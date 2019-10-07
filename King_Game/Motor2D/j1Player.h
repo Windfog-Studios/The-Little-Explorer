@@ -3,6 +3,10 @@
 
 #include "j1Module.h"
 
+#include "PugiXml/src/pugixml.hpp"
+#include "p2List.h"
+#include "p2Point.h"
+
 class j1Player : public j1Module {
 	
 	j1Player();
@@ -13,10 +17,17 @@ class j1Player : public j1Module {
 
 	bool Start();
 
+	bool PreUpdate();
+
+	bool Update();
+
+	bool PostUpdate();
+
 	bool CleanUp();
 
 public:
-
+	//SDL_Texture* player_tex;
+	p2SString		 folder;
 };
 
 #endif // !_j1PLAYER_H_
