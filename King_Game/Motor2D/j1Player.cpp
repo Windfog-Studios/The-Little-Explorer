@@ -43,7 +43,7 @@ bool j1Player::PreUpdate(){
 	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
 	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN;
 	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN;
-	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
+	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN;
 
 	return true;
 }
