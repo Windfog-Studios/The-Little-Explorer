@@ -34,8 +34,13 @@ class j1Player : public j1Module {
 	bool CleanUp();
 
 private:
-	
+
+	Animation idle;
+	Animation jump;
+	Animation run;
+
 public:
+
 	SDL_Texture* player_tex;
 	p2SString folder;
 	Player_Input player_input;

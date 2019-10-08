@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "Animation.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -14,6 +15,7 @@ j1Player::~j1Player(){
 }
 
 bool j1Player::Awake(pugi::xml_node& config) {
+
 	LOG("Loading Player Parser");
 	bool ret = true;
 
@@ -23,7 +25,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 }
 
 bool j1Player::Start(){
-	player_tex = App->tex->Load("Game/sprites/characters/characters.png");
+
+	player_tex = App->tex->Load("Game/sprites/characters/characters.png");	//load character sprites
+
 	return true;
 }
 
@@ -32,7 +36,7 @@ bool j1Player::CleanUp() {
 }
 
 bool j1Player::PreUpdate(){
-
+	//get player input
 	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
 	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN;
 	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN;
