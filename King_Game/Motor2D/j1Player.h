@@ -39,6 +39,9 @@ private:
 	Animation idle;
 	Animation jump;
 	Animation run;
+	Animation walk;
+	Animation crouch;
+	Animation slide;
 
 public:
 
