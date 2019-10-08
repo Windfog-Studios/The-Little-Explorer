@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1Input.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -22,7 +23,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 }
 
 bool j1Player::Start(){
-	//player_tex = App->tex->Load("Game/sprites/characters/characters.png");
+	player_tex = App->tex->Load("Game/sprites/characters/characters.png");
 	return true;
 }
 
@@ -31,6 +32,12 @@ bool j1Player::CleanUp() {
 }
 
 bool j1Player::PreUpdate(){
+
+	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
+	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN;
+	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN;
+	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
+
 	return true;
 }
 
@@ -40,5 +47,6 @@ bool j1Player::Update(){
 }
 
 bool j1Player::PostUpdate() {
+
 	return true;
 }

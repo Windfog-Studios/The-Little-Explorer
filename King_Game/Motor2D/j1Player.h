@@ -2,10 +2,18 @@
 #define _j1PLAYER_H_
 
 #include "j1Module.h"
-
-#include "PugiXml/src/pugixml.hpp"
-#include "p2List.h"
 #include "p2Point.h"
+//#include "PugiXml/src/pugixml.hpp"
+//#include "p2List.h"
+
+struct SDL_Texture;
+
+struct Player_Input {
+	bool pressing_W;
+	bool pressing_A;
+	bool pressing_S;
+	bool pressing_D;
+};
 
 class j1Player : public j1Module {
 	
@@ -25,9 +33,13 @@ class j1Player : public j1Module {
 
 	bool CleanUp();
 
+private:
+	
 public:
-	//SDL_Texture* player_tex;
-	p2SString		 folder;
+	SDL_Texture* player_tex;
+	p2SString folder;
+	Player_Input player_input;
+	p2Point<int> position;
 };
 
 #endif // !_j1PLAYER_H_
