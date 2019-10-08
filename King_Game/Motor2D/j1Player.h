@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
+#include "Animation.h"
 //#include "PugiXml/src/pugixml.hpp"
 //#include "p2List.h"
 
@@ -16,7 +17,7 @@ struct Player_Input {
 };
 
 class j1Player : public j1Module {
-	
+public:
 	j1Player();
 
 	virtual ~j1Player();
@@ -45,6 +46,7 @@ public:
 	p2SString folder;
 	Player_Input player_input;
 	p2Point<int> position;
+
 };
 
 #endif // !_j1PLAYER_H_
