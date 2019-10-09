@@ -14,6 +14,7 @@ struct Player_Input {
 	bool pressing_A;
 	bool pressing_S;
 	bool pressing_D;
+	bool pressing_F;
 };
 
 enum Player_States {

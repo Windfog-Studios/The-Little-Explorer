@@ -37,10 +37,10 @@ j1Player::j1Player():j1Module () {
 	run.PushBack({ 322, 155, 40, 54 }, 0.2f);
 
 	//crouch animation
-	crouch.PushBack({ 21, 302, 32, 56 }, 0.2f);
-	crouch.PushBack({ 75, 305, 35, 53 }, 0.2f);
-	crouch.PushBack({ 125, 321, 43, 37 }, 0.2f);
-	crouch.PushBack({ 184, 322, 43, 36 }, 0.2f);
+	crouch.PushBack({ 21, 302, 32, 56 }, 0.02f);
+	crouch.PushBack({ 75, 305, 35, 53 }, 0.02f);
+	crouch.PushBack({ 125, 321, 43, 37 }, 0.02f);
+	crouch.PushBack({ 184, 322, 43, 36 }, 0.02f);
 
 	//slide animation
 	slide.PushBack({ 21, 101, 52, 42 }, 0.2f);
@@ -104,10 +104,13 @@ bool j1Player::PreUpdate(){
 	//get player input
 	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
 	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
-	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN;
+	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT;
 	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+	player_input.pressing_F = App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT;
+	
 	if (state == IDLE)
 	{
+		
 		if (player_input.pressing_A)
 		{
 			position.x--;
@@ -119,11 +122,44 @@ bool j1Player::PreUpdate(){
 			state = RUN_FORWARD;
 			current_animation = &run;
 		}
+
+		if (player_input.pressing_S)
+		{
+			state = CROUCH;
+			current_animation = &crouch;
+		}
+
+		if (player_input.pressing_F)
+		{
+			position.x++;
+			state = SLIDE;
+			current_animation = &slide;
+		}
 	}
 
 	if (state == RUN_FORWARD)
 	{
 		if (!player_input.pressing_D)
+		{
+			state = IDLE;
+			current_animation = &idle;
+		}
+		position.x++;
+
+	}
+
+	if (state == CROUCH)
+	{
+		if (!player_input.pressing_S)
+		{
+			state = IDLE;
+			current_animation = &idle;
+		}
+	}
+
+	if (state == SLIDE)
+	{
+		if (!player_input.pressing_F)
 		{
 			state = IDLE;
 			current_animation = &idle;
@@ -136,10 +172,29 @@ bool j1Player::PreUpdate(){
 
 bool j1Player::Update(){
 	
-	if (state == RUN_FORWARD)
+	switch (state)
 	{
+	case IDLE:
+		current_animation = &idle;
+		break;
+
+	case RUN_FORWARD:
 		current_animation = &run;
+		break;
+
+	case CROUCH:
+		current_animation = &crouch;
+		break;
+
+	case SLIDE:
+		current_animation = &slide;
+		break;
+
+	default:
+		LOG("No state found");
+		break;
 	}
+
 	return true;
 }
 
@@ -147,5 +202,5 @@ bool j1Player::PostUpdate() {
 
 	App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame());
 
-	return true;
+	return true;	
 }
