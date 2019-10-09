@@ -13,13 +13,13 @@ struct MapLayer {
 	uint height = 0u;
 	uint* tile_gid;
 	inline uint Get(int x, int y) const { if (tile_gid >0) return x + y * width; };
-	~MapLayer() { delete tile_gid; }
+	~MapLayer() { RELEASE(tile_gid); }
 };
 // ----------------------------------------------------
 struct TileSet
 {
-	SDL_Rect GetRect(uint tile_id);
-	p2SString			name;
+	SDL_Rect GetRect(int tile_id);
+	p2SString			name = "No name";
 	int					firstgid;
 	int					margin;
 	int					spacing;
@@ -78,6 +78,9 @@ public:
 
 	int GetXPosition(int x) { return x * data.tile_width; }
 	int GetYPosition(int y) { return y * data.tile_height;}
+
+	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
 
 private:
 

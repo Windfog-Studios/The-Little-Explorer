@@ -36,12 +36,22 @@ void j1Map::Draw()
 		p2List_item<TileSet*>* tileset;
 		layer = data.layers.start;
 		tileset = data.tilesets.start;
-		for (int y = 0; y < layer->data->height; y++)
+		iPoint position;
+		while (tileset != NULL)
 		{
-			for (int x = 0; x < layer->data->width; x++)
+			while (layer != NULL)
 			{
-				App->render->Blit(tileset->data->texture, GetXPosition(x), GetYPosition(y), &tileset->data->GetRect(layer->data->tile_gid[layer->data->Get(x, y)]));
+				for (int y = 0; y < layer->data->height; y++)
+				{
+					for (int x = 0; x < layer->data->width; x++)
+					{
+						position = MapToWorld(x, y);
+						App->render->Blit(tileset->data->texture, position.x, position.y, &tileset->data->GetRect(layer->data->tile_gid[layer->data->Get(x, y)]));
+					}
+				}
+				layer = layer->next;
 			}
+			tileset = tileset->next;
 		}
 	}
 }
@@ -63,6 +73,15 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
+	p2List_item<MapLayer*>* item2;
+	item2 = data.layers.start;
+
+	while (item2 != NULL)
+	{
+		RELEASE(item2->data);
+		item2 = item2->next;
+	}
+	data.layers.clear();
 	data.layers.clear();
 	// Clean up the pugui tree
 	map_file.reset();
@@ -316,7 +335,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-SDL_Rect TileSet::GetRect(uint tile_id) {
+SDL_Rect TileSet::GetRect(int tile_id) {
 		SDL_Rect rect;
 		tile_id = tile_id - firstgid;
 		rect.x = margin + ((tile_width + spacing) * (tile_id % num_tiles_width));
@@ -324,4 +343,38 @@ SDL_Rect TileSet::GetRect(uint tile_id) {
 		rect.w = tile_width;
 		rect.h = tile_height;
 		return rect;
+}
+
+iPoint j1Map::MapToWorld(int x, int y) const
+{
+	iPoint ret(0, 0);
+
+	if (data.type == MAPTYPE_ORTHOGONAL) {
+		ret.x = x * data.tile_width;
+		ret.y = y * data.tile_height;
+	}
+
+	if (data.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x - y) * (data.tile_width * 0.5f);
+		ret.y = (x + y) * (data.tile_height * 0.5f);
+	}
+	return ret;
+}
+
+iPoint j1Map::WorldToMap(int x, int y) const
+{
+	iPoint ret(0, 0);
+	if (data.type == MAPTYPE_ORTHOGONAL) {
+		ret.x = x / data.tile_width;
+		ret.y = y / data.tile_height;
+	}
+
+	if (data.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = x / data.tile_width + y / data.tile_height;
+		ret.y = y / data.tile_height - x / data.tile_width;
+	}
+
+	return ret;
 }

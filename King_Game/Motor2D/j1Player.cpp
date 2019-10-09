@@ -9,14 +9,14 @@ j1Player::j1Player():j1Module () {
 	name.create("player");
 
 	//idle animation
-	idle.PushBack({ 21, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 71, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 121, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 171, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 221, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 271, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 321, 226, 32, 56 }, 0.2f);
-	idle.PushBack({ 369, 226, 32, 56 }, 0.2f);
+	idle.PushBack({ 21, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 71, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 121, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 171, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 221, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 271, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 321, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 369, 226, 32, 56 }, 0.1f);
 
 	//walk animation
 	walk.PushBack({ 21, 31, 33, 56 }, 0.2f);
