@@ -45,7 +45,7 @@ void j1Map::Draw()
 				{
 					for (int x = 0; x < layer->data->width; x++)
 					{
-						position = MapToWorld(x, y);
+						position = MapToWorld(x, y-10);
 						App->render->Blit(tileset->data->texture, position.x, position.y, &tileset->data->GetRect(layer->data->tile_gid[layer->data->Get(x, y)]));
 					}
 				}
