@@ -16,6 +16,16 @@ struct Player_Input {
 	bool pressing_D;
 };
 
+enum Player_States {
+	IDLE, 
+	RUN_FORWARD,
+	RUN_BACKWARD,
+	JUMP,
+	SLIDE,
+	WALK,
+	CROUCH
+};
+
 class j1Player : public j1Module {
 public:
 	j1Player();
@@ -36,12 +46,6 @@ public:
 
 private:
 
-	Animation idle;
-	Animation jump;
-	Animation run;
-	Animation walk;
-	Animation crouch;
-	Animation slide;
 
 public:
 
@@ -49,6 +53,17 @@ public:
 	p2SString folder;
 	Player_Input player_input;
 	p2Point<int> position;
+
+	//animations
+	Animation idle;
+	Animation jump;
+	Animation run;
+	Animation walk;
+	Animation crouch;
+	Animation slide;
+	Animation* current_animation;
+
+	Player_States state;
 
 };
 

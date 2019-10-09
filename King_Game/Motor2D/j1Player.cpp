@@ -79,8 +79,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	LOG("Loading Player Data");
 	bool ret = true;
-	position.x = 300;
-	position.y = 100;
+	position.x = 50;
+	position.y = 450;
+	current_animation = &idle;
 	//set initial position
 	//position.x = config.child("position").attribute("x").as_int();
 	//position.y = config.child("position").attribute("y").as_int();
@@ -102,21 +103,49 @@ bool j1Player::CleanUp() {
 bool j1Player::PreUpdate(){
 	//get player input
 	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
-	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN;
+	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
 	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN;
-	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN;
+	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+	if (state == IDLE)
+	{
+		if (player_input.pressing_A)
+		{
+			position.x--;
+		}
+
+		if (player_input.pressing_D)
+		{
+			position.x++;
+			state = RUN_FORWARD;
+			current_animation = &run;
+		}
+	}
+
+	if (state == RUN_FORWARD)
+	{
+		if (!player_input.pressing_D)
+		{
+			state = IDLE;
+			current_animation = &idle;
+		}
+		position.x++;
+	}
 
 	return true;
 }
 
 bool j1Player::Update(){
 	
+	if (state == RUN_FORWARD)
+	{
+		current_animation = &run;
+	}
 	return true;
 }
 
 bool j1Player::PostUpdate() {
 
-	App->render->Blit(player_tex, position.x, position.y, &idle.GetCurrentFrame());
+	App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame());
 
 	return true;
 }
