@@ -4,7 +4,7 @@
   <image source="../../../../../../Desktop/opp-assets/environment/tiles/castle/tile_castle.png" width="480" height="480"/>
  </tileset>
  <tileset firstgid="226" name="Mapa2_fondo" tilewidth="32" tileheight="32" tilecount="4800" columns="120">
-  <image source="../../../../../../Desktop/Desenvolupament de videojocs/Mapa2_fondo.png" width="3840" height="1280"/>
+  <image source="Mapa2_fondo.png" width="3840" height="1280"/>
  </tileset>
  <layer name="Capa de patrones 6" width="120" height="40">
   <data>
@@ -1425,10 +1425,10 @@
    <tile gid="1640"/>
    <tile gid="1641"/>
    <tile gid="1642"/>
-   <tile gid="1643"/>
-   <tile gid="1644"/>
-   <tile gid="1645"/>
-   <tile gid="1646"/>
+   <tile gid="347"/>
+   <tile gid="348"/>
+   <tile gid="349"/>
+   <tile gid="350"/>
    <tile gid="1647"/>
    <tile gid="1648"/>
    <tile gid="1649"/>
@@ -1545,10 +1545,10 @@
    <tile gid="1760"/>
    <tile gid="1761"/>
    <tile gid="1762"/>
-   <tile gid="1763"/>
-   <tile gid="1764"/>
-   <tile gid="1765"/>
-   <tile gid="1766"/>
+   <tile gid="467"/>
+   <tile gid="468"/>
+   <tile gid="469"/>
+   <tile gid="470"/>
    <tile gid="1767"/>
    <tile gid="1768"/>
    <tile gid="1769"/>
@@ -1665,11 +1665,11 @@
    <tile gid="1880"/>
    <tile gid="1881"/>
    <tile gid="1882"/>
-   <tile gid="1883"/>
-   <tile gid="1884"/>
-   <tile gid="1885"/>
-   <tile gid="1886"/>
-   <tile gid="1887"/>
+   <tile gid="587"/>
+   <tile gid="588"/>
+   <tile gid="589"/>
+   <tile gid="590"/>
+   <tile gid="350"/>
    <tile gid="1888"/>
    <tile gid="1889"/>
    <tile gid="1890"/>
@@ -1785,11 +1785,11 @@
    <tile gid="2000"/>
    <tile gid="2001"/>
    <tile gid="2002"/>
-   <tile gid="2003"/>
-   <tile gid="2004"/>
-   <tile gid="2005"/>
-   <tile gid="2006"/>
-   <tile gid="2007"/>
+   <tile gid="707"/>
+   <tile gid="708"/>
+   <tile gid="709"/>
+   <tile gid="710"/>
+   <tile gid="470"/>
    <tile gid="2008"/>
    <tile gid="2009"/>
    <tile gid="2010"/>
@@ -1905,11 +1905,11 @@
    <tile gid="2120"/>
    <tile gid="2121"/>
    <tile gid="2122"/>
-   <tile gid="2123"/>
-   <tile gid="2124"/>
-   <tile gid="2125"/>
-   <tile gid="2126"/>
-   <tile gid="2127"/>
+   <tile gid="827"/>
+   <tile gid="828"/>
+   <tile gid="829"/>
+   <tile gid="830"/>
+   <tile gid="590"/>
    <tile gid="2128"/>
    <tile gid="2129"/>
    <tile gid="2130"/>
@@ -2025,11 +2025,11 @@
    <tile gid="2240"/>
    <tile gid="2241"/>
    <tile gid="2242"/>
-   <tile gid="2243"/>
-   <tile gid="2244"/>
-   <tile gid="2245"/>
-   <tile gid="2246"/>
-   <tile gid="2247"/>
+   <tile gid="947"/>
+   <tile gid="948"/>
+   <tile gid="949"/>
+   <tile gid="950"/>
+   <tile gid="710"/>
    <tile gid="2248"/>
    <tile gid="2249"/>
    <tile gid="2250"/>
@@ -2145,11 +2145,11 @@
    <tile gid="2360"/>
    <tile gid="2361"/>
    <tile gid="2362"/>
-   <tile gid="2363"/>
-   <tile gid="2364"/>
-   <tile gid="2365"/>
-   <tile gid="2366"/>
-   <tile gid="2367"/>
+   <tile gid="1067"/>
+   <tile gid="1068"/>
+   <tile gid="1069"/>
+   <tile gid="1070"/>
+   <tile gid="830"/>
    <tile gid="2368"/>
    <tile gid="2369"/>
    <tile gid="2370"/>
@@ -2265,11 +2265,11 @@
    <tile gid="2480"/>
    <tile gid="2481"/>
    <tile gid="2482"/>
-   <tile gid="2483"/>
-   <tile gid="2484"/>
-   <tile gid="2485"/>
-   <tile gid="2486"/>
-   <tile gid="2487"/>
+   <tile gid="1187"/>
+   <tile gid="1188"/>
+   <tile gid="1189"/>
+   <tile gid="1190"/>
+   <tile gid="950"/>
    <tile gid="2488"/>
    <tile gid="2489"/>
    <tile gid="2490"/>
@@ -2385,11 +2385,11 @@
    <tile gid="2600"/>
    <tile gid="2601"/>
    <tile gid="2602"/>
-   <tile gid="2603"/>
-   <tile gid="2604"/>
-   <tile gid="2605"/>
-   <tile gid="2606"/>
-   <tile gid="2607"/>
+   <tile gid="1067"/>
+   <tile gid="1068"/>
+   <tile gid="1069"/>
+   <tile gid="1070"/>
+   <tile gid="1070"/>
    <tile gid="2608"/>
    <tile gid="2609"/>
    <tile gid="2610"/>
@@ -2505,11 +2505,11 @@
    <tile gid="2720"/>
    <tile gid="2721"/>
    <tile gid="2722"/>
-   <tile gid="2723"/>
-   <tile gid="2724"/>
-   <tile gid="2725"/>
-   <tile gid="2726"/>
-   <tile gid="2727"/>
+   <tile gid="1187"/>
+   <tile gid="1188"/>
+   <tile gid="1189"/>
+   <tile gid="1190"/>
+   <tile gid="1190"/>
    <tile gid="2728"/>
    <tile gid="2729"/>
    <tile gid="2730"/>
