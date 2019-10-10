@@ -9637,9 +9637,6 @@
   <object id="6" type="Collider" x="2498.33" y="314.667" width="60.5" height="68"/>
   <object id="7" type="Collider" x="2592.67" y="410.667" width="62" height="69.3333"/>
   <object id="14" type="Collider" x="0.666667" y="829.333" width="221.333" height="113.333"/>
-  <object id="17" type="Collider" x="224" y="831.333">
-   <polyline points="0,0 64,0.666667 64,32.6667 128,32.6667 128,0.666667 224,0.666667 224,192.667 288,192.667 288,0.666667 352,0.666667 352,-95.3333 448,-95.3333 448,320.667 0,320.667 0,0.666667"/>
-  </object>
   <object id="18" type="Collider" x="128.667" y="796" width="93.3333" height="61.3333"/>
  </objectgroup>
 </map>

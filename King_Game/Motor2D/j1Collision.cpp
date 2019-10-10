@@ -9,46 +9,11 @@ j1Collision::j1Collision()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_WALL_LEFT][COLLIDER_WALL_LEFT] = false;
-	matrix[COLLIDER_WALL_RIGHT][COLLIDER_WALL_RIGHT] = false;
-
-	matrix[COLLIDER_WALL_RIGHT][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WALL_RIGHT][COLLIDER_PLAYER_PARTICLES] = false;
-	matrix[COLLIDER_WALL_LEFT][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WALL_LEFT][COLLIDER_PLAYER_PARTICLES] = false;
+	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
+	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL_RIGHT] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_WALL_LEFT] = true;
-
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_PARTICLES] = false;
-	matrix[COLLIDER_PLAYER_PARTICLES][COLLIDER_PLAYER] = false;
-
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_2] = true;
-	matrix[COLLIDER_PLAYER_2][COLLIDER_PLAYER] = true;
-
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_2_ATTACK] = true;
-	matrix[COLLIDER_PLAYER_2_ATTACK][COLLIDER_PLAYER] = true;
-
-	matrix[COLLIDER_PLAYER_2][COLLIDER_WALL_RIGHT] = true;
-	matrix[COLLIDER_WALL_RIGHT][COLLIDER_PLAYER_2] = true;
-	matrix[COLLIDER_PLAYER_2][COLLIDER_WALL_LEFT] = true;
-	matrix[COLLIDER_WALL_LEFT][COLLIDER_PLAYER_2] = true;
-
-	matrix[COLLIDER_PLAYER_1_ATTACK][COLLIDER_PLAYER_2] = true;
-	matrix[COLLIDER_PLAYER_2][COLLIDER_PLAYER_1_ATTACK] = true;
-
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER_1_ATTACK] = false;
-	matrix[COLLIDER_PLAYER_1_ATTACK][COLLIDER_PLAYER] = false;
-
-	matrix[COLLIDER_PLAYER_2][COLLIDER_PLAYER_2_ATTACK] = false;
-	matrix[COLLIDER_PLAYER_2_ATTACK][COLLIDER_PLAYER_2] = false;
-
-	matrix[COLLIDER_PLAYER_PARTICLES][COLLIDER_WALL_RIGHT] = false;
-	matrix[COLLIDER_PLAYER_PARTICLES][COLLIDER_WALL_LEFT] = false;
-
-	matrix[COLLIDER_PLAYER_2_PARTICLES][COLLIDER_PLAYER_2] = false;
-	matrix[COLLIDER_PLAYER_2][COLLIDER_PLAYER_2_PARTICLES] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 
 }
 
@@ -132,29 +97,11 @@ void j1Collision::DebugDraw()
 		case COLLIDER_NONE: // white
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-		case COLLIDER_WALL_RIGHT: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+		case COLLIDER_WALL:
+			App->render->DrawQuad(colliders[i]->rect, 75, 0, 130, alpha);
 			break;
-		case COLLIDER_WALL_LEFT: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-		case COLLIDER_PLAYER: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-			break;
-		case COLLIDER_PLAYER_2: //orange
-			App->render->DrawQuad(colliders[i]->rect, 255, 165, 0, 150);
-			break;
-		case COLLIDER_PLAYER_PARTICLES: //yellow
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
-			break;
-		case COLLIDER_PLAYER_1_ATTACK: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			break;
-		case COLLIDER_PLAYER_2_ATTACK: //purple
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-		case COLLIDER_PLAYER_2_PARTICLES:
-			App->render->DrawQuad(colliders[i]->rect, 205, 130, 60, alpha);
+		case COLLIDER_PLAYER:
+			App->render->DrawQuad(colliders[i]->rect, 0, 153, 0, alpha);
 			break;
 		}
 	}
