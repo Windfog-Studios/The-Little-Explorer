@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="32" tileheight="32" nextobjectid="113">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="32" tileheight="32" nextobjectid="131">
  <tileset firstgid="1" name="jungle_spacing" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
   <terraintypes>
@@ -14513,5 +14513,20 @@
   <object id="109" type="Collider" x="1984" y="1056" width="64" height="32"/>
   <object id="110" type="Collider" x="2400" y="960" width="64" height="32"/>
   <object id="111" type="Collider" x="2208" y="256.5" width="63.5" height="223"/>
+  <object id="113" type="Death" x="448" y="1024" width="64" height="64"/>
+  <object id="117" type="Death" x="1312" y="1248" width="64" height="32"/>
+  <object id="118" type="Death" x="1536" y="1248" width="128" height="32"/>
+  <object id="119" type="Death" x="1920" y="1248" width="128" height="32"/>
+  <object id="120" type="Death" x="2144" y="1248" width="96" height="32"/>
+  <object id="121" type="Death" x="2528" y="1248" width="128" height="32"/>
+  <object id="122" type="Death" x="2784" y="1248" width="96" height="32"/>
+  <object id="123" type="Death" x="2944" y="1248" width="64" height="32"/>
+  <object id="124" type="Collider" x="1152" y="864" width="64" height="64"/>
+  <object id="125" type="Collider" x="1344" y="896" width="64" height="54.8333"/>
+  <object id="126" type="Collider" x="1408" y="928" width="128" height="32"/>
+  <object id="127" type="Collider" x="1440" y="960" width="64" height="64"/>
+  <object id="128" type="Collider" x="1024" y="800" width="96" height="32"/>
+  <object id="129" type="Death" x="1760" y="384" width="160" height="32"/>
+  <object id="130" type="Death" x="3328" y="1248" width="416" height="32"/>
  </objectgroup>
 </map>
