@@ -98,11 +98,13 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		case COLLIDER_WALL:
-			App->render->DrawQuad(colliders[i]->rect, 75, 0, 130, alpha);
-			LOG("collider drawn");
+			App->render->DrawQuad(colliders[i]->rect, 255, 85, 150, alpha);
 			break;
 		case COLLIDER_PLAYER:
 			App->render->DrawQuad(colliders[i]->rect, 0, 153, 0, alpha);
+			break;
+		case COLLIDER_DEATH:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}
 	}
