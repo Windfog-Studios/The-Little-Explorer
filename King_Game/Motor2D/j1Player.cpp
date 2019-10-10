@@ -151,6 +151,11 @@ bool j1Player::PreUpdate(){
 				position.x--;
 			}
 		}
+
+		if (player_input.pressing_W)
+		{
+			state = JUMP;
+		}
 		
 	}
 
@@ -217,6 +222,15 @@ bool j1Player::PreUpdate(){
 		}
 		position.x--;
 	}
+
+	if (state == JUMP)
+	{
+		if (current_animation->Finished())
+		{
+			state = IDLE;
+			jump.Reset();
+		}
+	}
 	
 	return true;
 }
@@ -256,6 +270,10 @@ bool j1Player::Update(float dt){
 	case SLIDE_BACKWARD:
 		current_animation = &slide;
 		flip = SDL_FLIP_HORIZONTAL;
+		break;
+
+	case JUMP:
+		current_animation = &jump;
 		break;
 
 	default:
