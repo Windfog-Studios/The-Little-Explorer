@@ -41,21 +41,21 @@ j1Player::j1Player():j1Module () {
 
 	//crouch down animation
 	crouch_down.PushBack({ 21, 302, 32, 56 }, 0.2f);
-	crouch_down.PushBack({ 75, 305, 35, 53 }, 0.2f);
-	crouch_down.PushBack({ 125, 321, 43, 37 }, 0.2f);
-	crouch_down.PushBack({ 184, 322, 43, 36 }, 0.2f);
+	crouch_down.PushBack({ 75, 302, 35, 56 }, 0.2f);
+	crouch_down.PushBack({ 125, 302, 43, 56 }, 0.2f);
+	crouch_down.PushBack({ 184, 302, 43, 56 }, 0.2f);
 	crouch_down.loop = false;
 	
 	//crouch up animation
-	crouch_up.PushBack({ 184, 322, 43, 36 }, 0.2f);
-	crouch_up.PushBack({ 125, 321, 43, 37 }, 0.2f);
-	crouch_up.PushBack({ 75, 305, 35, 53 }, 0.2f);
+	crouch_up.PushBack({ 184, 302, 43, 56 }, 0.2f);
+	crouch_up.PushBack({ 125, 302, 43, 56 }, 0.2f);
+	crouch_up.PushBack({ 75, 302, 35, 56 }, 0.2f);
 	crouch_up.PushBack({ 21, 302, 32, 56 }, 0.2f);
 	crouch_up.loop = false;
 
 	//slide animation
-	slide.PushBack({ 21, 101, 52, 42 }, 0.2f);
-	slide.PushBack({ 86, 101, 52, 42 }, 0.2f);
+	slide.PushBack({ 21, 91, 52, 52 }, 0.2f);
+	slide.PushBack({ 86, 91, 52, 52 }, 0.2f);
 	slide.loop = true;
 
 	//jump animation
@@ -142,8 +142,14 @@ bool j1Player::PreUpdate(){
 
 		if (player_input.pressing_F)
 		{
+			state = SLIDE_FORWARD;
 			position.x++;
-			state = SLIDE;
+
+			if (flip == SDL_FLIP_HORIZONTAL)
+			{
+				state = SLIDE_BACKWARD;
+				position.x--;
+			}
 		}
 		
 	}
@@ -185,13 +191,22 @@ bool j1Player::PreUpdate(){
 		}
 	}
 	
-	if (state == SLIDE)
+	if (state == SLIDE_FORWARD)
 	{
 		if (!player_input.pressing_F)
 		{
 			state = IDLE;
 		}
 		position.x++;
+	}
+
+	if (state == SLIDE_BACKWARD)
+	{
+		if (!player_input.pressing_F)
+		{
+			state = IDLE;
+		}
+		position.x--;
 	}
 	
 	return true;
@@ -224,8 +239,14 @@ bool j1Player::Update(float dt){
 		current_animation = &crouch_up;
 		break;
 
-	case SLIDE:
+	case SLIDE_FORWARD:
 		current_animation = &slide;
+		flip = SDL_FLIP_NONE;
+		break;
+
+	case SLIDE_BACKWARD:
+		current_animation = &slide;
+		flip = SDL_FLIP_HORIZONTAL;
 		break;
 
 	default:
