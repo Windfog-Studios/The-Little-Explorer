@@ -110,19 +110,19 @@ bool j1Player::PreUpdate(){
 	
 	if (state == IDLE)
 	{
-		
-		if (player_input.pressing_A)
-		{
-			position.x--;
-		}
-
 		if (player_input.pressing_D)
 		{
 			position.x++;
 			state = RUN_FORWARD;
-			current_animation = &run;
 		}
 
+		if (player_input.pressing_A)
+		{
+			position.x--;
+			state = RUN_BACKWARD;
+		}
+		//new states
+		/*
 		if (player_input.pressing_S)
 		{
 			state = CROUCH;
@@ -135,6 +135,7 @@ bool j1Player::PreUpdate(){
 			state = SLIDE;
 			current_animation = &slide;
 		}
+		*/
 	}
 
 	if (state == RUN_FORWARD)
@@ -142,12 +143,21 @@ bool j1Player::PreUpdate(){
 		if (!player_input.pressing_D)
 		{
 			state = IDLE;
-			current_animation = &idle;
 		}
 		position.x++;
 
 	}
 
+	if (state == RUN_BACKWARD)
+	{
+		if (!player_input.pressing_A)
+		{
+			state = IDLE;
+		}
+		position.x--;
+	}
+
+	/*
 	if (state == CROUCH)
 	{
 		if (!player_input.pressing_S)
@@ -156,7 +166,7 @@ bool j1Player::PreUpdate(){
 			current_animation = &idle;
 		}
 	}
-
+	
 	if (state == SLIDE)
 	{
 		if (!player_input.pressing_F)
@@ -166,22 +176,30 @@ bool j1Player::PreUpdate(){
 		}
 		position.x++;
 	}
+	*/
 
 	return true;
 }
 
-bool j1Player::Update(){
-	
+bool j1Player::Update(float dt){
+
 	switch (state)
 	{
 	case IDLE:
 		current_animation = &idle;
+		//flip = SDL_FLIP_NONE;
 		break;
 
 	case RUN_FORWARD:
 		current_animation = &run;
+		flip = SDL_FLIP_NONE;
 		break;
 
+	case RUN_BACKWARD:
+		current_animation = &run;
+		flip = SDL_FLIP_HORIZONTAL;
+		break;
+/*
 	case CROUCH:
 		current_animation = &crouch;
 		break;
@@ -189,7 +207,7 @@ bool j1Player::Update(){
 	case SLIDE:
 		current_animation = &slide;
 		break;
-
+*/
 	default:
 		LOG("No state found");
 		break;
@@ -200,7 +218,7 @@ bool j1Player::Update(){
 
 bool j1Player::PostUpdate() {
 
-	App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame());
+	App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 
 	return true;	
 }

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "SDL/include/SDL.h"
 //#include "PugiXml/src/pugixml.hpp"
 //#include "p2List.h"
 
@@ -39,7 +40,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool PostUpdate();
 
@@ -65,6 +66,8 @@ public:
 	Animation* current_animation;
 
 	Player_States state;
+
+	SDL_RendererFlip flip;
 
 };
 
