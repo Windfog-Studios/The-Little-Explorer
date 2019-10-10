@@ -162,6 +162,10 @@ bool j1Player::PreUpdate(){
 		}
 		position.x++;
 
+		if (player_input.pressing_F)
+		{
+			state = SLIDE_FORWARD;
+		}
 	}
 
 	if (state == RUN_BACKWARD)
@@ -171,6 +175,11 @@ bool j1Player::PreUpdate(){
 			state = IDLE;
 		}
 		position.x--;
+
+		if (player_input.pressing_F)
+		{
+			state = SLIDE_BACKWARD;
+		}
 	}
 
 	
