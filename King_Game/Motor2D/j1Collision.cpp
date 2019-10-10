@@ -70,7 +70,7 @@ bool j1Collision::PreUpdate()
 }
 
 // Called before render is available
-bool j1Collision::Update()
+bool j1Collision::Update(float dt)
 {
 	bool ret = true;
 	DebugDraw();
@@ -99,6 +99,7 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_WALL:
 			App->render->DrawQuad(colliders[i]->rect, 75, 0, 130, alpha);
+			LOG("collider drawn");
 			break;
 		case COLLIDER_PLAYER:
 			App->render->DrawQuad(colliders[i]->rect, 0, 153, 0, alpha);

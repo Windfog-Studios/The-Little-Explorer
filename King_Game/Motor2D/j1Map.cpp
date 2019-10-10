@@ -368,6 +368,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 	pugi::xml_node object = node.child("object");
 	SDL_Rect rect = { 0,0,0,0 };
 	objectgroup->name = node.attribute("name").as_string();
+	uint i = 0u;
 
 		if (object == NULL)
 		{
@@ -377,15 +378,21 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 		
 		else
 		{
+			objectgroup->object = new SDL_Rect;
+
 			while (object != NULL)
 			{
-				rect.x = object.attribute("x").as_int();
-				rect.y = object.attribute("y").as_int();
-				rect.w = object.attribute("width").as_int();
-				rect.h = object.attribute("height").as_int();
-				App->collision->AddCollider(rect, COLLIDER_WALL);
-				//LOG("collider x: %i y: % w: %i h: %i");
+				objectgroup->object[i].x = object.attribute("x").as_int();
+				objectgroup->object[i].y = object.attribute("y").as_int();
+				objectgroup->object[i].w = object.attribute("width").as_int();
+				objectgroup->object[i].h = object.attribute("height").as_int();
+				objectgroup->object[i].y -= 320;
+				App->collision->AddCollider(objectgroup->object[i], COLLIDER_WALL);
+
+				//LOG("collider x: %i y: %i width: %i height: %i", objectgroup->object[i].x, objectgroup->object[i].y, objectgroup->object[i].w, objectgroup->object[i].h);
+
 				object = object.next_sibling("object");
+				objectgroup->size++;
 			}
 		}
 
