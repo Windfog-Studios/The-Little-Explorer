@@ -369,6 +369,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 	SDL_Rect rect = { 0,0,0,0 };
 	objectgroup->name = node.attribute("name").as_string();
 	uint i = 0u;
+	p2SString type;
 
 		if (object == NULL)
 		{
@@ -378,21 +379,27 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 		
 		else
 		{
-			objectgroup->object = new SDL_Rect;
+			objectgroup->object = new SDL_Rect[100];
 
-			while (object != NULL)
+			while (object)
 			{
 				objectgroup->object[i].x = object.attribute("x").as_int();
 				objectgroup->object[i].y = object.attribute("y").as_int();
 				objectgroup->object[i].w = object.attribute("width").as_int();
 				objectgroup->object[i].h = object.attribute("height").as_int();
 				objectgroup->object[i].y -= 320;
+				
+				p2SString type(object.attribute("type").as_string());
+
+				if (type =="Collider")
 				App->collision->AddCollider(objectgroup->object[i], COLLIDER_WALL);
 
-				//LOG("collider x: %i y: %i width: %i height: %i", objectgroup->object[i].x, objectgroup->object[i].y, objectgroup->object[i].w, objectgroup->object[i].h);
+				if (type == "Death")
+				App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
 
 				object = object.next_sibling("object");
-				objectgroup->size++;
+				i++;
+				LOG("Colliders loaded: %i", i);
 			}
 		}
 
