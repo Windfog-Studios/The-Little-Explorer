@@ -6,12 +6,9 @@
  <tileset firstgid="226" name="Mapa2_fondo" tilewidth="32" tileheight="32" tilecount="4800" columns="120">
   <image source="Mapa2_fondo.png" width="3840" height="1280"/>
  </tileset>
-<<<<<<< HEAD
  <imagelayer name="Capa de Imagen 1">
   <image source="Mapa2_fondo.png" trans="ffffff" width="3840" height="1280"/>
  </imagelayer>
-=======
->>>>>>> 8a2c4bfb80f07a681c92c4ed319aca99572a42d9
  <layer name="Capa de patrones 6" width="120" height="40">
   <data>
    <tile gid="226"/>
