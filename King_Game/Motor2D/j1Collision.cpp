@@ -98,7 +98,7 @@ void j1Collision::DebugDraw()
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 		case COLLIDER_WALL:
-			App->render->DrawQuad(colliders[i]->rect, 75, 0, 130, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 255, 85, 150, alpha);
 			LOG("collider drawn");
 			break;
 		case COLLIDER_PLAYER:
