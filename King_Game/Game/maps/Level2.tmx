@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="32" tileheight="32" nextobjectid="44">
  <tileset firstgid="1" name="Castle" tilewidth="32" tileheight="32" tilecount="225" columns="15">
-  <image source="tile_castle.png" width="480" height="480"/>
+  <image source="../../../../../../Desktop/opp-assets/environment/tiles/castle/tile_castle.png" width="480" height="480"/>
  </tileset>
  <tileset firstgid="226" name="Mapa2_fondo" tilewidth="32" tileheight="32" tilecount="4800" columns="120">
-  <image source="Mapa2_fondo.png" width="3840" height="1280"/>
+  <image source="../../../../../../Desktop/Desenvolupament de videojocs/Mapa2_fondo.png" width="3840" height="1280"/>
  </tileset>
- <imagelayer name="Capa de Imagen 1">
-  <image source="Mapa2_fondo.png" trans="ffffff" width="3840" height="1280"/>
- </imagelayer>
  <layer name="Capa de patrones 6" width="120" height="40">
   <data>
    <tile gid="226"/>

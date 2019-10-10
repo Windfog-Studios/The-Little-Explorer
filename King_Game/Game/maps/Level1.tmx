@@ -26,7 +26,7 @@
   <tile id="269" terrain="0,0,,"/>
  </tileset>
  <tileset firstgid="421" name="Mapa1_fondo" tilewidth="32" tileheight="32" tilecount="4800" columns="120">
-  <image source="Mapa1_fondo.png" width="3840" height="1280"/>
+  <image source="../../../../../../Desktop/Desenvolupament de videojocs/Mapa1_fondo.png" width="3840" height="1280"/>
  </tileset>
  <layer name="Sky" width="120" height="40">
   <data>
@@ -3415,7 +3415,7 @@
    <tile gid="3803"/>
    <tile gid="3804"/>
    <tile gid="3805"/>
-   <tile gid="3806"/>
+   <tile gid="70"/>
    <tile gid="3807"/>
    <tile gid="3808"/>
    <tile gid="3809"/>
@@ -3548,7 +3548,7 @@
    <tile gid="3936"/>
    <tile gid="3937"/>
    <tile gid="3938"/>
-   <tile gid="3939"/>
+   <tile gid="30"/>
    <tile gid="3940"/>
    <tile gid="3941"/>
    <tile gid="3942"/>
@@ -3667,8 +3667,8 @@
    <tile gid="4055"/>
    <tile gid="4056"/>
    <tile gid="4057"/>
-   <tile gid="4058"/>
-   <tile gid="4059"/>
+   <tile gid="30"/>
+   <tile gid="242"/>
    <tile gid="4060"/>
    <tile gid="4061"/>
    <tile gid="4062"/>
@@ -14440,7 +14440,7 @@
    <tile gid="130"/>
   </data>
  </layer>
- <objectgroup name="Collisions">
+ <objectgroup name="Collisions" visible="0">
   <object id="6" type="Collider" x="2498.33" y="314.667" width="60.5" height="68"/>
   <object id="7" type="Collider" x="2592.67" y="410.667" width="62" height="69.3333"/>
   <object id="14" type="Collider" x="0.666667" y="829.333" width="284" height="113.333"/>
