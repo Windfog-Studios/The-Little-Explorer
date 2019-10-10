@@ -36,6 +36,7 @@ struct TileSet
 	int					offset_y;
 };
 
+
 struct ObjectGroup {
 	p2SString name = "No name";
 	int size = 0;

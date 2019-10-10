@@ -379,9 +379,9 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 		
 		else
 		{
-			objectgroup->object = new SDL_Rect[100];
+			objectgroup->object = new SDL_Rect;
 
-			while (object)
+			while (object != NULL)
 			{
 				objectgroup->object[i].x = object.attribute("x").as_int();
 				objectgroup->object[i].y = object.attribute("y").as_int();
@@ -398,8 +398,8 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
 
 				object = object.next_sibling("object");
-				i++;
-				LOG("Colliders loaded: %i", i);
+				//i++;
+				//LOG("Colliders loaded: %i", i);
 			}
 		}
 
