@@ -6,7 +6,7 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-struct Collider;
+//struct Collider;
 
 // ----------------------------------------------------
 struct MapLayer {
@@ -38,7 +38,7 @@ struct TileSet
 
 struct ObjectGroup {
 	p2SString name = "No name";
-	Collider* object;
+	SDL_Rect* object;
 };
 
 enum MapTypes

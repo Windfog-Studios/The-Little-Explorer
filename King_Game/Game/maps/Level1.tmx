@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="32" tileheight="32" nextobjectid="111">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="120" height="40" tilewidth="32" tileheight="32" nextobjectid="113">
  <tileset firstgid="1" name="jungle_spacing" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
   <terraintypes>
@@ -14512,5 +14512,6 @@
   <object id="108" type="Collider" x="2112" y="1024" width="64" height="64"/>
   <object id="109" type="Collider" x="1984" y="1056" width="64" height="32"/>
   <object id="110" type="Collider" x="2400" y="960" width="64" height="32"/>
+  <object id="111" type="Collider" x="2208" y="256.5" width="63.5" height="223"/>
  </objectgroup>
 </map>

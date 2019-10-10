@@ -366,7 +366,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 	bool ret = true;
 	pugi::xml_node object = node.child("object");
-
+	SDL_Rect rect = { 0,0,0,0 };
 	objectgroup->name = node.attribute("name").as_string();
 
 		if (object == NULL)
@@ -374,25 +374,21 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 			LOG("Error loading object group");
 			ret = false;
 		}
-		/*
+		
 		else
 		{
-			layer->name = node.attribute("name").as_string();
-			layer->width = node.attribute("width").as_uint();
-			layer->height = node.attribute("height").as_uint();
-
-			size = layer->width * layer->height * sizeof(uint);
-			layer->tile_gid = new uint[layer->width * layer->height];
-
-			memset(layer->tile_gid, 0, size);
-
-			for (uint i = 0u; i < layer->width * layer->height; i++)
+			while (object != NULL)
 			{
-				layer->tile_gid[i] = tile.attribute("gid").as_uint();
-				tile = tile.next_sibling("tile");
+				rect.x = object.attribute("x").as_int();
+				rect.y = object.attribute("y").as_int();
+				rect.w = object.attribute("width").as_int();
+				rect.h = object.attribute("height").as_int();
+				App->collision->AddCollider(rect, COLLIDER_WALL);
+				//LOG("collider x: %i y: % w: %i h: %i");
+				object = object.next_sibling("object");
 			}
 		}
-		*/
+
 	return ret;
 }
 
