@@ -92,13 +92,12 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	LOG("Loading Player Data");
 	bool ret = true;
-	position.x = 50;
-	position.y = 450;
 	current_animation = &idle;
 	//set initial position
-	//position.x = config.child("position").attribute("x").as_int();
-	//position.y = config.child("position").attribute("y").as_int();
-
+	position.x = config.child("position").attribute("x").as_int();
+	position.y = config.child("position").attribute("y").as_int();
+	speed = config.child("speed").attribute("value").as_int();
+	LOG("speed: %i", speed);
 	return ret;
 }
 
@@ -125,13 +124,11 @@ bool j1Player::PreUpdate(){
 	{
 		if (player_input.pressing_D)
 		{
-			position.x++;
 			state = RUN_FORWARD;
 		}
 
 		if (player_input.pressing_A)
 		{
-			position.x--;
 			state = RUN_BACKWARD;
 		}
 		
@@ -142,13 +139,13 @@ bool j1Player::PreUpdate(){
 
 		if (player_input.pressing_F)
 		{
-			state = SLIDE_FORWARD;
-			position.x++;
-
-			if (flip == SDL_FLIP_HORIZONTAL)
+			if (flip == SDL_FLIP_NONE)
+			{
+				state = SLIDE_FORWARD;
+			}
+			else
 			{
 				state = SLIDE_BACKWARD;
-				position.x--;
 			}
 		}
 
@@ -165,12 +162,12 @@ bool j1Player::PreUpdate(){
 		{
 			state = IDLE;
 		}
-		position.x++;
 
 		if (player_input.pressing_F)
 		{
 			state = SLIDE_FORWARD;
 		}
+		position.x += speed;
 	}
 
 	if (state == RUN_BACKWARD)
@@ -179,12 +176,12 @@ bool j1Player::PreUpdate(){
 		{
 			state = IDLE;
 		}
-		position.x--;
 
 		if (player_input.pressing_F)
 		{
 			state = SLIDE_BACKWARD;
 		}
+		position.x -= speed;
 	}
 
 	
@@ -211,7 +208,7 @@ bool j1Player::PreUpdate(){
 		{
 			state = IDLE;
 		}
-		position.x++;
+		position.x += speed;
 	}
 
 	if (state == SLIDE_BACKWARD)
@@ -220,7 +217,7 @@ bool j1Player::PreUpdate(){
 		{
 			state = IDLE;
 		}
-		position.x--;
+		position.x -= speed;
 	}
 
 	if (state == JUMP)

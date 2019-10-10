@@ -72,6 +72,7 @@ public:
 
 	SDL_RendererFlip flip;
 
+	int speed;
 };
 
 #endif // !_j1PLAYER_H_

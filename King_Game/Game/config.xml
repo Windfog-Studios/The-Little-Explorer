@@ -25,4 +25,8 @@
   <map>
     <folder>maps/</folder>
   </map>
+  <player>
+    <position x="50" y="450" />	
+    <speed value="2"/>	
+  </player>
 </config>
