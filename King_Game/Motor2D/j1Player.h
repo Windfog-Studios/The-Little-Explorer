@@ -25,7 +25,8 @@ enum Player_States {
 	JUMP,
 	SLIDE,
 	WALK,
-	CROUCH
+	CROUCH_DOWN,
+	CROUCH_UP
 };
 
 class j1Player : public j1Module {
@@ -61,7 +62,8 @@ public:
 	Animation jump;
 	Animation run;
 	Animation walk;
-	Animation crouch;
+	Animation crouch_down;
+	Animation crouch_up;
 	Animation slide;
 	Animation* current_animation;
 

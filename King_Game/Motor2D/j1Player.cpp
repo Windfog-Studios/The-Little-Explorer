@@ -17,6 +17,7 @@ j1Player::j1Player():j1Module () {
 	idle.PushBack({ 271, 226, 32, 56 }, 0.1f);
 	idle.PushBack({ 321, 226, 32, 56 }, 0.1f);
 	idle.PushBack({ 369, 226, 32, 56 }, 0.1f);
+	idle.loop = true;
 
 	//walk animation
 	walk.PushBack({ 21, 31, 33, 56 }, 0.2f);
@@ -27,6 +28,7 @@ j1Player::j1Player():j1Module () {
 	walk.PushBack({ 264, 31, 30, 56 }, 0.2f);
 	walk.PushBack({ 312, 31, 30, 56 }, 0.2f);
 	walk.PushBack({ 359, 31, 30, 56 }, 0.2f);
+	walk.loop = false;
 
 	//run animation
 	run.PushBack({ 21, 156, 46, 53 }, 0.2f);
@@ -35,16 +37,26 @@ j1Player::j1Player():j1Module () {
 	run.PushBack({ 196, 155, 46, 54 }, 0.2f);
 	run.PushBack({ 260, 157, 42, 52 }, 0.2f);
 	run.PushBack({ 322, 155, 40, 54 }, 0.2f);
+	run.loop = true;
 
-	//crouch animation
-	crouch.PushBack({ 21, 302, 32, 56 }, 0.02f);
-	crouch.PushBack({ 75, 305, 35, 53 }, 0.02f);
-	crouch.PushBack({ 125, 321, 43, 37 }, 0.02f);
-	crouch.PushBack({ 184, 322, 43, 36 }, 0.02f);
+	//crouch down animation
+	crouch_down.PushBack({ 21, 302, 32, 56 }, 0.2f);
+	crouch_down.PushBack({ 75, 305, 35, 53 }, 0.2f);
+	crouch_down.PushBack({ 125, 321, 43, 37 }, 0.2f);
+	crouch_down.PushBack({ 184, 322, 43, 36 }, 0.2f);
+	crouch_down.loop = false;
+	
+	//crouch up animation
+	crouch_up.PushBack({ 184, 322, 43, 36 }, 0.2f);
+	crouch_up.PushBack({ 125, 321, 43, 37 }, 0.2f);
+	crouch_up.PushBack({ 75, 305, 35, 53 }, 0.2f);
+	crouch_up.PushBack({ 21, 302, 32, 56 }, 0.2f);
+	crouch_up.loop = false;
 
 	//slide animation
 	slide.PushBack({ 21, 101, 52, 42 }, 0.2f);
 	slide.PushBack({ 86, 101, 52, 42 }, 0.2f);
+	slide.loop = true;
 
 	//jump animation
 	jump.PushBack({ 420, 315, 49, 43 }, 0.2f);
@@ -67,6 +79,7 @@ j1Player::j1Player():j1Module () {
 	jump.PushBack({ 494, 385, 51, 58 }, 0.2f);
 	jump.PushBack({ 553, 385, 51, 58 }, 0.2f);
 	jump.PushBack({ 614, 385, 51, 58 }, 0.2f);
+	jump.loop = false;
 
 
 }
@@ -121,21 +134,18 @@ bool j1Player::PreUpdate(){
 			position.x--;
 			state = RUN_BACKWARD;
 		}
-		//new states
-		/*
+		
 		if (player_input.pressing_S)
 		{
-			state = CROUCH;
-			current_animation = &crouch;
+			state = CROUCH_DOWN;
 		}
 
 		if (player_input.pressing_F)
 		{
 			position.x++;
 			state = SLIDE;
-			current_animation = &slide;
 		}
-		*/
+		
 	}
 
 	if (state == RUN_FORWARD)
@@ -157,13 +167,21 @@ bool j1Player::PreUpdate(){
 		position.x--;
 	}
 
-	/*
-	if (state == CROUCH)
+	
+	if (state == CROUCH_DOWN)
 	{
 		if (!player_input.pressing_S)
 		{
+			state = CROUCH_UP;
+			crouch_down.Reset();
+		}
+	}
+	
+	if (state == CROUCH_UP)
+	{
+		if (current_animation->Finished()) {
 			state = IDLE;
-			current_animation = &idle;
+			crouch_up.Reset();
 		}
 	}
 	
@@ -172,12 +190,10 @@ bool j1Player::PreUpdate(){
 		if (!player_input.pressing_F)
 		{
 			state = IDLE;
-			current_animation = &idle;
 		}
 		position.x++;
 	}
-	*/
-
+	
 	return true;
 }
 
@@ -199,15 +215,19 @@ bool j1Player::Update(float dt){
 		current_animation = &run;
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
-/*
-	case CROUCH:
-		current_animation = &crouch;
+
+	case CROUCH_DOWN:
+		current_animation = &crouch_down;
+		break;
+
+	case CROUCH_UP:
+		current_animation = &crouch_up;
 		break;
 
 	case SLIDE:
 		current_animation = &slide;
 		break;
-*/
+
 	default:
 		LOG("No state found");
 		break;
