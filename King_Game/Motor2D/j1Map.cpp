@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collision.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -34,9 +35,12 @@ void j1Map::Draw()
 	{
 		p2List_item<MapLayer*>* layer;
 		p2List_item<TileSet*>* tileset;
+	//	p2List_item<ObjectGroup*>* objectgroup;
 		layer = data.layers.start;
 		tileset = data.tilesets.start;
+		//objectgroup = data.objectgroup.start;
 		iPoint position;
+
 		while (tileset != NULL)
 		{
 			while (layer != NULL)
@@ -55,7 +59,6 @@ void j1Map::Draw()
 		}
 	}
 }
-
 
 // Called before quitting
 bool j1Map::CleanUp()
@@ -142,6 +145,20 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(set);
 	}
 
+	//Load objectgroup info -------------------------------------
+	
+	pugi::xml_node objectgroup;
+	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
+	{
+		ObjectGroup* set = new ObjectGroup();
+
+		if (ret == true) 
+		{
+			ret = LoadObjectGroup(objectgroup, set);
+		}
+		data.objectgroups.add(set);
+	}
+	
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -168,6 +185,17 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
 		}
+
+		p2List_item<ObjectGroup*>* item_object = data.objectgroups.start;
+		
+		while (item_object != NULL)
+		{
+			ObjectGroup* o = item_object->data;
+			LOG("ObjectGroup ----");
+			LOG("name: %s", o->name.GetString());
+			item_object = item_object->next;
+		}
+		
 	}
 
 	map_loaded = ret;
@@ -332,6 +360,39 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 			tile = tile.next_sibling("tile");
 		}
 	}
+	return ret;
+}
+
+bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
+	bool ret = true;
+	pugi::xml_node object = node.child("object");
+
+	objectgroup->name = node.attribute("name").as_string();
+
+		if (object == NULL)
+		{
+			LOG("Error loading object group");
+			ret = false;
+		}
+		/*
+		else
+		{
+			layer->name = node.attribute("name").as_string();
+			layer->width = node.attribute("width").as_uint();
+			layer->height = node.attribute("height").as_uint();
+
+			size = layer->width * layer->height * sizeof(uint);
+			layer->tile_gid = new uint[layer->width * layer->height];
+
+			memset(layer->tile_gid, 0, size);
+
+			for (uint i = 0u; i < layer->width * layer->height; i++)
+			{
+				layer->tile_gid[i] = tile.attribute("gid").as_uint();
+				tile = tile.next_sibling("tile");
+			}
+		}
+		*/
 	return ret;
 }
 
