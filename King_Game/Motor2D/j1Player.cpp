@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1Collision.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -97,6 +98,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	position.x = config.child("position").attribute("x").as_int();
 	position.y = config.child("position").attribute("y").as_int();
 	speed = config.child("speed").attribute("value").as_int();
+	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player);
+
 	LOG("speed: %i", speed);
 	return ret;
 }
@@ -122,7 +125,7 @@ bool j1Player::PreUpdate(){
 	
 	if (state == IDLE)
 	{
-		if (player_input.pressing_D)
+		if ((player_input.pressing_D)&&(colliding == false))
 		{
 			state = RUN_FORWARD;
 		}
@@ -228,7 +231,7 @@ bool j1Player::PreUpdate(){
 			jump.Reset();
 		}
 	}
-	
+	collider->SetPos(position.x, position.y);
 	return true;
 }
 
@@ -286,4 +289,15 @@ bool j1Player::PostUpdate() {
 	App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 
 	return true;	
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	switch (c2->type)
+	{
+	case COLLIDER_WALL:
+		colliding = true;
+		break;
+	default:
+		break;
+	}
 }

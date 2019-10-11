@@ -48,6 +48,8 @@ public:
 
 	bool CleanUp();
 
+	void OnCollision(Collider* c1, Collider* c2);
+
 private:
 
 
@@ -71,8 +73,10 @@ public:
 	Player_States state;
 
 	SDL_RendererFlip flip;
+	Collider* collider;
 
 	int speed;
+	bool colliding = false;
 };
 
 #endif // !_j1PLAYER_H_
