@@ -128,6 +128,8 @@ bool j1Player::PreUpdate(){
 	player_input.pressing_space = App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN;
 
 	lastPosition = position;
+	last_state = state;
+
 	if (!App->pause)
 	{
 		if (state == IDLE)
@@ -162,6 +164,7 @@ bool j1Player::PreUpdate(){
 			if (player_input.pressing_space)
 			{
 				state = JUMP;
+				velocity.y = jumpImpulse;
 			}
 
 		}
@@ -173,13 +176,18 @@ bool j1Player::PreUpdate(){
 				state = IDLE;
 			}
 
+			if (player_input.pressing_space)
+			{
+				state = JUMP_FORWARD;
+				velocity.y = jumpImpulse;
+			}
+
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_FORWARD;
 			}
+
 			velocity.x = speed;
-			//LOG("Velocity.x: %f", velocity.x);
-		//	position.x += speed;
 		}
 
 		if (state == RUN_BACKWARD)
@@ -189,11 +197,17 @@ bool j1Player::PreUpdate(){
 				state = IDLE;
 			}
 
+			if (player_input.pressing_space)
+			{
+				state = JUMP_BACKWARD;
+				velocity.y = jumpImpulse;
+			}
+
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_BACKWARD;
 			}
-			//position.x -= speed;
+
 			velocity.x = -speed;
 		}
 
@@ -244,6 +258,38 @@ bool j1Player::PreUpdate(){
 			}
 		}
 
+		if (state == JUMP_FORWARD)
+		{
+			if (player_input.pressing_D) position.x += speed;
+			if (player_input.pressing_A) position.x -= speed;
+
+			if (current_animation->Finished())
+			{
+				state = IDLE;
+				jump.Reset();
+			}
+		}
+
+		if (state == JUMP_FORWARD)
+		{
+			if (player_input.pressing_D) position.x += speed;
+			if (player_input.pressing_A) position.x -= speed;
+
+			if (current_animation->Finished())
+			{
+				state = IDLE;
+				jump.Reset();
+			}
+		}
+
+		if (state == FALL)
+		{
+			if (current_animation->Finished())
+			{
+				fall.Reset();
+			}
+		}
+
 		 MovementControl(); //calculate new position
 
 		collider->SetPos(position.x, position.y);
@@ -289,8 +335,19 @@ bool j1Player::Update(float dt){
 
 	case JUMP:
 		current_animation = &jump;
+		if (velocity.y <= 0) state = FALL;
 		break;
 
+	case JUMP_FORWARD:
+		current_animation = &jump;
+		break;
+
+	case JUMP_BACKWARD:
+		current_animation = &jump;
+		break;
+	case FALL:
+		current_animation = &fall;
+		break;
 	default:
 		LOG("No state found");
 		break;
@@ -312,6 +369,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_WALL:
 		position = lastPosition;
 		velocity.x = velocity.y = 0;
+		if ((position.y < c2->rect.y)&&(last_state == FALL))
+		{
+			state = IDLE;
+		}
 		break;
 	default:
 		break;
@@ -320,7 +381,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 void j1Player::MovementControl() {
 	position.x += velocity.x;
-	LOG("Velocity x: %f", velocity.x);
-	position.y += velocity.y;
-	velocity.y += gravity;
+	//LOG("Velocity x: %f", velocity.x);
+	position.y -= velocity.y;
+	velocity.y -= gravity;
 }

@@ -24,6 +24,8 @@ enum Player_States {
 	RUN_FORWARD,
 	RUN_BACKWARD,
 	JUMP,
+	JUMP_FORWARD,
+	JUMP_BACKWARD,
 	FALL,
 	SLIDE_FORWARD,
 	SLIDE_BACKWARD,
@@ -79,12 +81,14 @@ public:
 	Animation* current_animation;
 
 	Player_States state;
+	Player_States last_state;
 
 	SDL_RendererFlip flip;
 	Collider* collider = nullptr;
 	Collider* collider_copy;
 
 	float speed;
+	float jumpImpulse = 15;
 	int gravity = 1;
 };
 
