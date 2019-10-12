@@ -366,6 +366,7 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
