@@ -26,7 +26,7 @@
     <folder>maps/</folder>
   </map>
   <player>
-    <position x="50" y="450" />	
+    <position x="300" y="450" />	
     <speed value="4.75"/>
     <jumpImpulse value="15.0"/>
     <gravity value="1"/>		

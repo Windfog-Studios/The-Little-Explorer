@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -45,23 +46,36 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	iPoint* player_position = &App->player->position;
+	SDL_Rect* camera = &App->render->camera;
+
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
+
+	//camera window ------------------
+
+	//if ((player_position->x < camera->x + camera->w / 4)) camera->x++;
+	if (player_position->x < camera->x + camera->w / 4) { 
+		camera->x++;
+	}
+
+	//camera manual control --------------
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 1;
+		camera->y += 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 1;
+		camera->y -= 1;
 
-	if((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)&&(App->render->camera.x < 0))
-		App->render->camera.x += 1;
+	if((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)&&(camera->x < 0))
+		camera->x += 1;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 1;
+		camera->x -= 1;
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
