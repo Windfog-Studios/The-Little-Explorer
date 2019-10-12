@@ -27,6 +27,6 @@
   </map>
   <player>
     <position x="50" y="450" />	
-    <speed value="2"/>	
+    <speed value="3"/>	
   </player>
 </config>

@@ -396,7 +396,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				objectgroup->object[i].y = object.attribute("y").as_int();
 				objectgroup->object[i].w = object.attribute("width").as_int();
 				objectgroup->object[i].h = object.attribute("height").as_int();
-				objectgroup->object[i].y -= 320;
+				objectgroup->object[i].y -= COLLIDER_OFFSET;
 				
 				p2SString type(object.attribute("type").as_string());
 

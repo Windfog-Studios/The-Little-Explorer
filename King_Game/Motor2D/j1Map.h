@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
+#define COLLIDER_OFFSET 320
 //struct Collider;
 
 // ----------------------------------------------------

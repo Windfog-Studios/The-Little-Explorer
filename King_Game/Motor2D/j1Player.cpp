@@ -70,19 +70,21 @@ j1Player::j1Player():j1Module () {
 	jump.PushBack({ 752, 294, 32, 64 }, 0.2f);
 	jump.PushBack({ 796, 294, 32, 64 }, 0.2f);
 	jump.loop = false;
-	/*
-	jump.PushBack({ 37, 379, 32, 64 }, 0.2f);
-	jump.PushBack({ 78, 383, 37, 60 }, 0.2f);
-	jump.PushBack({ 124, 384, 47, 59 }, 0.2f);
-	jump.PushBack({ 183, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 250, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 313, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 374, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 434, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 494, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 553, 385, 51, 58 }, 0.2f);
-	jump.PushBack({ 614, 385, 51, 58 }, 0.2f);
-	*/
+
+
+	fall.PushBack({ 37, 379, 32, 64 }, 0.2f);
+	fall.PushBack({ 78, 383, 37, 60 }, 0.2f);
+	fall.PushBack({ 124, 384, 47, 59 }, 0.2f);
+	fall.PushBack({ 183, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 250, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 313, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 374, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 434, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 494, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 553, 385, 51, 58 }, 0.2f);
+	fall.PushBack({ 614, 385, 51, 58 }, 0.2f);
+	fall.loop = false;
+
 }
 
 j1Player::~j1Player(){
@@ -94,13 +96,13 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	LOG("Loading Player Data");
 	bool ret = true;
 	current_animation = &idle;
-	//set initial position
+	//set initial attributes of the player
 	position.x = config.child("position").attribute("x").as_int();
 	position.y = config.child("position").attribute("y").as_int();
 	speed = config.child("speed").attribute("value").as_int();
-	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player);
 
-	LOG("speed: %i", speed);
+	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
+
 	return ret;
 }
 
@@ -123,118 +125,122 @@ bool j1Player::PreUpdate(){
 	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT;
 	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
 	player_input.pressing_F = App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT;
-	
+	player_input.pressing_space = App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN;
+
 	lastPosition = position;
-
-	if (state == IDLE)
+	if (!App->pause)
 	{
-		if (player_input.pressing_D)
+		if (state == IDLE)
 		{
-			state = RUN_FORWARD;
+			if (player_input.pressing_D)
+			{
+				state = RUN_FORWARD;
+			}
+
+			if (player_input.pressing_A)
+			{
+				state = RUN_BACKWARD;
+			}
+
+			if (player_input.pressing_S)
+			{
+				state = CROUCH_DOWN;
+			}
+
+			if (player_input.pressing_F)
+			{
+				if (flip == SDL_FLIP_NONE)
+				{
+					state = SLIDE_FORWARD;
+				}
+				else
+				{
+					state = SLIDE_BACKWARD;
+				}
+			}
+
+			if (player_input.pressing_space)
+			{
+				state = JUMP;
+			}
+
 		}
 
-		if (player_input.pressing_A)
+		if (state == RUN_FORWARD)
 		{
-			state = RUN_BACKWARD;
-		}
-		
-		if (player_input.pressing_S)
-		{
-			state = CROUCH_DOWN;
-		}
+			if (!player_input.pressing_D)
+			{
+				state = IDLE;
+			}
 
-		if (player_input.pressing_F)
-		{
-			if (flip == SDL_FLIP_NONE)
+			if (player_input.pressing_F)
 			{
 				state = SLIDE_FORWARD;
 			}
-			else
+			position.x += speed;
+		}
+
+		if (state == RUN_BACKWARD)
+		{
+			if (!player_input.pressing_A)
+			{
+				state = IDLE;
+			}
+
+			if (player_input.pressing_F)
 			{
 				state = SLIDE_BACKWARD;
 			}
+			position.x -= speed;
 		}
 
-		if (player_input.pressing_W)
-		{
-			state = JUMP_UP;
-		}
-		
-	}
 
-	if (state == RUN_FORWARD)
-	{
-		if (!player_input.pressing_D)
+		if (state == CROUCH_DOWN)
 		{
-			state = IDLE;
+			if (!player_input.pressing_S)
+			{
+				state = CROUCH_UP;
+				crouch_down.Reset();
+			}
 		}
 
-		if (player_input.pressing_F)
+		if (state == CROUCH_UP)
 		{
-			state = SLIDE_FORWARD;
-		}
-		position.x += speed;
-	}
-
-	if (state == RUN_BACKWARD)
-	{
-		if (!player_input.pressing_A)
-		{
-			state = IDLE;
+			if (current_animation->Finished()) {
+				state = IDLE;
+				crouch_up.Reset();
+			}
 		}
 
-		if (player_input.pressing_F)
+		if (state == SLIDE_FORWARD)
 		{
-			state = SLIDE_BACKWARD;
+			if (!player_input.pressing_F)
+			{
+				state = IDLE;
+			}
+			position.x += speed;
 		}
-		position.x -= speed;
-	}
 
-	
-	if (state == CROUCH_DOWN)
-	{
-		if (!player_input.pressing_S)
+		if (state == SLIDE_BACKWARD)
 		{
-			state = CROUCH_UP;
-			crouch_down.Reset();
+			if (!player_input.pressing_F)
+			{
+				state = IDLE;
+			}
+			position.x -= speed;
 		}
-	}
-	
-	if (state == CROUCH_UP)
-	{
-		if (current_animation->Finished()) {
-			state = IDLE;
-			crouch_up.Reset();
-		}
-	}
-	
-	if (state == SLIDE_FORWARD)
-	{
-		if (!player_input.pressing_F)
-		{
-			state = IDLE;
-		}
-		position.x += speed;
-	}
 
-	if (state == SLIDE_BACKWARD)
-	{
-		if (!player_input.pressing_F)
+		if (state == JUMP)
 		{
-			state = IDLE;
+			if (current_animation->Finished())
+			{
+				state = IDLE;
+				jump.Reset();
+			}
 		}
-		position.x -= speed;
-	}
 
-	if (state == JUMP_UP)
-	{
-		if (current_animation->Finished())
-		{
-			state = IDLE;
-			jump.Reset();
-		}
+		collider->SetPos(position.x, position.y);
 	}
-	collider->SetPos(position.x, position.y);
 	return true;
 }
 
@@ -244,7 +250,6 @@ bool j1Player::Update(float dt){
 	{
 	case IDLE:
 		current_animation = &idle;
-		flip = SDL_FLIP_NONE;
 		break;
 
 	case RUN_FORWARD:
@@ -275,7 +280,7 @@ bool j1Player::Update(float dt){
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
 
-	case JUMP_UP:
+	case JUMP:
 		current_animation = &jump;
 		break;
 

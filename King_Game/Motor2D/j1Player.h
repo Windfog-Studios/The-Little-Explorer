@@ -8,6 +8,7 @@
 #include "p2Vec2.h"
 
 struct SDL_Texture;
+struct Collider;
 
 struct Player_Input {
 	bool pressing_W;
@@ -15,14 +16,15 @@ struct Player_Input {
 	bool pressing_S;
 	bool pressing_D;
 	bool pressing_F;
+	bool pressing_space;
 };
 
 enum Player_States {
 	IDLE, 
 	RUN_FORWARD,
 	RUN_BACKWARD,
-	JUMP_UP,
-	JUMP_DOWN,
+	JUMP,
+	FALL,
 	SLIDE_FORWARD,
 	SLIDE_BACKWARD,
 	WALK,
@@ -71,14 +73,17 @@ public:
 	Animation crouch_down;
 	Animation crouch_up;
 	Animation slide;
+	Animation fall;
 	Animation* current_animation;
 
 	Player_States state;
 
 	SDL_RendererFlip flip;
 	Collider* collider = nullptr;
+	Collider* collider_copy;
 
-	int speed;
+	float speed;
+
 };
 
 #endif // !_j1PLAYER_H_

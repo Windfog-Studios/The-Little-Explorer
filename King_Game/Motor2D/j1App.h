@@ -88,6 +88,8 @@ public:
 	j1Player*			player;
 	j1Collision*		collision;
 
+	bool pause = false;
+
 private:
 
 	p2List<j1Module*>	modules;
@@ -103,6 +105,7 @@ private:
 	bool				want_to_load;
 	p2SString			load_game;
 	mutable p2SString	save_game;
+
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

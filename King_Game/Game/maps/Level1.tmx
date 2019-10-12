@@ -26,7 +26,7 @@
   <tile id="269" terrain="0,0,,"/>
  </tileset>
  <tileset firstgid="421" name="Mapa1_fondo" tilewidth="32" tileheight="32" tilecount="0" columns="120">
-  <image source="../../../../../../Desktop/Desenvolupament de videojocs/Mapa1_fondo.png" width="3840" height="1280"/>
+  <image source="Mapa1_fondo.png" width="3840" height="1280"/>
  </tileset>
  <layer id="1" name="Sky" width="120" height="40">
   <data>
