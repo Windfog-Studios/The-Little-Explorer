@@ -88,7 +88,7 @@ public:
 	Collider* collider_copy;
 
 	float speed;
-	float jumpImpulse = 15;
+	float jumpImpulse = 12.5f;
 	int gravity = 1;
 };
 
