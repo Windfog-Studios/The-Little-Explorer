@@ -396,7 +396,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 void j1Player::MovementControl() {
 	position.x += velocity.x;
-	//LOG("Velocity x: %f", velocity.x);
 	position.y -= velocity.y;
 	velocity.y -= gravity;
 }
