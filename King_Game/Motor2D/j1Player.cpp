@@ -97,8 +97,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	bool ret = true;
 	current_animation = &idle;
 	//set initial attributes of the player
-	position.x = config.child("position").attribute("x").as_int();
-	position.y = config.child("position").attribute("y").as_int();
+	position.x = initial_x_position = config.child("position").attribute("x").as_int();
+	position.y = initial_y_position = config.child("position").attribute("y").as_int();
 	speed = config.child("speed").attribute("value").as_int();
 	velocity.y = 0;
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
@@ -270,7 +270,7 @@ bool j1Player::PreUpdate(){
 			}
 		}
 
-		if (state == JUMP_FORWARD)
+		if (state == JUMP_BACKWARD)
 		{
 			if (player_input.pressing_D) position.x += speed;
 			if (player_input.pressing_A) position.x -= speed;
@@ -340,10 +340,12 @@ bool j1Player::Update(float dt){
 
 	case JUMP_FORWARD:
 		current_animation = &jump;
+		if (velocity.y <= 0) state = FALL;
 		break;
 
 	case JUMP_BACKWARD:
 		current_animation = &jump;
+		if (velocity.y <= 0) state = FALL;
 		break;
 	case FALL:
 		current_animation = &fall;
@@ -372,7 +374,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if ((position.y < c2->rect.y)&&(last_state == FALL))
 		{
 			state = IDLE;
+			position.y--;
 		}
+		break;
+	case COLLIDER_DEATH:
+		position.x = initial_x_position;
+		position.y = initial_y_position;
+		LOG("Initial x position: %i\n Initial y position: %i", initial_x_position, initial_y_position);
 		break;
 	default:
 		break;

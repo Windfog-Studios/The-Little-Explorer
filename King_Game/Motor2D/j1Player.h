@@ -64,6 +64,8 @@ public:
 	SDL_Texture* player_tex;
 	p2SString folder;
 	Player_Input player_input;
+	int initial_x_position;
+	int initial_y_position;
 	iPoint position;
 	iPoint lastPosition;
 	fVec2 velocity;
