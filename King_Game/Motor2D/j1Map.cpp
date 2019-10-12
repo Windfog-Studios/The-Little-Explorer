@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Collision.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -21,7 +22,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
 	bool ret = true;
-
+	App->collision->AddCollider({ 0,0,1,1000 }, COLLIDER_WALL);
 	folder.create(config.child("folder").child_value());
 
 	return ret;

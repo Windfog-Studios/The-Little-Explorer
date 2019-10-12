@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Collision.h"
+#include "j1Window.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -359,7 +360,7 @@ bool j1Player::Update(float dt){
 		LOG("No state found");
 		break;
 	}
-
+	
 	return true;
 }
 
