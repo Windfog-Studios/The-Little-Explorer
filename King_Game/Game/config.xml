@@ -27,6 +27,8 @@
   </map>
   <player>
     <position x="50" y="450" />	
-    <speed value="3.75"/>	
+    <speed value="4.75"/>
+    <jumpImpulse value="15.0"/>
+    <gravity value="1"/>		
   </player>
 </config>

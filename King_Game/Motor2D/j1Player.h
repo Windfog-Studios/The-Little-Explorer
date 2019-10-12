@@ -56,6 +56,9 @@ public:
 
 	void MovementControl();
 
+	bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node& data);
+
 private:
 
 
@@ -90,8 +93,8 @@ public:
 	Collider* collider_copy;
 
 	float speed;
-	float jumpImpulse = 12.5f;
-	int gravity = 1;
+	float jumpImpulse;
+	int gravity;
 };
 
 #endif // !_j1PLAYER_H_

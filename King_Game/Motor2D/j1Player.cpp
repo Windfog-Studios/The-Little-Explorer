@@ -32,12 +32,12 @@ j1Player::j1Player():j1Module () {
 	walk.loop = false;
 
 	//run animation
-	run.PushBack({ 21, 156, 46, 53 }, 0.2f);
-	run.PushBack({ 79, 157, 44, 52 }, 0.2f);
-	run.PushBack({ 136, 155, 41, 54 }, 0.2f);
-	run.PushBack({ 196, 155, 46, 54 }, 0.2f);
-	run.PushBack({ 260, 157, 42, 52 }, 0.2f);
-	run.PushBack({ 322, 155, 40, 54 }, 0.2f);
+	run.PushBack({ 21, 156, 46, 53 }, 0.3f);
+	run.PushBack({ 79, 157, 44, 52 }, 0.3f);
+	run.PushBack({ 136, 155, 41, 54 }, 0.3f);
+	run.PushBack({ 196, 155, 46, 54 }, 0.3f);
+	run.PushBack({ 260, 157, 42, 52 }, 0.3f);
+	run.PushBack({ 322, 155, 40, 54 }, 0.3f);
 	run.loop = true;
 
 	//crouch down animation
@@ -100,7 +100,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	position.x = initial_x_position = config.child("position").attribute("x").as_int();
 	position.y = initial_y_position = config.child("position").attribute("y").as_int();
 	speed = config.child("speed").attribute("value").as_int();
-	velocity.y = 0;
+	jumpImpulse = config.child("jumpImpulse").attribute("value").as_int();
+	gravity = config.child("gravity").attribute("value").as_int();
+	//velocity.y = 0;
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
 	return ret;
@@ -251,6 +253,9 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP)
 		{
+			if (player_input.pressing_D) position.x += speed;
+			if (player_input.pressing_A) position.x -= speed;
+
 			if (current_animation->Finished())
 			{
 				state = IDLE;
@@ -393,4 +398,21 @@ void j1Player::MovementControl() {
 	//LOG("Velocity x: %f", velocity.x);
 	position.y -= velocity.y;
 	velocity.y -= gravity;
+}
+
+bool j1Player::Save(pugi::xml_node& data) const {
+
+	pugi::xml_node p_position = data.append_child("position");
+
+	p_position.append_attribute("x") = position.x;
+	p_position.append_attribute("y") = position.y;
+	return true;
+}
+
+bool j1Player::Load(pugi::xml_node& data)
+{
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+
+	return true;
 }
