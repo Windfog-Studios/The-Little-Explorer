@@ -52,6 +52,8 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
+	void MovementControl();
+
 private:
 
 
@@ -62,7 +64,7 @@ public:
 	Player_Input player_input;
 	iPoint position;
 	iPoint lastPosition;
-	fVec2 v;
+	fVec2 velocity;
 
 
 	//animations
@@ -83,7 +85,7 @@ public:
 	Collider* collider_copy;
 
 	float speed;
-
+	int gravity = 1;
 };
 
 #endif // !_j1PLAYER_H_
