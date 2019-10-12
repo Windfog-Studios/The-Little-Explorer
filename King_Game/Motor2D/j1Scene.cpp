@@ -31,6 +31,10 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	top_edge = App->render->camera.y + App->render->camera.h / 4;
+	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
+	left_edge = App->render->camera.x + App->render->camera.w / 4;
+	right_edge = App->render->camera.x + App->render->camera.h *3/4;
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
 	//App->map->Load("Level2.tmx");
@@ -58,9 +62,25 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 
-	//if ((player_position->x < camera->x + camera->w / 4)) camera->x++;
-	if (player_position->x < camera->x + camera->w / 4) { 
-		camera->x++;
+	if ((player_position->x < left_edge)) {
+		camera->x+=2;
+		left_edge--;
+		right_edge--;
+	}
+	if (player_position->x > right_edge) { 
+		camera->x-=2;
+		right_edge+=2;
+		left_edge+=2;
+	}
+	if ((player_position->y < top_edge)) {
+		camera->y+=2;
+		top_edge-=2;
+		bottom_edge-=2;
+	}
+	if ((player_position->y > bottom_edge)) {
+		camera->y-=2;
+		top_edge+=2;
+		bottom_edge+=2;
 	}
 
 	//camera manual control --------------

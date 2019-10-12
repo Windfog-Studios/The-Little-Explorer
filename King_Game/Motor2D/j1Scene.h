@@ -33,6 +33,10 @@ public:
 	bool CleanUp();
 
 private:
+	int left_edge;
+	int right_edge;
+	int top_edge;
+	int bottom_edge;
 };
 
 #endif // __j1SCENE_H__
