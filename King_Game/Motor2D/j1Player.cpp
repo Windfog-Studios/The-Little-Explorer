@@ -69,6 +69,8 @@ j1Player::j1Player():j1Module () {
 	jump.PushBack({ 710, 294, 32, 64 }, 0.2f);
 	jump.PushBack({ 752, 294, 32, 64 }, 0.2f);
 	jump.PushBack({ 796, 294, 32, 64 }, 0.2f);
+	jump.loop = false;
+	/*
 	jump.PushBack({ 37, 379, 32, 64 }, 0.2f);
 	jump.PushBack({ 78, 383, 37, 60 }, 0.2f);
 	jump.PushBack({ 124, 384, 47, 59 }, 0.2f);
@@ -80,9 +82,7 @@ j1Player::j1Player():j1Module () {
 	jump.PushBack({ 494, 385, 51, 58 }, 0.2f);
 	jump.PushBack({ 553, 385, 51, 58 }, 0.2f);
 	jump.PushBack({ 614, 385, 51, 58 }, 0.2f);
-	jump.loop = false;
-
-
+	*/
 }
 
 j1Player::~j1Player(){
@@ -112,6 +112,7 @@ bool j1Player::Start(){
 }
 
 bool j1Player::CleanUp() {
+
 	return true;
 }
 
@@ -123,9 +124,11 @@ bool j1Player::PreUpdate(){
 	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
 	player_input.pressing_F = App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT;
 	
+	lastPosition = position;
+
 	if (state == IDLE)
 	{
-		if ((player_input.pressing_D)&&(colliding == false))
+		if (player_input.pressing_D)
 		{
 			state = RUN_FORWARD;
 		}
@@ -154,7 +157,7 @@ bool j1Player::PreUpdate(){
 
 		if (player_input.pressing_W)
 		{
-			state = JUMP;
+			state = JUMP_UP;
 		}
 		
 	}
@@ -223,7 +226,7 @@ bool j1Player::PreUpdate(){
 		position.x -= speed;
 	}
 
-	if (state == JUMP)
+	if (state == JUMP_UP)
 	{
 		if (current_animation->Finished())
 		{
@@ -241,7 +244,7 @@ bool j1Player::Update(float dt){
 	{
 	case IDLE:
 		current_animation = &idle;
-		//flip = SDL_FLIP_NONE;
+		flip = SDL_FLIP_NONE;
 		break;
 
 	case RUN_FORWARD:
@@ -272,7 +275,7 @@ bool j1Player::Update(float dt){
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
 
-	case JUMP:
+	case JUMP_UP:
 		current_animation = &jump;
 		break;
 
@@ -295,7 +298,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		colliding = true;
+		position = lastPosition;
 		break;
 	default:
 		break;

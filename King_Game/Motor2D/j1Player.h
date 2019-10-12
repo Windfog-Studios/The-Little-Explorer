@@ -5,8 +5,7 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "SDL/include/SDL.h"
-//#include "PugiXml/src/pugixml.hpp"
-//#include "p2List.h"
+#include "p2Vec2.h"
 
 struct SDL_Texture;
 
@@ -22,7 +21,8 @@ enum Player_States {
 	IDLE, 
 	RUN_FORWARD,
 	RUN_BACKWARD,
-	JUMP,
+	JUMP_UP,
+	JUMP_DOWN,
 	SLIDE_FORWARD,
 	SLIDE_BACKWARD,
 	WALK,
@@ -58,7 +58,10 @@ public:
 	SDL_Texture* player_tex;
 	p2SString folder;
 	Player_Input player_input;
-	p2Point<int> position;
+	iPoint position;
+	iPoint lastPosition;
+	fVec2 v;
+
 
 	//animations
 	Animation idle;
@@ -73,10 +76,9 @@ public:
 	Player_States state;
 
 	SDL_RendererFlip flip;
-	Collider* collider;
+	Collider* collider = nullptr;
 
 	int speed;
-	bool colliding = false;
 };
 
 #endif // !_j1PLAYER_H_
