@@ -33,12 +33,12 @@ j1Player::j1Player():j1Module () {
 	walk.loop = false;
 
 	//run animation
-	run.PushBack({ 21, 156, 46, 53 }, 0.25f);
-	run.PushBack({ 79, 157, 44, 52 }, 0.25f);
-	run.PushBack({ 136, 155, 41, 54 }, 0.25f);
-	run.PushBack({ 196, 155, 46, 54 }, 0.25f);
-	run.PushBack({ 260, 157, 42, 52 }, 0.25f);
-	run.PushBack({ 322, 155, 40, 54 }, 0.25f);
+	run.PushBack({ 21, 156, 46, 53 }, 0.1f);
+	run.PushBack({ 79, 157, 44, 52 }, 0.1f);
+	run.PushBack({ 136, 155, 41, 54 }, 0.1f);
+	run.PushBack({ 196, 155, 46, 54 }, 0.1f);
+	run.PushBack({ 260, 157, 42, 52 }, 0.1f);
+	run.PushBack({ 322, 155, 40, 54 }, 0.1f);
 	run.loop = true;
 
 	//crouch down animation
