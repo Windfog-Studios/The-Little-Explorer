@@ -52,8 +52,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	
-
 	iPoint* player_position = &App->player->position;
 
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -80,7 +78,7 @@ bool j1Scene::Update(float dt)
 	if ((player_position->y < top_edge)) {
 		top_edge -= App->player->speed;
 		bottom_edge -= App->player->speed;
-		if (App->render->camera.y - App->map->map_offset * App->map->data.tile_height)	
+		if (App->render->camera.y > App->render->initial_camera_y - App->map->map_offset * App->map->data.tile_height)	
 			App->render->camera.y += App->player->speed;
 	}
 	if ((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge)) {
@@ -133,4 +131,13 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::Reset_Camera() {
+	App->render->camera.x = App->render->initial_camera_x;
+	App->render->camera.y = App->render->initial_camera_y;
+	top_edge = App->render->camera.y + App->render->camera.h / 4;
+	bottom_edge = App->render->camera.y + App->render->camera.h * 3 / 4;
+	left_edge = App->render->camera.x + App->render->camera.w / 4;
+	right_edge = App->render->camera.x + App->render->camera.w * 3 / 4;
 }

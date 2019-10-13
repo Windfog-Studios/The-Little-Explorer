@@ -32,6 +32,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void Reset_Camera();
+
 public:
 	int left_edge;
 	int right_edge;

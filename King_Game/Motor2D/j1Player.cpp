@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "j1Collision.h"
 #include "j1Window.h"
+#include "j1Scene.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -254,8 +255,8 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += speed;
-			if (player_input.pressing_A) position.x -= speed;
+			if (player_input.pressing_D) position.x += speed*1.5f;
+			if (player_input.pressing_A) position.x -= speed*1.5f;
 
 			if (current_animation->Finished())
 			{
@@ -387,7 +388,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_DEATH:
 		position.x = initial_x_position;
 		position.y = initial_y_position;
-		LOG("Initial x position: %i\n Initial y position: %i", initial_x_position, initial_y_position);
+		App->scene->Reset_Camera();
 		break;
 	default:
 		break;
