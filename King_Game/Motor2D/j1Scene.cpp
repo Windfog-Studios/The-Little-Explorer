@@ -31,9 +31,9 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	top_edge = App->render->camera.y + App->render->camera.h / 5;
+	top_edge = App->render->camera.y + App->render->camera.h / 4;
 	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
-	left_edge = App->render->camera.x + App->render->camera.w / 3;
+	left_edge = App->render->camera.x + App->render->camera.w / 4;
 	right_edge = App->render->camera.x + App->render->camera.h *3/4;
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
