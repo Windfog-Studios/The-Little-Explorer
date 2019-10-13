@@ -383,10 +383,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			state = IDLE;
 			position.y--;
 		}
-		if ((state == RUN_FORWARD))
-		{
-			state = FALL;
-		}
 		break;
 	case COLLIDER_DEATH:
 		position.x = initial_x_position;
