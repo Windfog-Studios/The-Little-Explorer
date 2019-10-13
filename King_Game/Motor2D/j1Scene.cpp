@@ -31,10 +31,12 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	//invisible square delimiting the space in the camera where the player can move
 	top_edge = App->render->camera.y + App->render->camera.h / 4;
 	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
 	left_edge = App->render->camera.x + App->render->camera.w / 4;
-	right_edge = App->render->camera.x + App->render->camera.h *3/4;
+	right_edge = App->render->camera.x + App->render->camera.w *3/4;
+	
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
 	//App->map->Load("Level2.tmx");
@@ -50,6 +52,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	
+
 	iPoint* player_position = &App->player->position;
 
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -62,21 +66,24 @@ bool j1Scene::Update(float dt)
 	//camera window ------------------
 
 	if ((player_position->x < left_edge)) {
-		App->render->camera.x += App->player->speed;
-		left_edge -= App->player->speed;
 		right_edge -= App->player->speed;
+		left_edge -= App->player->speed;
+		if (App->render->camera.x > 0) {
+			App->render->camera.x += App->player->speed;
+		}
 	}
-	if (player_position->x > right_edge) { 
+	if (player_position->x+App->player->current_animation->GetCurrentFrame().w > right_edge) { 
 		App->render->camera.x -= App->player->speed;
 		right_edge += App->player->speed;
 		left_edge+= App->player->speed;
 	}
 	if ((player_position->y < top_edge)) {
-		App->render->camera.y += App->player->speed;
-		top_edge-= App->player->speed;
-		bottom_edge-= App->player->speed;
+		top_edge -= App->player->speed;
+		bottom_edge -= App->player->speed;
+		if (App->render->camera.y - App->map->map_offset * App->map->data.tile_height)	
+			App->render->camera.y += App->player->speed;
 	}
-	if ((player_position->y > bottom_edge)) {
+	if ((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge)) {
 		App->render->camera.y -= App->player->speed;
 		top_edge+= App->player->speed;
 		bottom_edge+= App->player->speed;
@@ -95,6 +102,7 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 3;
+
 
 	//App->render->Blit(img, 0, 0);
 	App->map->Draw();

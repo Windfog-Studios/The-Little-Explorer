@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "j1Collision.h"
 #include "p2Log.h"
+#include "j1Scene.h"
 
 j1Collision::j1Collision()
 {
@@ -89,6 +90,11 @@ void j1Collision::DebugDraw()
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		debug = !debug;
 
+	SDL_Rect camera_window{ App->scene->left_edge,
+		App->scene->top_edge,
+		App->scene->right_edge - App->scene->left_edge,
+		App->scene->bottom_edge - App->scene->top_edge };
+
 	if (debug == false)
 		return;
 
@@ -114,6 +120,8 @@ void j1Collision::DebugDraw()
 			break;
 		}
 	}
+
+	App->render->DrawQuad(camera_window, 100,100,153,70);
 }
 
 // Called before quitting

@@ -7,6 +7,7 @@
 #include "j1Module.h"
 
 #define COLLIDER_OFFSET 320
+
 //struct Collider;
 
 // ----------------------------------------------------
@@ -104,6 +105,7 @@ private:
 public:
 
 	MapData data;
+	int map_offset = 10;
 
 private:
 

@@ -32,11 +32,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
+public:
 	int left_edge;
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
+private:
 };
 
 #endif // __j1SCENE_H__

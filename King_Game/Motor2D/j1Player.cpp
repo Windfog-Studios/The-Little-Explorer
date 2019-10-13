@@ -33,12 +33,12 @@ j1Player::j1Player():j1Module () {
 	walk.loop = false;
 
 	//run animation
-	run.PushBack({ 21, 156, 46, 53 }, 0.3f);
-	run.PushBack({ 79, 157, 44, 52 }, 0.3f);
-	run.PushBack({ 136, 155, 41, 54 }, 0.3f);
-	run.PushBack({ 196, 155, 46, 54 }, 0.3f);
-	run.PushBack({ 260, 157, 42, 52 }, 0.3f);
-	run.PushBack({ 322, 155, 40, 54 }, 0.3f);
+	run.PushBack({ 21, 156, 46, 53 }, 0.25f);
+	run.PushBack({ 79, 157, 44, 52 }, 0.25f);
+	run.PushBack({ 136, 155, 41, 54 }, 0.25f);
+	run.PushBack({ 196, 155, 46, 54 }, 0.25f);
+	run.PushBack({ 260, 157, 42, 52 }, 0.25f);
+	run.PushBack({ 322, 155, 40, 54 }, 0.25f);
 	run.loop = true;
 
 	//crouch down animation
@@ -137,7 +137,7 @@ bool j1Player::PreUpdate(){
 	{
 		if (state == IDLE)
 		{
-			if (player_input.pressing_D)
+			if ((player_input.pressing_D)&&(velocity.y <= 0))
 			{
 				state = RUN_FORWARD;
 			}
@@ -382,6 +382,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			state = IDLE;
 			position.y--;
+		}
+		if ((state == RUN_FORWARD))
+		{
+			state = FALL;
 		}
 		break;
 	case COLLIDER_DEATH:
