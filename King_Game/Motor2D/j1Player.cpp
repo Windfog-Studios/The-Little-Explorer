@@ -263,6 +263,10 @@ bool j1Player::PreUpdate(){
 				state = IDLE;
 				jump.Reset();
 			}
+			if (player_input.pressing_space)
+			{
+				//velocity.y += jumpImpulse/2;
+			}
 		}
 
 		if (state == JUMP_FORWARD)
