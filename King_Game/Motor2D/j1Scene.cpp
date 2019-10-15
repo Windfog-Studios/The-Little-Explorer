@@ -34,8 +34,8 @@ bool j1Scene::Start()
 	//invisible square delimiting the space in the camera where the player can move
 	top_edge = App->render->camera.y + App->render->camera.h / 4;
 	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
-	left_edge = App->render->camera.x + App->render->camera.w / 4;
-	right_edge = App->render->camera.x + App->render->camera.w *3/4;
+	left_edge = App->render->camera.x + App->render->camera.w / 3;
+	right_edge = App->render->camera.x + App->render->camera.w *1/2;
 	
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
@@ -139,6 +139,6 @@ void j1Scene::Reset_Camera() {
 	App->render->camera.y = App->render->initial_camera_y;
 	top_edge = App->render->camera.y + App->render->camera.h / 4;
 	bottom_edge = App->render->camera.y + App->render->camera.h * 3 / 4;
-	left_edge = App->render->camera.x + App->render->camera.w / 4;
-	right_edge = App->render->camera.x + App->render->camera.w * 3 / 4;
+	left_edge = App->render->camera.x + App->render->camera.w / 3;
+	right_edge = App->render->camera.x + App->render->camera.w * 1 / 2;
 }

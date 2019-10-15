@@ -357,17 +357,27 @@ bool j1Player::Update(float dt){
 
 	case JUMP:
 		current_animation = &jump;
-		if (velocity.y <= 0) state = FALL;
+		if (velocity.y <= 0)
+		{
+			state = FALL;
+			jump.Reset();
+		}
 		break;
 
 	case JUMP_FORWARD:
 		current_animation = &jump;
-		if (velocity.y <= 0) state = FALL;
+		if (velocity.y <= 0) {
+			state = FALL;
+			jump.Reset();
+		}
 		break;
 
 	case JUMP_BACKWARD:
 		current_animation = &jump;
-		if (velocity.y <= 0) state = FALL;
+		if (velocity.y <= 0) {
+			state = FALL;
+			jump.Reset();
+		}
 		break;
 	case FALL:
 		current_animation = &fall;
@@ -397,6 +407,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if ((position.y < c2->rect.y)&&(last_state == FALL))
 		{
 			state = IDLE;
+			fall.Reset();
 		}
 		double_jumping = false;
 		break;
