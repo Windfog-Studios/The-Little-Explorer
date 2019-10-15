@@ -28,7 +28,7 @@
   <player>
     <position x="300" y="450" />	
     <speed value="6.75"/>
-    <jumpImpulse value="15.0"/>
-    <gravity value="0.75"/>		
+    <jumpImpulse value="7.5"/>
+    <gravity value="0.3"/>		
   </player>
 </config>

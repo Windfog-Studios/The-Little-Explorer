@@ -78,7 +78,8 @@ bool j1Scene::Update(float dt)
 	if ((player_position->y < top_edge)) {
 		top_edge -= App->player->speed;
 		bottom_edge -= App->player->speed;
-		if (App->render->camera.y > App->render->initial_camera_y - App->map->map_offset * App->map->data.tile_height)	
+		LOG("camera y: %i", App->render->camera.y);
+		if (App->render->camera.y > 1)	
 			App->render->camera.y += App->player->speed;
 	}
 	if ((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge)) {

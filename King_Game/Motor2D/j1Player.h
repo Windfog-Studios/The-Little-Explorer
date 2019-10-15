@@ -95,6 +95,8 @@ public:
 	float speed;
 	float jumpImpulse;
 	float gravity;
+
+	bool double_jumping = false;
 };
 
 #endif // !_j1PLAYER_H_

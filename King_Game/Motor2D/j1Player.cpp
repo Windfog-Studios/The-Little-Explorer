@@ -169,12 +169,6 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
-
-				if (player_input.pressing_space)
-				{
-					state = JUMP;
-					velocity.y = jumpImpulse;
-				}
 			}
 
 		}
@@ -264,10 +258,11 @@ bool j1Player::PreUpdate(){
 			if (player_input.pressing_D) position.x += speed;
 			if (player_input.pressing_A) position.x -= speed;
 
-			if (player_input.pressing_space)
+			if ((player_input.pressing_space)&&(double_jumping == false))
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+				double_jumping = true;
 			}
 
 			if (current_animation->Finished())
@@ -304,10 +299,11 @@ bool j1Player::PreUpdate(){
 
 		if (state == FALL)
 		{
-			if (player_input.pressing_space)
+			if ((player_input.pressing_space)&&(double_jumping == false))
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+				double_jumping = true;
 			}
 
 			if (current_animation->Finished())
@@ -401,8 +397,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if ((position.y < c2->rect.y)&&(last_state == FALL))
 		{
 			state = IDLE;
-			position.y--;
 		}
+		double_jumping = false;
 		break;
 	case COLLIDER_DEATH:
 		position.x = initial_x_position;
@@ -418,7 +414,7 @@ void j1Player::MovementControl() {
 	position.x += velocity.x;
 	position.y -= velocity.y;
 	velocity.y -= gravity;
-	LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
+	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
 }
 
 bool j1Player::Save(pugi::xml_node& data) const {
