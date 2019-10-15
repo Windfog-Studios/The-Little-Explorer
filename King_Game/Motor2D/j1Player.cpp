@@ -275,8 +275,8 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP_FORWARD)
 		{
-			if (player_input.pressing_D) position.x += speed;
-			if (player_input.pressing_A) position.x -= speed;
+			if (player_input.pressing_D) position.x += speed * 0.1;
+			if (player_input.pressing_A) position.x -= speed * 0.1;
 
 			if (current_animation->Finished())
 			{
@@ -287,8 +287,8 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP_BACKWARD)
 		{
-			if (player_input.pressing_D) position.x += speed;
-			if (player_input.pressing_A) position.x -= speed;
+			if (player_input.pressing_D) position.x += speed * 0.1;
+			if (player_input.pressing_A) position.x -= speed * 0.1;
 
 			if (current_animation->Finished())
 			{
