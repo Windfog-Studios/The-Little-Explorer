@@ -12,14 +12,14 @@ j1Player::j1Player():j1Module () {
 	name.create("player");
 
 	//idle animation
-	idle.PushBack({ 21, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 71, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 121, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 171, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 221, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 271, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 321, 226, 32, 56 }, 0.1f);
-	idle.PushBack({ 369, 226, 32, 56 }, 0.1f);
+	idle.PushBack({ 21, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 71, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 121, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 171, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 221, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 271, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 321, 226, 32, 56 }, 0.05f);
+	idle.PushBack({ 369, 226, 32, 56 }, 0.05f);
 	idle.loop = true;
 
 	//walk animation
@@ -102,8 +102,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	position.x = initial_x_position = config.child("position").attribute("x").as_int();
 	position.y = initial_y_position = config.child("position").attribute("y").as_int();
 	speed = config.child("speed").attribute("value").as_int();
-	jumpImpulse = config.child("jumpImpulse").attribute("value").as_int();
-	gravity = config.child("gravity").attribute("value").as_int();
+	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
+	gravity = config.child("gravity").attribute("value").as_float();
 	//velocity.y = 0;
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
@@ -418,6 +418,7 @@ void j1Player::MovementControl() {
 	position.x += velocity.x;
 	position.y -= velocity.y;
 	velocity.y -= gravity;
+	LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
 }
 
 bool j1Player::Save(pugi::xml_node& data) const {
