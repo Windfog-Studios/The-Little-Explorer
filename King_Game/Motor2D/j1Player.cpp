@@ -169,6 +169,12 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+
+				if (player_input.pressing_space)
+				{
+					state = JUMP;
+					velocity.y = jumpImpulse;
+				}
 			}
 
 		}
@@ -255,18 +261,21 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += speed*1.5f;
-			if (player_input.pressing_A) position.x -= speed*1.5f;
+			if (player_input.pressing_D) position.x += speed;
+			if (player_input.pressing_A) position.x -= speed;
+
+			if (player_input.pressing_space)
+			{
+				state = JUMP;
+				velocity.y = jumpImpulse;
+			}
 
 			if (current_animation->Finished())
 			{
 				state = IDLE;
 				jump.Reset();
 			}
-			if (player_input.pressing_space)
-			{
-				//velocity.y += jumpImpulse/2;
-			}
+			
 		}
 
 		if (state == JUMP_FORWARD)
@@ -295,6 +304,12 @@ bool j1Player::PreUpdate(){
 
 		if (state == FALL)
 		{
+			if (player_input.pressing_space)
+			{
+				state = JUMP;
+				velocity.y = jumpImpulse;
+			}
+
 			if (current_animation->Finished())
 			{
 				fall.Reset();

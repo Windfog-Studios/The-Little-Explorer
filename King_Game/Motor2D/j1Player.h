@@ -94,7 +94,7 @@ public:
 
 	float speed;
 	float jumpImpulse;
-	int gravity;
+	float gravity;
 };
 
 #endif // !_j1PLAYER_H_
