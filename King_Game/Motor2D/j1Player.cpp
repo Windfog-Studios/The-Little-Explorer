@@ -172,20 +172,20 @@ bool j1Player::PreUpdate(){
 			}
 
 		}
-
+		
 		if (state == RUN_FORWARD)
 		{
 			if (!player_input.pressing_D)
 			{
 				state = IDLE;
 			}
-
+			
 			if (player_input.pressing_space)
 			{
-				state = JUMP_FORWARD;
+				state = JUMP;
 				velocity.y = jumpImpulse;
 			}
-
+			
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_FORWARD;
@@ -200,13 +200,13 @@ bool j1Player::PreUpdate(){
 			{
 				state = IDLE;
 			}
-
+			
 			if (player_input.pressing_space)
 			{
-				state = JUMP_BACKWARD;
+				state = JUMP;
 				velocity.y = jumpImpulse;
 			}
-
+			
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_BACKWARD;
@@ -272,7 +272,7 @@ bool j1Player::PreUpdate(){
 			}
 			
 		}
-
+		/*
 		if (state == JUMP_FORWARD)
 		{
 			if (player_input.pressing_D) position.x += speed * 0.1;
@@ -296,7 +296,7 @@ bool j1Player::PreUpdate(){
 				jump.Reset();
 			}
 		}
-
+		*/
 		if (state == FALL)
 		{
 			if ((player_input.pressing_space)&&(double_jumping == false))
@@ -363,7 +363,7 @@ bool j1Player::Update(float dt){
 			jump.Reset();
 		}
 		break;
-
+/*
 	case JUMP_FORWARD:
 		current_animation = &jump;
 		if (velocity.y <= 0) {
@@ -379,6 +379,7 @@ bool j1Player::Update(float dt){
 			jump.Reset();
 		}
 		break;
+		*/
 	case FALL:
 		current_animation = &fall;
 		break;
