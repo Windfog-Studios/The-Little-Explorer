@@ -138,6 +138,7 @@ bool j1Player::PreUpdate(){
 	{
 		if (state == IDLE)
 		{
+			can_double_jump = true;
 			if ((player_input.pressing_D)&&(velocity.y <= 0))
 			{
 				state = RUN_FORWARD;
@@ -164,13 +165,13 @@ bool j1Player::PreUpdate(){
 					state = SLIDE_BACKWARD;
 				}
 			}
-
+			
 			if (player_input.pressing_space)
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
 			}
-
+			
 		}
 		
 		if (state == RUN_FORWARD)
@@ -258,9 +259,9 @@ bool j1Player::PreUpdate(){
 			if (player_input.pressing_D) position.x += speed;
 			if (player_input.pressing_A) position.x -= speed;
 
-			if ((player_input.pressing_space)&&(can_double_jump == true))
+			if ((player_input.pressing_space)&&(can_double_jump == true)&&(velocity.y <= jumpImpulse/2))
 			{ 
-				velocity.y = jumpImpulse;
+				velocity.y = jumpImpulse/4;
 				can_double_jump = false;
 			}
 
@@ -271,37 +272,12 @@ bool j1Player::PreUpdate(){
 			}
 			
 		}
-		/*
-		if (state == JUMP_FORWARD)
-		{
-			if (player_input.pressing_D) position.x += speed * 0.1;
-			if (player_input.pressing_A) position.x -= speed * 0.1;
-
-			if (current_animation->Finished())
-			{
-				state = IDLE;
-				jump.Reset();
-			}
-		}
-
-		if (state == JUMP_BACKWARD)
-		{
-			if (player_input.pressing_D) position.x += speed * 0.1;
-			if (player_input.pressing_A) position.x -= speed * 0.1;
-
-			if (current_animation->Finished())
-			{
-				state = IDLE;
-				jump.Reset();
-			}
-		}
-		*/
 		if (state == FALL)
 		{
-			if ((player_input.pressing_space)&&(can_double_jump == true))
+			if ((player_input.pressing_space)&&(can_double_jump == true) & (velocity.y <= jumpImpulse / 2))
 			{
 				state = JUMP;
-				velocity.y = jumpImpulse;
+				velocity.y = jumpImpulse*2/3;
 				can_double_jump = false;
 			}
 
@@ -309,6 +285,11 @@ bool j1Player::PreUpdate(){
 			{
 				fall.Reset();
 			}
+		}
+
+		if ((velocity.y < -10)&&(state == IDLE))
+		{
+			state = FALL;
 		}
 
 		 MovementControl(); //calculate new position
@@ -362,23 +343,6 @@ bool j1Player::Update(float dt){
 			jump.Reset();
 		}
 		break;
-/*
-	case JUMP_FORWARD:
-		current_animation = &jump;
-		if (velocity.y <= 0) {
-			state = FALL;
-			jump.Reset();
-		}
-		break;
-
-	case JUMP_BACKWARD:
-		current_animation = &jump;
-		if (velocity.y <= 0) {
-			state = FALL;
-			jump.Reset();
-		}
-		break;
-		*/
 	case FALL:
 		current_animation = &fall;
 		break;
@@ -402,7 +366,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		can_double_jump = true;
 		position = lastPosition;
 		velocity.x = velocity.y = 0;
 		if ((position.y < c2->rect.y)&&(last_state == FALL))
