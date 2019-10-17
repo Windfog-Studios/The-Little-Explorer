@@ -44,8 +44,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = 0;
-		camera.y = 0;
+		camera.x = initial_camera_x = -12;
+		camera.y = initial_camera_y = 0;
 	}
 
 	return ret;
@@ -57,6 +57,7 @@ bool j1Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
 	return true;
 }
 
