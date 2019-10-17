@@ -259,7 +259,7 @@ bool j1Player::PreUpdate(){
 			if (player_input.pressing_A) position.x -= speed;
 
 			if ((player_input.pressing_space)&&(can_double_jump == true))
-			{
+			{ 
 				velocity.y = jumpImpulse;
 				can_double_jump = false;
 			}
@@ -402,9 +402,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
+		can_double_jump = true;
 		position = lastPosition;
 		velocity.x = velocity.y = 0;
-		can_double_jump = true;
 		if ((position.y < c2->rect.y)&&(last_state == FALL))
 		{
 			state = IDLE;
