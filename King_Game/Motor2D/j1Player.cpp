@@ -258,11 +258,10 @@ bool j1Player::PreUpdate(){
 			if (player_input.pressing_D) position.x += speed;
 			if (player_input.pressing_A) position.x -= speed;
 
-			if ((player_input.pressing_space)&&(double_jumping == false))
+			if ((player_input.pressing_space)&&(can_double_jump == true))
 			{
-				state = JUMP;
 				velocity.y = jumpImpulse;
-				double_jumping = true;
+				can_double_jump = false;
 			}
 
 			if (current_animation->Finished())
@@ -299,11 +298,11 @@ bool j1Player::PreUpdate(){
 		*/
 		if (state == FALL)
 		{
-			if ((player_input.pressing_space)&&(double_jumping == false))
+			if ((player_input.pressing_space)&&(can_double_jump == true))
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
-				double_jumping = true;
+				can_double_jump = false;
 			}
 
 			if (current_animation->Finished())
@@ -405,12 +404,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_WALL:
 		position = lastPosition;
 		velocity.x = velocity.y = 0;
+		can_double_jump = true;
 		if ((position.y < c2->rect.y)&&(last_state == FALL))
 		{
 			state = IDLE;
 			fall.Reset();
 		}
-		double_jumping = false;
 		break;
 	case COLLIDER_DEATH:
 		position.x = initial_x_position;
