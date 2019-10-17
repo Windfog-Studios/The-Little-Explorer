@@ -7,6 +7,7 @@
 #include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "j1Map.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -97,22 +98,25 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	LOG("Loading Player Data");
 	bool ret = true;
+
 	current_animation = &idle;
+
 	//set initial attributes of the player
-	position.x = initial_x_position = config.child("position").attribute("x").as_int();
-	position.y = initial_y_position = config.child("position").attribute("y").as_int();
 	speed = config.child("speed").attribute("value").as_int();
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	gravity = config.child("gravity").attribute("value").as_float();
-	//velocity.y = 0;
+
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
 	return ret;
 }
 
 bool j1Player::Start(){
-
-	player_tex = App->tex->Load("sprites/characters/Spritesheet_traveler.png");	//load character sprites
+	//load character sprites
+	player_tex = App->tex->Load("sprites/characters/Spritesheet_traveler.png");
+	position.x = initial_x_position = App->map->data.player_initial_x;
+	position.y = initial_x_position = App->map->data.player_initial_y;
+	LOG("Position x: %i y: %i", position.x, position.y);
 
 	return true;
 }
@@ -256,12 +260,13 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += speed;
-			if (player_input.pressing_A) position.x -= speed;
+			if (player_input.pressing_D) position.x += speed/2;
+			if (player_input.pressing_A) position.x -= speed/2;
 
 			if ((player_input.pressing_space)&&(can_double_jump == true)&&(velocity.y <= jumpImpulse/2))
 			{ 
-				velocity.y = jumpImpulse/4;
+				jump.Reset();
+				velocity.y = jumpImpulse * 2/3;
 				can_double_jump = false;
 			}
 
@@ -274,10 +279,15 @@ bool j1Player::PreUpdate(){
 		}
 		if (state == FALL)
 		{
+			//let the player move while faling
+			if (player_input.pressing_D) position.x += speed /2;
+			if (player_input.pressing_A) position.x -= speed / 2;
+
 			if ((player_input.pressing_space)&&(can_double_jump == true) & (velocity.y <= jumpImpulse / 2))
 			{
+				jump.Reset();
 				state = JUMP;
-				velocity.y = jumpImpulse*2/3;
+				velocity.y = jumpImpulse * 2/3; 
 				can_double_jump = false;
 			}
 
@@ -366,17 +376,20 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		position = lastPosition;
-		velocity.x = velocity.y = 0;
-		if ((position.y < c2->rect.y)&&(last_state == FALL))
-		{
-			state = IDLE;
-			fall.Reset();
-		}
+			position = lastPosition;
+			velocity.x = velocity.y = 0;
+			if ((position.y < c2->rect.y) && (last_state == FALL))
+			{
+				state = CROUCH_DOWN;
+				fall.Reset();
+			}
 		break;
 	case COLLIDER_DEATH:
-		position.x = initial_x_position;
-		position.y = initial_y_position;
+		state = IDLE;
+		position.x = App->map->data.player_initial_x;
+		position.y = App->map->data.player_initial_y;
+		velocity.x = 0;
+		velocity.y = 0;
 		App->scene->Reset_Camera();
 		break;
 	default:

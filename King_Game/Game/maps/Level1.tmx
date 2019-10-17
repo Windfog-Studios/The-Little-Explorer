@@ -14527,4 +14527,7 @@
   <object id="133" type="Collider" x="1728" y="992" width="32" height="32"/>
   <object id="134" type="Collider" x="1696" y="928" width="64" height="61"/>
  </objectgroup>
+<player>
+    <position x="320" y="450" />
+</player>
 </map>

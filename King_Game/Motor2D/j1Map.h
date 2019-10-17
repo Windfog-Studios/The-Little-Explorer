@@ -52,6 +52,14 @@ enum MapTypes
 	MAPTYPE_ISOMETRIC,
 	MAPTYPE_STAGGERED
 };
+
+enum MapLoaded
+{
+	NO_MAP = 0,
+	LEVEL_1,
+	LEVEL_2,
+};
+
 // ----------------------------------------------------
 struct MapData
 {
@@ -64,6 +72,9 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ObjectGroup*> objectgroups;
+	MapLoaded			map;
+	int					player_initial_x = 0;
+	int					player_initial_y = 0;
 };
 
 // ----------------------------------------------------
@@ -93,6 +104,8 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
+
+	void Reset_Level();
 
 private:
 

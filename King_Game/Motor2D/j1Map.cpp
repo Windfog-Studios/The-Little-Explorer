@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1Collision.h"
 #include "j1Window.h"
+#include "j1Player.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -116,11 +117,20 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 
+	if (file_name == "Level1.tmx") data.map = LEVEL_1;
+	if (file_name == "Level2.tmx") data.map = LEVEL_2;
+
 	// Load general info ----------------------------------------------
 	if(ret == true)
 	{
 		ret = LoadMap();
 	}
+
+	//load map's player info
+
+	data.player_initial_x = map_file.child("map").child("player").child("position").attribute("x").as_int();
+	data.player_initial_y = map_file.child("map").child("player").child("position").attribute("y").as_int();
+	LOG("Player position x: %i y: %i", data.player_initial_x, data.player_initial_y);
 
 	// Load all tilesets info ----------------------------------------------
 	pugi::xml_node tileset;
@@ -168,7 +178,7 @@ bool j1Map::Load(const char* file_name)
 		}
 		data.objectgroups.add(set);
 	}
-	
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -461,4 +471,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	}
 
 	return ret;
+}
+
+void j1Map::Reset_Level() {
+	
 }

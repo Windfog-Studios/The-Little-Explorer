@@ -60,6 +60,8 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		App->map->Reset_Level();
 
 	//camera window ------------------
 
@@ -81,7 +83,7 @@ bool j1Scene::Update(float dt)
 			top_edge -= App->player->speed;
 			bottom_edge -= App->player->speed;
 	}
-	if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge))&&(top_edge < App->render->initial_camera_y + 320)) {
+	if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge))&&(top_edge < App->render->initial_camera_y + 380)) {
 		App->render->camera.y -= App->player->speed;
 		top_edge+= App->player->speed;
 		bottom_edge+= App->player->speed;
@@ -101,8 +103,6 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 3;
 
-
-	//App->render->Blit(img, 0, 0);
 	App->map->Draw();
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
