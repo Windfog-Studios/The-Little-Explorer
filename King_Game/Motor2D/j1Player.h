@@ -101,6 +101,7 @@ public:
 	bool can_double_jump = true;
 	bool can_go_right = true;
 	bool can_go_left = true;
+	bool god = false;
 };
 
 #endif // !_j1PLAYER_H_

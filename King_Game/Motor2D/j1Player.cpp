@@ -125,7 +125,7 @@ bool j1Player::CleanUp() {
 
 bool j1Player::PreUpdate(){
 	//get player input
-	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN;
+	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT;
 	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
 	player_input.pressing_S = App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT;
 	player_input.pressing_D = App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
@@ -134,6 +134,15 @@ bool j1Player::PreUpdate(){
 
 	lastPosition = position;
 	last_state = state;
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		god = !god;
+		if (god)
+		{
+			state = IDLE;
+			velocity.y = 0;
+		}
+	}
 
 	if (!App->pause)
 	{
@@ -299,9 +308,15 @@ bool j1Player::PreUpdate(){
 			state = FALL;
 		}
 
-		 MovementControl(); //calculate new position
+		MovementControl(); //calculate new position
 
 		collider->SetPos(position.x, position.y);
+	}
+
+	if (god)
+	{
+		if (player_input.pressing_W) position.y -= speed;
+		if (player_input.pressing_S) position.y += speed;
 	}
 	return true;
 }
@@ -369,17 +384,18 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	
-	switch (c2->type)
+	if (!god)
 	{
-	case COLLIDER_WALL:
+		switch (c2->type)
+		{
+		case COLLIDER_WALL:
 			position = lastPosition;
 			velocity.x = velocity.y = 0;
-			if ((position.x < c2->rect.x + COLLIDER_MARGIN)&&(state == FALL))
+			if ((position.x < c2->rect.x + COLLIDER_MARGIN) && (state == FALL))
 			{
 				can_go_right = false;
 			}
-			if ((position.x > c2->rect.x  + c2->rect.w - COLLIDER_MARGIN) && (state == FALL))
+			if ((position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) && (state == FALL))
 			{
 				can_go_left = false;
 			}
@@ -390,25 +406,26 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				can_go_right = true;
 				can_go_left = true;
 			}
-			
-		break;
-	case COLLIDER_DEATH:
-		state = IDLE;
-		position.x = App->map->data.player_initial_x;
-		position.y = App->map->data.player_initial_y;
-		velocity.x = 0;
-		velocity.y = 0;
-		//App->scene->Reset_Camera();
-		break;
-	default:
-		break;
+
+			break;
+		case COLLIDER_DEATH:
+			state = IDLE;
+			position.x = App->map->data.player_initial_x;
+			position.y = App->map->data.player_initial_y;
+			velocity.x = 0;
+			velocity.y = 0;
+			//App->scene->Reset_Camera();
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 void j1Player::MovementControl() {
 	position.x += velocity.x;
 	position.y -= velocity.y;
-	velocity.y -= gravity;
+	if (!god) velocity.y -= gravity;
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
 }
 
