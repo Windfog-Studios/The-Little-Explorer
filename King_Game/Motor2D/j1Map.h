@@ -8,7 +8,7 @@
 
 #define COLLIDER_OFFSET 320
 
-//struct Collider;
+struct Collider;
 
 // ----------------------------------------------------
 struct MapLayer {
@@ -38,11 +38,11 @@ struct TileSet
 	int					offset_y = 0;
 };
 
-
 struct ObjectGroup {
 	p2SString name = "No name";
-	int size = 0;
 	SDL_Rect* object;
+	Collider** collider;
+	uint size = 0u;
 };
 
 enum MapTypes

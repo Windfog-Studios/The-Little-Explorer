@@ -80,7 +80,6 @@ bool j1Scene::Update(float dt)
 			App->map->Load("Level2.tmx");
 		}
 	}
-		//reload level 2
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->map->Reset_Level();

@@ -116,13 +116,12 @@ bool j1Player::Start(){
 	player_tex = App->tex->Load("sprites/characters/Spritesheet_traveler.png");
 	position.x = initial_x_position = App->map->data.player_initial_x;
 	position.y = initial_x_position = App->map->data.player_initial_y;
-	LOG("Position x: %i y: %i", position.x, position.y);
-
 	return true;
 }
 
 bool j1Player::CleanUp() {
-
+	collider = nullptr;
+	player_tex = nullptr;
 	return true;
 }
 
