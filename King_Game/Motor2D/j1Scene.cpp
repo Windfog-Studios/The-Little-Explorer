@@ -65,6 +65,7 @@ bool j1Scene::Update(float dt)
 		{
 			App->map->CleanUp();
 			App->map->Load("Level1.tmx");
+			App->map->Reset_Level();
 		}
 	}
 
@@ -78,6 +79,7 @@ bool j1Scene::Update(float dt)
 		{
 			App->map->CleanUp();
 			App->map->Load("Level2.tmx");
+			App->map->Reset_Level();
 		}
 	}
 
@@ -121,16 +123,16 @@ bool j1Scene::Update(float dt)
 	//camera manual control --------------
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 3;
+		App->render->camera.y += CAMERA_SPEED;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 3;
+		App->render->camera.y -= CAMERA_SPEED;
 
 	if((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)&&(App->render->camera.x < 0))
-		App->render->camera.x += 3;
+		App->render->camera.x += CAMERA_SPEED;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 3;
+		App->render->camera.x -= CAMERA_SPEED;
 
 	App->map->Draw();
 

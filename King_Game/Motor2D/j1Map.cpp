@@ -96,14 +96,10 @@ bool j1Map::CleanUp()
 		LOG("Objectgroups releasing");
 		for (uint i = 0; i < item3->data->size; i++)
 		{
-			if (item3->data->collider[i] != nullptr)
+			while (item3->data->collider[i] != nullptr)
 			{
 				item3->data->collider[i]->to_delete = true;
 				item3->data->collider[i] = nullptr;
-			}
-			else
-			{
-				break;
 			}
 		}
 		delete[] item3->data->collider;
@@ -433,7 +429,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
 
 				object = object.next_sibling("object");
-			
+				LOG("Collider %i added", i);
 				i++;
 			}
 			objectgroup->size = i;

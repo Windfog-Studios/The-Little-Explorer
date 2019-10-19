@@ -3,6 +3,8 @@
 
 #include "j1Module.h"
 
+#define CAMERA_SPEED 10
+
 struct SDL_Texture;
 
 enum MapLoaded
