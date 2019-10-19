@@ -143,7 +143,7 @@ bool j1Player::PreUpdate(){
 		if (state == IDLE)
 		{
 			can_double_jump = true;
-			if ((player_input.pressing_D)&&(velocity.y <= 0))
+			if ((player_input.pressing_D)&&(velocity.y == 0))
 			{
 				state = RUN_FORWARD;
 			}
@@ -280,8 +280,8 @@ bool j1Player::PreUpdate(){
 		if (state == FALL)
 		{
 			//let the player move while faling
-			if (player_input.pressing_D) position.x += speed /2;
-			if (player_input.pressing_A) position.x -= speed / 2;
+			if ((player_input.pressing_D)&&(can_go_right == true)) position.x += speed /2;
+			if ((player_input.pressing_A)&&(can_go_left == true)) position.x -= speed / 2;
 
 			if ((player_input.pressing_space)&&(can_double_jump == true) & (velocity.y <= jumpImpulse / 2))
 			{
@@ -378,11 +378,22 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_WALL:
 			position = lastPosition;
 			velocity.x = velocity.y = 0;
-			if ((position.y < c2->rect.y) && (last_state == FALL))
+			if ((position.x < c2->rect.x + COLLIDER_MARGIN)&&(state == FALL))
+			{
+				can_go_right = false;
+			}
+			if ((position.x > c2->rect.x  + c2->rect.w - COLLIDER_MARGIN) && (state == FALL))
+			{
+				can_go_left = false;
+			}
+			if ((position.y < c2->rect.y + COLLIDER_MARGIN) && (last_state == FALL))
 			{
 				state = CROUCH_DOWN;
 				fall.Reset();
+				can_go_right = true;
+				can_go_left = true;
 			}
+			
 		break;
 	case COLLIDER_DEATH:
 		state = IDLE;
