@@ -383,6 +383,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				state = CROUCH_DOWN;
 				fall.Reset();
 			}
+			
 		break;
 	case COLLIDER_DEATH:
 		state = IDLE;

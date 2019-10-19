@@ -93,6 +93,7 @@ public:
 private:
 
 	p2List<j1Module*>	modules;
+	
 	uint				frames;
 	float				dt;
 	int					argc;
