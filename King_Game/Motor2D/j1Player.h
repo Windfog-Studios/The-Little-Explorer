@@ -11,6 +11,8 @@
 struct SDL_Texture;
 struct Collider;
 
+#define COLLIDER_MARGIN speed*1.5f
+
 struct Player_Input {
 	bool pressing_W;
 	bool pressing_A;
@@ -98,6 +100,9 @@ public:
 	float gravity;
 
 	bool can_double_jump = true;
+	bool can_go_right = true;
+	bool can_go_left = true;
+	bool god = false;
 };
 
 #endif // !_j1PLAYER_H_

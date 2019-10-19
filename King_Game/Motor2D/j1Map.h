@@ -8,7 +8,7 @@
 
 #define COLLIDER_OFFSET 320
 
-//struct Collider;
+struct Collider;
 
 // ----------------------------------------------------
 struct MapLayer {
@@ -38,11 +38,11 @@ struct TileSet
 	int					offset_y = 0;
 };
 
-
 struct ObjectGroup {
 	p2SString name = "No name";
-	int size = 0;
 	SDL_Rect* object;
+	Collider** collider;
+	uint size = 0u;
 };
 
 enum MapTypes
@@ -51,13 +51,6 @@ enum MapTypes
 	MAPTYPE_ORTHOGONAL,
 	MAPTYPE_ISOMETRIC,
 	MAPTYPE_STAGGERED
-};
-
-enum MapLoaded
-{
-	NO_MAP = 0,
-	LEVEL_1,
-	LEVEL_2,
 };
 
 // ----------------------------------------------------
@@ -72,7 +65,6 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ObjectGroup*> objectgroups;
-	MapLoaded			map;
 	int					player_initial_x = 0;
 	int					player_initial_y = 0;
 };

@@ -56,14 +56,44 @@ bool j1Scene::Update(float dt)
 {
 	iPoint* player_position = &App->player->position;
 
-	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
+	//player inputs ---------------
 
-	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->SaveGame();
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if (current_level == LEVEL_1)
+		{
+			App->map->Reset_Level();
+		}
+		else
+		{
+			App->map->CleanUp();
+			App->map->Load("Level1.tmx");
+			App->map->Reset_Level();
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+		if (current_level == LEVEL_2)
+		{
+			App->map->Reset_Level();
+		}
+		else
+		{
+			App->map->CleanUp();
+			App->map->Load("Level2.tmx");
+			App->map->Reset_Level();
+		}
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->map->Reset_Level();
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		App->SaveGame();
+
+	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->LoadGame();
+
 
 	//camera window ------------------
 
@@ -80,11 +110,11 @@ bool j1Scene::Update(float dt)
 	}
 
 	if (((player_position->y < top_edge))&&(top_edge > App->render->initial_camera_y - App->player->current_animation->GetCurrentFrame().h)) {
-		LOG("camera y: %i", App->render->camera.y);
 			App->render->camera.y += App->player->speed;
 			top_edge -= App->player->speed;
 			bottom_edge -= App->player->speed;
 	}
+
 	if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge))&&(top_edge < App->render->initial_camera_y + 380)) {
 		App->render->camera.y -= App->player->speed;
 		top_edge+= App->player->speed;
@@ -94,16 +124,16 @@ bool j1Scene::Update(float dt)
 	//camera manual control --------------
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 3;
+		App->render->camera.y += CAMERA_SPEED;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 3;
+		App->render->camera.y -= CAMERA_SPEED;
 
 	if((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)&&(App->render->camera.x < 0))
-		App->render->camera.x += 3;
+		App->render->camera.x += CAMERA_SPEED;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 3;
+		App->render->camera.x -= CAMERA_SPEED;
 
 	App->map->Draw();
 

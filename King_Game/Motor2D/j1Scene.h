@@ -3,7 +3,16 @@
 
 #include "j1Module.h"
 
+#define CAMERA_SPEED 10
+
 struct SDL_Texture;
+
+enum MapLoaded
+{
+	NO_MAP = 0,
+	LEVEL_1,
+	LEVEL_2,
+};
 
 class j1Scene : public j1Module
 {
@@ -40,6 +49,7 @@ public:
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
+	MapLoaded current_level;
 private:
 };
 

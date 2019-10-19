@@ -7,6 +7,7 @@
 #include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Player.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -92,6 +93,16 @@ bool j1Map::CleanUp()
 	item3 = data.objectgroups.start;
 	while (item3 != NULL)
 	{
+		LOG("Objectgroups releasing");
+		for (uint i = 0; i < item3->data->size; i++)
+		{
+			while (item3->data->collider[i] != nullptr)
+			{
+				item3->data->collider[i]->to_delete = true;
+				item3->data->collider[i] = nullptr;
+			}
+		}
+		delete[] item3->data->collider;
 		RELEASE(item3->data);
 		item3 = item3->next;
 	}
@@ -117,8 +128,8 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 
-	if (file_name == "Level1.tmx") data.map = LEVEL_1;
-	if (file_name == "Level2.tmx") data.map = LEVEL_2;
+	if (file_name == "Level1.tmx") App->scene->current_level = LEVEL_1;
+	if (file_name == "Level2.tmx") App->scene->current_level = LEVEL_2;
 
 	// Load general info ----------------------------------------------
 	if(ret == true)
@@ -207,7 +218,6 @@ bool j1Map::Load(const char* file_name)
 		}
 
 		p2List_item<ObjectGroup*>* item_object = data.objectgroups.start;
-		
 		while (item_object != NULL)
 		{
 			ObjectGroup* o = item_object->data;
@@ -400,6 +410,7 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 		else
 		{
 			objectgroup->object = new SDL_Rect[MAX_COLLIDERS];
+			objectgroup->collider = new Collider*[MAX_COLLIDERS];
 
 			while (object != NULL)
 			{
@@ -412,18 +423,15 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				p2SString type(object.attribute("type").as_string());
 
 				if (type =="Collider")
-				App->collision->AddCollider(objectgroup->object[i], COLLIDER_WALL);
+				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_WALL);
 
 				if (type == "Death")
-				App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
+				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
 
 				object = object.next_sibling("object");
-				
-				//LOG("Collider %i", i);
-				//LOG("Collider x: %i y: %i", objectgroup->object[i].x, objectgroup->object[i].y);
-				//LOG("Collider w: %i h: %i", objectgroup->object[i].w, objectgroup->object[i].h);
 				i++;
 			}
+			objectgroup->size = i;
 		}
 
 	return ret;
@@ -474,5 +482,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 }
 
 void j1Map::Reset_Level() {
-	
+	App->player->position.x = App->map->data.player_initial_x;
+	App->player->position.y = App->map->data.player_initial_y;
 }
