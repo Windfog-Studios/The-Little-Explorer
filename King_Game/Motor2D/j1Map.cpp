@@ -7,6 +7,7 @@
 #include "j1Collision.h"
 #include "j1Window.h"
 #include "j1Player.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -117,8 +118,8 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 
-	if (file_name == "Level1.tmx") data.map = LEVEL_1;
-	if (file_name == "Level2.tmx") data.map = LEVEL_2;
+	if (file_name == "Level1.tmx") App->scene->current_level = LEVEL_1;
+	if (file_name == "Level2.tmx") App->scene->current_level = LEVEL_2;
 
 	// Load general info ----------------------------------------------
 	if(ret == true)
@@ -474,5 +475,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 }
 
 void j1Map::Reset_Level() {
-	
+	App->player->position.x = App->map->data.player_initial_x;
+	App->player->position.y = App->map->data.player_initial_y;
 }

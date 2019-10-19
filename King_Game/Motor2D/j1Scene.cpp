@@ -54,14 +54,43 @@ bool j1Scene::Update(float dt)
 {
 	iPoint* player_position = &App->player->position;
 
-	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
+	//player inputs ---------------
 
-	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->SaveGame();
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		if (current_level == LEVEL_1)
+		{
+			App->map->Reset_Level();
+		}
+		else
+		{
+			App->map->CleanUp();
+			App->map->Load("Level1.tmx");
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+		if (current_level == LEVEL_2)
+		{
+			App->map->Reset_Level();
+		}
+		else
+		{
+			App->map->CleanUp();
+			App->map->Load("Level2.tmx");
+		}
+	}
+		//reload level 2
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		App->map->Reset_Level();
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		App->SaveGame();
+
+	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		App->LoadGame();
+
 
 	//camera window ------------------
 
@@ -83,6 +112,7 @@ bool j1Scene::Update(float dt)
 			top_edge -= App->player->speed;
 			bottom_edge -= App->player->speed;
 	}
+
 	if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge))&&(top_edge < App->render->initial_camera_y + 380)) {
 		App->render->camera.y -= App->player->speed;
 		top_edge+= App->player->speed;

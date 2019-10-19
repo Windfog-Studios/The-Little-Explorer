@@ -5,6 +5,13 @@
 
 struct SDL_Texture;
 
+enum MapLoaded
+{
+	NO_MAP = 0,
+	LEVEL_1,
+	LEVEL_2,
+};
+
 class j1Scene : public j1Module
 {
 public:
@@ -39,6 +46,7 @@ public:
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
+	MapLoaded current_level;
 private:
 };
 
