@@ -36,6 +36,8 @@ bool j1Scene::Start()
 	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
 	left_edge = App->render->camera.x + App->render->camera.w / 3;
 	right_edge = App->render->camera.x + App->render->camera.w *1/2;
+
+	App->audio->PlayMusic("music_sadpiano.ogg");
 	
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");

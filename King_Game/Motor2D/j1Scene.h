@@ -35,6 +35,7 @@ public:
 	void Reset_Camera();
 
 public:
+	
 	int left_edge;
 	int right_edge;
 	int top_edge;

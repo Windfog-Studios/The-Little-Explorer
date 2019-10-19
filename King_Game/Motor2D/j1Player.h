@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "Animation.h"
+#include "j1Audio.h"
 #include "SDL/include/SDL.h"
 #include "p2Vec2.h"
 
