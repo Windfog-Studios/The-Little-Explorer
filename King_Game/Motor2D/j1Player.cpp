@@ -434,7 +434,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 bool j1Player::LoadAnimations() {
 	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
 	bool ret = true;
-
+	uint i = 0u;
+	
 	if (result == NULL)
 	{
 		LOG("Could not load animations xml file %s. pugi error: %s", "animations.xml", result.description());
@@ -467,8 +468,10 @@ bool j1Player::LoadAnimations() {
 			speed = rect.x = frame.attribute("speed").value.as_float();
 			item->data->PushBack({ rect.x,rect.y,rect.w,rect.h }, speed);
 		}
+		i++;
 	}
 
+	LOG("%u animations loaded", i);
 
 	animation = animation_doc.child("");
 
