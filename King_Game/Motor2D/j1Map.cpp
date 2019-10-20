@@ -38,10 +38,8 @@ void j1Map::Draw()
 	{
 		p2List_item<MapLayer*>* layer;
 		p2List_item<TileSet*>* tileset;
-	//	p2List_item<ObjectGroup*>* objectgroup;
 		layer = data.layers.start;
 		tileset = data.tilesets.start;
-		//objectgroup = data.objectgroup.start;
 		iPoint position;
 
 		while (tileset != NULL)
@@ -79,6 +77,8 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
+	//Remove all layers
+
 	p2List_item<MapLayer*>* item2;
 	item2 = data.layers.start;
 
@@ -88,6 +88,8 @@ bool j1Map::CleanUp()
 		item2 = item2->next;
 	}
 	data.layers.clear();
+
+	//Remove all colliders
 
 	p2List_item<ObjectGroup*>* item3;
 	item3 = data.objectgroups.start;
