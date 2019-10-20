@@ -189,6 +189,7 @@ bool j1Player::PreUpdate(){
 			if (!player_input.pressing_D)
 			{
 				state = IDLE;
+				velocity.x = 0;
 			}
 			
 			if (player_input.pressing_space)
@@ -210,6 +211,7 @@ bool j1Player::PreUpdate(){
 			if (!player_input.pressing_A)
 			{
 				state = IDLE;
+				velocity.x = 0;
 			}
 			
 			if (player_input.pressing_space)
@@ -278,7 +280,7 @@ bool j1Player::PreUpdate(){
 
 			if (current_animation->Finished())
 			{
-				state = IDLE;
+				state = FALL;
 				jump.Reset();
 			}
 			
@@ -363,6 +365,10 @@ bool j1Player::Update(float dt){
 		{
 			state = FALL;
 			jump.Reset();
+		}
+		if ((last_state = RUN_FORWARD)||(last_state == RUN_BACKWARD))
+		{
+			velocity.x /= 2;
 		}
 		break;
 	case FALL:
