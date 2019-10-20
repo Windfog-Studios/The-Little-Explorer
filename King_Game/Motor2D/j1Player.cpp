@@ -99,6 +99,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	current_animation = &idle;
 
+	folder.create(config.child("folder").child_value());
+
 	//set initial attributes of the player
 	speed = config.child("speed").attribute("value").as_int();
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
@@ -111,7 +113,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start(){
 	//load character sprites
-	player_tex = App->tex->Load("sprites/characters/Spritesheet_traveler.png");
+	player_tex = App->tex->Load("sprites/characters/spritesheet_traveler.png");
+	//LoadAnimations();
 	position.x = initial_x_position = App->map->data.player_initial_x;
 	position.y = initial_x_position = App->map->data.player_initial_y;
 	return true;
@@ -426,6 +429,50 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 		}
 	}
+}
+
+bool j1Player::LoadAnimations() {
+	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
+	bool ret = true;
+
+	if (result == NULL)
+	{
+		LOG("Could not load animations xml file %s. pugi error: %s", "animations.xml", result.description());
+		ret = false;
+	}
+
+	animations.add(&idle);
+	animations.add(&jump);
+	animations.add(&run);
+	animations.add(&crouch_down);
+	animations.add(&crouch_up);
+	animations.add(&fall);
+
+	pugi::xml_node animation;
+	pugi::xml_node frame;
+	p2List_item<Animation*>* item = animations.start;
+	SDL_Rect rect = {0,0,0,0};
+	float speed;
+
+	LOG("Loading animations ---------");
+
+	for (animation ; animation && ret; animation = animation.next_sibling("animation"))
+	{
+		for (frame = animation.child("frame"); frame; frame = frame.next_sibling("frame"))
+		{
+			rect.x = frame.attribute("x").value.as_int();
+			rect.y = frame.attribute("y").value.as_int();
+			rect.w = frame.attribute("w").value.as_int();
+			rect.h = frame.attribute("h").value.as_int();
+			speed = rect.x = frame.attribute("speed").value.as_float();
+			item->data->PushBack({ rect.x,rect.y,rect.w,rect.h }, speed);
+		}
+	}
+
+
+	animation = animation_doc.child("");
+
+	return ret;
 }
 
 void j1Player::MovementControl() {

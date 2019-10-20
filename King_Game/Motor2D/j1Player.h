@@ -62,6 +62,8 @@ public:
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
 
+	bool LoadAnimations();
+
 private:
 
 
@@ -76,7 +78,6 @@ public:
 	iPoint lastPosition;
 	fVec2 velocity;
 
-
 	//animations
 	Animation idle;
 	Animation jump;
@@ -87,6 +88,10 @@ public:
 	Animation slide;
 	Animation fall;
 	Animation* current_animation;
+
+	p2List<Animation*> animations;
+
+	pugi::xml_document animation_doc;
 
 	Player_States state;
 	Player_States last_state;

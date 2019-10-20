@@ -26,6 +26,7 @@
     <folder>maps/</folder>
   </map>
   <player>
+    <folder>sprites/characters</folder>
     <position x="320" y="450" />	
     <speed value="6.75"/>
     <jumpImpulse value="8.5"/>
