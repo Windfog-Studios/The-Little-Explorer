@@ -13,6 +13,7 @@ j1Player::j1Player():j1Module () {
 	name.create("player");
 
 	//idle animation
+	/*
 	idle.PushBack({ 21, 226, 32, 56 }, 0.05f);
 	idle.PushBack({ 71, 226, 32, 56 }, 0.05f);
 	idle.PushBack({ 121, 226, 32, 56 }, 0.05f);
@@ -22,7 +23,7 @@ j1Player::j1Player():j1Module () {
 	idle.PushBack({ 321, 226, 32, 56 }, 0.05f);
 	idle.PushBack({ 369, 226, 32, 56 }, 0.05f);
 	idle.loop = true;
-
+	*/
 	//walk animation
 	walk.PushBack({ 21, 31, 33, 56 }, 0.2f);
 	walk.PushBack({ 70, 31, 32, 56 }, 0.2f);
@@ -88,6 +89,8 @@ j1Player::j1Player():j1Module () {
 	fall.PushBack({ 614, 385, 51, 58 }, 0.2f);
 	fall.loop = false;
 
+	LoadAnimations();
+
 }
 
 j1Player::~j1Player(){ }
@@ -114,7 +117,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start(){
 	//load character sprites
 	player_tex = App->tex->Load("sprites/characters/spritesheet_traveler.png");
-	//LoadAnimations();
 	position.x = initial_x_position = App->map->data.player_initial_x;
 	position.y = initial_x_position = App->map->data.player_initial_y;
 	return true;
@@ -449,24 +451,27 @@ bool j1Player::LoadAnimations() {
 	animations.add(&crouch_up);
 	animations.add(&fall);
 
-	pugi::xml_node animation;
+	pugi::xml_node animation = animation_doc.child("animations").child("animation");
 	pugi::xml_node frame;
 	p2List_item<Animation*>* item = animations.start;
 	SDL_Rect rect = {0,0,0,0};
-	float speed;
+	float anim_speed = 1;
 
 	LOG("Loading animations ---------");
 
 	for (animation ; animation && ret; animation = animation.next_sibling("animation"))
 	{
-		for (frame = animation.child("frame"); frame; frame = frame.next_sibling("frame"))
+		item->data->loop = animation.attribute("loop").as_bool();
+
+		for (frame = animation.child("data").child("frame"); frame; frame = frame.next_sibling("frame"))
 		{
-			rect.x = frame.attribute("x").value.as_int();
-			rect.y = frame.attribute("y").value.as_int();
-			rect.w = frame.attribute("w").value.as_int();
-			rect.h = frame.attribute("h").value.as_int();
-			speed = rect.x = frame.attribute("speed").value.as_float();
-			item->data->PushBack({ rect.x,rect.y,rect.w,rect.h }, speed);
+			rect.x = frame.attribute("x").as_int();
+			rect.y = frame.attribute("y").as_int();
+			rect.w = frame.attribute("w").as_int();
+			rect.h = frame.attribute("h").as_int();
+			speed = rect.x = frame.attribute("speed").as_float();
+
+			item->data->PushBack({ rect.x,rect.y,rect.w,rect.h }, anim_speed);
 		}
 		i++;
 	}
