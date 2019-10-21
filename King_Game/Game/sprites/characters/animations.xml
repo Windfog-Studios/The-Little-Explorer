@@ -14,4 +14,58 @@
   <frame x="369" y="226" w="32" h="56" speed="0.05"/>
   </data>
  </animation>
+<animation name="run" loop="true">
+  <data>
+  <frame x="21" y="156" w="46" h="53" speed="0.1"/>
+  <frame x="79" y="157" w="44" h="52" speed="0.1"/>
+  <frame x="136" y="155" w="41" h="54" speed="0.1"/>
+  <frame x="196" y="155" w="46" h="54" speed="0.1"/>
+  <frame x="260" y="157" w="42" h="52" speed="0.1"/>
+  <frame x="322" y="155" w="40" h="54" speed="0.1"/>
+  </data>
+ </animation>
+<animation name="crouch_down" loop="false">
+  <data>
+  <frame x="21" y="302" w="32" h="56" speed="0.2"/>
+  <frame x="75" y="302" w="35" h="56" speed="0.2"/>
+  <frame x="125" y="302" w="43" h="56" speed="0.2"/>
+  <frame x="184" y="302" w="43" h="56" speed="0.2"/>
+  </data>
+ </animation>
+<animation name="crouch_up" loop="false">
+  <data>
+  <frame x="184" y="302" w="43" h="56" speed="0.2"/>
+  <frame x="125" y="302" w="43" h="56" speed="0.2"/>
+  <frame x="75" y="302" w="35" h="56" speed="0.2"/>
+  <frame x="21" y="302" w="32" h="56" speed="0.2"/>
+  </data>
+ </animation>
+<animation name="jump" loop="false">
+  <data>
+  <frame x="420" y="315" w="49" h="43" speed="0.2"/>
+  <frame x="477" y="316" w="52" h="42" speed="0.2"/>
+  <frame x="539" y="294" w="32" h="64" speed="0.2"/>
+  <frame x="582" y="294" w="32" h="64" speed="0.2"/>
+  <frame x="626" y="294" w="32" h="64" speed="0.2"/>
+  <frame x="669" y="294" w="32" h="64" speed="0.2"/>
+  <frame x="710" y="294" w="32" h="64" speed="0.2"/>
+  <frame x="752" y="294" w="32" h="64" speed="0.2"/>
+  <frame x="796" y="294" w="32" h="64" speed="0.2"/>
+  </data>
+ </animation>
+<animation name="fall" loop="false">
+  <data>
+  <frame x="37" y="379" w="32" h="64" speed="0.2"/>
+  <frame x="78" y="383" w="37" h="60" speed="0.2"/>
+  <frame x="124" y="384" w="47" h="59" speed="0.2"/>
+  <frame x="183" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="250" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="313" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="374" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="434" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="494" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="553" y="385" w="51" h="58" speed="0.2"/>
+  <frame x="614" y="385" w="51" h="58" speed="0.2"/>
+  </data>
+ </animation>
 </animations>

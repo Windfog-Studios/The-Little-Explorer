@@ -23,7 +23,7 @@ j1Player::j1Player():j1Module () {
 	idle.PushBack({ 321, 226, 32, 56 }, 0.05f);
 	idle.PushBack({ 369, 226, 32, 56 }, 0.05f);
 	idle.loop = true;
-	*/
+	
 	//walk animation
 	walk.PushBack({ 21, 31, 33, 56 }, 0.2f);
 	walk.PushBack({ 70, 31, 32, 56 }, 0.2f);
@@ -88,6 +88,7 @@ j1Player::j1Player():j1Module () {
 	fall.PushBack({ 553, 385, 51, 58 }, 0.2f);
 	fall.PushBack({ 614, 385, 51, 58 }, 0.2f);
 	fall.loop = false;
+	*/
 
 	LoadAnimations();
 
@@ -437,6 +438,7 @@ bool j1Player::LoadAnimations() {
 	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
 	bool ret = true;
 	uint i = 0u;
+	uint j = 0;
 	
 	if (result == NULL)
 	{
@@ -445,40 +447,39 @@ bool j1Player::LoadAnimations() {
 	}
 
 	animations.add(&idle);
-	animations.add(&jump);
 	animations.add(&run);
 	animations.add(&crouch_down);
 	animations.add(&crouch_up);
+	animations.add(&jump);
 	animations.add(&fall);
 
 	pugi::xml_node animation = animation_doc.child("animations").child("animation");
 	pugi::xml_node frame;
 	p2List_item<Animation*>* item = animations.start;
-	SDL_Rect rect = {0,0,0,0};
+	int x, y, w, h;
 	float anim_speed = 1;
 
 	LOG("Loading animations ---------");
 
-	for (animation ; animation && ret; animation = animation.next_sibling("animation"))
+	for (animation ; animation; animation = animation.next_sibling("animation"))
 	{
 		item->data->loop = animation.attribute("loop").as_bool();
 
 		for (frame = animation.child("data").child("frame"); frame; frame = frame.next_sibling("frame"))
 		{
-			rect.x = frame.attribute("x").as_int();
-			rect.y = frame.attribute("y").as_int();
-			rect.w = frame.attribute("w").as_int();
-			rect.h = frame.attribute("h").as_int();
-			speed = rect.x = frame.attribute("speed").as_float();
+			x = frame.attribute("x").as_int();
+			y = frame.attribute("y").as_int();
+			w = frame.attribute("w").as_int();
+			h = frame.attribute("h").as_int();
+			anim_speed = frame.attribute("speed").as_float();
 
-			item->data->PushBack({ rect.x,rect.y,rect.w,rect.h }, anim_speed);
+			item->data->PushBack({x,y,w,h}, anim_speed);
 		}
 		i++;
+		item = item->next;
 	}
 
 	LOG("%u animations loaded", i);
-
-	animation = animation_doc.child("");
 
 	return ret;
 }
