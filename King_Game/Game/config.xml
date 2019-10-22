@@ -22,10 +22,24 @@
     <path>data.zip</path>
   </file_system>
 
+  <audio>
+    <music>
+      <folder>audio/music/</folder>
+      <musicVolumeModifier value="0.3" />
+    </music>
+    <sfx> 
+      <folder>audio/fx/</folder>
+      <sfxVolumeModifier value="1" />
+    </sfx>
+  </audio>
+	
+
   <map>
     <folder>maps/</folder>
   </map>
   <player>
+    <folder>audio/fx</folder>
+    <hello_man source="hello_man.wav"/>
     <folder>sprites/characters</folder>
     <position x="320" y="450" />	
     <speed value="6.75"/>

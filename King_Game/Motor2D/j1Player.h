@@ -89,6 +89,8 @@ public:
 	Animation fall;
 	Animation* current_animation;
 
+	p2SString hello_man;
+
 	p2List<Animation*> animations;
 
 	pugi::xml_document animation_doc;

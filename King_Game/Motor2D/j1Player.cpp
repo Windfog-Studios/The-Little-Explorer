@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Scene.h"
 #include "j1Map.h"
+#include "j1Audio.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -110,6 +111,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	gravity = config.child("gravity").attribute("value").as_float();
 
+	hello_man = config.child("hello_man").attribute("source").as_string();
+
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
 	return ret;
@@ -120,6 +123,9 @@ bool j1Player::Start(){
 	player_tex = App->tex->Load("sprites/characters/spritesheet_traveler.png");
 	position.x = initial_x_position = App->map->data.player_initial_x;
 	position.y = initial_x_position = App->map->data.player_initial_y;
+
+	App->audio->LoadFx(hello_man.GetString());
+
 	return true;
 }
 
@@ -128,6 +134,7 @@ bool j1Player::CleanUp() {
 	player_tex = nullptr;
 	return true;
 }
+
 
 bool j1Player::PreUpdate(){
 	//get player input
