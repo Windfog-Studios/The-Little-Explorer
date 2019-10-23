@@ -37,8 +37,6 @@ bool j1Scene::Start()
 	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
 	left_edge = App->render->camera.x + App->render->camera.w / 3;
 	right_edge = App->render->camera.x + App->render->camera.w *1/2;
-
-	App->audio->PlayMusic("music_sadpiano.ogg");
 	
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
@@ -98,7 +96,7 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 
-	if (((player_position->x < left_edge)) &&(left_edge > App->render->initial_camera_x + App->render->camera.w / 3)){
+	if (((player_position->x < left_edge)) &&(left_edge > App->render->initial_camera_x + App->render->camera.w / 3)&&(right_edge < App->map->data.width * App->map->data.tile_width - App->render->camera.w/2)){
 			App->render->camera.x += App->player->speed;
 			right_edge -= App->player->speed;
 			left_edge -= App->player->speed;

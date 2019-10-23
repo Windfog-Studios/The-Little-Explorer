@@ -85,7 +85,7 @@ bool j1Audio::CleanUp()
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
 	p2SString tmp("%s%s", folder.GetString(), path);
-
+	LOG("song: %s", tmp.GetString());
 	bool ret = true;
 
 	if(!active)
@@ -133,7 +133,6 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		}
 	}
 
-	LOG("Successfully playing %s", path);
 	return ret;
 }
 
