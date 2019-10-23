@@ -117,6 +117,11 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+	int level_1_player_x;
+	int level_1_player_y;
+	int level_2_player_x;
+	int level_2_player_y;
+
 };
 
 #endif // __j1MAP_H__

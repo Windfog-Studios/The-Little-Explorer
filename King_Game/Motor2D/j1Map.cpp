@@ -26,7 +26,10 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 	App->collision->AddCollider({ 0,0,1,1000 }, COLLIDER_WALL);
 	folder.create(config.child("folder").child_value());
-
+	level_1_player_x = config.child("level1").child("player_position").attribute("x").as_int();
+	level_1_player_y = config.child("level1").child("player_position").attribute("y").as_int();
+	level_2_player_x = config.child("level2").child("player_position").attribute("x").as_int();
+	level_2_player_y = config.child("level2").child("player_position").attribute("y").as_int();
 	return ret;
 }
 
@@ -130,8 +133,16 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 
-	if (file_name == "Level1.tmx") App->scene->current_level = LEVEL_1;
-	if (file_name == "Level2.tmx") App->scene->current_level = LEVEL_2;
+	if (file_name == "Level1.tmx") {
+		App->scene->current_level = LEVEL_1;
+		App->scene->player_x_position = level_1_player_x;
+		App->scene->player_y_position = level_1_player_y;
+	}
+	if (file_name == "Level2.tmx") {
+		App->scene->current_level = LEVEL_2; 
+		App->scene->player_x_position = level_2_player_x;
+		App->scene->player_y_position = level_2_player_y;
+	}
 
 	// Load general info ----------------------------------------------
 	if(ret == true)
@@ -481,9 +492,4 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	}
 
 	return ret;
-}
-
-void j1Map::Reset_Level() {
-	App->player->position.x = App->map->data.player_initial_x;
-	App->player->position.y = App->map->data.player_initial_y;
 }

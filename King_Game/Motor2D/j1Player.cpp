@@ -121,8 +121,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start(){
 	//load character sprites
 	player_tex = App->tex->Load("sprites/characters/spritesheet_traveler.png");
-	position.x = initial_x_position = App->map->data.player_initial_x;
-	position.y = initial_x_position = App->map->data.player_initial_y;
+	position.x = initial_x_position = App->scene->player_x_position;
+	position.y = initial_x_position = App->scene->player_y_position;
 
 	App->audio->LoadFx(hello_man.GetString());
 
@@ -159,9 +159,11 @@ bool j1Player::PreUpdate(){
 
 	if (!App->pause)
 	{
+		velocity.x = 0;
 		if (state == IDLE)
 		{
 			can_double_jump = true;
+
 			if ((player_input.pressing_D)&&(velocity.y == 0))
 			{
 				state = RUN_FORWARD;
@@ -428,12 +430,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 			break;
 		case COLLIDER_DEATH:
-			state = IDLE;
-			position.x = App->map->data.player_initial_x;
-			position.y = App->map->data.player_initial_y;
-			velocity.x = 0;
-			velocity.y = 0;
-			//App->scene->Reset_Camera();
+			if (!god) {
+				state = IDLE;
+				position.x = App->map->data.player_initial_x;
+				position.y = App->map->data.player_initial_y;
+				velocity.x = 0;
+				velocity.y = 0;
+				//App->scene->Reset_Camera();
+			}
 			break;
 		default:
 			break;

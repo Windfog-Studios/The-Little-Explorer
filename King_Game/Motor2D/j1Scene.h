@@ -43,6 +43,8 @@ public:
 
 	void Reset_Camera();
 
+	void ResetLevel();
+
 public:
 	
 	int left_edge;
@@ -50,6 +52,8 @@ public:
 	int top_edge;
 	int bottom_edge;
 	MapLoaded current_level;
+	int	player_x_position;
+	int	player_y_position;
 private:
 };
 

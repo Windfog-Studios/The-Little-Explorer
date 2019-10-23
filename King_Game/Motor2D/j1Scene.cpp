@@ -61,13 +61,13 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (current_level == LEVEL_1)
 		{
-			App->map->Reset_Level();
+			ResetLevel();
 		}
 		else
 		{
 			App->map->CleanUp();
 			App->map->Load("Level1.tmx");
-			App->map->Reset_Level();
+			ResetLevel();
 		}
 	}
 
@@ -75,19 +75,18 @@ bool j1Scene::Update(float dt)
 
 		if (current_level == LEVEL_2)
 		{
-			App->map->Reset_Level();
+			ResetLevel();
 		}
 		else
 		{
 			App->map->CleanUp();
 			App->map->Load("Level2.tmx");
-			App->map->Reset_Level();
+			ResetLevel();
 		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		App->map->Reset_Level();
-
+		ResetLevel();
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
@@ -172,4 +171,9 @@ void j1Scene::Reset_Camera() {
 	bottom_edge = App->render->camera.y + App->render->camera.h * 3 / 4;
 	left_edge = App->render->camera.x + App->render->camera.w / 3;
 	right_edge = App->render->camera.x + App->render->camera.w * 1 / 2;
+}
+
+void j1Scene::ResetLevel() {
+	App->player->position.x = player_x_position;
+	App->player->position.y = player_y_position;
 }

@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -36,6 +36,12 @@
 
   <map>
     <folder>maps/</folder>
+    <level1>
+	<player_position x="320" y="450"/>
+    </level1>
+    <level2>
+	<player_position x="250" y="320"/>
+    </level2>
   </map>
   <player>
     <folder>audio/fx</folder>
