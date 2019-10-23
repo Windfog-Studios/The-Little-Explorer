@@ -38,9 +38,11 @@
     <folder>maps/</folder>
     <level1>
 	<player_position x="320" y="450"/>
+	<music song="music_sadpiadno.ogg" />
     </level1>
     <level2>
 	<player_position x="250" y="320"/>
+	<music song="music_sadpaino.ogg" />
     </level2>
   </map>
   <player>

@@ -54,6 +54,7 @@ public:
 	MapLoaded current_level;
 	int	player_x_position;
 	int	player_y_position;
+	p2SString song;
 private:
 };
 

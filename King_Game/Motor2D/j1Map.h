@@ -97,8 +97,6 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
-	void Reset_Level();
-
 private:
 
 	bool LoadMap();
@@ -121,6 +119,9 @@ private:
 	int level_1_player_y;
 	int level_2_player_x;
 	int level_2_player_y;
+
+	p2SString level_1_music;
+	p2SString level_2_music;
 
 };
 

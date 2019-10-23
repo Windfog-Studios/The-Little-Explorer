@@ -26,10 +26,18 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 	App->collision->AddCollider({ 0,0,1,1000 }, COLLIDER_WALL);
 	folder.create(config.child("folder").child_value());
+
+	//level 1 data
 	level_1_player_x = config.child("level1").child("player_position").attribute("x").as_int();
 	level_1_player_y = config.child("level1").child("player_position").attribute("y").as_int();
+	level_1_music = config.child("level1").child("music").attribute("song").as_string();
+	LOG("Song: %s", level_1_music);
+
+	//level 2 data
 	level_2_player_x = config.child("level2").child("player_position").attribute("x").as_int();
 	level_2_player_y = config.child("level2").child("player_position").attribute("y").as_int();
+	level_2_music = config.child("level2").child("music").attribute("song").as_string();
+
 	return ret;
 }
 
@@ -133,15 +141,19 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 
+	// Level data ---------------------
+
 	if (file_name == "Level1.tmx") {
 		App->scene->current_level = LEVEL_1;
 		App->scene->player_x_position = level_1_player_x;
 		App->scene->player_y_position = level_1_player_y;
+		App->scene->song = level_1_music;
 	}
 	if (file_name == "Level2.tmx") {
 		App->scene->current_level = LEVEL_2; 
 		App->scene->player_x_position = level_2_player_x;
 		App->scene->player_y_position = level_2_player_y;
+		App->scene->song = level_2_music;
 	}
 
 	// Load general info ----------------------------------------------
