@@ -406,10 +406,11 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+
 	if (!god)
 	{
-		switch (c2->type)
-		{
+	switch (c2->type)
+	{
 		case COLLIDER_WALL:
 			position = lastPosition;
 			velocity.x = velocity.y = 0;
@@ -440,10 +441,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				//App->scene->Reset_Camera();
 			}
 			break;
+		case COLLIDER_PLATFORM:
+			position = lastPosition;
+			break;
+		case COLLIDER_CHANGE_LEVEL:
+			if (App->scene->current_level == LEVEL_1) App->scene->LevelChange(LEVEL_2, LEVEL_1);
+			if (App->scene->current_level == LEVEL_2) App->scene->LevelChange(LEVEL_1, LEVEL_2);
+			break;
 		default:
 			break;
-		}
 	}
+			}
 }
 
 bool j1Player::LoadAnimations() {

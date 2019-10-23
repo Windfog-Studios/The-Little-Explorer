@@ -64,8 +64,7 @@ bool j1Scene::Update(float dt)
 		}
 		else
 		{
-			App->map->CleanUp();
-			App->map->Load("Level1.tmx");
+			LevelChange(LEVEL_1, LEVEL_2);
 			ResetLevel();
 		}
 	}
@@ -78,8 +77,7 @@ bool j1Scene::Update(float dt)
 		}
 		else
 		{
-			App->map->CleanUp();
-			App->map->Load("Level2.tmx");
+			LevelChange(LEVEL_2, LEVEL_1);
 			ResetLevel();
 		}
 	}
@@ -176,4 +174,10 @@ void j1Scene::Reset_Camera() {
 void j1Scene::ResetLevel() {
 	App->player->position.x = player_x_position;
 	App->player->position.y = player_y_position;
+}
+
+void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
+		App->map->CleanUp();
+		if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
+		if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
 }

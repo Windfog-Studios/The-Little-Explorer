@@ -7,7 +7,7 @@
 
 struct SDL_Texture;
 
-enum MapLoaded
+enum Map
 {
 	NO_MAP = 0,
 	LEVEL_1,
@@ -45,13 +45,15 @@ public:
 
 	void ResetLevel();
 
+	void LevelChange(Map unloading_map, Map loading_map);
+
 public:
 	
 	int left_edge;
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
-	MapLoaded current_level;
+	Map current_level;
 	int	player_x_position;
 	int	player_y_position;
 	p2SString song;

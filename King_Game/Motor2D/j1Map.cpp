@@ -452,6 +452,12 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				if (type == "Death")
 				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
 
+				if (type == "Platform")
+				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_PLATFORM);
+
+				if (type == "Level Change") 
+				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_CHANGE_LEVEL);
+
 				object = object.next_sibling("object");
 				i++;
 			}

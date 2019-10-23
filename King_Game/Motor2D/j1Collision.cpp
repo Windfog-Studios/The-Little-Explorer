@@ -14,21 +14,31 @@ j1Collision::j1Collision()
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEATH] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLATFORM] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_CHANGE_LEVEL] = true;
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_WALL][COLLIDER_CHANGE_LEVEL] = false;
 
 	matrix[COLLIDER_DEATH][COLLIDER_DEATH] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_WALL] = false;
 	matrix[COLLIDER_DEATH][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_DEATH][COLLIDER_PLATFORM] = false;
+	matrix[COLLIDER_DEATH][COLLIDER_CHANGE_LEVEL] = false;
 
 	matrix[COLLIDER_PLATFORM][COLLIDER_PLATFORM] = false;
 	matrix[COLLIDER_PLATFORM][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_PLATFORM][COLLIDER_WALL] = false;
 	matrix[COLLIDER_PLATFORM][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_PLATFORM][COLLIDER_CHANGE_LEVEL] = false;
+
+	matrix[COLLIDER_CHANGE_LEVEL][COLLIDER_CHANGE_LEVEL] = false;
+	matrix[COLLIDER_CHANGE_LEVEL][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_CHANGE_LEVEL][COLLIDER_WALL] = false;
+	matrix[COLLIDER_CHANGE_LEVEL][COLLIDER_DEATH] = false;
+	matrix[COLLIDER_CHANGE_LEVEL][COLLIDER_PLATFORM] = false;
 
 }
 
@@ -128,6 +138,10 @@ void j1Collision::DebugDraw()
 			break;
 		case COLLIDER_PLATFORM:
 			App->render->DrawQuad(colliders[i]->rect, 100, 0, 255, alpha);
+			break;
+		case COLLIDER_CHANGE_LEVEL:
+			App->render->DrawQuad(colliders[i]->rect, 230, 235, 50, alpha);
+			break;
 		}
 	}
 
