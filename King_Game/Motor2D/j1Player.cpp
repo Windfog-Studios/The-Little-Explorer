@@ -196,6 +196,7 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+				grounded = false;
 			}
 			
 		}
@@ -212,6 +213,7 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+				grounded = false;
 			}
 			
 			if (player_input.pressing_F)
@@ -234,6 +236,7 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+				grounded = false;
 			}
 			
 			if (player_input.pressing_F)
@@ -313,6 +316,7 @@ bool j1Player::PreUpdate(){
 				state = JUMP;
 				velocity.y = jumpImpulse * 2/3; 
 				can_double_jump = false;
+				grounded = false;
 			}
 
 			if (current_animation->Finished())
@@ -409,49 +413,58 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	if (!god)
 	{
-	switch (c2->type)
-	{
-		case COLLIDER_WALL:
-			position = lastPosition;
-			velocity.x = velocity.y = 0;
-			if ((position.x < c2->rect.x + COLLIDER_MARGIN) && (state == FALL))
-			{
-				can_go_right = false;
-			}
-			if ((position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) && (state == FALL))
-			{
-				can_go_left = false;
-			}
-			if ((position.y < c2->rect.y + COLLIDER_MARGIN) && (last_state == FALL))
-			{
-				state = CROUCH_DOWN;
-				fall.Reset();
-				can_go_right = true;
-				can_go_left = true;
-			}
+		switch (c2->type)
+		{
+			case COLLIDER_WALL:
+				position = lastPosition;
+				velocity.x = velocity.y = 0;
+				if ((position.x < c2->rect.x + COLLIDER_MARGIN) && (state == FALL))
+				{
+					can_go_right = false;
+				}
+				if ((position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) && (state == FALL))
+				{
+					can_go_left = false;
+				}
+				if ((position.y < c2->rect.y + COLLIDER_MARGIN) && (last_state == FALL))
+				{
+					state = CROUCH_DOWN;
+					fall.Reset();
+					can_go_right = true;
+					can_go_left = true;
+				}
 
-			break;
-		case COLLIDER_DEATH:
-			if (!god) {
-				state = IDLE;
-				position.x = App->scene->player_x_position;
-				position.y = App->scene->player_y_position;
-				velocity.x = 0;
-				velocity.y = 0;
-				//App->scene->Reset_Camera();
-			}
-			break;
-		case COLLIDER_PLATFORM:
-			position = lastPosition;
-			break;
-		case COLLIDER_CHANGE_LEVEL:
-			if (App->scene->current_level == LEVEL_1) App->scene->LevelChange(LEVEL_2, LEVEL_1);
-			if (App->scene->current_level == LEVEL_2) App->scene->LevelChange(LEVEL_1, LEVEL_2);
-			break;
-		default:
-			break;
+				break;
+			case COLLIDER_DEATH:
+				if (!god) {
+					state = IDLE;
+					position.x = App->scene->player_x_position;
+					position.y = App->scene->player_y_position;
+					velocity.x = 0;
+					velocity.y = 0;
+					//App->scene->Reset_Camera();
+				}
+				break;
+			case COLLIDER_PLATFORM:
+				if (((position.y + current_animation->GetCurrentFrame().h >= c2->rect.y)&&(lastPosition.y + current_animation->GetCurrentFrame().h <= c2->rect.y + COLLIDER_MARGIN))||(grounded == true))
+				{
+					position = lastPosition;
+					velocity.x = velocity.y = 0;
+					grounded = true;
+					if (last_state == FALL)
+					{
+						state = IDLE;
+					}
+				}
+				break;
+			case COLLIDER_CHANGE_LEVEL:
+				if (App->scene->current_level == LEVEL_1) App->scene->LevelChange(LEVEL_2, LEVEL_1);
+				if (App->scene->current_level == LEVEL_2) App->scene->LevelChange(LEVEL_1, LEVEL_2);
+				break;
+			default:
+				break;
+		}
 	}
-			}
 }
 
 bool j1Player::LoadAnimations() {

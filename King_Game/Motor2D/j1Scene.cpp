@@ -65,7 +65,6 @@ bool j1Scene::Update(float dt)
 		else
 		{
 			LevelChange(LEVEL_1, LEVEL_2);
-			ResetLevel();
 		}
 	}
 
@@ -78,7 +77,6 @@ bool j1Scene::Update(float dt)
 		else
 		{
 			LevelChange(LEVEL_2, LEVEL_1);
-			ResetLevel();
 		}
 	}
 
@@ -180,4 +178,5 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 		App->map->CleanUp();
 		if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
 		if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
+		ResetLevel();
 }

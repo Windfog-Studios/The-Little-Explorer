@@ -110,6 +110,7 @@ public:
 	bool can_go_right = true;
 	bool can_go_left = true;
 	bool god = false;
+	bool grounded = false;
 };
 
 #endif // !_j1PLAYER_H_
