@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1UI.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -38,11 +39,6 @@ bool j1Scene::Start()
 	left_edge = App->render->camera.x + App->render->camera.w / 3;
 	right_edge = App->render->camera.x + App->render->camera.w *1/2;
 
-	//transition values
-	camera = &App->render->camera;
-	left_square = { camera->x - camera->w / 2,camera->y,camera->w / 2,camera->h };
-	right_square = { camera->x + camera->w,camera->y,camera->w *3/4,camera->h };
-
 	//initial map
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
@@ -65,23 +61,25 @@ bool j1Scene::Update(float dt)
 	//player inputs ---------------
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-
-		transition = true;
-		transition_moment = SDL_GetTicks();
+		App->ui->ResetTransition();
+		App->ui->transition = true;
+		App->ui->transition_moment = SDL_GetTicks();
 		want_to_load = LEVEL_1;
-		direction = CLOSE;
+		App->ui->direction = CLOSE;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-
-		transition = true;
-		transition_moment = SDL_GetTicks();
+		App->ui->ResetTransition();
+		App->ui->transition = true;
+		App->ui->transition_moment = SDL_GetTicks();
 		want_to_load = LEVEL_2;
-		direction = CLOSE;
+		App->ui->direction = CLOSE;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		ResetLevel();
+		App->ui->ResetTransition();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
@@ -136,8 +134,6 @@ bool j1Scene::Update(float dt)
 					App->map->data.width, App->map->data.height,
 					App->map->data.tile_width, App->map->data.tile_height,
 					App->map->data.tilesets.count());
-
-	if (transition == true) LevelTransition();
 	
 	App->win->SetTitle(title.GetString());
 	return true;
@@ -177,64 +173,9 @@ void j1Scene::ResetLevel() {
 }
 
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
+
 	App->map->CleanUp();
 	if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
 	if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
 	ResetLevel();
-}
-
-void j1Scene::LevelTransition() {
-	switch (direction)
-	{
-	case CLOSE:
-		if (left_square.x < camera->x)
-		{
-			left_square.x += 3;
-			right_square.x -= 3;
-			App->render->DrawQuad(left_square, 0, 0, 0, 255);
-			App->render->DrawQuad(right_square, 0, 0, 0, 255);
-		}
-		else
-		{
-			direction = STATIC;
-		}
-		break;
-	case OPEN:
-		if (left_square.x + left_square.w > camera->x)
-		{
-			left_square.x -= 3;
-			right_square.x += 3;
-			App->render->DrawQuad(left_square, 0, 0, 0, 255);
-			App->render->DrawQuad(right_square, 0, 0, 0, 255);
-		}
-		else
-		{
-			transition = CLOSE;
-		}
-		break;
-	case STATIC:
-		if (SDL_GetTicks() - transition_moment >= transition_time * 1000)
-		{
-			direction = OPEN;
-		}
-		else
-		{
-			App->render->DrawQuad(left_square, 0, 0, 0, 255);
-			App->render->DrawQuad(right_square, 0, 0, 0, 255);
-
-			if (current_level == want_to_load)
-			{
-				ResetLevel();
-			}
-			else if ((current_level == LEVEL_1) && (want_to_load == LEVEL_2)) {
-				LevelChange(LEVEL_2, LEVEL_1);
-			}
-			else if ((current_level == LEVEL_2) && (want_to_load == LEVEL_1)) {
-				LevelChange(LEVEL_1, LEVEL_2);
-			}
-		}
-		break;
-	default:
-		break;
-	}
 }
