@@ -98,6 +98,7 @@ void j1UI::LevelTransition() {
 				}
 			}
 			loaded = true;
+			App->scene->Reset_Camera();
 		}
 		break;
 	default:
