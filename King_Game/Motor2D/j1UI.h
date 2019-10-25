@@ -27,7 +27,7 @@ public:
 
 	bool Update(float dt);
 
-	//bool PostUpdate();
+	bool PostUpdate();
 
 	bool CleanUp();
 
