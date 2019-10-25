@@ -191,8 +191,8 @@ void j1Scene::LevelTransition() {
 		{
 			left_square.x += 3;
 			right_square.x -= 3;
-			App->render->DrawQuad(left_square, 75, 0, 130, 255);
-			App->render->DrawQuad(right_square, 75, 0, 130, 255);
+			App->render->DrawQuad(left_square, 0, 0, 0, 255);
+			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 		}
 		else
 		{
@@ -204,8 +204,8 @@ void j1Scene::LevelTransition() {
 		{
 			left_square.x -= 3;
 			right_square.x += 3;
-			App->render->DrawQuad(left_square, 75, 0, 130, 255);
-			App->render->DrawQuad(right_square, 75, 0, 130, 255);
+			App->render->DrawQuad(left_square, 0, 0, 0, 255);
+			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 		}
 		else
 		{
@@ -219,8 +219,8 @@ void j1Scene::LevelTransition() {
 		}
 		else
 		{
-			App->render->DrawQuad(left_square, 75, 0, 255, 255);
-			App->render->DrawQuad(right_square, 75, 0, 255, 255);
+			App->render->DrawQuad(left_square, 0, 0, 0, 255);
+			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 
 			if (current_level == want_to_load)
 			{
