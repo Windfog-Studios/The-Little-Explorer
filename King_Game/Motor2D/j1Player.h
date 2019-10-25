@@ -72,6 +72,8 @@ public:
 	SDL_Texture* player_tex;
 	p2SString folder;
 	Player_Input player_input;
+
+	//positions
 	int initial_x_position;
 	int initial_y_position;
 	iPoint position;
@@ -88,29 +90,30 @@ public:
 	Animation slide;
 	Animation fall;
 	Animation* current_animation;
+	p2List<Animation*> animations;
+	pugi::xml_document animation_doc;
 
 	p2SString hello_man;
-
-	p2List<Animation*> animations;
-
-	pugi::xml_document animation_doc;
 
 	Player_States state;
 	Player_States last_state;
 
 	SDL_RendererFlip flip;
+
 	Collider* collider = nullptr;
 	Collider* collider_copy;
 
+	//movement
 	float speed;
 	float jumpImpulse;
 	float gravity;
-
 	bool can_double_jump = true;
 	bool can_go_right = true;
 	bool can_go_left = true;
 	bool god = false;
 	bool grounded = false;
+
+	bool visible = true;
 };
 
 #endif // !_j1PLAYER_H_

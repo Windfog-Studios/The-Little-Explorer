@@ -15,12 +15,6 @@ enum Map
 	LEVEL_2,
 };
 
-enum TransitionDirection {
-	STATIC,
-	OPEN,
-	CLOSE
-};
-
 class j1Scene : public j1Module
 {
 public:
@@ -54,8 +48,6 @@ public:
 
 	void LevelChange(Map unloading_map, Map loading_map);
 
-	void LevelTransition();
-
 public:
 	//edges
 	int left_edge;
@@ -72,15 +64,9 @@ public:
 	int	player_y_position;
 
 	p2SString song;
-	bool transition = false;
+
 private:
-	//transition variables
-	int transition_time = 5;
-	int transition_moment = 0;
-	TransitionDirection direction = CLOSE;
-	SDL_Rect* camera;
-	SDL_Rect left_square;
-	SDL_Rect right_square;
+
 };
 
 #endif // __j1SCENE_H__

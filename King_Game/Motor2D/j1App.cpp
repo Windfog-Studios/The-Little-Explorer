@@ -13,6 +13,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1Collision.h"
+#include "j1UI.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -29,6 +30,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	player = new j1Player();
 	collision = new j1Collision();
+	ui = new j1UI();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -40,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(player);
 	AddModule(collision);
+	AddModule(ui);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -302,8 +305,6 @@ void j1App::SaveGame() const
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
-
-
 }
 
 bool j1App::LoadGameNow()

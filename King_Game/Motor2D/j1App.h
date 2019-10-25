@@ -15,6 +15,7 @@ class j1Scene;
 class j1Map;
 class j1Player;
 class j1Collision;
+class j1UI;
 
 class j1App
 {
@@ -87,6 +88,7 @@ public:
 	j1Map*				map;
 	j1Player*			player;
 	j1Collision*		collision;
+	j1UI*				ui;
 
 	bool pause = false;
 

@@ -406,7 +406,10 @@ bool j1Player::Update(float dt){
 
 bool j1Player::PostUpdate() {
 
-	App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
+	if (visible == true)
+	{
+		App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
+	}
 
 	return true;	
 }
