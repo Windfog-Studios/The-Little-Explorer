@@ -131,7 +131,9 @@ bool j1Player::Start(){
 }
 
 bool j1Player::CleanUp() {
+	collider->to_delete = true;
 	collider = nullptr;
+	App->tex->UnLoad(player_tex);
 	player_tex = nullptr;
 	return true;
 }
