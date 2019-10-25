@@ -47,6 +47,8 @@ public:
 
 	void LevelChange(Map unloading_map, Map loading_map);
 
+	void LevelTransition();
+
 public:
 	
 	int left_edge;
@@ -57,6 +59,7 @@ public:
 	int	player_x_position;
 	int	player_y_position;
 	p2SString song;
+	bool transition = false;
 private:
 };
 

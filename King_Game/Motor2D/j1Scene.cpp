@@ -58,6 +58,9 @@ bool j1Scene::Update(float dt)
 	//player inputs ---------------
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+
+		transition = true;
+
 		if (current_level == LEVEL_1)
 		{
 			ResetLevel();
@@ -69,6 +72,8 @@ bool j1Scene::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+		transition = true;
 
 		if (current_level == LEVEL_2)
 		{
@@ -137,6 +142,8 @@ bool j1Scene::Update(float dt)
 					App->map->data.tile_width, App->map->data.tile_height,
 					App->map->data.tilesets.count());
 
+	if (transition == true) LevelTransition();
+	
 	App->win->SetTitle(title.GetString());
 	return true;
 }
@@ -175,20 +182,29 @@ void j1Scene::ResetLevel() {
 }
 
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
-	SDL_Rect* camera = &App->render->camera;
-	SDL_Rect left_square = {camera->x-camera->w/2,camera->y,camera->w/2,camera->h};
-	SDL_Rect right_square = { camera->x + camera->w,camera->y,camera->w / 2,camera->h };
-	while (left_square.x < camera->x)
-	{
-		left_square.x++;
-		right_square.x--;
-		App->render->DrawQuad(left_square, 255, 0, 0, 100);
-		App->render->DrawQuad(right_square, 255, 0, 0, 100);
-	}
 	App->map->CleanUp();
 	if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
 	if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
 	ResetLevel();
-	left_square.x = camera->x - camera->w / 2;
-	right_square.x = camera->x + camera->w;
+}
+
+void j1Scene::LevelTransition() {
+	SDL_Rect* camera = &App->render->camera;
+	SDL_Rect left_square = { camera->x - camera->w / 2,camera->y,camera->w / 2,camera->h };
+	SDL_Rect right_square = { camera->x + camera->w,camera->y,camera->w / 2,camera->h };
+	
+	if (left_square.x < camera->x)
+	{
+		left_square.x++;
+		right_square.x--;
+		App->render->DrawQuad(left_square, 255, 0, 0, 255);
+		App->render->DrawQuad(right_square, 255, 0, 0, 255);
+	}
+	else
+	{
+		transition = false;
+		left_square.x = camera->x - camera->w / 2;
+		right_square.x = camera->x + camera->w;
+	}
+
 }
