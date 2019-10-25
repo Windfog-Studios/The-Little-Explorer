@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1App.h"
 
 #define CAMERA_SPEED 10
 
@@ -12,6 +13,12 @@ enum Map
 	NO_MAP = 0,
 	LEVEL_1,
 	LEVEL_2,
+};
+
+enum TransitionDirection {
+	STATIC,
+	OPEN,
+	CLOSE
 };
 
 class j1Scene : public j1Module
@@ -50,17 +57,30 @@ public:
 	void LevelTransition();
 
 public:
-	
+	//edges
 	int left_edge;
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
+
+	//levels
 	Map current_level;
+	Map want_to_load = NO_MAP;
+
+	//player initial position
 	int	player_x_position;
 	int	player_y_position;
+
 	p2SString song;
 	bool transition = false;
 private:
+	//transition variables
+	int transition_time = 5;
+	int transition_moment = 0;
+	TransitionDirection direction = CLOSE;
+	SDL_Rect* camera;
+	SDL_Rect left_square;
+	SDL_Rect right_square;
 };
 
 #endif // __j1SCENE_H__

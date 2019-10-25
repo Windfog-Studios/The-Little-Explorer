@@ -37,10 +37,17 @@ bool j1Scene::Start()
 	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
 	left_edge = App->render->camera.x + App->render->camera.w / 3;
 	right_edge = App->render->camera.x + App->render->camera.w *1/2;
-	
+
+	//transition values
+	camera = &App->render->camera;
+	left_square = { camera->x - camera->w / 2,camera->y,camera->w / 2,camera->h };
+	right_square = { camera->x + camera->w,camera->y,camera->w *3/4,camera->h };
+
+	//initial map
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
 	//App->map->Load("Level2.tmx");
+
 	return true;
 }
 
@@ -60,29 +67,17 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 
 		transition = true;
-
-		if (current_level == LEVEL_1)
-		{
-			ResetLevel();
-		}
-		else
-		{
-			LevelChange(LEVEL_1, LEVEL_2);
-		}
+		transition_moment = SDL_GetTicks();
+		want_to_load = LEVEL_1;
+		direction = CLOSE;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 
 		transition = true;
-
-		if (current_level == LEVEL_2)
-		{
-			ResetLevel();
-		}
-		else
-		{
-			LevelChange(LEVEL_2, LEVEL_1);
-		}
+		transition_moment = SDL_GetTicks();
+		want_to_load = LEVEL_2;
+		direction = CLOSE;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -189,22 +184,57 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 }
 
 void j1Scene::LevelTransition() {
-	SDL_Rect* camera = &App->render->camera;
-	SDL_Rect left_square = { camera->x - camera->w / 2,camera->y,camera->w / 2,camera->h };
-	SDL_Rect right_square = { camera->x + camera->w,camera->y,camera->w / 2,camera->h };
-	
-	if (left_square.x < camera->x)
+	switch (direction)
 	{
-		left_square.x++;
-		right_square.x--;
-		App->render->DrawQuad(left_square, 255, 0, 0, 255);
-		App->render->DrawQuad(right_square, 255, 0, 0, 255);
-	}
-	else
-	{
-		transition = false;
-		left_square.x = camera->x - camera->w / 2;
-		right_square.x = camera->x + camera->w;
-	}
+	case CLOSE:
+		if (left_square.x < camera->x)
+		{
+			left_square.x += 3;
+			right_square.x -= 3;
+			App->render->DrawQuad(left_square, 75, 0, 130, 255);
+			App->render->DrawQuad(right_square, 75, 0, 130, 255);
+		}
+		else
+		{
+			direction = STATIC;
+		}
+		break;
+	case OPEN:
+		if (left_square.x + left_square.w > camera->x)
+		{
+			left_square.x -= 3;
+			right_square.x += 3;
+			App->render->DrawQuad(left_square, 75, 0, 130, 255);
+			App->render->DrawQuad(right_square, 75, 0, 130, 255);
+		}
+		else
+		{
+			transition = CLOSE;
+		}
+		break;
+	case STATIC:
+		if (SDL_GetTicks() - transition_moment >= transition_time * 1000)
+		{
+			direction = OPEN;
+		}
+		else
+		{
+			App->render->DrawQuad(left_square, 75, 0, 255, 255);
+			App->render->DrawQuad(right_square, 75, 0, 255, 255);
 
+			if (current_level == want_to_load)
+			{
+				ResetLevel();
+			}
+			else if ((current_level == LEVEL_1) && (want_to_load == LEVEL_2)) {
+				LevelChange(LEVEL_2, LEVEL_1);
+			}
+			else if ((current_level == LEVEL_2) && (want_to_load == LEVEL_1)) {
+				LevelChange(LEVEL_1, LEVEL_2);
+			}
+		}
+		break;
+	default:
+		break;
+	}
 }
