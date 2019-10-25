@@ -43,7 +43,9 @@ public:
 	SDL_Rect* camera;
 	SDL_Rect left_square;
 	SDL_Rect right_square;
+	bool loaded = false;
 	bool transition = false;
+	int DeltaTime = 0;
 };
 
 #endif // !_j1UI_H

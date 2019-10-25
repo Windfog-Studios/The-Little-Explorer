@@ -63,17 +63,21 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		App->ui->ResetTransition();
 		App->ui->transition = true;
+		App->ui->loaded = false;
 		App->ui->transition_moment = SDL_GetTicks();
 		want_to_load = LEVEL_1;
 		App->ui->direction = CLOSE;
+		App->ui->ResetTransition();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
 		App->ui->ResetTransition();
 		App->ui->transition = true;
+		App->ui->loaded = false;
 		App->ui->transition_moment = SDL_GetTicks();
 		want_to_load = LEVEL_2;
 		App->ui->direction = CLOSE;
+		App->ui->ResetTransition();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {

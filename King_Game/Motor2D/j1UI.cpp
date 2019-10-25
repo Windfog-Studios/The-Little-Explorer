@@ -33,12 +33,18 @@ bool j1UI::CleanUp() {
 
 bool j1UI::Update(float dt) {
 	bool ret = true;
-	if (transition == true) LevelTransition();
+	SDL_Rect rect = { 10,10,10,10 };
+	if (transition == true) {
+		LevelTransition();
+		App->render->DrawQuad(left_square, 0, 0, 0, 255);
+		App->render->DrawQuad(right_square, 0, 0, 0, 255);
+	}
+	App->render->DrawQuad(rect, 255, 0, 0, 255);
 	return ret;
 }
 
 void j1UI::LevelTransition() {
-
+	SDL_Rect screen = { 0, 0, camera->w,camera->h };
 	switch (direction)
 	{
 	case CLOSE:
@@ -65,28 +71,30 @@ void j1UI::LevelTransition() {
 		else
 		{
 			transition = CLOSE;
+			transition = false;
 		}
 		break;
 	case STATIC:
-		if (SDL_GetTicks() - transition_moment >= transition_time * 1000)
+		DeltaTime = SDL_GetTicks();
+		if (transition_moment - DeltaTime <= - transition_time * 1000)
 		{
 			direction = OPEN;
 		}
-		else
+		else 
 		{
-			App->render->DrawQuad(left_square, 0, 0, 0, 255);
-			App->render->DrawQuad(right_square, 0, 0, 0, 255);
-
-			if (App->scene->current_level == App->scene->want_to_load)
-			{
-				App->scene->ResetLevel();
+			if (loaded == false) {
+				if (App->scene->current_level == App->scene->want_to_load)
+				{
+					App->scene->ResetLevel();
+				}
+				else if ((App->scene->current_level == LEVEL_1) && (App->scene->want_to_load == LEVEL_2)) {
+					App->scene->LevelChange(LEVEL_2, LEVEL_1);
+				}
+				else if ((App->scene->current_level == LEVEL_2) && (App->scene->want_to_load == LEVEL_1)) {
+					App->scene->LevelChange(LEVEL_1, LEVEL_2);
+				}
 			}
-			else if ((App->scene->current_level == LEVEL_1) && (App->scene->want_to_load == LEVEL_2)) {
-				App->scene->LevelChange(LEVEL_2, LEVEL_1);
-			}
-			else if ((App->scene->current_level == LEVEL_2) && (App->scene->want_to_load == LEVEL_1)) {
-				App->scene->LevelChange(LEVEL_1, LEVEL_2);
-			}
+			loaded = true;
 		}
 		break;
 	default:
@@ -95,9 +103,6 @@ void j1UI::LevelTransition() {
 }
 
 void j1UI::ResetTransition() {
-	camera = &App->render->camera;
-	left_square = { camera->x - camera->w / 2,camera->y,camera->w / 2,camera->h };
-	right_square = { camera->x + camera->w,camera->y,camera->w * 3 / 4,camera->h };
 
-	LOG("camera x: %i", camera->x);
+	
 }
