@@ -175,8 +175,20 @@ void j1Scene::ResetLevel() {
 }
 
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
-		App->map->CleanUp();
-		if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
-		if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
-		ResetLevel();
+	SDL_Rect* camera = &App->render->camera;
+	SDL_Rect left_square = {camera->x-camera->w/2,camera->y,camera->w/2,camera->h};
+	SDL_Rect right_square = { camera->x + camera->w,camera->y,camera->w / 2,camera->h };
+	while (left_square.x < camera->x)
+	{
+		left_square.x++;
+		right_square.x--;
+		App->render->DrawQuad(left_square, 255, 0, 0, 100);
+		App->render->DrawQuad(right_square, 255, 0, 0, 100);
+	}
+	App->map->CleanUp();
+	if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
+	if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
+	ResetLevel();
+	left_square.x = camera->x - camera->w / 2;
+	right_square.x = camera->x + camera->w;
 }
