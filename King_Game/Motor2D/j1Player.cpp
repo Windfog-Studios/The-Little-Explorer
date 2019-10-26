@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 #include "j1UI.h"
+#include "j1Particles.h"
 
 j1Player::j1Player():j1Module () {
 	name.create("player");
@@ -445,8 +446,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					if (App->ui->transition == false)
 					{
 						state = IDLE;
-						position.x = App->scene->player_x_position;
-						position.y = App->scene->player_y_position;
+						//position.x = App->scene->player_x_position;
+						//position.y = App->scene->player_y_position;
 						App->ui->transition = true;
 						App->scene->blocked_camera = true;
 						App->ui->ResetTransition();
