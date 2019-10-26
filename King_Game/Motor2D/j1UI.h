@@ -33,7 +33,7 @@ public:
 
 	void LevelTransition();
 
-	void ResetTransition();
+	void ResetTransition(TransitionDirection state = CLOSE);
 
 public:
 	//transition variables

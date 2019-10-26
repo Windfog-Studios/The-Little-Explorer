@@ -63,6 +63,8 @@ void j1UI::LevelTransition() {
 		{
 			direction = STATIC;
 			App->scene->Reset_Camera();
+			left_square.x = -camera->x;
+			right_square.x = -camera->x + camera->w / 2;
 			left_square.y = -camera->y;
 			right_square.y = -camera->y;
 		}
@@ -103,8 +105,8 @@ void j1UI::LevelTransition() {
 				}
 			}
 			loaded = true;
-			App->scene->blocked_camera = false;
 			App->scene->Reset_Camera();
+			ResetTransition(STATIC);
 			App->scene->ResetLevel();
 		}
 		break;
@@ -113,10 +115,18 @@ void j1UI::LevelTransition() {
 	}
 }
 
-void j1UI::ResetTransition() {
-	direction = CLOSE;
-	left_square.x = -camera->x - left_square.w;
-	right_square.x = -camera->x + camera->w;
+void j1UI::ResetTransition(TransitionDirection state) {
 	left_square.y = -camera->y;
 	right_square.y = -camera->y;
+	if (state == CLOSE)
+	{
+		left_square.x = -camera->x - left_square.w;
+		right_square.x = -camera->x + camera->w;
+	}
+	else
+	{
+		left_square.x = -camera->x;
+		right_square.x = -camera->x + camera->w / 2;
+	}
+	App->scene->blocked_camera = true;
 }

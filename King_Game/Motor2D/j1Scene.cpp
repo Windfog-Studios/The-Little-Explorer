@@ -39,8 +39,8 @@ bool j1Scene::Start()
 {
 	//initial map
 	//App->map->Load("hello2.tmx");
-	App->map->Load("Level1.tmx");
-	//App->map->Load("Level2.tmx");
+	//App->map->Load("Level1.tmx");
+	App->map->Load("Level2.tmx");
 
 	return true;
 }
@@ -78,6 +78,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		ResetLevel();
 		App->ui->ResetTransition();
+		App->ui->transition = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
