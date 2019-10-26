@@ -79,7 +79,7 @@ void j1UI::LevelTransition() {
 		}
 		else
 		{
-			transition = CLOSE;
+			direction = CLOSE;
 			transition = false;
 			App->scene->blocked_camera = false;
 		}

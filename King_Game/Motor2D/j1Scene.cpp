@@ -78,6 +78,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		ResetLevel();
 		App->ui->ResetTransition();
+		App->ui->transition_moment = SDL_GetTicks();
 		App->ui->transition = true;
 	}
 
