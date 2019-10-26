@@ -197,7 +197,6 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
-				p2SString(hello_man.GetString());
 				grounded = false;
 			}
 			
