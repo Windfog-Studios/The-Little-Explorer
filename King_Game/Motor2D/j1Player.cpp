@@ -113,8 +113,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	gravity = config.child("gravity").attribute("value").as_float();
 
-	hello_man = config.child("hello_man").attribute("source").as_string();
-
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
 	return ret;

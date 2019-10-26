@@ -62,6 +62,7 @@ void j1Map::Draw()
 					{
 						position = MapToWorld(x, y-map_offset);
 						App->render->Blit(tileset->data->texture, position.x, position.y, &tileset->data->GetRect(layer->data->tile_gid[layer->data->Get(x, y)]));
+						LOG("tile gid: %u", layer->data->tile_gid[layer->data->Get(x, y)]);
 					}
 				}
 				layer = layer->next;
@@ -408,6 +409,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->tile_gid = new uint[layer->width * layer->height];
 
 		memset(layer->tile_gid, 0, size);
+		LOG("size: %u", size);
 
 		for (uint i = 0u; i < layer->width * layer->height; i++)
 		{
