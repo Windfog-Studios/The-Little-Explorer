@@ -39,8 +39,8 @@ bool j1Scene::Start()
 {
 	//initial map
 	//App->map->Load("hello2.tmx");
-	//App->map->Load("Level1.tmx");
-	App->map->Load("Level2.tmx");
+	App->map->Load("Level1.tmx");
+	//App->map->Load("Level2.tmx");
 
 	return true;
 }
@@ -56,9 +56,8 @@ bool j1Scene::Update(float dt)
 {
 	SDL_Rect* camera = &App->render->camera;
 	iPoint* player_position = &App->player->position;
-	//left_edge =  
-	//player inputs ---------------
 
+	//player inputs ---------------
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		App->ui->transition = true;
 		App->ui->loaded = false;
@@ -91,22 +90,22 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 	if (!blocked_camera) {
-		if (((player_position->x < camera_limits.x)) && (camera_limits.x > App->render->initial_camera_x + App->render->camera.w / 3) && (camera_limits.x + camera_limits.w < App->map->data.width * App->map->data.tile_width - App->render->camera.w / 2)) {
+		if (((player_position->x < camera_limits.x)) && (-camera->x < 0)) {
 			App->render->camera.x += App->player->speed;
 			camera_limits.x -= App->player->speed;
 		}
 
-		if (player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_limits.x + camera_limits.w) {
+		if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_limits.x + camera_limits.w)&&(-camera->x + camera->w + App->player->speed < App->map->data.width * App->map->data.tile_width)) {
 			App->render->camera.x -= App->player->speed;
 			camera_limits.x += App->player->speed;
 		}
 
-		if (((player_position->y < camera_limits.y)) && (camera_limits.y + camera_limits.h > App->render->initial_camera_y - App->player->current_animation->GetCurrentFrame().h)) {
+		if (((player_position->y < camera_limits.y)) && (camera_limits.y - camera_limits_y_offset > 0)) {
 			App->render->camera.y += App->player->speed;
 			camera_limits.y -= App->player->speed;
 		}
 
-		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_limits.y + camera_limits.h)) && (camera_limits.y < App->map->data.height * App->map->data.tile_height)) {
+		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_limits.y + camera_limits.h)) && (-camera->y + camera->h + App->player->speed < App->map->data.height * App->map->data.tile_height)) {
 			App->render->camera.y -= App->player->speed;
 			camera_limits.y += App->player->speed;
 		}
@@ -133,6 +132,8 @@ bool j1Scene::Update(float dt)
 					App->map->data.tilesets.count());
 	
 	App->win->SetTitle(title.GetString());
+	SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
+	App->render->DrawQuad(test_rect, 255, 0, 0, 255);
 	return true;
 }
 

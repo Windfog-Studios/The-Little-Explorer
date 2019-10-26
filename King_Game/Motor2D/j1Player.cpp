@@ -467,15 +467,18 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 				break;
 			case COLLIDER_CHANGE_LEVEL:
-				if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
-				if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
-				//position.x = initial_x_position;
-				//position.y = initial_y_position;
-				App->ui->transition = true;
-				App->ui->loaded = false;
-				App->ui->transition_moment = SDL_GetTicks();
-				App->ui->ResetTransition();
-				//App->scene->Reset_Camera();
+				if (App->ui->transition == false)
+				{
+					if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
+					if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
+					//position.x = initial_x_position;
+					//position.y = initial_y_position;
+					App->ui->transition = true;
+					App->ui->loaded = false;
+					App->ui->transition_moment = SDL_GetTicks();
+					App->ui->ResetTransition();
+					//App->scene->Reset_Camera();
+				}
 				break;
 			default:
 				break;
