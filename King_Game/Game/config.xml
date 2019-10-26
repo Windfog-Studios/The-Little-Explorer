@@ -45,6 +45,9 @@
 	<music song="Video_Game_Soldiers.ogg" />
     </level2>
   </map>
+  <scene>
+  <camera_limits x="300" y="175" w="300" h="400" />
+  </scene>
   <player>
     <folder>audio/fx</folder>
     <hello_man source="hello_man.wav"/>

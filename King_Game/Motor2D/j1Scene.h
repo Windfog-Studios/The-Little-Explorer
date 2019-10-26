@@ -25,7 +25,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -50,10 +50,16 @@ public:
 
 public:
 	//edges
+	SDL_Rect camera_limits;
 	int left_edge;
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
+
+	int top_divider;
+	int left_divider;
+	int right_divider;
+	int bottom_divider;
 
 	//levels
 	Map current_level;
@@ -64,6 +70,7 @@ public:
 	int	player_y_position;
 
 	p2SString song;
+	p2SString folder;
 
 private:
 

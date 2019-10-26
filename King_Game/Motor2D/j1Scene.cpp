@@ -21,9 +21,14 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
+	folder.create(config.child("folder").child_value());
+	camera_limits.x = config.child("camera_limits").attribute("x").as_int();
+	camera_limits.y = config.child("camera_limits").attribute("y").as_int();
+	camera_limits.w = config.child("camera_limits").attribute("w").as_int();
+	camera_limits.h = config.child("camera_limits").attribute("h").as_int();
 	bool ret = true;
 
 	return ret;
@@ -32,13 +37,6 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	
-	//invisible square delimiting the space in the camera where the player can move
-	top_edge = App->render->camera.y + App->render->camera.h / 4;
-	bottom_edge = App->render->camera.y + App->render->camera.h* 3/4;
-	left_edge = App->render->camera.x + App->render->camera.w / 3;
-	right_edge = App->render->camera.x + App->render->camera.w *1/2;
-
 	//initial map
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
@@ -56,8 +54,9 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	SDL_Rect* camera = &App->render->camera;
 	iPoint* player_position = &App->player->position;
-
+	//left_edge =  
 	//player inputs ---------------
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -90,28 +89,24 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 
-	if (((player_position->x < left_edge)) &&(left_edge > App->render->initial_camera_x + App->render->camera.w / 3)&&(right_edge < App->map->data.width * App->map->data.tile_width - App->render->camera.w/2)){
+	if (((player_position->x < camera_limits.x)) &&(camera_limits.x > App->render->initial_camera_x + App->render->camera.w / 3)&&(camera_limits.x + camera_limits.w < App->map->data.width * App->map->data.tile_width - App->render->camera.w/2)){
 			App->render->camera.x += App->player->speed;
-			right_edge -= App->player->speed;
-			left_edge -= App->player->speed;
+			camera_limits.x -= App->player->speed;
 	}
 
-	if (player_position->x+App->player->current_animation->GetCurrentFrame().w > right_edge) { 
+	if (player_position->x+App->player->current_animation->GetCurrentFrame().w >camera_limits.x + camera_limits.w){ 
 		App->render->camera.x -= App->player->speed;
-		right_edge += App->player->speed;
-		left_edge+= App->player->speed;
+		camera_limits.x += App->player->speed;
 	}
 
-	if (((player_position->y < top_edge))&&(top_edge > App->render->initial_camera_y - App->player->current_animation->GetCurrentFrame().h)) {
+	if (((player_position->y < camera_limits.y))&&(camera_limits.y + camera_limits.h > App->render->initial_camera_y - App->player->current_animation->GetCurrentFrame().h)) {
 			App->render->camera.y += App->player->speed;
-			top_edge -= App->player->speed;
-			bottom_edge -= App->player->speed;
+			camera_limits.y -= App->player->speed;
 	}
 
-	if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > bottom_edge))&&(top_edge < App->render->initial_camera_y + 380)) {
+	if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_limits.y + camera_limits.h))&&(camera_limits.y < App->map->data.height * App->map->data.tile_height )) {
 		App->render->camera.y -= App->player->speed;
-		top_edge+= App->player->speed;
-		bottom_edge+= App->player->speed;
+		camera_limits.y += App->player->speed;
 	}
 
 	//camera manual control --------------
