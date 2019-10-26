@@ -10,32 +10,73 @@
 
 struct Collider;
 
+struct Properties
+{
+	struct Property
+	{
+		p2SString name;
+		int value;
+	};
+
+	~Properties()
+	{
+		p2List_item<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	int Get(const char* name, int default_value = 0) const;
+
+	p2List<Property*>	list;
+};
+
 // ----------------------------------------------------
-struct MapLayer {
-	p2SString name = "No name";
-	uint width = 0u;
-	uint height = 0u;
-	uint* tile_gid = nullptr;
-	inline uint Get(int x, int y) const { if (tile_gid >0) return x + y * width; };
-	~MapLayer() { RELEASE(tile_gid); }
+struct MapLayer
+{
+	p2SString	name;
+	int			width;
+	int			height;
+	uint* data;
+	Properties	properties;
+
+	MapLayer() : data(NULL)
+	{}
+
+	~MapLayer()
+	{
+		RELEASE(data);
+	}
+
+	inline uint Get(int x, int y) const
+	{
+		return data[(y * width) + x];
+	}
 };
 // ----------------------------------------------------
 struct TileSet
 {
-	SDL_Rect GetRect(int tile_id);
-	p2SString			name = "No name";
-	int					firstgid =0 ;
-	int					margin = 0;
-	int					spacing = 0;
-	int					tile_width = 0;
-	int					tile_height = 0;
-	SDL_Texture*		texture = nullptr;
-	int					tex_width = 0;
-	int					tex_height = 0;
-	int					num_tiles_width = 0;
-	int					num_tiles_height = 0;
-	int					offset_x = 0;
-	int					offset_y = 0;
+	SDL_Rect GetTileRect(int id) const;
+
+	p2SString			name;
+	int					firstgid;
+	int					margin;
+	int					spacing;
+	int					tile_width;
+	int					tile_height;
+	SDL_Texture* texture;
+	int					tex_width;
+	int					tex_height;
+	int					num_tiles_width;
+	int					num_tiles_height;
+	int					offset_x;
+	int					offset_y;
 };
 
 struct ObjectGroup {
@@ -104,6 +145,9 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup);
+	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+
+	TileSet* GetTilesetFromTileId(int id) const;
 
 public:
 
@@ -115,6 +159,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+
 	int level_1_player_x;
 	int level_1_player_y;
 	int level_2_player_x;

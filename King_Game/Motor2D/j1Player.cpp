@@ -441,12 +441,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				break;
 			case COLLIDER_DEATH:
 				if (!god) {
-					state = IDLE;
-					position.x = App->scene->player_x_position;
-					position.y = App->scene->player_y_position;
 					velocity.x = 0;
-					velocity.y = 0;
-					//App->scene->Reset_Camera();
+					if (App->ui->transition == false)
+					{
+						state = IDLE;
+						position.x = App->scene->player_x_position;
+						position.y = App->scene->player_y_position;
+						App->ui->transition = true;
+						App->scene->blocked_camera = true;
+						App->ui->ResetTransition();
+						//App->scene->Reset_Camera();
+					}
 				}
 				break;
 			case COLLIDER_PLATFORM:

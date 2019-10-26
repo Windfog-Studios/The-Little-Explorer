@@ -56,10 +56,10 @@ public:
 	int top_edge;
 	int bottom_edge;
 
-	int top_divider;
-	int left_divider;
-	int right_divider;
-	int bottom_divider;
+	int camera_limits_x_offset;
+	int camera_limits_y_offset;
+
+	bool blocked_camera = false;
 
 	//levels
 	Map current_level;

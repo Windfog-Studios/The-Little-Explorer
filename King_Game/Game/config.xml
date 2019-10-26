@@ -32,8 +32,6 @@
       <sfxVolumeModifier value="1" />
     </sfx>
   </audio>
-	
-
   <map>
     <folder>maps/</folder>
     <level1>
@@ -46,7 +44,7 @@
     </level2>
   </map>
   <scene>
-  <camera_limits x="300" y="175" w="300" h="400" />
+  <camera_limits x="300" y="175" w="300" h="300" />
   </scene>
   <player>
     <folder>audio/fx</folder>
@@ -61,4 +59,7 @@
     <jumpImpulse value="8.0"/>
     <gravity value="0.3"/>		
   </player>
+  <ui>
+    <transition_speed value="3.0" />
+  </ui>
 </config>

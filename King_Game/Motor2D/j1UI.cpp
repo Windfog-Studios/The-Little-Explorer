@@ -13,15 +13,16 @@ j1UI::j1UI() : j1Module() {
 
 j1UI :: ~j1UI() {}
 
-bool j1UI::Awake() {
+bool j1UI::Awake(pugi::xml_node& config) {
 	LOG("Loading UI");
+	transition_speed = config.child("transition_speed").attribute("value").as_float();
 	return true;
 }
 
 bool j1UI::Start() {
 	//transition values
 	camera = &App->render->camera;
-	left_square = { -camera->x - camera->w / 2,camera->y,camera->w / 2,camera->h };
+	left_square = { -camera->x - camera->w / 2,camera->y,camera->w / 2 + (int)transition_speed,camera->h };
 	right_square = { camera->x + camera->w,camera->y,camera->w * 3 / 4,camera->h };
 	return true;
 }
@@ -51,23 +52,26 @@ void j1UI::LevelTransition() {
 	switch (direction)
 	{
 	case CLOSE:
-		if (left_square.x <= -camera->x)
+		if (left_square.x <= -camera->x - transition_speed / 2)
 		{
-			left_square.x += 3;
-			right_square.x -= 3;
+			left_square.x += transition_speed;
+			right_square.x -= transition_speed;
 			App->render->DrawQuad(left_square, 0, 0, 0, 255);
 			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 		}
 		else
 		{
 			direction = STATIC;
+			App->scene->Reset_Camera();
+			left_square.y = -camera->y;
+			right_square.y = -camera->y;
 		}
 		break;
 	case OPEN:
 		if (left_square.x + left_square.w > camera->x)
 		{
-			left_square.x -= 3;
-			right_square.x += 3;
+			left_square.x -= transition_speed;
+			right_square.x += transition_speed;
 			App->render->DrawQuad(left_square, 0, 0, 0, 255);
 			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 		}
@@ -75,6 +79,7 @@ void j1UI::LevelTransition() {
 		{
 			transition = CLOSE;
 			transition = false;
+			App->scene->blocked_camera = false;
 		}
 		break;
 	case STATIC:
@@ -98,7 +103,9 @@ void j1UI::LevelTransition() {
 				}
 			}
 			loaded = true;
+			App->scene->blocked_camera = false;
 			App->scene->Reset_Camera();
+			App->scene->ResetLevel();
 		}
 		break;
 	default:
@@ -110,4 +117,6 @@ void j1UI::ResetTransition() {
 	direction = CLOSE;
 	left_square.x = -camera->x - left_square.w;
 	right_square.x = -camera->x + camera->w;
+	left_square.y = -camera->y;
+	right_square.y = -camera->y;
 }

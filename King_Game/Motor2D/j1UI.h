@@ -19,7 +19,7 @@ public:
 
 	virtual ~j1UI();
 
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	bool Start();
 
@@ -39,6 +39,7 @@ public:
 	//transition variables
 	int transition_time = 5;
 	int transition_moment = 0;
+	float transition_speed = 0;
 	TransitionDirection direction = CLOSE;
 	SDL_Rect* camera;
 	SDL_Rect left_square;
