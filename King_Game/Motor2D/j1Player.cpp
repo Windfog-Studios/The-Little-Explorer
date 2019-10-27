@@ -223,6 +223,7 @@ bool j1Player::PreUpdate(){
 			if ((player_input.pressing_space) && (!god))
 			{
 				state = JUMP;
+				App->audio->PlayFx(2);
 				velocity.y = jumpImpulse;
 				grounded = false;
 				if(velocity.y > 0) App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
@@ -308,7 +309,7 @@ bool j1Player::PreUpdate(){
 				jump.Reset();
 				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
-				App->audio->PlayFx(1);
+				App->audio->PlayFx(2);
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
 			}
 
@@ -330,7 +331,7 @@ bool j1Player::PreUpdate(){
 			{
 				jump.Reset();
 				state = JUMP;
-				App->audio->PlayFx(1);
+				App->audio->PlayFx(2);
 				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
 				grounded = false;
@@ -459,9 +460,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			case COLLIDER_DEATH:
 				if (!god) {
 					velocity.x = 0;
+					App->audio->PlayFx(1);
 					if (App->ui->transition == false)
 					{
-						state = IDLE;
 						App->ui->transition = true;
 						App->scene->blocked_camera = true;
 						App->ui->ResetTransition();
