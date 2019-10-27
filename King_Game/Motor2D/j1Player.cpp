@@ -155,7 +155,7 @@ bool j1Player::PreUpdate(){
 	lastPosition = position;
 	last_state = state;
 
-	LOG("Velocity y; %.2f", velocity.y);
+	//LOG("Velocity y; %.2f", velocity.y);
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		god = !god;
@@ -306,12 +306,8 @@ bool j1Player::PreUpdate(){
 				jump.Reset();
 				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
-<<<<<<< HEAD
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
 				App->audio->PlayFx(jumpFX.Length());
-=======
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
->>>>>>> 602b3faee4bffe7012776cf2b4f1cd510d40fde0
 			}
 
 			if (current_animation->Finished())
@@ -332,6 +328,7 @@ bool j1Player::PreUpdate(){
 			{
 				jump.Reset();
 				state = JUMP;
+				App->audio->PlayFx(jumpFX.Length());
 				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
 				grounded = false;

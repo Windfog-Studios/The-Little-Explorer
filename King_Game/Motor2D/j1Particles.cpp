@@ -135,7 +135,6 @@ Particle* j1Particles::AddParticle(const Particle& particle, int x, int y, COLLI
 			}
 			active[i] = p;
 			p->flip = flip;
-			LOG("particle created");
 			return p;
 		}
 	}
