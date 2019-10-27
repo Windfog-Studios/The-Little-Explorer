@@ -1,4 +1,4 @@
-# The Little Explorer
+﻿# The Little Explorer
 
 A very skilled little explorer named Tilo is in the middle of a dangerous forest of Guayamabí trying to reach the old castle hidden in it looking for treasures. Help him to get there and live with him amazing adventures!
 
@@ -42,8 +42,28 @@ All the art used was made by various artists contributing to Open Pixel Project.
 You can check their official page here: https://www.openpixelproject.com/
 
 ### Music
+All the music we used was taken from the audio library of youtube. The song of the first level is called Island Coconuts and the song of the second level is called Videogame Soldiers.
+You can check their pages here and artists here:
+
+Island Coconuts:
+Page: https://www.youtube.com/audiolibrary/music?nv=1
+Artist: http://www.aaron-kenny.com
+
+Videogame Soldiers:
+Video Game Soldiers de Twin Musicom está sujeta a una licencia de Creative Commons Attribution (https://creativecommons.org/licenses/by/4.0/)
+Page: http://www.twinmusicom.org/song/295/video-game-soldiers
+Artist: http://www.twinmusicom.org
 
 ### SFx
+All the SFx used was taken from youtube and the page Tune Poket. You can check their pages and information bellow:
+
+- JumpFX: 
+Page: https://www.youtube.com/watch?v=_eqKyzxa0dM
+Artist: https://audionautix.com/ 
+
+- DieFX:
+Tune Pocket page: https://www.tunepocket.com/game-over-fail-sound-effects/ 
+Artist: http://www.vittoriocazzadore.it/
 
 ## Innovation
 
