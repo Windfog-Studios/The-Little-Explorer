@@ -439,8 +439,10 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->name = node.attribute("name").as_string();
 		layer->width = node.attribute("width").as_uint();
 		layer->height = node.attribute("height").as_uint();
+		
 		LoadProperties(node, layer->properties);
 		pugi::xml_node layer_data = node.child("data");
+		
 
 		if (layer_data == NULL)
 		{
