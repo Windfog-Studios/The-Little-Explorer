@@ -13,86 +13,8 @@
 #include "j1Particles.h"
 
 j1Player::j1Player():j1Module () {
+
 	name.create("player");
-	{
-		//idle animation
-		/*
-		idle.PushBack({ 21, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 71, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 121, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 171, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 221, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 271, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 321, 226, 32, 56 }, 0.05f);
-		idle.PushBack({ 369, 226, 32, 56 }, 0.05f);
-		idle.loop = true;
-
-		//walk animation
-		walk.PushBack({ 21, 31, 33, 56 }, 0.2f);
-		walk.PushBack({ 70, 31, 32, 56 }, 0.2f);
-		walk.PushBack({ 119, 31, 30, 56 }, 0.2f);
-		walk.PushBack({ 169, 31, 30, 56 }, 0.2f);
-		walk.PushBack({ 215, 31, 30, 56 }, 0.2f);
-		walk.PushBack({ 264, 31, 30, 56 }, 0.2f);
-		walk.PushBack({ 312, 31, 30, 56 }, 0.2f);
-		walk.PushBack({ 359, 31, 30, 56 }, 0.2f);
-		walk.loop = false;
-
-		//run animation
-		run.PushBack({ 21, 156, 46, 53 }, 0.1f);
-		run.PushBack({ 79, 157, 44, 52 }, 0.1f);
-		run.PushBack({ 136, 155, 41, 54 }, 0.1f);
-		run.PushBack({ 196, 155, 46, 54 }, 0.1f);
-		run.PushBack({ 260, 157, 42, 52 }, 0.1f);
-		run.PushBack({ 322, 155, 40, 54 }, 0.1f);
-		run.loop = true;
-
-		//crouch down animation
-		crouch_down.PushBack({ 21, 302, 32, 56 }, 0.2f);
-		crouch_down.PushBack({ 75, 302, 35, 56 }, 0.2f);
-		crouch_down.PushBack({ 125, 302, 43, 56 }, 0.2f);
-		crouch_down.PushBack({ 184, 302, 43, 56 }, 0.2f);
-		crouch_down.loop = false;
-
-		//crouch up animation
-		crouch_up.PushBack({ 184, 302, 43, 56 }, 0.2f);
-		crouch_up.PushBack({ 125, 302, 43, 56 }, 0.2f);
-		crouch_up.PushBack({ 75, 302, 35, 56 }, 0.2f);
-		crouch_up.PushBack({ 21, 302, 32, 56 }, 0.2f);
-		crouch_up.loop = false;
-
-		//slide animation
-		slide.PushBack({ 21, 91, 52, 52 }, 0.2f);
-		slide.PushBack({ 86, 91, 52, 52 }, 0.2f);
-		slide.loop = true;
-
-		//jump animation
-		jump.PushBack({ 420, 315, 49, 43 }, 0.2f);
-		jump.PushBack({ 477, 316, 52, 42 }, 0.2f);
-		jump.PushBack({ 539, 294, 32, 64 }, 0.2f);
-		jump.PushBack({ 582, 294, 32, 64 }, 0.2f);
-		jump.PushBack({ 626, 294, 32, 64 }, 0.2f);
-		jump.PushBack({ 669, 294, 32, 64 }, 0.2f);
-		jump.PushBack({ 710, 294, 32, 64 }, 0.2f);
-		jump.PushBack({ 752, 294, 32, 64 }, 0.2f);
-		jump.PushBack({ 796, 294, 32, 64 }, 0.2f);
-		jump.loop = false;
-
-
-		fall.PushBack({ 37, 379, 32, 64 }, 0.2f);
-		fall.PushBack({ 78, 383, 37, 60 }, 0.2f);
-		fall.PushBack({ 124, 384, 47, 59 }, 0.2f);
-		fall.PushBack({ 183, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 250, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 313, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 374, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 434, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 494, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 553, 385, 51, 58 }, 0.2f);
-		fall.PushBack({ 614, 385, 51, 58 }, 0.2f);
-		fall.loop = false;
-		*/
-	}
 
 	LoadAnimations();
 
@@ -190,6 +112,7 @@ bool j1Player::PreUpdate(){
 				state = CROUCH_DOWN;
 			}
 
+			/*
 			if (player_input.pressing_F)
 			{
 				if (flip == SDL_FLIP_NONE)
@@ -201,6 +124,7 @@ bool j1Player::PreUpdate(){
 					state = SLIDE_BACKWARD;
 				}
 			}
+			*/
 
 			if ((player_input.pressing_space) && (!god))
 			{
@@ -229,10 +153,12 @@ bool j1Player::PreUpdate(){
 				grounded = false;
 			}
 
+			/*
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_FORWARD;
 			}
+			*/
 
 			velocity.x = speed;
 		}
@@ -253,11 +179,12 @@ bool j1Player::PreUpdate(){
 				grounded = false;
 			}
 
+			/*
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_BACKWARD;
 			}
-
+			*/
 			velocity.x = -speed;
 		}
 
@@ -278,7 +205,7 @@ bool j1Player::PreUpdate(){
 				crouch_up.Reset();
 			}
 		}
-
+		/*
 		if (state == SLIDE_FORWARD)
 		{
 			if (!player_input.pressing_F)
@@ -298,7 +225,7 @@ bool j1Player::PreUpdate(){
 			//position.x -= speed;
 			velocity.x = -speed;
 		}
-
+		*/
 		if (state == JUMP)
 		{
 			if (player_input.pressing_D) position.x += speed / 2;
@@ -389,6 +316,7 @@ bool j1Player::Update(float dt){
 		current_animation = &crouch_up;
 		break;
 
+	/*
 	case SLIDE_FORWARD:
 		current_animation = &slide;
 		flip = SDL_FLIP_NONE;
@@ -398,6 +326,7 @@ bool j1Player::Update(float dt){
 		current_animation = &slide;
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
+	*/
 
 	case JUMP:
 		current_animation = &jump;
