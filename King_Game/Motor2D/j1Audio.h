@@ -38,8 +38,8 @@ private:
 
 	_Mix_Music*			music;
 	p2List<Mix_Chunk*>	fx;
-	p2SString folder;
-	p2SString folder_fx;
+	p2SString			folder;
+	p2SString			folder_fx;
 
 
 };
