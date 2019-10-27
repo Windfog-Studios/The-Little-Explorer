@@ -52,7 +52,7 @@
   <player>
     <folder>audio/fx</folder>
     <dieFX source="Die.wav"/>
-    <jumpFX source="LuigiVoiceYahoo.wav"/>
+    <jumpFX source="JumpSoundEffect.wav"/>
     <folder>sprites/characters</folder>
     <position x="320" y="450" />	
     <speed value="6.75"/>
