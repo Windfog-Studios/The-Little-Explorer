@@ -303,7 +303,7 @@ bool j1Player::PreUpdate(){
 				jump.Reset();
 				velocity.y = jumpImpulse * 2/3;
 				can_double_jump = false;
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
 			}
 
 			if (current_animation->Finished())
@@ -327,7 +327,7 @@ bool j1Player::PreUpdate(){
 				velocity.y = jumpImpulse * 2/3; 
 				can_double_jump = false;
 				grounded = false;
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
 			}
 
 			if (current_animation->Finished())

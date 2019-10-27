@@ -19,16 +19,17 @@ j1Particles::j1Particles():j1Module()
 
 	//dust
 	{
-		dust.anim.PushBack({ 3,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 50,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 97,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 144,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 191,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 238,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 285,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 334,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 381,3,45,43 }, 0.1);
-		dust.anim.PushBack({ 428,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 3,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 50,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 97,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 144,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 191,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 238,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 285,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 334,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 381,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 428,3,45,43 }, 0.3);
+		dust.anim.loop = false;
 	}
 }
 
@@ -49,6 +50,8 @@ bool j1Particles::Awake(pugi::xml_node& config) {
 bool j1Particles::Start()
 {
 	dust_tex = App->tex->Load("sprites/particles/particles.png");
+	dust.texture = dust_tex;
+	LOG("dust particle created");
 	dust.texture = dust_tex;
 	return true;
 }
@@ -76,7 +79,7 @@ bool j1Particles::CleanUp()
 bool j1Particles::Update(float dt)
 {
 	bool ret = true;
-	particle_tex = dust_tex;
+	//particle_tex = dust_tex;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* p = active[i];
@@ -91,7 +94,8 @@ bool j1Particles::Update(float dt)
 		}
 		else if (SDL_GetTicks() >= p->born)
 		{
-			
+			particle_tex = dust_tex;
+
 			if (p->coll != nullptr){}
 			else 
 			{
@@ -99,11 +103,11 @@ bool j1Particles::Update(float dt)
 			}
 			if (p->flip == SDL_FLIP_NONE)
 			{
-				App->render->Blit(p->texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
+				App->render->Blit(particle_tex, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
 			}
 			else
 			{
-				App->render->Blit(p->texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+				App->render->Blit(particle_tex, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
 			}
 			if (p->fx_played == false)
 			{

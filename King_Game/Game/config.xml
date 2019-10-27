@@ -36,7 +36,7 @@
   <map>
     <folder>maps/</folder>
     <level1>
-	<player_position x="320" y="450"/>
+	<player_position x="150" y="450"/>
 	<music song="Island_Coconuts.ogg" />
     </level1>
     <level2>

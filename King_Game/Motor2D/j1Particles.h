@@ -26,7 +26,7 @@ public:
 	Uint32 life = 0;
 	bool fx_played = false;
 	SDL_RendererFlip flip;
-	SDL_Texture* texture;
+	SDL_Texture *texture;
 
 	Particle();
 	Particle(const Particle& p);
@@ -49,15 +49,14 @@ public:
 	Particle* AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 private:
-	SDL_Texture*	particle_tex = nullptr;
 	SDL_Texture*	fx_particles = nullptr;
-	SDL_Texture*	dust_tex = nullptr;
 	Particle*		active[MAX_ACTIVE_PARTICLES];
 	p2SString		folder;
+	SDL_Texture* particle_tex = nullptr;
+	SDL_Texture* dust_tex = nullptr;
 
 public:
 	Particle dust;
-
 };
 
 #endif // __j1PARTICLES_H__
