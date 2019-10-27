@@ -14431,9 +14431,6 @@
   </data>
  </layer>
  <layer name="Background" width="120" height="40">
-  <properties>
-   <property name="ParallaxSpeed" type="float" value="1"/>
-  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -19238,9 +19235,6 @@
   </data>
  </layer>
  <layer name="Platforms" width="120" height="40">
-  <properties>
-   <property name="ParallaxSpeed" type="float" value="1"/>
-  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -24045,9 +24039,6 @@
   </data>
  </layer>
  <layer name="Decoration" width="120" height="40">
-  <properties>
-   <property name="ParallaxSpeed" type="float" value="1"/>
-  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
