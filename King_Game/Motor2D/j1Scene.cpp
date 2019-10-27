@@ -90,7 +90,7 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 	if (!blocked_camera) {
-		if (((player_position->x < camera_limits.x)) && (-camera->x < 0)) {
+		if (((player_position->x < camera_limits.x)) && (-camera->x > 0)) {
 			App->render->camera.x += App->player->speed;
 			camera_limits.x -= App->player->speed;
 		}
