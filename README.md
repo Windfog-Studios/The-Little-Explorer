@@ -8,8 +8,17 @@ A very skilled little explorer named Tilo is in the middle of a dangerous forest
 ### Marc Pagès Francesch 
 https://github.com/marcpages2020
 
+Role: 
+- Character Movement
+- Collider Implementation
+- Camera Implementation
+- Particle Implementation 
+
 ### Silvino Medina Cardona
 https://github.com/silvino00
+- Levels Design
+- Audio
+- Spritesheet design 
 
 We are both students of video game development in the CITM in Terrassa and this is our development project for the first semester of the second year of the degree.  
 
@@ -45,12 +54,14 @@ You can check their official page here: https://www.openpixelproject.com/
 All the music we used was taken from the audio library of youtube. The song of the first level is called Island Coconuts and the song of the second level is called Videogame Soldiers.
 You can check their pages here and artists here:
 
+### Level 1
 Island Coconuts:
 Page: https://www.youtube.com/audiolibrary/music?nv=1
 Artist: http://www.aaron-kenny.com
 
+### Level 2
 Videogame Soldiers:
-Video Game Soldiers de Twin Musicom está sujeta a una licencia de Creative Commons Attribution (https://creativecommons.org/licenses/by/4.0/)
+Video Game Soldiers by Twin Musicom is under a Creative Commons Attribution License (https://creativecommons.org/licenses/by/4.0/)
 Page: http://www.twinmusicom.org/song/295/video-game-soldiers
 Artist: http://www.twinmusicom.org
 
