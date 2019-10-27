@@ -203,6 +203,7 @@ bool j1Player::PreUpdate(){
 
 			if ((player_input.pressing_space) && (!god))
 			{
+				App->audio->PlayFx(2);
 				state = JUMP;
 				velocity.y = jumpImpulse;
 				grounded = false;
@@ -306,8 +307,14 @@ bool j1Player::PreUpdate(){
 				jump.Reset();
 				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
+<<<<<<< HEAD
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
 				App->audio->PlayFx(jumpFX.Length());
+=======
+				App->audio->PlayFx(1);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
+
+>>>>>>> 8db717490159a42d984d238985cb87e05a53f462
 			}
 
 			if (current_animation->Finished())
