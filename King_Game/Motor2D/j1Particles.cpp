@@ -66,12 +66,7 @@ bool j1Particles::Update()
 			
 			if (p->coll != nullptr)
 			{
-				/*
-				if ((p->coll->type == COLLIDER_PLAYER_PARTICLES) || (p->coll->type == COLLIDER_PLAYER_2_PARTICLES))
-				{
-					particle_tex = fire_sword_tex;
-				}
-				*/
+
 			}
 			else 
 			{
@@ -170,27 +165,7 @@ bool Particle::Update()
 	{
 		if (coll != nullptr)
 		{
-			/*
-			if ((coll->type == COLLIDER_PLAYER_PARTICLES) || (coll->type == COLLIDER_PLAYER_2_PARTICLES)) {
-				if (flip == SDL_FLIP_NONE)
-				{
-					position.x += speed.x;
-					position.y += speed.y;
-				}
-				else if (flip == SDL_FLIP_HORIZONTAL)
-				{
-					position.x -= speed.x;
-					position.y += speed.y;
-				}
-			}
-
-
-			if (coll != nullptr)
-				coll->SetPos(position.x, position.y);
-
-			if (position.y > 160) 
-				ret = false;
-				*/
+		
 		}
 		return ret;
 	}

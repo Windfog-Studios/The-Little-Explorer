@@ -90,7 +90,7 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 	if (!blocked_camera) {
-		if (((player_position->x < camera_limits.x)) && (-camera->x < 0)) {
+		if (((player_position->x < camera_limits.x)) && (-camera->x > 0)) {
 			App->render->camera.x += App->player->speed;
 			camera_limits.x -= App->player->speed;
 		}
@@ -166,6 +166,7 @@ void j1Scene::Reset_Camera() {
 void j1Scene::ResetLevel() {
 	App->player->position.x = player_x_position;
 	App->player->position.y = player_y_position;
+	App->player->flip = SDL_FLIP_NONE;
 }
 
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {

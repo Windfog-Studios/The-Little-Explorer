@@ -67,6 +67,7 @@ void j1UI::LevelTransition() {
 			right_square.x = -camera->x + camera->w / 2;
 			left_square.y = -camera->y;
 			right_square.y = -camera->y;
+			App->scene->ResetLevel();
 		}
 		break;
 	case OPEN:
