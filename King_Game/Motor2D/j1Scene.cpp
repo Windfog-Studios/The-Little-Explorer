@@ -183,9 +183,14 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 bool j1Scene::Save(pugi::xml_node& data) const {
 
 	pugi::xml_node cam_limits = data.append_child("camera_limits");
+	pugi::xml_node level = data.append_child("level");
 
 	cam_limits.append_attribute("x") = camera_limits.x;
 	cam_limits.append_attribute("y") = camera_limits.y;
+
+	if (current_level == LEVEL_1) level.append_attribute("number") = 1;
+	if (current_level == LEVEL_2) level.append_attribute("number") = 2;
+
 	return true;
 }
 
@@ -193,5 +198,9 @@ bool j1Scene::Load(pugi::xml_node& data)
 {
 	camera_limits.x = data.child("position").attribute("x").as_int();
 	camera_limits.y = data.child("position").attribute("y").as_int();
+
+	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(LEVEL_2, LEVEL_1);
+	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);
+
 	return true;
 }

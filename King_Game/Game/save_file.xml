@@ -6,15 +6,16 @@
 	<audio />
 	<map />
 	<scene>
-		<camera_limits x="534" y="415" />
+		<camera_limits x="1564" y="283" />
+		<level number="2" />
 	</scene>
 	<player>
-		<position x="789" y="419" />
+		<position x="1711" y="392" />
 	</player>
 	<particles />
 	<:anonymous />
 	<ui />
 	<renderer>
-		<camera x="-234" y="-240" />
+		<camera x="-1264" y="-108" />
 	</renderer>
 </game_state>
