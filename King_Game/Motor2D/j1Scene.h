@@ -42,11 +42,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void Reset_Camera();
+	void Reset_Camera(int kind_of_reset);
 
 	void ResetLevel();
 
 	void LevelChange(Map unloading_map, Map loading_map);
+
+	bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node& data);
 
 public:
 	//edges

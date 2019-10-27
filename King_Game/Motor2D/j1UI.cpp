@@ -4,6 +4,7 @@
 #include "j1UI.h"
 #include "j1Render.h"
 #include "j1Scene.h"
+#include "j1Player.h"
 
 j1UI::j1UI() : j1Module() {
 	
@@ -62,12 +63,13 @@ void j1UI::LevelTransition() {
 		else
 		{
 			direction = STATIC;
-			App->scene->Reset_Camera();
+			App->scene->Reset_Camera(0);
 			left_square.x = -camera->x;
 			right_square.x = -camera->x + camera->w / 2;
 			left_square.y = -camera->y;
 			right_square.y = -camera->y;
 			App->scene->ResetLevel();
+			App->player->state = IDLE;
 		}
 		break;
 	case OPEN:
@@ -83,6 +85,7 @@ void j1UI::LevelTransition() {
 			direction = CLOSE;
 			transition = false;
 			App->scene->blocked_camera = false;
+			App->player->controls_blocked = false;
 		}
 		break;
 	case STATIC:
@@ -106,7 +109,7 @@ void j1UI::LevelTransition() {
 				}
 			}
 			loaded = true;
-			App->scene->Reset_Camera();
+			App->scene->Reset_Camera(0);
 			ResetTransition(STATIC);
 			App->scene->ResetLevel();
 		}
