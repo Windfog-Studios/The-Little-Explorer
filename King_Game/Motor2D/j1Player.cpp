@@ -226,7 +226,6 @@ bool j1Player::PreUpdate(){
 				App->audio->PlayFx(2);
 				velocity.y = jumpImpulse;
 				grounded = false;
-				if(velocity.y > 0) App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
 			}
 
 			if (player_input.pressing_F)
@@ -344,7 +343,7 @@ bool j1Player::PreUpdate(){
 			}
 		}
 
-		if ((velocity.y < -10) && (state == IDLE))
+		if ((velocity.y < -speed/2) && ((state == IDLE) ||(state == RUN_FORWARD) || (state == RUN_BACKWARD) ) )
 		{
 			state = FALL;
 		}
