@@ -114,6 +114,9 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	gravity = config.child("gravity").attribute("value").as_float();
 
+	dieFX = config.child("dieFX").attribute("source").as_string();
+	jumpFX = config.child("jumpFX").attribute("source").as_string();
+
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
 	return ret;
@@ -125,7 +128,8 @@ bool j1Player::Start(){
 	position.x = initial_x_position = App->scene->player_x_position;
 	position.y = initial_x_position = App->scene->player_y_position;
 
-	App->audio->LoadFx(hello_man.GetString());
+	App->audio->LoadFx(dieFX.GetString());
+	App->audio->LoadFx(jumpFX.GetString());
 
 	return true;
 }
@@ -198,6 +202,7 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
+				App->audio->PlayFx(1, 1);
 				grounded = false;
 			}
 			
