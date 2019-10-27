@@ -68,7 +68,7 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed);
 				}
 			}
 		}
@@ -442,7 +442,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		
 		LoadProperties(node, layer->properties);
 		pugi::xml_node layer_data = node.child("data");
-		
+		layer->ParallaxSpeed = node.child("properties").child("property").attribute("value").as_float();
 		
 
 		if (layer_data == NULL)
