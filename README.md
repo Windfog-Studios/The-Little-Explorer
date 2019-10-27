@@ -37,7 +37,7 @@ F10 - God Mode
 
 ## Credits
 
-# Sprites and backgrounds
+### Sprites and backgrounds
 All the art used was made by various artists contributing to Open Pixel Project. We sincerely thank the fact of being able to use their art to make our project.
 You can check their official page here: https://www.openpixelproject.com/
 
