@@ -49,8 +49,8 @@
   <player>
     <folder>audio/fx</folder>
     <hello_man source="hello_man.wav"/>
-    <hello_man source="Die.wav"/>
-    <hello_man source="Luigi Voice Yahoo.wav"/>
+    <dieFX source="Die.wav"/>
+    <jumpFX source="Luigi Voice Yahoo.wav"/>
     <folder>sprites/characters</folder>
     <position x="320" y="450" />	
     <speed value="6.75"/>

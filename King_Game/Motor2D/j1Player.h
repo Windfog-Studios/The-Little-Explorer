@@ -64,6 +64,7 @@ public:
 
 	bool LoadAnimations();
 
+	
 private:
 
 
@@ -93,7 +94,9 @@ public:
 	p2List<Animation*> animations;
 	pugi::xml_document animation_doc;
 
-	p2SString hello_man;
+	//fx
+	p2SString dieFX;
+	p2SString jumpFX;
 
 	Player_States state;
 	Player_States last_state;

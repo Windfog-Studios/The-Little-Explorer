@@ -45,6 +45,7 @@ struct MapLayer
 	int			height;
 	uint* data;
 	Properties	properties;
+	float		ParallaxSpeed;
 
 	MapLayer() : data(NULL)
 	{}
