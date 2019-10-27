@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Scene.h"
 
 #define VSYNC true
 
@@ -93,7 +94,7 @@ bool j1Render::Load(pugi::xml_node& data)
 {
 	camera.x = initial_camera_x = data.child("camera").attribute("x").as_int();
 	camera.y = initial_camera_y = data.child("camera").attribute("y").as_int();
-
+	App->scene->Reset_Camera(1);
 	return true;
 }
 
@@ -104,7 +105,6 @@ bool j1Render::Save(pugi::xml_node& data) const
 
 	cam.append_attribute("x") = camera.x;
 	cam.append_attribute("y") = camera.y;
-
 	return true;
 }
 

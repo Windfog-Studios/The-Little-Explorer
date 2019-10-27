@@ -5,12 +5,16 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<scene>
+		<camera_limits x="534" y="415" />
+	</scene>
 	<player>
-		<position x="892" y="264" />
+		<position x="789" y="419" />
 	</player>
+	<particles />
 	<:anonymous />
+	<ui />
 	<renderer>
-		<camera x="-456" y="66" />
+		<camera x="-234" y="-240" />
 	</renderer>
 </game_state>

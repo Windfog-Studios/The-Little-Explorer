@@ -117,6 +117,7 @@ public:
 	bool grounded = false;
 
 	bool visible = true;
+	bool controls_blocked = false;
 };
 
 #endif // !_j1PLAYER_H_

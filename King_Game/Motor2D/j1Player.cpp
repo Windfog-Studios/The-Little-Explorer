@@ -155,6 +155,8 @@ bool j1Player::PreUpdate(){
 	lastPosition = position;
 	last_state = state;
 
+	LOG("Velocity y; %.2f", velocity.y);
+
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		god = !god;
 		if (god)
@@ -167,11 +169,12 @@ bool j1Player::PreUpdate(){
 	if (!App->pause)
 	{
 		velocity.x = 0;
+		if(!controls_blocked){
 		if (state == IDLE)
 		{
 			can_double_jump = true;
 
-			if ((player_input.pressing_D)&&(velocity.y == 0))
+			if ((player_input.pressing_D) && (velocity.y == 0))
 			{
 				state = RUN_FORWARD;
 			}
@@ -197,17 +200,17 @@ bool j1Player::PreUpdate(){
 					state = SLIDE_BACKWARD;
 				}
 			}
-			
-			if (player_input.pressing_space)
+
+			if ((player_input.pressing_space) && (!god))
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
 				App->audio->PlayFx(1, 1);
 				grounded = false;
 			}
-			
+
 		}
-		
+
 		if (state == RUN_FORWARD)
 		{
 			if (!player_input.pressing_D)
@@ -215,14 +218,15 @@ bool j1Player::PreUpdate(){
 				state = IDLE;
 				velocity.x = 0;
 			}
-			
-			if (player_input.pressing_space)
+
+			if ((player_input.pressing_space) && (!god))
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
 				grounded = false;
+				if(velocity.y > 0) App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
 			}
-			
+
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_FORWARD;
@@ -238,14 +242,14 @@ bool j1Player::PreUpdate(){
 				state = IDLE;
 				velocity.x = 0;
 			}
-			
-			if (player_input.pressing_space)
+
+			if ((player_input.pressing_space)&&(!god))
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
 				grounded = false;
 			}
-			
+
 			if (player_input.pressing_F)
 			{
 				state = SLIDE_BACKWARD;
@@ -294,16 +298,16 @@ bool j1Player::PreUpdate(){
 
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += speed/2;
-			if (player_input.pressing_A) position.x -= speed/2;
+			if (player_input.pressing_D) position.x += speed / 2;
+			if (player_input.pressing_A) position.x -= speed / 2;
 
 			//double jump
-			if ((player_input.pressing_space)&&(can_double_jump == true)&&(velocity.y <= jumpImpulse/2))
-			{ 
+			if ((player_input.pressing_space) && (can_double_jump == true) && (velocity.y <= jumpImpulse / 2))
+			{
 				jump.Reset();
-				velocity.y = jumpImpulse * 2/3;
+				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
 			}
 
 			if (current_animation->Finished())
@@ -311,23 +315,23 @@ bool j1Player::PreUpdate(){
 				state = FALL;
 				jump.Reset();
 			}
-			
+
 		}
 		if (state == FALL)
 		{
 			//let the player move while faling
-			if ((player_input.pressing_D)&&(can_go_right == true)) position.x += speed /2;
-			if ((player_input.pressing_A)&&(can_go_left == true)) position.x -= speed / 2;
+			if ((player_input.pressing_D) && (can_go_right == true)) position.x += speed / 2;
+			if ((player_input.pressing_A) && (can_go_left == true)) position.x -= speed / 2;
 
 			//double jump
-			if ((player_input.pressing_space)&&(can_double_jump == true) & (velocity.y <= jumpImpulse / 2))
+			if ((player_input.pressing_space) && (can_double_jump == true) & (velocity.y <= jumpImpulse / 2))
 			{
 				jump.Reset();
 				state = JUMP;
-				velocity.y = jumpImpulse * 2/3; 
+				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
 				grounded = false;
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
 			}
 
 			if (current_animation->Finished())
@@ -336,11 +340,11 @@ bool j1Player::PreUpdate(){
 			}
 		}
 
-		if ((velocity.y < -10)&&(state == IDLE))
+		if ((velocity.y < -10) && (state == IDLE))
 		{
 			state = FALL;
 		}
-
+	}
 		MovementControl(); //calculate new position
 
 		collider->SetPos(position.x, position.y);
@@ -455,12 +459,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					if (App->ui->transition == false)
 					{
 						state = IDLE;
-						//position.x = App->scene->player_x_position;
-						//position.y = App->scene->player_y_position;
 						App->ui->transition = true;
 						App->scene->blocked_camera = true;
 						App->ui->ResetTransition();
-						//App->scene->Reset_Camera();
+						App->scene->Reset_Camera(1);
+						controls_blocked = true;
 					}
 				}
 				break;
@@ -481,13 +484,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				{
 					if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
 					if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
-					//position.x = initial_x_position;
-					//position.y = initial_y_position;
 					App->ui->transition = true;
 					App->ui->loaded = false;
 					App->ui->transition_moment = SDL_GetTicks();
 					App->ui->ResetTransition();
-					//App->scene->Reset_Camera();
+					controls_blocked = true;
 				}
 				break;
 			default:
