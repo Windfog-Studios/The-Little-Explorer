@@ -64,7 +64,7 @@ public:
 
 	bool LoadAnimations();
 
-	
+		
 private:
 
 

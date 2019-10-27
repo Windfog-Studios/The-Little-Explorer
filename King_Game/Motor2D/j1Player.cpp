@@ -202,7 +202,6 @@ bool j1Player::PreUpdate(){
 			{
 				state = JUMP;
 				velocity.y = jumpImpulse;
-				App->audio->PlayFx(1, 1);
 				grounded = false;
 			}
 			
@@ -304,6 +303,7 @@ bool j1Player::PreUpdate(){
 				velocity.y = jumpImpulse * 2/3;
 				can_double_jump = false;
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3/4, COLLIDER_NONE, 0, flip);
+				App->audio->PlayFx(jumpFX.Length());
 			}
 
 			if (current_animation->Finished())
@@ -569,3 +569,4 @@ bool j1Player::Load(pugi::xml_node& data)
 
 	return true;
 }
+
