@@ -16,13 +16,13 @@ Role:
 
 ### Silvino Medina Cardona
 https://github.com/silvino00
-- Levels Design
+- Level Design
 - Audio
 - Spritesheet design 
 
 We are both students of video game development in the CITM in Terrassa and this is our development project for the first semester of the second year of the degree.  
 
-you can check our repository using this link: https://github.com/Windfog-Studios/The-Little-Explorer
+You can check our repository using this link: https://github.com/Windfog-Studios/The-Little-Explorer
 
 ## Controls 
 
