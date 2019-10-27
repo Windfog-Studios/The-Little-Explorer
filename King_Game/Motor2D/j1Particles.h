@@ -16,6 +16,7 @@ enum COLLIDER_TYPE;
 
 struct Particle
 {
+public:
 	Collider* coll = nullptr;
 	Animation anim;
 	uint fx = 0;
@@ -25,6 +26,7 @@ struct Particle
 	Uint32 life = 0;
 	bool fx_played = false;
 	SDL_RendererFlip flip;
+	SDL_Texture* texture;
 
 	Particle();
 	Particle(const Particle& p);
@@ -38,25 +40,22 @@ public:
 	j1Particles();
 	~j1Particles();
 
+	bool Awake(pugi::xml_node& config);
 	bool Start();
-	bool Update();
+	bool Update(float dt);
 	bool CleanUp();
 	void OnCollision(Collider* c1, Collider* c2);
 
 	Particle* AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 private:
-	SDL_Texture* particle_tex = nullptr;
-	SDL_Texture* tornado_tex = nullptr;
-	SDL_Texture* fire_sword_tex = nullptr;
-	SDL_Texture* fx_particles = nullptr;
-	Particle* active[MAX_ACTIVE_PARTICLES];
+	SDL_Texture*	particle_tex = nullptr;
+	SDL_Texture*	fx_particles = nullptr;
+	SDL_Texture*	dust_tex = nullptr;
+	Particle*		active[MAX_ACTIVE_PARTICLES];
+	p2SString		folder;
 
 public:
-	Particle tornado;
-	Particle fire_sword;
-	Particle blood;
-	Particle flash;
 	Particle dust;
 
 };

@@ -10,21 +10,46 @@
 
 #include "SDL/include/SDL_timer.h"
 
-j1Particles::j1Particles()
+j1Particles::j1Particles():j1Module()
 {
+	name.create("particles");
+
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	active[i] = nullptr;
 
+	//dust
+	{
+		dust.anim.PushBack({ 3,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 50,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 97,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 144,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 191,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 238,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 285,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 334,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 381,3,45,43 }, 0.1);
+		dust.anim.PushBack({ 428,3,45,43 }, 0.1);
+	}
 }
 
 j1Particles::~j1Particles()
 {}
 
 // Load assets
+bool j1Particles::Awake(pugi::xml_node& config) {
+
+	LOG("Loading particles");
+	bool ret = true;
+
+	folder = config.child("folder").child_value();
+	//fx_particles = dust_tex;
+	return ret;
+}
+
 bool j1Particles::Start()
 {
-	LOG("Loading particles");
-
+	dust_tex = App->tex->Load("sprites/particles/particles.png");
+	dust.texture = dust_tex;
 	return true;
 }
 
@@ -42,13 +67,16 @@ bool j1Particles::CleanUp()
 		}
 	}
 
+	App->tex->UnLoad(dust_tex);
+
 	return true;
 }
 
 // Update: draw background
-bool j1Particles::Update()
+bool j1Particles::Update(float dt)
 {
 	bool ret = true;
+	particle_tex = dust_tex;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* p = active[i];
@@ -64,21 +92,18 @@ bool j1Particles::Update()
 		else if (SDL_GetTicks() >= p->born)
 		{
 			
-			if (p->coll != nullptr)
-			{
-
-			}
+			if (p->coll != nullptr){}
 			else 
 			{
-				particle_tex = fx_particles;
+				//particle_tex = fx_particles;
 			}
 			if (p->flip == SDL_FLIP_NONE)
 			{
-				App->render->Blit(particle_tex, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
+				App->render->Blit(p->texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
 			}
 			else
 			{
-				App->render->Blit(particle_tex, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
+				App->render->Blit(p->texture, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()), SDL_FLIP_HORIZONTAL);
 			}
 			if (p->fx_played == false)
 			{
@@ -87,7 +112,6 @@ bool j1Particles::Update()
 			}
 		}
 	}
-
 
 	return ret;
 }
@@ -102,10 +126,12 @@ Particle* j1Particles::AddParticle(const Particle& particle, int x, int y, COLLI
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
-			if (collider_type != COLLIDER_NONE)
+			if (collider_type != COLLIDER_NONE) {
 				p->coll = App->collision->AddCollider(p->anim.GetCurrentFrame(), collider_type, this);
+			}
 			active[i] = p;
 			p->flip = flip;
+			LOG("particle created");
 			return p;
 		}
 	}
@@ -163,9 +189,10 @@ bool Particle::Update()
 
 	if (!App->pause)
 	{
-		if (coll != nullptr)
+		//if (coll != nullptr){}
+		if (flip == SDL_FLIP_NONE)
 		{
-		
+			
 		}
 		return ret;
 	}

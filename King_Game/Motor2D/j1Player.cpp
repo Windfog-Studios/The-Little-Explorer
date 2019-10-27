@@ -292,11 +292,13 @@ bool j1Player::PreUpdate(){
 			if (player_input.pressing_D) position.x += speed/2;
 			if (player_input.pressing_A) position.x -= speed/2;
 
+			//double jump
 			if ((player_input.pressing_space)&&(can_double_jump == true)&&(velocity.y <= jumpImpulse/2))
 			{ 
 				jump.Reset();
 				velocity.y = jumpImpulse * 2/3;
 				can_double_jump = false;
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h, COLLIDER_NONE, 0, flip);
 			}
 
 			if (current_animation->Finished())
@@ -312,6 +314,7 @@ bool j1Player::PreUpdate(){
 			if ((player_input.pressing_D)&&(can_go_right == true)) position.x += speed /2;
 			if ((player_input.pressing_A)&&(can_go_left == true)) position.x -= speed / 2;
 
+			//double jump
 			if ((player_input.pressing_space)&&(can_double_jump == true) & (velocity.y <= jumpImpulse / 2))
 			{
 				jump.Reset();
@@ -319,6 +322,7 @@ bool j1Player::PreUpdate(){
 				velocity.y = jumpImpulse * 2/3; 
 				can_double_jump = false;
 				grounded = false;
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h, COLLIDER_NONE, 0, flip);
 			}
 
 			if (current_animation->Finished())
