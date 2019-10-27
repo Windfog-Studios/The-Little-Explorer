@@ -114,6 +114,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	gravity = config.child("gravity").attribute("value").as_float();
 
+	//player fx
 	dieFX = config.child("dieFX").attribute("source").as_string();
 	jumpFX = config.child("jumpFX").attribute("source").as_string();
 
@@ -155,7 +156,7 @@ bool j1Player::PreUpdate(){
 	lastPosition = position;
 	last_state = state;
 
-	LOG("Velocity y; %.2f", velocity.y);
+	//LOG("Velocity y; %.2f", velocity.y);
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		god = !god;
@@ -309,7 +310,6 @@ bool j1Player::PreUpdate(){
 				can_double_jump = false;
 				App->audio->PlayFx(1);
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 3 / 4, COLLIDER_NONE, 0, flip);
-
 			}
 
 			if (current_animation->Finished())
@@ -330,6 +330,7 @@ bool j1Player::PreUpdate(){
 			{
 				jump.Reset();
 				state = JUMP;
+				App->audio->PlayFx(1);
 				velocity.y = jumpImpulse * 2 / 3;
 				can_double_jump = false;
 				grounded = false;
