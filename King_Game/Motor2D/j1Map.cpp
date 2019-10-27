@@ -443,6 +443,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		LoadProperties(node, layer->properties);
 		pugi::xml_node layer_data = node.child("data");
 		
+		
 
 		if (layer_data == NULL)
 		{
