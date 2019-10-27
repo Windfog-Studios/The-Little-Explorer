@@ -68,7 +68,19 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed);
+					/*if (layer->ParallaxSpeed != NULL) {
+						if ((App->player->flip == SDL_FLIP_NONE) && (App->player->velocity.x != 0)) pos.x += layer->ParallaxSpeed * 20;
+						if ((App->player->flip == SDL_FLIP_HORIZONTAL) && (App->player->velocity.x != 0)) pos.x -= layer->ParallaxSpeed * 20;
+					}
+					*/
+					if (layer->ParallaxSpeed != NULL)
+					{
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, 0.85);
+					}
+					else
+					{
+						App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, 1);
+					}
 				}
 			}
 		}

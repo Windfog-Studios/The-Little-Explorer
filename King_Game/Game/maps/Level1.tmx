@@ -11,7 +11,7 @@
  </tileset>
  <layer name="Sky" width="120" height="40">
   <properties>
-   <property name="ParallaxSpeed" type="float" value="1"/>
+   <property name="ParallaxSpeed" type="float" value="0.5"/>
   </properties>
   <data>
    <tile gid="912"/>
@@ -4818,7 +4818,7 @@
  </layer>
  <layer name="clouds" width="120" height="40">
   <properties>
-   <property name="ParallaxSpeed" type="float" value="0.5"/>
+   <property name="ParallaxSpeed" type="float" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
@@ -9625,7 +9625,7 @@
  </layer>
  <layer name="Roots" width="120" height="40">
   <properties>
-   <property name="ParallaxSpeed" type="float" value="0.5"/>
+   <property name="ParallaxSpeed" type="float" value="1"/>
   </properties>
   <data>
    <tile gid="0"/>
