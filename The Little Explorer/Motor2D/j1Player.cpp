@@ -37,8 +37,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	gravity = config.child("gravity").attribute("value").as_float();
 
 	//player fx
-	dieFX = config.child("dieFX").attribute("source").as_string();
-	jumpFX = config.child("jumpFX").attribute("source").as_string();
+	die_fx_path = config.child("dieFX").attribute("source").as_string();
+	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 
@@ -51,8 +51,8 @@ bool j1Player::Start(){
 	position.x = initial_x_position = App->scene->player_x_position;
 	position.y = initial_x_position = App->scene->player_y_position;
 
-	App->audio->LoadFx(dieFX.GetString());
-	App->audio->LoadFx(jumpFX.GetString());
+	die_fx = App->audio->LoadFx(die_fx_path.GetString());
+	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 
 	return true;
 }
@@ -153,9 +153,8 @@ bool j1Player::PreUpdate(){
 
 			if ((player_input.pressing_space) && (!god))
 			{
-				App->audio->PlayFx(2);
+				App->audio->PlayFx(jump_fx);
 				state = JUMP;
-				App->audio->PlayFx(2);
 				speed.y = jumpImpulse;
 				grounded = false;
 			}
@@ -185,7 +184,7 @@ bool j1Player::PreUpdate(){
 
 			if ((player_input.pressing_space)&&(!god))
 			{
-				App->audio->PlayFx(2);
+				App->audio->PlayFx(jump_fx);
 				state = JUMP;
 				speed.y = jumpImpulse;
 				grounded = false;
@@ -239,15 +238,15 @@ bool j1Player::PreUpdate(){
 		*/
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += acceleration;
-			if (player_input.pressing_A) position.x -= acceleration;
+			if (player_input.pressing_D) position.x += acceleration * 10;
+			if (player_input.pressing_A) position.x -= acceleration * 10;
 
 			//double jump
 			if ((player_input.pressing_space) && (can_double_jump == true) && (speed.y <= jumpImpulse * 0.5f))
 			{
-				App->audio->PlayFx(2);
+				App->audio->PlayFx(jump_fx);
 				jump.Reset();
-				speed.y = jumpImpulse * 0.3f;
+				speed.y = jumpImpulse * 0.5f;
 				can_double_jump = false;
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
 			}
@@ -270,8 +269,8 @@ bool j1Player::PreUpdate(){
 			{
 				jump.Reset();
 				state = JUMP;
-				App->audio->PlayFx(2);
-				speed.y = jumpImpulse * 2 / 3;
+				App->audio->PlayFx(jump_fx);
+				speed.y = jumpImpulse * 0.5f;
 				can_double_jump = false;
 				grounded = false;
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
@@ -404,7 +403,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					
 					if (App->ui->transition == false)
 					{
-						App->audio->PlayFx(1);
+						App->audio->PlayFx(die_fx);
 						App->ui->transition = true;
 						App->scene->blocked_camera = true;
 						App->ui->ResetTransition();
@@ -498,7 +497,7 @@ void j1Player::MovementControl() {
 	position.y -= speed.y;
 	if (!god) speed.y -= gravity;
 	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
-	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration;
+	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration * 1.5f;
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
 	LOG("Speed x: %.2f", speed.x);
 }

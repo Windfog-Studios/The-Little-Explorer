@@ -94,8 +94,11 @@ public:
 	pugi::xml_document animation_doc;
 
 	//fx
-	p2SString dieFX;
-	p2SString jumpFX;
+	p2SString die_fx_path;
+	p2SString jump_fx_path;
+
+	uint jump_fx;
+	uint die_fx;
 
 	Player_States state;
 	Player_States last_state;
@@ -109,8 +112,8 @@ public:
 	fVec2 speed;
 	float jumpImpulse;
 	float gravity;
-	float acceleration = 0.2;
-	float max_x_speed = 6.75;
+	float acceleration = 0.5;
+	float max_x_speed = 5.0f;
 	float air_movement = 5.0f;
 	bool can_double_jump = true;
 	bool can_go_right = true;
