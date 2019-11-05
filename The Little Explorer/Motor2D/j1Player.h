@@ -11,7 +11,7 @@
 struct SDL_Texture;
 struct Collider;
 
-#define COLLIDER_MARGIN speed*1.5f
+#define COLLIDER_MARGIN speed.x*1.5f
 
 struct Player_Input {
 	bool pressing_W;
@@ -79,7 +79,6 @@ public:
 	int initial_y_position;
 	iPoint position;
 	iPoint lastPosition;
-	fVec2 velocity;
 
 	//animations
 	Animation idle;
@@ -107,9 +106,12 @@ public:
 	Collider* collider_copy;
 
 	//movement
-	float speed;
+	fVec2 speed;
 	float jumpImpulse;
 	float gravity;
+	float acceleration = 2;
+	float max_x_speed = 6.75;
+	float air_movement = 5.0f;
 	bool can_double_jump = true;
 	bool can_go_right = true;
 	bool can_go_left = true;
