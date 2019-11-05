@@ -109,7 +109,7 @@ public:
 	fVec2 speed;
 	float jumpImpulse;
 	float gravity;
-	float acceleration = 2;
+	float acceleration = 0.2;
 	float max_x_speed = 6.75;
 	float air_movement = 5.0f;
 	bool can_double_jump = true;

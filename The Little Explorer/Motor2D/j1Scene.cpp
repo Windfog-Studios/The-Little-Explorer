@@ -91,23 +91,23 @@ bool j1Scene::Update(float dt)
 	//camera window ------------------
 	if (!blocked_camera) {
 		if (((player_position->x < camera_limits.x + camera_limits.w * 0.5f)) && (-camera->x > 0)) {
-			App->render->camera.x += App->player->speed.x * 0.3;
-			camera_limits.x -= App->player->speed.x * 0.3;
+			App->render->camera.x += App->player->max_x_speed * 0.3;
+			camera_limits.x -= App->player->max_x_speed * 0.3;
 		}
 
-		if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_limits.x + camera_limits.w/2)&&(-camera->x + camera->w + App->player->speed.x < App->map->data.width * App->map->data.tile_width)) {
-			App->render->camera.x -= App->player->speed.x * 0.3;
-			camera_limits.x += App->player->speed.x * 0.3;
+		if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_limits.x + camera_limits.w/2)&&(-camera->x + camera->w + App->player->max_x_speed < App->map->data.width * App->map->data.tile_width)) {
+			App->render->camera.x -= App->player->max_x_speed * 0.3;
+			camera_limits.x += App->player->max_x_speed * 0.3;
 		}
 
 		if (((player_position->y < camera_limits.y)) && (camera_limits.y - camera_limits_y_offset > 0)) {
-			App->render->camera.y += App->player->speed.y * 0.3;
-			camera_limits.y -= App->player->speed.y * 0.3;
+			App->render->camera.y += App->player->max_x_speed * 0.3;
+			camera_limits.y -= App->player->max_x_speed * 0.3;
 		}
 
-		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_limits.y + camera_limits.h)) && (-camera->y + camera->h + App->player->speed.y < App->map->data.height * App->map->data.tile_height)) {
-			App->render->camera.y -= App->player->speed.y * 0.3;
-			camera_limits.y += App->player->speed.y * 0.3;
+		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_limits.y + camera_limits.h)) && (-camera->y + camera->h + App->player->max_x_speed < App->map->data.height * App->map->data.tile_height)) {
+			App->render->camera.y -= App->player->max_x_speed * 0.3;
+			camera_limits.y += App->player->max_x_speed * 0.3;
 		}
 	}
 	//camera manual control --------------

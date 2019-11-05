@@ -91,7 +91,7 @@ bool j1Player::PreUpdate(){
 
 	if (!App->pause)
 	{
-		speed.x = 0;
+		//speed.x = 0;
 		if(!controls_blocked){
 		if (state == IDLE)
 		{
@@ -149,7 +149,6 @@ bool j1Player::PreUpdate(){
 			if (!player_input.pressing_D)
 			{
 				state = IDLE;
-				speed.x = 0;
 			}
 
 			if ((player_input.pressing_space) && (!god))
@@ -182,7 +181,6 @@ bool j1Player::PreUpdate(){
 			if (!player_input.pressing_A)
 			{
 				state = IDLE;
-				speed.x = 0;
 			}
 
 			if ((player_input.pressing_space)&&(!god))
@@ -199,7 +197,6 @@ bool j1Player::PreUpdate(){
 				state = SLIDE_BACKWARD;
 			}
 			*/
-			speed.x = -speed.x;
 		}
 
 
@@ -242,8 +239,8 @@ bool j1Player::PreUpdate(){
 		*/
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += speed.x * 0.5f;
-			if (player_input.pressing_A) position.x -= speed.x * 0.5f;
+			if (player_input.pressing_D) position.x += acceleration;
+			if (player_input.pressing_A) position.x -= acceleration;
 
 			//double jump
 			if ((player_input.pressing_space) && (can_double_jump == true) && (speed.y <= jumpImpulse * 0.5f))
@@ -351,7 +348,7 @@ bool j1Player::Update(float dt){
 		}
 		if ((last_state = RUN_FORWARD)||(last_state == RUN_BACKWARD))
 		{
-			speed.x /= 2;
+			speed.x *= 0.5f;
 		}
 		break;
 	case FALL:
@@ -383,7 +380,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		{
 			case COLLIDER_WALL:
 				position = lastPosition;
-				speed.x = speed.y = 0;
+				speed.y = 0;
 				if ((position.x < c2->rect.x + COLLIDER_MARGIN) && (state == FALL))
 				{
 					can_go_right = false;
@@ -500,7 +497,10 @@ void j1Player::MovementControl() {
 	position.x += speed.x;
 	position.y -= speed.y;
 	if (!god) speed.y -= gravity;
+	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
+	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration;
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
+	LOG("Speed x: %.2f", speed.x);
 }
 
 bool j1Player::Save(pugi::xml_node& data) const {
