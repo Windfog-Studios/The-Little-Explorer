@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "j1App.h"
 
-#define CAMERA_SPEED 10
+#define CAMERA_SPEED 2
 
 struct SDL_Texture;
 
@@ -53,14 +53,14 @@ public:
 
 public:
 	//edges
-	SDL_Rect camera_limits;
+	SDL_Rect camera_frame;
 	int left_edge;
 	int right_edge;
 	int top_edge;
 	int bottom_edge;
 
-	int camera_limits_x_offset;
-	int camera_limits_y_offset;
+	int camera_frame_x_margin;
+	int camera_frame_y_margin;
 
 	bool blocked_camera = false;
 

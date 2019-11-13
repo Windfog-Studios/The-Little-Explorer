@@ -32,9 +32,10 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	folder.create(config.child("folder").child_value());
 
 	//set initial attributes of the player
-	//speed = config.child("speed").attribute("value").as_int();
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
+	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
 	gravity = config.child("gravity").attribute("value").as_float();
+	side_speed = config.child("side_speed").attribute("value").as_float();
 
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
@@ -77,8 +78,6 @@ bool j1Player::PreUpdate(){
 
 	lastPosition = position;
 	last_state = state;
-
-	//LOG("Velocity y; %.2f", velocity.y);
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		god = !god;
@@ -238,15 +237,15 @@ bool j1Player::PreUpdate(){
 		*/
 		if (state == JUMP)
 		{
-			if (player_input.pressing_D) position.x += acceleration * 10;
-			if (player_input.pressing_A) position.x -= acceleration * 10;
+			if (player_input.pressing_D) position.x += side_speed;
+			if (player_input.pressing_A) position.x -= side_speed;
 
 			//double jump
 			if ((player_input.pressing_space) && (can_double_jump == true) && (speed.y <= jumpImpulse * 0.5f))
 			{
 				App->audio->PlayFx(jump_fx);
 				jump.Reset();
-				speed.y = jumpImpulse * 0.5f;
+				speed.y = doubleJumpImpulse;
 				can_double_jump = false;
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
 			}
@@ -261,8 +260,8 @@ bool j1Player::PreUpdate(){
 		if (state == FALL)
 		{
 			//let the player move while faling
-			if ((player_input.pressing_D) && (can_go_right == true)) position.x += speed.x * 0.5f;
-			if ((player_input.pressing_A) && (can_go_left == true)) position.x -= speed.x * 0.5f;
+			if ((player_input.pressing_D) && (can_go_right == true)) position.x += side_speed;
+			if ((player_input.pressing_A) && (can_go_left == true)) position.x -= side_speed;
 
 			//double jump
 			if ((player_input.pressing_space) && (can_double_jump == true) & (speed.y <= jumpImpulse * 0.5f))
@@ -270,7 +269,7 @@ bool j1Player::PreUpdate(){
 				jump.Reset();
 				state = JUMP;
 				App->audio->PlayFx(jump_fx);
-				speed.y = jumpImpulse * 0.5f;
+				speed.y = doubleJumpImpulse;
 				can_double_jump = false;
 				grounded = false;
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
