@@ -443,6 +443,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 }
 
 bool j1Player::LoadAnimations() {
+	return true;
+}
+
+/*
+bool j1Player::LoadAnimations() {
 	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
 	bool ret = true;
 	uint i = 0u;
@@ -491,6 +496,7 @@ bool j1Player::LoadAnimations() {
 
 	return ret;
 }
+*/
 
 void j1Player::MovementControl() {
 	position.x += speed.x;
