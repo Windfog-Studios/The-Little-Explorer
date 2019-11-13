@@ -1,7 +1,7 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="60">
+  <app framerate_cap="30">
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
@@ -46,7 +46,7 @@
   </map>
 
   <scene>
-  <camera_limits x="300" y="175" w="300" h="300" />
+  <camera_frame x="300" y="175" w="300" h="300" />
   </scene>
 
   <player>

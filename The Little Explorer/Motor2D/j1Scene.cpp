@@ -25,10 +25,10 @@ bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	folder.create(config.child("folder").child_value());
-	camera_limits.x = camera_limits_x_margin = config.child("camera_limits").attribute("x").as_int();
-	camera_limits.y = camera_limits_y_margin = config.child("camera_limits").attribute("y").as_int();
-	camera_limits.w = config.child("camera_limits").attribute("w").as_int();
-	camera_limits.h = config.child("camera_limits").attribute("h").as_int();
+	camera_frame.x = camera_frame_x_margin = config.child("camera_frame").attribute("x").as_int();
+	camera_frame.y = camera_frame_y_margin = config.child("camera_frame").attribute("y").as_int();
+	camera_frame.w = config.child("camera_frame").attribute("w").as_int();
+	camera_frame.h = config.child("camera_frame").attribute("h").as_int();
 	bool ret = true;
 
 	return ret;
@@ -54,8 +54,8 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	SDL_Rect* camera = &App->render->camera;
-	iPoint* player_position = &App->player->position;
+	SDL_Rect*	camera = &App->render->camera;
+	iPoint*		player_position = &App->player->position;
 
 	//player inputs ---------------
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -90,24 +90,24 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 	if (!blocked_camera) {
-		if (((player_position->x < camera_limits.x + camera_limits.w * 0.5f)) && (-camera->x > 0)) {
+		if (((player_position->x < camera_frame.x + camera_frame.w * 0.5f)) && (-camera->x > 0)) {
 			App->render->camera.x += CAMERA_SPEED * dt;
-			camera_limits.x -= CAMERA_SPEED * dt;
+			camera_frame.x -= CAMERA_SPEED * dt;
 		}
 
-		if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_limits.x + camera_limits.w/2)&&(-camera->x + camera->w + App->player->max_x_speed < App->map->data.width * App->map->data.tile_width)) {
+		if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_frame.x + camera_frame.w * 0.5f)&&(-camera->x + camera->w + App->player->max_x_speed < App->map->data.width * App->map->data.tile_width)) {
 			App->render->camera.x -= CAMERA_SPEED * dt;
-			camera_limits.x += CAMERA_SPEED * dt;
+			camera_frame.x += CAMERA_SPEED * dt;
 		}
 
-		if (((player_position->y < camera_limits.y)) && (camera_limits.y - camera_limits_y_margin > 0)) {
+		if (((player_position->y < camera_frame.y)) && (camera_frame.y - camera_frame_y_margin > 0)) {
 			App->render->camera.y += CAMERA_SPEED * dt;
-			camera_limits.y -= CAMERA_SPEED * dt;
+			camera_frame.y -= CAMERA_SPEED * dt;
 		}
 
-		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_limits.y + camera_limits.h)) && (-camera->y + camera->h + App->player->max_x_speed < App->map->data.height * App->map->data.tile_height)) {
+		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_frame.y + camera_frame.h)) && (-camera->y + camera->h + App->player->max_x_speed < App->map->data.height * App->map->data.tile_height)) {
 			App->render->camera.y -= CAMERA_SPEED * dt;
-			camera_limits.y += CAMERA_SPEED * dt;
+			camera_frame.y += CAMERA_SPEED * dt;
 		}
 	}
 	//camera manual control --------------
@@ -126,16 +126,6 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-	/*
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count());
-	*/
-
-	p2SString title("The Little Explorer");
-
-	App->win->SetTitle(title.GetString());
 	SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
 	App->render->DrawQuad(test_rect, 255, 0, 0, 255);
 	return true;
