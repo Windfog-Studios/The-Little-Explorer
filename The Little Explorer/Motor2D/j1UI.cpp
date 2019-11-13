@@ -89,8 +89,8 @@ void j1UI::LevelTransition() {
 		}
 		break;
 	case STATIC:
-		DeltaTime = SDL_GetTicks();
-		if (transition_moment - DeltaTime <= - transition_time * 1000)
+		time = SDL_GetTicks();
+		if (transition_moment - time <= - transition_time * 1000)
 		{
 			direction = OPEN;
 		}

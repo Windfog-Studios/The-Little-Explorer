@@ -46,7 +46,8 @@ public:
 	SDL_Rect right_square;
 	bool loaded = false;
 	bool transition = false;
-	int DeltaTime = 0;
+	int deltaTime = 0;
+	int time = 0;
 };
 
 #endif // !_j1UI_H
