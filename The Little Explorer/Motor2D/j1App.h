@@ -95,7 +95,7 @@ public:
 	j1UI*				ui;
 
 	bool pause = false;
-
+	bool vsync = false;
 private:
 
 	p2List<j1Module*>	modules;
