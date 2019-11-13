@@ -156,8 +156,8 @@ void j1Scene::Reset_Camera(int kind_of_reset) {
 		App->render->camera.x = App->render->initial_camera_x;
 		App->render->camera.y = App->render->initial_camera_y;
 	}
-	camera_limits.x = -App->render->camera.x + camera_limits_x_margin;
-	camera_limits.y = -App->render->camera.y + camera_limits_y_margin;
+	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
+	camera_frame.y = -App->render->camera.y + camera_frame_y_margin;
 }
 
 void j1Scene::ResetLevel() {
@@ -176,11 +176,11 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 
 bool j1Scene::Save(pugi::xml_node& data) const {
 
-	pugi::xml_node cam_limits = data.append_child("camera_limits");
+	pugi::xml_node cam_frame = data.append_child("camera_frame");
 	pugi::xml_node level = data.append_child("level");
 
-	cam_limits.append_attribute("x") = camera_limits.x;
-	cam_limits.append_attribute("y") = camera_limits.y;
+	cam_frame.append_attribute("x") = camera_frame.x;
+	cam_frame.append_attribute("y") = camera_frame.y;
 
 	if (current_level == LEVEL_1) level.append_attribute("number") = 1;
 	if (current_level == LEVEL_2) level.append_attribute("number") = 2;
@@ -190,8 +190,8 @@ bool j1Scene::Save(pugi::xml_node& data) const {
 
 bool j1Scene::Load(pugi::xml_node& data)
 {
-	camera_limits.x = data.child("position").attribute("x").as_int();
-	camera_limits.y = data.child("position").attribute("y").as_int();
+	camera_frame.x = data.child("position").attribute("x").as_int();
+	camera_frame.y = data.child("position").attribute("y").as_int();
 
 	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(LEVEL_2, LEVEL_1);
 	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);
