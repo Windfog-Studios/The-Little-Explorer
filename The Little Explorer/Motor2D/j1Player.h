@@ -111,10 +111,12 @@ public:
 	//movement
 	fVec2 speed;
 	float jumpImpulse;
+	float doubleJumpImpulse;
 	float gravity;
 	float acceleration = 0.5;
 	float max_x_speed = 5.0f;
 	float air_movement = 5.0f;
+	float side_speed;
 	bool can_double_jump = true;
 	bool can_go_right = true;
 	bool can_go_left = true;
