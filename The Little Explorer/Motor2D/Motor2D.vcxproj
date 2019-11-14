@@ -121,6 +121,9 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="p2Vec2.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

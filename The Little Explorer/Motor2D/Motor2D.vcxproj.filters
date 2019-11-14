@@ -1,26 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1App.cpp">
       <Filter>Desenvolupament  ========</Filter>
     </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Main.cpp">
       <Filter>Desenvolupament  ========</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="p2Log.cpp">
       <Filter>Programacio 2 ===========</Filter>
@@ -37,9 +22,6 @@
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Collision.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -52,28 +34,31 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="j1Audio.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Collision.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="j1Window.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1App.h">
       <Filter>Desenvolupament  ========</Filter>
     </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Module.h">
       <Filter>Desenvolupament  ========</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Defs.h">
       <Filter>Programacio 2 ===========</Filter>
@@ -111,9 +96,6 @@
     <ClInclude Include="Animation.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
-    <ClInclude Include="j1Collision.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="p2Vec2.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
@@ -128,6 +110,24 @@
     </ClInclude>
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Audio.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Window.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collision.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,5 +149,13 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Bases">
+      <UniqueIdentifier>{1445edbd-6d6b-461e-a7be-18ffc92b134e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

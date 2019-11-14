@@ -25,7 +25,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
-	App->collision->AddCollider({ 0,0,1,1000 }, COLLIDER_WALL);
+	App->collision->AddCollider({ -5,0,5,1000 }, COLLIDER_WALL);
 
 	folder.create(config.child("folder").child_value());
 
@@ -537,17 +537,9 @@ SDL_Rect TileSet::GetTileRect(int id) const
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);
+	ret.x = x * data.tile_width;
+	ret.y = y * data.tile_height;
 
-	if (data.type == MAPTYPE_ORTHOGONAL) {
-		ret.x = x * data.tile_width;
-		ret.y = y * data.tile_height;
-	}
-
-	if (data.type == MAPTYPE_ISOMETRIC)
-	{
-		ret.x = (x - y) * (data.tile_width * 0.5f);
-		ret.y = (x + y) * (data.tile_height * 0.5f);
-	}
 	return ret;
 }
 

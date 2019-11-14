@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "j1App.h"
 
-#define CAMERA_SPEED 0.2
+#define CAMERA_SPEED 0.15
 #define CAMERA_CENTER_MARGIN 20
 
 struct SDL_Texture;

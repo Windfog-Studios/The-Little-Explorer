@@ -57,7 +57,7 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void MovementControl();
+	void MovementControl(float dt);
 
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
@@ -112,14 +112,13 @@ public:
 	fVec2 speed;
 	float jumpImpulse;
 	float doubleJumpImpulse;
-	float gravity;
-	float acceleration = 0.5;
-	float max_x_speed = 5.0f;
-	float air_movement = 5.0f;
+	float max_running_speed;
+	float acceleration;
 	float side_speed;
 	bool can_double_jump = true;
 	bool can_go_right = true;
 	bool can_go_left = true;
+	float gravity;
 	bool god = false;
 	bool grounded = false;
 
