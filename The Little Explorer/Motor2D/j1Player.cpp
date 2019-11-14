@@ -368,8 +368,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		switch (c2->type)
 		{
 			case COLLIDER_WALL:
-				position = lastPosition;
-				speed.y = 0;
+				//position = lastPosition;
+				//speed.y = 0;
+				if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
+				{
+					grounded = true;
+					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+					speed.y = 0;
+				}/*
 				if ((position.x < c2->rect.x + COLLIDER_MARGIN) && (state == FALL))
 				{
 					can_go_right = false;
@@ -385,7 +391,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					can_go_right = true;
 					can_go_left = true;
 				}
-
+				*/
 				break;
 			case COLLIDER_DEATH:
 				if (!god) {

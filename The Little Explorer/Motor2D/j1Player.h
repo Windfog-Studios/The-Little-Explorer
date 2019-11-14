@@ -11,7 +11,7 @@
 struct SDL_Texture;
 struct Collider;
 
-#define COLLIDER_MARGIN speed.x*1.5f
+#define COLLIDER_MARGIN 10
 
 struct Player_Input {
 	bool pressing_W;
