@@ -13,6 +13,9 @@ enum class EntityType
 	TRAPS,
 	UNKNOWN
 };
+
+class Entity;
+
 class j1EntityManager : public j1Module
 {
 public:
@@ -20,20 +23,22 @@ public:
 	j1EntityManager();
 	~j1EntityManager();
 
-	bool Awake(pugi::xml_node& config);
-	bool Start();
-	bool PreUpdate();
-	bool Update(float dt);
-	bool PostUpdate();
-	bool CleanUp();
-	void OnCollision(Collider* c1, Collider* c2);
-	bool Load(pugi::xml_node& data);
-	bool Save(pugi::xml_node& data);
+	virtual bool Awake(pugi::xml_node& config);
+	virtual bool Start();
+	virtual bool PreUpdate();
+	virtual bool Update(float dt);
+	virtual bool PostUpdate();
+	virtual bool CleanUp();
+	virtual void OnCollision(Collider* c1, Collider* c2);
+	virtual bool Load(pugi::xml_node& data);
+	virtual bool Save(pugi::xml_node& data);
 
 
 public:
 
-
+	p2List<Entity*> entities;
+	SDL_Texture* entities_texture = nullptr;
+	pugi::xml_node config;
 
 };
 

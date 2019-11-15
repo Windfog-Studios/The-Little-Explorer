@@ -16,7 +16,7 @@
 
 j1EntityManager::j1EntityManager()
 {
-
+	name.create("entityManager");
 }
 
 
@@ -27,12 +27,15 @@ j1EntityManager::~j1EntityManager()
 
 bool j1EntityManager::Awake(pugi::xml_node& config)
 {
+	bool ret = true;
 
+
+	return ret;
 }
 
 bool j1EntityManager::Start()
 {
-
+	return true;
 }
 
 bool j1EntityManager::PreUpdate()
@@ -46,6 +49,11 @@ bool j1EntityManager::Update(float dt)
 }
 
 bool j1EntityManager::PostUpdate()
+{
+
+}
+
+bool j1EntityManager::CleanUp()
 {
 
 }
