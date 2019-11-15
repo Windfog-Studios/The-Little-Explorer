@@ -134,7 +134,7 @@ bool j1Scene::Update(float dt)
 
 	SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
 
-	App->render->DrawQuad(test_rect, 255, 0, 0, 255);
+	//App->render->DrawQuad(test_rect, 255, 0, 0, 255);
 
 	return true;
 }

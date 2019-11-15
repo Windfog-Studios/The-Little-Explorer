@@ -56,7 +56,7 @@
     <jumpFX source="JumpSoundEffect.wav"/>
     <position x="320" y="450" />
     <running_speed value="3.5"/>
-    <acceleration value="0.25"/>
+    <acceleration value="0.5"/>
     <side_speed value="4"/>
     <jumpImpulse value="3.75"/>
     <doubleJumpImpulse value = "2.75" />

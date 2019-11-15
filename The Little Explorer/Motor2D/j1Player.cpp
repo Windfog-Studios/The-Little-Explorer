@@ -294,7 +294,8 @@ bool j1Player::Update(float dt){
 	MovementControl(dt); //calculate new position
 
 	collider->SetPos(floor(position.x), floor(position.y));
-	raycast->SetPos(floor(position.x + current_animation->GetCurrentFrame().w * 0.25f), floor(position.y + current_animation->GetCurrentFrame().h));
+	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
+
 	if (last_collider != nullptr)
 	{
 		if (!raycast->CheckCollision(last_collider->rect))
@@ -383,7 +384,7 @@ void j1Player::MovementControl(float dt) {
 		position.y -= speed.y * dt;
 	}
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
-	//LOG("Speed x: %.2f", speed.x);
+	LOG("Speed x: %.2f", speed.x);
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
@@ -398,8 +399,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		switch (c2->type)
 		{
 			case COLLIDER_WALL:
-				//position = lastPosition;
 				//speed.y = 0;
+				//position.x = lastPosition.x;
 				if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
 				{
 					grounded = true;
@@ -407,10 +408,15 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					speed.y = 0;
 					state = IDLE;
 				}
-				/*
-				if (position.y > c2->rect.y + COLLIDER_MARGIN) {
+				
+				if (position.y +current_animation->GetCurrentFrame().h > c2->rect.y) {
 					position.x = lastPosition.x;
-				}*/
+				}
+				if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
+				{
+					position.y = c2->rect.y + c2->rect.h;
+					speed.y = 0;
+				}
 				break;
 			case COLLIDER_DEATH:
 				if (!god) {
