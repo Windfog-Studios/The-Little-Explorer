@@ -52,8 +52,8 @@ private:
 	SDL_Texture*	fx_particles = nullptr;
 	Particle*		active[MAX_ACTIVE_PARTICLES];
 	p2SString		folder;
-	SDL_Texture* particle_tex = nullptr;
-	SDL_Texture* dust_tex = nullptr;
+	SDL_Texture*	particle_tex = nullptr;
+	SDL_Texture*	dust_tex = nullptr;
 
 public:
 	Particle dust;

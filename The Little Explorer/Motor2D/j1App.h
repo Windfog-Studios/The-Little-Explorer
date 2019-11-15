@@ -19,6 +19,7 @@ class j1Player;
 class j1Particles;
 class j1Collision;
 class j1UI;
+class j1EntityManager;
 
 class j1App
 {
@@ -93,6 +94,7 @@ public:
 	j1Particles*		particles;
 	j1Collision*		collision;
 	j1UI*				ui;
+	j1EntityManager*	entityManager;
 
 	bool pause = false;
 	bool vsync = false;
