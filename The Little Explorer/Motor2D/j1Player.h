@@ -107,6 +107,7 @@ public:
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;
+	Collider* last_collider = nullptr;
 
 	//movement
 	fVec2 speed;

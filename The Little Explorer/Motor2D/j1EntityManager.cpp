@@ -63,12 +63,10 @@ void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
-
 }
 
 bool j1EntityManager::Save(pugi::xml_node& data)
 {
-
 }
 */
 

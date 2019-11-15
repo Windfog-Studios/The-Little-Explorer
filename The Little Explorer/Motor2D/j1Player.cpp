@@ -295,6 +295,13 @@ bool j1Player::Update(float dt){
 
 	collider->SetPos(floor(position.x), floor(position.y));
 	raycast->SetPos(floor(position.x + current_animation->GetCurrentFrame().w * 0.25f), floor(position.y + current_animation->GetCurrentFrame().h));
+	if (last_collider != nullptr)
+	{
+		if (!raycast->CheckCollision(last_collider->rect))
+		{
+			grounded = false;
+		}
+	}
 
 	switch (state)
 	{
@@ -380,6 +387,11 @@ void j1Player::MovementControl(float dt) {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+
+	if (c1 == raycast)
+	{
+		last_collider = c2;
+	}
 
 	if (!god)
 	{
