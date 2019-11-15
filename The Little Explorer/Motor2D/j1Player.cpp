@@ -372,17 +372,20 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::MovementControl(float dt) {
-	dt = floor(dt) * 0.1;
 	//speed.x *= ceil(dt);
 	//speed.y *= ceil(dt);
-	if (!god) speed.y -= gravity;
-	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
-	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration * 1.5f;
-	position.x += speed.x * dt;
-	if (grounded == false)
+	if (!grounded)
 	{
+		if (!god) speed.y -= gravity;
 		position.y -= speed.y * dt;
 	}
+
+	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
+	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration * 1.5f;
+
+	position.x += speed.x * dt;
+	LOG("Grounded %i", grounded);
+	LOG("Speed y: %.2f", speed.y);
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
 	LOG("Speed x: %.2f", speed.x);
 }

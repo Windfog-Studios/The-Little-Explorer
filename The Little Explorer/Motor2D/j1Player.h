@@ -11,7 +11,7 @@
 struct SDL_Texture;
 struct Collider;
 
-#define COLLIDER_MARGIN 10
+#define COLLIDER_MARGIN 15
 
 struct Player_Input {
 	bool pressing_W;

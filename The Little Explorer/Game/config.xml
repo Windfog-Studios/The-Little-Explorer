@@ -55,12 +55,12 @@
     <dieFX source="Die.wav"/>
     <jumpFX source="JumpSoundEffect.wav"/>
     <position x="320" y="450" />
-    <running_speed value="3.5"/>
-    <acceleration value="0.5"/>
+    <running_speed value="150"/>
+    <acceleration value="100"/>
     <side_speed value="4"/>
-    <jumpImpulse value="3.75"/>
-    <doubleJumpImpulse value = "2.75" />
-    <gravity value="0.2"/>
+    <jumpImpulse value="250"/>
+    <doubleJumpImpulse value = "125" />
+    <gravity value="15"/>
 		
   </player>
   <particles>

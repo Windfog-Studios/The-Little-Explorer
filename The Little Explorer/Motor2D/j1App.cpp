@@ -129,7 +129,7 @@ bool j1App::Start()
 	}
 
 	startup_time.Start();
-
+	dt_timer.Start();
 	PERF_PEEK(ptimer);
 	return ret;
 }
@@ -179,7 +179,6 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 	frame_time.Start();
-	dt_timer.Start();
 }
 
 // ---------------------------------------------
@@ -216,8 +215,9 @@ void j1App::FinishUpdate()
 
 	if (last_frame_ms < 1000 / framerate_cap) SDL_Delay(delay);
 
-	dt = dt_timer.ReadMs();
+	dt = dt_timer.ReadSec();
 	LOG("dt: %.2f", dt);
+	dt_timer.Start();
 }
 
 // Call modules before each loop iteration

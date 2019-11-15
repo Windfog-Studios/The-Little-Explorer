@@ -129,8 +129,8 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-	LOG("Camera center x: %.2f y: %.2f", camera_frame_x_center, camera_frame_y_center);
-	LOG("Player position x: %i y: %i", player_position->x, player_position->y);
+//	LOG("Camera center x: %.2f y: %.2f", camera_frame_x_center, camera_frame_y_center);
+//	LOG("Player position x: %i y: %i", player_position->x, player_position->y);
 
 	SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
 
