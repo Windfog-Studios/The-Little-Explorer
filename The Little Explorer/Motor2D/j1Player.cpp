@@ -44,6 +44,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
+	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER, (j1Module*)App->player);
 
 	return ret;
 }
@@ -98,7 +99,7 @@ bool j1Player::PreUpdate(){
 			{
 				can_double_jump = true;
 
-				if ((player_input.pressing_D) && (speed.y == 0))
+				if (player_input.pressing_D)
 				{
 					state = RUN_FORWARD;
 				}
@@ -293,6 +294,7 @@ bool j1Player::Update(float dt){
 	MovementControl(dt); //calculate new position
 
 	collider->SetPos(floor(position.x), floor(position.y));
+	raycast->SetPos(floor(position.x + current_animation->GetCurrentFrame().w * 0.25f), floor(position.y + current_animation->GetCurrentFrame().h));
 
 	switch (state)
 	{
@@ -361,6 +363,22 @@ bool j1Player::PostUpdate() {
 	return true;	
 }
 
+void j1Player::MovementControl(float dt) {
+	dt = floor(dt) * 0.1;
+	//speed.x *= ceil(dt);
+	//speed.y *= ceil(dt);
+	if (!god) speed.y -= gravity;
+	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
+	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration * 1.5f;
+	position.x += speed.x * dt;
+	if (grounded == false)
+	{
+		position.y -= speed.y * dt;
+	}
+	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
+	//LOG("Speed x: %.2f", speed.x);
+}
+
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	if (!god)
@@ -375,23 +393,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					grounded = true;
 					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 					speed.y = 0;
-				}/*
-				if ((position.x < c2->rect.x + COLLIDER_MARGIN) && (state == FALL))
-				{
-					can_go_right = false;
+					state = IDLE;
 				}
-				if ((position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) && (state == FALL))
-				{
-					can_go_left = false;
-				}
-				if ((position.y < c2->rect.y + COLLIDER_MARGIN) && (last_state == FALL))
-				{
-					state = CROUCH_DOWN;
-					fall.Reset();
-					can_go_right = true;
-					can_go_left = true;
-				}
-				*/
+				/*
+				if (position.y > c2->rect.y + COLLIDER_MARGIN) {
+					position.x = lastPosition.x;
+				}*/
 				break;
 			case COLLIDER_DEATH:
 				if (!god) {
@@ -437,12 +444,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		}
 	}
 }
-
-/*
-bool j1Player::LoadAnimations() {
-	return true;
-}
-*/
 
 bool j1Player::LoadAnimations() {
 	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
@@ -492,20 +493,6 @@ bool j1Player::LoadAnimations() {
 	LOG("%u animations loaded", i);
 
 	return ret;
-}
-
-
-void j1Player::MovementControl(float dt) {
-	dt = floor(dt) * 0.1;
-	//speed.x *= ceil(dt);
-	//speed.y *= ceil(dt);
-	if (!god) speed.y -= gravity;
-	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
-	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration * 1.5f;
-	position.x += speed.x * dt;
-	position.y -= speed.y * dt;
-	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
-	//LOG("Speed x: %.2f", speed.x);
 }
 
 bool j1Player::Save(pugi::xml_node& data) const {

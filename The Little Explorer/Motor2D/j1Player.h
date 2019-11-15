@@ -11,7 +11,7 @@
 struct SDL_Texture;
 struct Collider;
 
-#define COLLIDER_MARGIN 10
+#define COLLIDER_MARGIN 20
 
 struct Player_Input {
 	bool pressing_W;
@@ -106,7 +106,7 @@ public:
 	SDL_RendererFlip flip;
 
 	Collider* collider = nullptr;
-	Collider* collider_copy;
+	Collider* raycast = nullptr;
 
 	//movement
 	fVec2 speed;
