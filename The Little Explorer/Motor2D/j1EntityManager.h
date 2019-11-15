@@ -22,7 +22,7 @@ public:
 
 	j1EntityManager();
 	~j1EntityManager();
-
+/*
 	virtual bool Awake(pugi::xml_node& config);
 	virtual bool Start();
 	virtual bool PreUpdate();
@@ -32,8 +32,9 @@ public:
 	virtual void OnCollision(Collider* c1, Collider* c2);
 	virtual bool Load(pugi::xml_node& data);
 	virtual bool Save(pugi::xml_node& data);
-
-
+*/
+	Entity* CreateEntity(EntityType type);
+	virtual void DestroyEntity(Entity* delete_entity);
 public:
 
 	p2List<Entity*> entities;

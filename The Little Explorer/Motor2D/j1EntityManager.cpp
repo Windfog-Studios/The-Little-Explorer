@@ -21,10 +21,8 @@ j1EntityManager::j1EntityManager()
 
 
 j1EntityManager::~j1EntityManager()
-{
-
-}
-
+{}
+/*
 bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
@@ -69,6 +67,19 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 }
 
 bool j1EntityManager::Save(pugi::xml_node& data)
+{
+
+}
+*/
+
+Entity* j1EntityManager::CreateEntity(EntityType type)
+{
+	Entity* entity = nullptr;
+
+	return entity;
+}
+
+void j1EntityManager::DestroyEntity(Entity* delete_entity)
 {
 
 }
