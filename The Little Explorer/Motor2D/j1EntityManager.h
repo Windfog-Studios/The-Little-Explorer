@@ -11,7 +11,6 @@ enum class EntityType
 	PARTICLES,
 	ENEMIES,
 	TRAPS,
-
 	UNKNOWN
 };
 class j1EntityManager : public j1Module
