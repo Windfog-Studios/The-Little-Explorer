@@ -37,7 +37,6 @@ public:
 public:
 
 	p2List<Entity*> entities;
-	SDL_Texture* entities_texture = nullptr;
 	pugi::xml_node config;
 
 };
