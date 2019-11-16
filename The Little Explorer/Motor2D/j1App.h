@@ -94,10 +94,11 @@ public:
 	j1Particles*		particles;
 	j1Collision*		collision;
 	j1UI*				ui;
-	j1EntityManager*	entityManager;
+	j1EntityManager*	entities;
 
 	bool pause = false;
 	bool vsync = false;
+
 private:
 
 	p2List<j1Module*>	modules;

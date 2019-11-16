@@ -5,14 +5,11 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "j1Audio.h"
-#include "SDL/include/SDL.h"
 #include "p2Vec2.h"
 #include "j1Entity.h"
 
 struct SDL_Texture;
 struct Collider;
-
-#define COLLIDER_MARGIN 15
 
 struct Player_Input {
 	bool pressing_W;
@@ -22,7 +19,7 @@ struct Player_Input {
 	bool pressing_F;
 	bool pressing_space;
 };
-
+/*
 enum Player_States {
 	IDLE, 
 	RUN_FORWARD,
@@ -37,7 +34,7 @@ enum Player_States {
 	CROUCH_DOWN,
 	CROUCH_UP
 };
-
+*/
 class j1Player : public j1Entity {
 public:
 	j1Player();
@@ -76,8 +73,6 @@ public:
 	Player_Input player_input;
 
 	//positions
-	int initial_x_position;
-	int initial_y_position;
 	iPoint position;
 	iPoint lastPosition;
 
@@ -101,17 +96,13 @@ public:
 	uint jump_fx;
 	uint die_fx;
 
-	Player_States state;
-	Player_States last_state;
-
-	SDL_RendererFlip flip;
+	EntityState last_state;
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;
 	Collider* last_collider = nullptr;
 
 	//movement
-	fVec2 speed;
 	float jumpImpulse;
 	float doubleJumpImpulse;
 	float max_running_speed;

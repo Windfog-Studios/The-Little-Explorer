@@ -34,7 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	particles = new j1Particles();
 	collision = new j1Collision();
 	ui = new j1UI();
-	entityManager = new j1EntityManager();
+	entities = new j1EntityManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,7 +48,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(particles);
 	AddModule(collision);
 	AddModule(ui);
-	AddModule(entityManager);
+	AddModule(entities);
 
 	// render last to swap buffer
 	AddModule(render);

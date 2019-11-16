@@ -7,13 +7,14 @@ j1Entity::j1Entity(EntityType type) : j1EntityManager() {
 j1Entity::~j1Entity() {
 
 }
-/*
+
 bool j1Entity::Awake(pugi::xml_node&) {
 	return true;
 }
 
 bool j1Entity::Start() {
 	bool ret = true;
+
 	return ret;
 }
 
@@ -36,4 +37,4 @@ bool j1Entity::PostUpdate() {
 	bool ret = true;
 	return ret;
 }
-*/
+

@@ -88,7 +88,7 @@ bool j1Player::PreUpdate(){
 		if (god)
 		{
 			state = IDLE;
-			speed.y = 0;
+			current_speed.y = 0;
 		}
 	}
 
@@ -131,7 +131,7 @@ bool j1Player::PreUpdate(){
 				{
 					App->audio->PlayFx(jump_fx);
 					state = JUMP;
-					speed.y = jumpImpulse;
+					current_speed.y = jumpImpulse;
 					grounded = false;
 				}
 
@@ -141,9 +141,9 @@ bool j1Player::PreUpdate(){
 			{
 				if (player_input.pressing_D)
 				{
-					if (speed.x < max_running_speed)
+					if (current_speed.x < max_running_speed)
 					{
-						speed.x += acceleration;
+						current_speed.x += acceleration;
 					}
 				}
 
@@ -156,7 +156,7 @@ bool j1Player::PreUpdate(){
 				{
 					App->audio->PlayFx(jump_fx);
 					state = JUMP;
-					speed.y = jumpImpulse;
+					current_speed.y = jumpImpulse;
 					grounded = false;
 				}
 
@@ -170,9 +170,9 @@ bool j1Player::PreUpdate(){
 			{
 				if (player_input.pressing_A)
 				{
-					if (speed.x > -max_running_speed)
+					if (current_speed.x > -max_running_speed)
 					{
-						speed.x -= acceleration;
+						current_speed.x -= acceleration;
 					}
 				}
 
@@ -185,7 +185,7 @@ bool j1Player::PreUpdate(){
 				{
 					App->audio->PlayFx(jump_fx);
 					state = JUMP;
-					speed.y = jumpImpulse;
+					current_speed.y = jumpImpulse;
 					grounded = false;
 				}
 
@@ -231,15 +231,15 @@ bool j1Player::PreUpdate(){
 
 			if (state == JUMP)
 			{
-				if (player_input.pressing_D) position.x += side_speed;
-				if (player_input.pressing_A) position.x -= side_speed;
+				if ((player_input.pressing_D)&&(current_speed.x < side_speed)) current_speed.x += acceleration;
+				if ((player_input.pressing_A)&&(current_speed.x > -side_speed)) current_speed.x -= acceleration;
 
 				//double jump
-				if ((player_input.pressing_space) && (can_double_jump == true) && (speed.y <= jumpImpulse * 0.5f))
+				if ((player_input.pressing_space) && (can_double_jump == true) && (current_speed.y <= jumpImpulse * 0.5f))
 				{
 					App->audio->PlayFx(jump_fx);
 					jump.Reset();
-					speed.y = doubleJumpImpulse;
+					current_speed.y = doubleJumpImpulse;
 					can_double_jump = false;
 					App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
 				}
@@ -254,16 +254,16 @@ bool j1Player::PreUpdate(){
 			if (state == FALL)
 			{
 				//let the player move while faling
-				if ((player_input.pressing_D) && (can_go_right == true)) position.x += side_speed;
-				if ((player_input.pressing_A) && (can_go_left == true)) position.x -= side_speed;
+				if ((player_input.pressing_D) && (can_go_right == true)) current_speed.x += side_speed * 0.25;
+				if ((player_input.pressing_A) && (can_go_left == true)) current_speed.x -= side_speed * 0.25;
 
 				//double jump
-				if ((player_input.pressing_space) && (can_double_jump == true) & (speed.y <= jumpImpulse * 0.5f))
+				if ((player_input.pressing_space) && (can_double_jump == true) & (current_speed.y <= jumpImpulse * 0.5f))
 				{
 					jump.Reset();
 					state = JUMP;
 					App->audio->PlayFx(jump_fx);
-					speed.y = doubleJumpImpulse;
+					current_speed.y = doubleJumpImpulse;
 					can_double_jump = false;
 					grounded = false;
 					App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
@@ -284,8 +284,8 @@ bool j1Player::PreUpdate(){
 
 	if (god)
 	{
-		if (player_input.pressing_W) position.y -= speed.x;
-		if (player_input.pressing_S) position.y += speed.x;
+		if (player_input.pressing_W) position.y -= current_speed.x;
+		if (player_input.pressing_S) position.y += current_speed.x;
 	}
 	return true;
 }
@@ -341,14 +341,14 @@ bool j1Player::Update(float dt){
 
 	case JUMP:
 		current_animation = &jump;
-		if (speed.y <= 0)
+		if (current_speed.y <= 0)
 		{
 			state = FALL;
 			jump.Reset();
 		}
 		if ((last_state = RUN_FORWARD)||(last_state == RUN_BACKWARD))
 		{
-			speed.x *= 0.5f;
+			current_speed.x *= 0.5f;
 		}
 		break;
 	case FALL:
@@ -376,16 +376,16 @@ void j1Player::MovementControl(float dt) {
 
 	if (!grounded)
 	{
-		if (!god) speed.y -= gravity;
-		position.y -= speed.y * dt;
+		if (!god) current_speed.y -= gravity;
+		position.y -= current_speed.y * dt;
 	}
 
-	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= floor(acceleration * 10 * dt);
-	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += floor(acceleration  * 10 * dt);
+	if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= floor(acceleration * 10 * dt);
+	if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += floor(acceleration  * 10 * dt);
 
-	position.x += speed.x * dt;
+	position.x += current_speed.x * dt;
 
-	LOG("Speed x: %.2f y: %.2f", speed.x, speed.y);
+	LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
 
 //	LOG("Grounded %i", grounded);
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
@@ -409,7 +409,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				{
 					grounded = true;
 					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
-					speed.y = 0;
+					current_speed.y = 0;
 					state = IDLE;
 				}
 				
@@ -419,12 +419,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
 				{
 					position.y = c2->rect.y + c2->rect.h;
-					speed.y = 0;
+					current_speed.y = 0;
 				}
 				break;
 			case COLLIDER_DEATH:
 				if (!god) {
-					speed.x = 0;
+					current_speed.x = 0;
 					
 					if (App->ui->transition == false)
 					{
@@ -441,7 +441,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				if (((position.y + current_animation->GetCurrentFrame().h >= c2->rect.y)&&(lastPosition.y + current_animation->GetCurrentFrame().h <= c2->rect.y + COLLIDER_MARGIN))||(grounded == true))
 				{
 					position = lastPosition;
-					speed.x = speed.y = 0;
+					current_speed.x = current_speed.y = 0;
 					grounded = true;
 					if (last_state == FALL)
 					{
