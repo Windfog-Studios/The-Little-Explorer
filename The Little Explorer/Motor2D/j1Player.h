@@ -1,15 +1,9 @@
 #ifndef _j1PLAYER_H_
 #define _j1PLAYER_H_
 
-#include "j1Module.h"
-#include "p2Point.h"
-#include "Animation.h"
 #include "j1Audio.h"
 #include "p2Vec2.h"
 #include "j1Entity.h"
-
-struct SDL_Texture;
-struct Collider;
 
 struct Player_Input {
 	bool pressing_W;
@@ -19,38 +13,17 @@ struct Player_Input {
 	bool pressing_F;
 	bool pressing_space;
 };
-/*
-enum Player_States {
-	IDLE, 
-	RUN_FORWARD,
-	RUN_BACKWARD,
-	JUMP,
-	//JUMP_FORWARD,
-	//JUMP_BACKWARD,
-	FALL,
-	SLIDE_FORWARD,
-	SLIDE_BACKWARD,
-	WALK,
-	CROUCH_DOWN,
-	CROUCH_UP
-};
-*/
+
 class j1Player : public j1Entity {
 public:
 	j1Player();
-
 	virtual ~j1Player();
 
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
@@ -61,8 +34,7 @@ public:
 	bool Load(pugi::xml_node& data);
 
 	bool LoadAnimations();
-
-		
+	
 private:
 
 
@@ -76,15 +48,10 @@ public:
 	fPoint lastPosition;
 
 	//animations
-	Animation idle;
-	Animation jump;
-	Animation run;
 	Animation walk;
 	Animation crouch_down;
 	Animation crouch_up;
 	Animation slide;
-	Animation fall;
-	p2List<Animation*> animations;
 	pugi::xml_document animation_doc;
 
 	//fx
@@ -102,7 +69,6 @@ public:
 	bool can_double_jump = true;
 	bool can_go_right = true;
 	bool can_go_left = true;
-	float gravity;
 	bool god = false;
 
 	bool controls_blocked = false;

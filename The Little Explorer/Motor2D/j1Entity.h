@@ -2,6 +2,7 @@
 #define _j1ENTITY_H
 #include "j1EntityManager.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -43,7 +44,9 @@ public:
 	int initial_x_position;
 	int initial_y_position;
 	int health;
+
 	bool grounded = false;
+	float gravity;
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;
@@ -53,7 +56,12 @@ public:
 
 	p2SString die_fx_path;
 
+	p2List<Animation*> animations;
 	Animation* current_animation;
+	Animation idle;
+	Animation jump;
+	Animation run;
+	Animation fall;
 
 	EntityType type;
 	EntityState state;
