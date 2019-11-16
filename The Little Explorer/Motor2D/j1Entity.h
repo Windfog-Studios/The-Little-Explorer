@@ -1,8 +1,8 @@
 #ifndef _j1ENTITY_H
 #define _j1ENTITY_H
-#include "j1EntityManager.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include "j1EntityManager.h"
 
 struct SDL_Texture;
 struct Collider;

@@ -23,16 +23,33 @@ j1EntityManager::j1EntityManager()
 j1EntityManager::~j1EntityManager()
 {}
 
-Entity* j1EntityManager::CreateEntity(EntityType type)
+j1Entity* j1EntityManager::CreateEntity(EntityType type)
 {
-	Entity* entity = nullptr;
-
+	//static_assert(EntityType::UNKNOWN == 4, "code needs update");
+	j1Entity* entity = nullptr;
+	switch (type)
+	{
+	case EntityType::PLAYER:
+		entity = new j1Player();
+		break;
+	case EntityType::ENEMIES:
+		//ret = new j1Enemy();
+		break;
+	case EntityType::TRAPS:
+		break;
+	case EntityType::PARTICLES:
+		break;
+	case EntityType::UNKNOWN:
+		break;
+	default:
+		break;
+	}
+	entities.add(entity);
 	return entity;
 }
 
-void j1EntityManager::DestroyEntity(Entity* delete_entity)
+void j1EntityManager::DestroyEntity(j1Entity* delete_entity)
 {
-
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config)
@@ -46,6 +63,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 bool j1EntityManager::Start()
 {
 	bool ret = true;
+	//j1Player* player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER);
 	return ret;
 }
 

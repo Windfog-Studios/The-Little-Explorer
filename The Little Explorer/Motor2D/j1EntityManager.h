@@ -5,16 +5,16 @@
 #include "p2Point.h"
 #include "Animation.h"
 
+class j1Entity;
+
 enum class EntityType
 {
 	PLAYER,
-	PARTICLES,
 	ENEMIES,
 	TRAPS,
+	PARTICLES,
 	UNKNOWN
 };
-
-class Entity;
 
 class j1EntityManager : public j1Module
 {
@@ -33,11 +33,11 @@ public:
 	virtual bool Load(pugi::xml_node& data);
 	virtual bool Save(pugi::xml_node& data);
 
-	Entity* CreateEntity(EntityType type);
-	virtual void DestroyEntity(Entity* delete_entity);
+	j1Entity* CreateEntity(EntityType type);
+	virtual void DestroyEntity(j1Entity* delete_entity);
 public:
 
-	p2List<Entity*> entities;
+	p2List<j1Entity*> entities;
 	pugi::xml_node config;
 
 };

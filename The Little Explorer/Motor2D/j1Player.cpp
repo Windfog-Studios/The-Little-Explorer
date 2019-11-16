@@ -16,7 +16,6 @@
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	name.create("player");
-
 	LoadAnimations();
 
 }
@@ -25,8 +24,8 @@ j1Player::~j1Player(){ }
 
 bool j1Player::Awake(pugi::xml_node& config) {
 
-	LOG("Loading Player Data");
 	bool ret = true;
+	LOG("Loading Player Data");
 
 	current_animation = &idle;
 
@@ -51,11 +50,11 @@ bool j1Player::Awake(pugi::xml_node& config) {
 }
 
 bool j1Player::Start(){
-	//load character sprites
-	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
+
 	position.x = initial_x_position = App->scene->player_x_position;
 	position.y = initial_x_position = App->scene->player_y_position;
 
+	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 
@@ -65,8 +64,8 @@ bool j1Player::Start(){
 bool j1Player::CleanUp() {
 	collider->to_delete = true;
 	collider = nullptr;
-	App->tex->UnLoad(player_tex);
-	player_tex = nullptr;
+	App->tex->UnLoad(texture);
+	texture = nullptr;
 	return true;
 }
 

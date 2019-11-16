@@ -39,15 +39,21 @@ private:
 
 
 public:
+	float jumpImpulse;
+	float doubleJumpImpulse;
+	float max_running_speed;
+	float acceleration;
+	float side_speed;
+	bool can_double_jump = true;
+	bool can_go_right = true;
+	bool can_go_left = true;
 
-	SDL_Texture* player_tex;
+	fPoint lastPosition;
+	EntityState last_state;
+
 	p2SString folder;
 	Player_Input player_input;
 
-	//positions
-	fPoint lastPosition;
-
-	//animations
 	Animation walk;
 	Animation crouch_down;
 	Animation crouch_up;
@@ -58,19 +64,7 @@ public:
 	p2SString jump_fx_path;
 	uint jump_fx;
 
-	EntityState last_state;
-
-	//movement
-	float jumpImpulse;
-	float doubleJumpImpulse;
-	float max_running_speed;
-	float acceleration;
-	float side_speed;
-	bool can_double_jump = true;
-	bool can_go_right = true;
-	bool can_go_left = true;
 	bool god = false;
-
 	bool controls_blocked = false;
 };
 
