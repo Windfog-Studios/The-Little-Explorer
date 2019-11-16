@@ -19,7 +19,7 @@ class Animation
 public:
 	bool loop = true;
 	Frame frames[MAX_FRAMES];
-	float current_frame;
+	float current_frame = 0;
 private:
 	int loops;
 	int num_frames = 0;

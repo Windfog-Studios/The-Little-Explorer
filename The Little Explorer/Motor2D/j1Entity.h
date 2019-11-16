@@ -7,7 +7,7 @@
 struct SDL_Texture;
 struct Collider;
 
-#define COLLIDER_MARGIN 25
+#define COLLIDER_MARGIN 20
 
 enum EntityState {
 	IDLE,
@@ -41,32 +41,32 @@ public:
 
 	fPoint position;
 	fPoint current_speed;
-	int initial_x_position;
-	int initial_y_position;
-	int health;
+	int initial_x_position = 0;
+	int initial_y_position = 0;
+	int health = 0;
 
 	bool grounded = false;
-	float gravity;
+	float gravity = 0.0f;
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;
 	Collider* last_collider = nullptr;
 	
-	uint die_fx;
+	uint die_fx = 0;
 
 	p2SString die_fx_path;
 
 	p2List<Animation*> animations;
-	Animation* current_animation;
 	Animation idle;
 	Animation jump;
 	Animation run;
 	Animation fall;
+	Animation* current_animation = nullptr;
 
-	EntityType type;
-	EntityState state;
+	EntityType type = EntityType::UNKNOWN;
+	EntityState state = EntityState::IDLE;
 	SDL_Texture* texture = nullptr;
-	SDL_RendererFlip flip;
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	bool visible = true;
 };
 #endif // !_j1ENTITY_H

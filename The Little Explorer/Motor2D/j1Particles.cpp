@@ -19,16 +19,16 @@ j1Particles::j1Particles():j1Module()
 
 	//dust
 	{
-		dust.anim.PushBack({ 3,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 50,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 97,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 144,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 191,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 238,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 285,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 334,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 381,3,45,43 }, 0.3);
-		dust.anim.PushBack({ 428,3,45,43 }, 0.3);
+		dust.anim.PushBack({ 3,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 50,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 97,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 144,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 191,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 238,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 285,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 334,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 381,3,45,43 }, 0.3f);
+		dust.anim.PushBack({ 428,3,45,43 }, 0.3f);
 		dust.anim.loop = false;
 	}
 }

@@ -21,6 +21,4 @@ bool j1Enemy::CleanUp() {
 	return ret;
 }
 
-void j1Enemy::OnCollision(Collider* c1, Collider* c2) {
-
-}
+void j1Enemy::OnCollision(Collider* c1, Collider* c2) {}
