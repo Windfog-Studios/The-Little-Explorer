@@ -31,7 +31,7 @@ public:
 
 	bool CleanUp();
 
-	void LevelTransition();
+	void LevelTransition(float dt);
 
 	void ResetTransition(TransitionDirection state = CLOSE);
 

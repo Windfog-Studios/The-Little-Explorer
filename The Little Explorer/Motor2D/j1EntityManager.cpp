@@ -22,7 +22,7 @@ j1EntityManager::j1EntityManager()
 
 j1EntityManager::~j1EntityManager()
 {}
-/*
+
 bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
@@ -33,27 +33,32 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 
 bool j1EntityManager::Start()
 {
-	return true;
+	bool ret = true;
+	return ret;
 }
 
 bool j1EntityManager::PreUpdate()
 {
-
+	bool ret = true;
+	return ret;
 }
 
 bool j1EntityManager::Update(float dt)
 {
-
+	bool ret = true;
+	return ret;
 }
 
 bool j1EntityManager::PostUpdate()
 {
-
+	bool ret = true;
+	return ret;
 }
 
 bool j1EntityManager::CleanUp()
 {
-
+	bool ret = true;
+	return ret;
 }
 
 void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
@@ -63,12 +68,16 @@ void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
+	bool ret = true;
+	return ret;
 }
 
 bool j1EntityManager::Save(pugi::xml_node& data)
 {
+	bool ret = true;
+	return ret;
 }
-*/
+
 
 Entity* j1EntityManager::CreateEntity(EntityType type)
 {

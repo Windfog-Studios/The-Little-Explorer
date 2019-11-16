@@ -9,7 +9,7 @@ class j1Entity : public j1EntityManager
 {
 public:
 	j1Entity(EntityType type);
-	virtual ~j1Entity() {};
+	virtual ~j1Entity();
 
 	virtual bool Awake(pugi::xml_node&) { return true; };
 	virtual bool Start() { return true; };
@@ -26,4 +26,3 @@ public:
 };
 #endif // !_j1ENTITY_H
 
-j1Entity::j1Entity(EntityType type) : type(type) {}

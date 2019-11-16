@@ -7,6 +7,7 @@
 #include "j1Audio.h"
 #include "SDL/include/SDL.h"
 #include "p2Vec2.h"
+#include "j1Entity.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -37,7 +38,7 @@ enum Player_States {
 	CROUCH_UP
 };
 
-class j1Player : public j1Module {
+class j1Player : public j1Entity {
 public:
 	j1Player();
 

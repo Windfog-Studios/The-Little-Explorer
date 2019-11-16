@@ -11,8 +11,9 @@
 #include "j1Audio.h"
 #include "j1UI.h"
 #include "j1Particles.h"
+#include "j1EntityManager.h"
 
-j1Player::j1Player():j1Module () {
+j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	name.create("player");
 
@@ -293,7 +294,7 @@ bool j1Player::Update(float dt){
 
 	MovementControl(dt); //calculate new position
 
-	collider->SetPos(floor(position.x), floor(position.y));
+	collider->SetPos(floor(position.x), position.y);
 	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
 
 	if (last_collider != nullptr)
@@ -372,22 +373,22 @@ bool j1Player::PostUpdate() {
 }
 
 void j1Player::MovementControl(float dt) {
-	//speed.x *= ceil(dt);
-	//speed.y *= ceil(dt);
+
 	if (!grounded)
 	{
 		if (!god) speed.y -= gravity;
 		position.y -= speed.y * dt;
 	}
 
-	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= acceleration;
-	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += acceleration * 1.5f;
+	if ((!player_input.pressing_D) && (speed.x > 0)) speed.x -= floor(acceleration * 10 * dt);
+	if ((!player_input.pressing_A) && (speed.x < 0)) speed.x += floor(acceleration  * 10 * dt);
 
 	position.x += speed.x * dt;
-	LOG("Grounded %i", grounded);
-	LOG("Speed y: %.2f", speed.y);
+
+	LOG("Speed x: %.2f y: %.2f", speed.x, speed.y);
+
+//	LOG("Grounded %i", grounded);
 	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
-	LOG("Speed x: %.2f", speed.x);
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {

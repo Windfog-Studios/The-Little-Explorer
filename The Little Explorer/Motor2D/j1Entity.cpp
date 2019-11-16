@@ -1,15 +1,14 @@
 #include "j1Entity.h"
 
-/*
-j1Entity::j1Entity() : j1EntityManager() {
+j1Entity::j1Entity(EntityType type) : j1EntityManager() {
 
 }
 
 j1Entity::~j1Entity() {
 
 }
-
-bool j1Entity::Awake() {
+/*
+bool j1Entity::Awake(pugi::xml_node&) {
 	return true;
 }
 

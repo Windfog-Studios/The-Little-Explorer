@@ -37,26 +37,26 @@ bool j1UI::Update(float dt) {
 	bool ret = true;
 	SDL_Rect rect = { 10,10,10,10 };
 	rect.x = -camera->x;
+	if (transition) LevelTransition(dt);
 	//App->render->DrawQuad(rect, 255, 0, 0, 255);
 	return ret;
 }
 bool j1UI::PostUpdate() {
-	if (transition == true) {
-		LevelTransition();
+	if (transition) {
 		App->render->DrawQuad(left_square, 0, 0, 0, 255);
 		App->render->DrawQuad(right_square, 0, 0, 0, 255);
 	}
 	return true;
 }
-void j1UI::LevelTransition() {
+void j1UI::LevelTransition(float dt) {
 	SDL_Rect screen = { 0, 0, camera->w,camera->h };
 	switch (direction)
 	{
 	case CLOSE:
-		if (left_square.x <= -camera->x - transition_speed / 2)
+		if (left_square.x <= -camera->x - transition_speed * 0.5f)
 		{
-			left_square.x += transition_speed;
-			right_square.x -= transition_speed;
+			left_square.x += transition_speed * dt;
+			right_square.x -= transition_speed * dt;
 			App->render->DrawQuad(left_square, 0, 0, 0, 255);
 			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 		}
@@ -75,8 +75,8 @@ void j1UI::LevelTransition() {
 	case OPEN:
 		if (left_square.x + left_square.w > camera->x)
 		{
-			left_square.x -= transition_speed;
-			right_square.x += transition_speed;
+			left_square.x -= transition_speed * dt;
+			right_square.x += transition_speed * dt;
 			App->render->DrawQuad(left_square, 0, 0, 0, 255);
 			App->render->DrawQuad(right_square, 0, 0, 0, 255);
 		}
@@ -130,7 +130,7 @@ void j1UI::ResetTransition(TransitionDirection state) {
 	else
 	{
 		left_square.x = -camera->x;
-		right_square.x = -camera->x + camera->w / 2;
+		right_square.x = -camera->x + camera->w * 0.5f;
 	}
 	App->scene->blocked_camera = true;
 }
