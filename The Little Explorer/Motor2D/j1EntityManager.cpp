@@ -32,7 +32,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type)
 	case EntityType::PLAYER:
 		entity = new j1Player();
 		break;
-	case EntityType::ENEMIES:
+	case EntityType::ENEMY:
 		//ret = new j1Enemy();
 		break;
 	case EntityType::TRAPS:
@@ -50,12 +50,12 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type)
 
 void j1EntityManager::DestroyEntity(j1Entity* delete_entity)
 {
+	RELEASE(delete_entity);
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
-
 
 	return ret;
 }
@@ -63,7 +63,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 bool j1EntityManager::Start()
 {
 	bool ret = true;
-	//j1Player* player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER);
+	j1Player* player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER);
 	return ret;
 }
 
@@ -91,9 +91,7 @@ bool j1EntityManager::CleanUp()
 	return ret;
 }
 
-void j1EntityManager::OnCollision(Collider* c1, Collider* c2)
-{
-
+void j1EntityManager::OnCollision(Collider* c1, Collider* c2){
 }
 
 bool j1EntityManager::Load(pugi::xml_node& data)
