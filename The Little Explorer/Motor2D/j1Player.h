@@ -73,8 +73,7 @@ public:
 	Player_Input player_input;
 
 	//positions
-	iPoint position;
-	iPoint lastPosition;
+	fPoint lastPosition;
 
 	//animations
 	Animation idle;
@@ -85,22 +84,14 @@ public:
 	Animation crouch_up;
 	Animation slide;
 	Animation fall;
-	Animation* current_animation;
 	p2List<Animation*> animations;
 	pugi::xml_document animation_doc;
 
 	//fx
-	p2SString die_fx_path;
 	p2SString jump_fx_path;
-
 	uint jump_fx;
-	uint die_fx;
 
 	EntityState last_state;
-
-	Collider* collider = nullptr;
-	Collider* raycast = nullptr;
-	Collider* last_collider = nullptr;
 
 	//movement
 	float jumpImpulse;
@@ -113,9 +104,7 @@ public:
 	bool can_go_left = true;
 	float gravity;
 	bool god = false;
-	bool grounded = false;
 
-	bool visible = true;
 	bool controls_blocked = false;
 };
 

@@ -55,7 +55,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	SDL_Rect*	camera = &App->render->camera;
-	iPoint* player_position = &App->player->position;
+	fPoint*		player_position = &App->player->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 
@@ -150,7 +150,6 @@ bool j1Scene::PostUpdate()
 	return ret;
 }
 
-// Called before quitting
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");

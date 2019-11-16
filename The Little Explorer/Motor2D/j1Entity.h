@@ -43,13 +43,23 @@ public:
 	int initial_x_position;
 	int initial_y_position;
 	int health;
-	bool grounded;
+	bool grounded = false;
+
+	Collider* collider = nullptr;
+	Collider* raycast = nullptr;
+	Collider* last_collider = nullptr;
+	
+	uint die_fx;
+
+	p2SString die_fx_path;
+
+	Animation* current_animation;
 
 	EntityType type;
 	EntityState state;
 	SDL_Texture* texture = nullptr;
 	SDL_RendererFlip flip;
-
+	bool visible = true;
 };
 #endif // !_j1ENTITY_H
 

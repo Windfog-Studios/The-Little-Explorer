@@ -30,9 +30,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	current_animation = &idle;
 
-	folder.create(config.child("folder").child_value());
-
 	//set initial attributes of the player
+	folder.create(config.child("folder").child_value());
 	max_running_speed = config.child("running_speed").attribute("value").as_float();
 	acceleration = config.child("acceleration").attribute("value").as_float();
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
@@ -44,6 +43,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 
+	//colliders
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
 	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER, (j1Module*)App->player);
 
@@ -52,7 +52,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start(){
 	//load character sprites
-	player_tex = App->tex->Load("sprites/characters/spritesheet_traveler.png");
+	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
 	position.x = initial_x_position = App->scene->player_x_position;
 	position.y = initial_x_position = App->scene->player_y_position;
 
@@ -253,11 +253,10 @@ bool j1Player::PreUpdate(){
 			}
 			if (state == FALL)
 			{
-				//let the player move while faling
+
 				if ((player_input.pressing_D) && (can_go_right == true)) current_speed.x += side_speed * 0.25;
 				if ((player_input.pressing_A) && (can_go_left == true)) current_speed.x -= side_speed * 0.25;
 
-				//double jump
 				if ((player_input.pressing_space) && (can_double_jump == true) & (current_speed.y <= jumpImpulse * 0.5f))
 				{
 					jump.Reset();
@@ -274,11 +273,6 @@ bool j1Player::PreUpdate(){
 					fall.Reset();
 				}
 			}
-
-			/*if ((speed.y < 3) && ((state == IDLE) ||(state == RUN_FORWARD) || (state == RUN_BACKWARD) ) )
-			{
-				state = FALL;
-			}*/
 		}
 	}
 
@@ -363,12 +357,10 @@ bool j1Player::Update(float dt){
 }
 
 bool j1Player::PostUpdate() {
-
 	if (visible)
 	{
-		App->render->Blit(player_tex, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
+		App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 	}
-
 	return true;	
 }
 

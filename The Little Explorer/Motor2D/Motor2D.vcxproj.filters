@@ -58,6 +58,9 @@
     <ClCompile Include="j1Entity.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="j1Enemy.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -141,6 +144,9 @@
     <ClInclude Include="j1Entity.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="j1Enemy.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -166,6 +172,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Entities">
       <UniqueIdentifier>{4f434b92-82c7-449f-9eee-0d5f29879820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Enemies">
+      <UniqueIdentifier>{7bd26e59-f92a-4032-92d0-3893b48124fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
