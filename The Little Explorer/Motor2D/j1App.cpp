@@ -179,6 +179,7 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 	frame_time.Start();
+	dt_timer.Start();
 }
 
 // ---------------------------------------------
@@ -217,8 +218,6 @@ void j1App::FinishUpdate()
 
 	dt = dt_timer.ReadSec();
 	LOG("dt: %.2f delay: %.2f", dt, delay);
-	dt_timer.Start();
-
 }
 
 // Call modules before each loop iteration
