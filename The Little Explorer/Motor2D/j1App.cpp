@@ -220,7 +220,7 @@ void j1App::FinishUpdate()
 	if (last_frame_ms < 1000 / framerate_cap) SDL_Delay(delay);
 
 	dt = dt_timer.ReadSec();
-	LOG("dt: %.2f delay: %.2f", dt, delay);
+	LOG("dt: %.4f delay: %.2f", dt, delay);
 }
 
 // Call modules before each loop iteration
