@@ -394,8 +394,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		switch (c2->type)
 		{
 			case COLLIDER_WALL:
-				//speed.y = 0;
-				//position.x = lastPosition.x;
 				if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
 				{
 					grounded = true;
@@ -429,6 +427,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 				break;
 			case COLLIDER_PLATFORM:
+				/*
 				if (((position.y + current_animation->GetCurrentFrame().h >= c2->rect.y)&&(lastPosition.y + current_animation->GetCurrentFrame().h <= c2->rect.y + COLLIDER_MARGIN))||(grounded == true))
 				{
 					position = lastPosition;
@@ -438,6 +437,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					{
 						state = IDLE;
 					}
+				}*/
+				if (c1->rect.y + c1->rect.h * 0.5f < c2->rect.y)
+				{
+					grounded = true;
+					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+					current_speed.y = 0;
+					state = IDLE;
 				}
 				break;
 			case COLLIDER_CHANGE_LEVEL:
