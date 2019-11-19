@@ -40,6 +40,7 @@ bool j1Scene::Start()
 	//initial map
 	//App->map->Load("hello2.tmx");
 	App->map->Load("Level1.tmx");
+
 	//App->map->Load("Level2.tmx");
 
 	return true;
