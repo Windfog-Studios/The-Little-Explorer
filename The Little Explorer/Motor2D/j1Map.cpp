@@ -48,13 +48,12 @@ void j1Map::Draw()
 		return;
 
 	p2List_item<MapLayer*>* item = data.layers.start;
-
 	for (; item != NULL; item = item->next)
 	{
 		MapLayer* layer = item->data;
 
 		if (layer->properties.Get("Nodraw") != 0)
-			continue;
+		continue;
 
 		for (int y = 0; y < data.height; ++y)
 		{
@@ -64,7 +63,6 @@ void j1Map::Draw()
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
-
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
@@ -241,7 +239,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadLayer(layer, set);
 		}
-		
+
 		data.layers.add(set);
 	}
 
@@ -269,6 +267,9 @@ bool j1Map::Load(const char* file_name)
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
+			if (l->name == "Collisions") {
+				LoadCollisions(l);
+			}
 			item_layer = item_layer->next;
 		}
 
@@ -636,5 +637,28 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 		break;
 	}
 
+	return ret;
+}
+
+bool j1Map::LoadCollisions(MapLayer* layer) 
+{
+	bool ret = true;
+	SDL_Rect collider_rect = { 0,0,32,32 };
+	for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			int tile_id = layer->Get(x, y);
+			if (tile_id > 0)
+			{
+				TileSet* tileset = GetTilesetFromTileId(tile_id);
+				SDL_Rect r = tileset->GetTileRect(tile_id);
+				iPoint pos = MapToWorld(x, y);
+				collider_rect.x = pos.x;
+				collider_rect.y = pos.y;
+				App->collision->AddCollider(collider_rect, COLLIDER_WALL);
+			}
+		}
+	}
 	return ret;
 }
