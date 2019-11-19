@@ -16,6 +16,7 @@ struct Properties
 	{
 		p2SString name;
 		int value;
+
 	};
 
 	~Properties()
@@ -71,7 +72,7 @@ struct TileSet
 	int					spacing;
 	int					tile_width;
 	int					tile_height;
-	SDL_Texture* texture;
+	SDL_Texture*		texture;
 	int					tex_width;
 	int					tex_height;
 	int					num_tiles_width;
@@ -138,6 +139,7 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 

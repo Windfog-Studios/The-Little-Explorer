@@ -245,20 +245,6 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(set);
 	}
 
-	//Load objectgroup info -------------------------------------
-	
-	pugi::xml_node objectgroup;
-	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
-	{
-		ObjectGroup* set = new ObjectGroup();
-
-		if (ret == true) 
-		{
-			ret = LoadObjectGroup(objectgroup, set);
-		}
-		data.objectgroups.add(set);
-	}
-
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -295,6 +281,20 @@ bool j1Map::Load(const char* file_name)
 			item_object = item_object->next;
 		}
 		
+	}
+
+	//Load objectgroup info -------------------------------------
+
+	pugi::xml_node objectgroup;
+	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
+	{
+		ObjectGroup* set = new ObjectGroup();
+
+		if (ret == true)
+		{
+			ret = LoadObjectGroup(objectgroup, set);
+		}
+		data.objectgroups.add(set);
 	}
 
 	map_loaded = ret;
@@ -537,8 +537,16 @@ SDL_Rect TileSet::GetTileRect(int id) const
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);
-	ret.x = x * data.tile_width;
-	ret.y = y * data.tile_height;
+	if (data.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = x * data.tile_width;
+		ret.y = y * data.tile_height;
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
 
 	return ret;
 }
@@ -550,13 +558,11 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		ret.x = x / data.tile_width;
 		ret.y = y / data.tile_height;
 	}
-
-	if (data.type == MAPTYPE_ISOMETRIC)
+	else
 	{
-		ret.x = x / data.tile_width + y / data.tile_height;
-		ret.y = y / data.tile_height - x / data.tile_width;
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
 	}
-
 	return ret;
 }
 
@@ -580,6 +586,54 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 			properties.list.add(p);
 		}
+	}
+
+	return ret;
+}
+
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->properties.Get("Navigation", 0) == 0)
+			continue;
+
+		uchar* map = new uchar[layer->width * layer->height];
+		memset(map, 1, layer->width * layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y * layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					/*TileType* ts = tileset->GetTileType(tile_id);
+					if(ts != NULL)
+					{
+						map[i] = ts->properties.Get("walkable", 1);
+					}*/
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
 	}
 
 	return ret;
