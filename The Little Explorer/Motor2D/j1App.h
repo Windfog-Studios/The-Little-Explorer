@@ -20,6 +20,7 @@ class j1Particles;
 class j1Collision;
 class j1UI;
 class j1EntityManager;
+class j1PathFinding;
 
 class j1App
 {
@@ -95,6 +96,7 @@ public:
 	j1Collision*		collision;
 	j1UI*				ui;
 	j1EntityManager*	entities;
+	j1PathFinding*		pathfinding;
 
 	bool pause = false;
 	bool vsync = false;
