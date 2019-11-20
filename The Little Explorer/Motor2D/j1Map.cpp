@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Player.h"
 #include "j1Scene.h"
+#include "brofiler/Brofiler/Brofiler.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -44,6 +45,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("MapDraw", Profiler::Color::Purple)
 	if (map_loaded == false)
 		return;
 

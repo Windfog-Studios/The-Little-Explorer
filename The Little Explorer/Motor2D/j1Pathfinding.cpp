@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH),width(0), height(0)
 {
@@ -167,7 +168,8 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	// TODO 1: if origin or destination are not walkable, return -1
+	BROFILER_CATEGORY("CreatePath", Profiler::Color::Azure)
+	//if origin or destination are not walkable, return -1
 	if ((!IsWalkable(origin))||(!IsWalkable(destination)))
 	{
 		return -1;

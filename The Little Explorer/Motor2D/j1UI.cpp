@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1UI::j1UI() : j1Module() {
 	
@@ -34,6 +35,7 @@ bool j1UI::CleanUp() {
 }
 
 bool j1UI::Update(float dt) {
+	BROFILER_CATEGORY("UIUpdate", Profiler::Color::BlueViolet)
 	bool ret = true;
 	SDL_Rect rect = { 10,10,10,10 };
 	rect.x = -camera->x;
@@ -42,6 +44,7 @@ bool j1UI::Update(float dt) {
 	return ret;
 }
 bool j1UI::PostUpdate() {
+	BROFILER_CATEGORY("UIPostUpdate", Profiler::Color::GoldenRod)
 	if (transition) {
 		App->render->DrawQuad(left_square, 0, 0, 0, 255);
 		App->render->DrawQuad(right_square, 0, 0, 0, 255);

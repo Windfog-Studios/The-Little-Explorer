@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1UI.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -55,6 +56,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
 	SDL_Rect*	camera = &App->render->camera;
 	fPoint*		player_position = &App->player->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
@@ -143,6 +145,7 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
+	BROFILER_CATEGORY("ScenePostUpdate", Profiler::Color::Indigo);
 	bool ret = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
