@@ -64,20 +64,21 @@ int main(int argc, char* args[])
 			break;
 
 			// Call all modules before first frame  ----------------------------
-			case START:
-			LOG("START PHASE ===============================");
-			BROFILER_FRAME("Start")
-			if(App->Start() == true)
-			{
-				state = LOOP;
-				LOG("UPDATE PHASE ===============================");
+			case START: {
+				LOG("START PHASE ===============================");
+				BROFILER_FRAME("Start")
+					if (App->Start() == true)
+					{
+						state = LOOP;
+						LOG("UPDATE PHASE ===============================");
+					}
+					else
+					{
+						state = FAIL;
+						LOG("ERROR: Start failed");
+					}
+				break;
 			}
-			else
-			{
-				state = FAIL;
-				LOG("ERROR: Start failed");
-			}
-			break;
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP: {
 				BROFILER_FRAME("Update")
@@ -86,20 +87,20 @@ int main(int argc, char* args[])
 				break;
 			}
 			// Cleanup allocated memory -----------------------------------------
-			case CLEAN:
-			LOG("CLEANUP PHASE ===============================");
-			BROFILER_FRAME("CleanUp")
-			if(App->CleanUp() == true)
-			{
-				RELEASE(App);
-				result = EXIT_SUCCESS;
-				state = EXIT;
+			case CLEAN: {
+				LOG("CLEANUP PHASE ===============================");
+				BROFILER_FRAME("CleanUp")
+					if (App->CleanUp() == true)
+					{
+						RELEASE(App);
+						result = EXIT_SUCCESS;
+						state = EXIT;
+					}
+					else
+						state = FAIL;
+
+				break;
 			}
-			else
-				state = FAIL;
-
-			break;
-
 			// Exit with errors and shame ---------------------------------------
 			case FAIL:
 			LOG("Exiting with errors :(");
