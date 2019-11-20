@@ -66,6 +66,7 @@ int main(int argc, char* args[])
 			// Call all modules before first frame  ----------------------------
 			case START:
 			LOG("START PHASE ===============================");
+			BROFILER_FRAME("Start")
 			if(App->Start() == true)
 			{
 				state = LOOP;
@@ -87,6 +88,7 @@ int main(int argc, char* args[])
 			// Cleanup allocated memory -----------------------------------------
 			case CLEAN:
 			LOG("CLEANUP PHASE ===============================");
+			BROFILER_FRAME("CleanUp")
 			if(App->CleanUp() == true)
 			{
 				RELEASE(App);

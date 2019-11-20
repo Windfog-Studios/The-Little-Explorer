@@ -141,21 +141,25 @@ bool j1App::Start()
 // Called each loop iteration
 bool j1App::Update()
 {
-	BROFILER_CATEGORY("UpdateLogic", Profiler::Color::DarkSalmon)
 	bool ret = true;
 	PrepareUpdate();
 
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
-	if(ret == true)
+	if (ret == true) {
+		BROFILER_CATEGORY("PreUpdate", Profiler::Color::Red);
 		ret = PreUpdate();
+	}
 
-	if(ret == true)
+	if (ret == true) {
+		BROFILER_CATEGORY("DoUpdate", Profiler::Color::Green);
 		ret = DoUpdate();
-
-	if(ret == true)
+	}
+	if (ret == true) {
+		BROFILER_CATEGORY("PostUpdate", Profiler::Color::Blue);
 		ret = PostUpdate();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) pause = !pause;
 
