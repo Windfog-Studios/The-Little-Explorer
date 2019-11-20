@@ -275,9 +275,11 @@ bool j1Map::Load(const char* file_name)
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
+			/*
 			if (l->name == "Collisions") {
 				LoadCollisions(l);
 			}
+			*/
 			item_layer = item_layer->next;
 		}
 
