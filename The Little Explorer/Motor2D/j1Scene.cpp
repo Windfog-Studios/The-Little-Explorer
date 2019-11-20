@@ -11,6 +11,7 @@
 #include "j1Player.h"
 #include "j1UI.h"
 #include "j1Pathfinding.h"
+#include "j1Collision.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -41,7 +42,17 @@ bool j1Scene::Start()
 {
 	//initial map
 	//App->map->Load("hello2.tmx");
-	App->map->Load("Level1.tmx");
+	if (App->map->Load("Level1.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+
+	debug_tex = App->tex->Load("maps/path2.png");
 
 	//App->map->Load("Level2.tmx");
 
@@ -157,11 +168,31 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-//	LOG("Camera center x: %.2f y: %.2f", camera_frame_x_center, camera_frame_y_center);
-//	LOG("Player position x: %i y: %i", player_position->x, player_position->y);
+	// Debug pathfinding ------------------------------
+	int x, y;
+	SDL_Rect Debug_rect = { 0,0,32,32 };
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
 
-	SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
+	//App->render->Blit(debug_tex, p.x, p.y);
+	Debug_rect.x = p.x;
+	Debug_rect.y = p.y;
+	if (App->collision->debug)App->render->DrawQuad(Debug_rect, 0, 0, 255,80);
 
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		Debug_rect.x = pos.x;
+		Debug_rect.y = pos.y;
+		if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
+		//App->render->Blit(debug_tex, pos.x, pos.y);
+	}
+
+	//SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
 	//App->render->DrawQuad(test_rect, 255, 0, 0, 255);
 
 	return true;
