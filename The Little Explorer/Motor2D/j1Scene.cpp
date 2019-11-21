@@ -93,10 +93,12 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
+
 	SDL_Rect*	camera = &App->render->camera;
 	fPoint*		player_position = &App->player->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
+	bool		camera_manual_control = false;
 
 	//player inputs ---------------
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
@@ -131,40 +133,50 @@ bool j1Scene::Update(float dt)
 
 	//camera window ------------------
 	if (!blocked_camera) {
-		
-		if (((player_position->x < camera_frame_x_center)) && (-camera->x > 0)) {
-			App->render->camera.x += floor(CAMERA_SPEED * dt);
-			camera_frame.x -= floor(CAMERA_SPEED * dt);
-		}
+		if (!camera_manual_control)
+		{
+			if (((player_position->x < camera_frame_x_center)) && (-camera->x > 0)) {
+				App->render->camera.x += floor(CAMERA_SPEED * dt);
+				camera_frame.x -= floor(CAMERA_SPEED * dt);
+			}
 
-		if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_frame_x_center)&&(-camera->x + camera->w < App->map->data.width * App->map->data.tile_width)) {
-			App->render->camera.x -= floor(CAMERA_SPEED * dt);
-			camera_frame.x += floor(CAMERA_SPEED * dt);
-		}
+			if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width)) {
+				App->render->camera.x -= floor(CAMERA_SPEED * dt);
+				camera_frame.x += floor(CAMERA_SPEED * dt);
+			}
 
-		if (((player_position->y < camera_frame_y_center)) && (camera_frame.y - camera_frame_y_margin > 0)) {
-			App->render->camera.y += floor(CAMERA_SPEED * dt);
-			camera_frame.y -= floor(CAMERA_SPEED * dt);
-		}
+			if (((player_position->y < camera_frame_y_center)) && (camera_frame.y - camera_frame_y_margin > 0)) {
+				App->render->camera.y += floor(CAMERA_SPEED * dt);
+				camera_frame.y -= floor(CAMERA_SPEED * dt);
+			}
 
-		if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height)) {
-			App->render->camera.y -= floor(CAMERA_SPEED * dt);
-			camera_frame.y += floor(CAMERA_SPEED * dt);
+			if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height)) {
+				App->render->camera.y -= floor(CAMERA_SPEED * dt);
+				camera_frame.y += floor(CAMERA_SPEED * dt);
+			}
 		}
 	}
 	//camera manual control --------------
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		App->render->camera.y += floor(CAMERA_SPEED * dt);
+		camera_manual_control = true;
+	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		App->render->camera.y -= floor(CAMERA_SPEED * dt);
+		camera_manual_control = true;
+	}
 
-	if((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)&&(App->render->camera.x < 0))
+	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (App->render->camera.x < 0)) {
 		App->render->camera.x += floor(CAMERA_SPEED * dt);
+		camera_manual_control = true;
+	}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		App->render->camera.x -= floor(CAMERA_SPEED * dt);
+		camera_manual_control = true;
+	}
 
 	App->map->Draw();
 
