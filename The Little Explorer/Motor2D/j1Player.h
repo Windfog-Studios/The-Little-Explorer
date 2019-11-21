@@ -43,6 +43,7 @@ public:
 	float doubleJumpImpulse;
 	float max_running_speed;
 	float acceleration;
+	float deceleration;
 	float side_speed;
 	bool can_double_jump = true;
 	bool can_go_right = true;

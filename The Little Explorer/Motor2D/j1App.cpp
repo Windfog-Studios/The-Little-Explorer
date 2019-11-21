@@ -121,7 +121,7 @@ bool j1App::Awake()
 // Called before the first frame
 bool j1App::Start()
 {
-	PERF_START(ptimer);
+	PERF_START(perf_timer);
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -133,8 +133,7 @@ bool j1App::Start()
 	}
 
 	startup_time.Start();
-	dt_timer.Start();
-	PERF_PEEK(ptimer);
+	PERF_PEEK(perf_timer);
 	return ret;
 }
 
@@ -183,7 +182,7 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 	frame_time.Start();
-	dt_timer.Start();
+	perf_timer.Start();
 }
 
 // ---------------------------------------------
@@ -220,7 +219,7 @@ void j1App::FinishUpdate()
 
 	if (last_frame_ms < 1000 / framerate_cap) SDL_Delay(delay);
 
-	dt = dt_timer.ReadSec();
+	dt = perf_timer.ReadMs() * 0.001;
 	LOG("dt: %.4f delay: %.2f", dt, delay);
 }
 

@@ -46,9 +46,10 @@ bool j1Map::Awake(pugi::xml_node& config)
 void j1Map::Draw()
 {
 	BROFILER_CATEGORY("MapDraw", Profiler::Color::Purple)
+	
 	if (map_loaded == false)
-		return;
-	int tiles = 0;
+	return;
+
 	p2List_item<MapLayer*>* item = data.layers.start;
 	for (; item != NULL; item = item->next)
 	{
@@ -72,19 +73,15 @@ void j1Map::Draw()
 						if (layer->ParallaxSpeed != NULL)
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed);
-							tiles++;
 						}
 						else
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE);
-							tiles++;
 						}
 					}
 				}
 			}
 		}
- 		LOG("Tiles Drawn %i", tiles);
-		tiles = 0;
 	}
 }
 

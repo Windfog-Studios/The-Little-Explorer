@@ -27,16 +27,20 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	bool ret = true;
 	LOG("Loading Player Data");
 
+	folder.create(config.child("folder").child_value());
+
 	current_animation = &idle;
 
 	//set initial attributes of the player
-	folder.create(config.child("folder").child_value());
-	max_running_speed = config.child("running_speed").attribute("value").as_float();
+	max_running_speed = config.child("max_running_speed").attribute("value").as_float();
+	side_speed = config.child("side_speed").attribute("value").as_float();
 	acceleration = config.child("acceleration").attribute("value").as_float();
+	deceleration = config.child("deceleration").attribute("value").as_float();
+
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
+
 	gravity = config.child("gravity").attribute("value").as_float();
-	side_speed = config.child("side_speed").attribute("value").as_float();
 
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
@@ -365,21 +369,24 @@ bool j1Player::PostUpdate() {
 
 void j1Player::MovementControl(float dt) {
 
-	if (!grounded)
-	{
+	if (!grounded){
 		if (!god) current_speed.y -= gravity;
 		position.y -= current_speed.y * dt;
 	}
 
-	if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= floor(acceleration * 10 * dt);
-	if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += floor(acceleration  * 10 * dt);
+	//deceleration
+	if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= deceleration * dt;
+	if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += deceleration * dt;
+	if ((floor(current_speed.x)<=20)&&(floor(current_speed.x) >= -20))
+		current_speed.x = 0;
+
 
 	position.x += current_speed.x * dt;
 
 	LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
+	LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
 
-//	LOG("Grounded %i", grounded);
-	//LOG("velocity x. %.2f y: %.2f", velocity.x, velocity.y);
+	//LOG("Grounded %i", grounded);
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
