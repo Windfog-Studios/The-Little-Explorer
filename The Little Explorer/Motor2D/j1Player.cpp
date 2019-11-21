@@ -409,13 +409,19 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					state = IDLE;
 				}
 				
-				if (position.y +current_animation->GetCurrentFrame().h > c2->rect.y) {
+				if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
 					position.x = lastPosition.x;
 				}
 				if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
 				{
 					position.y = c2->rect.y + c2->rect.h;
 					current_speed.y = 0;
+				}
+				if ((position.y > c2->rect.y)&&(position.x > c2->rect.x)&&(position.y + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w))
+				{
+					position.y = lastPosition.y;
+					if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+
 				}
 				break;
 			case COLLIDER_DEATH:
@@ -434,23 +440,16 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 				break;
 			case COLLIDER_PLATFORM:
-				/*
-				if (((position.y + current_animation->GetCurrentFrame().h >= c2->rect.y)&&(lastPosition.y + current_animation->GetCurrentFrame().h <= c2->rect.y + COLLIDER_MARGIN))||(grounded == true))
-				{
-					position = lastPosition;
-					current_speed.x = current_speed.y = 0;
-					grounded = true;
-					if (last_state == FALL)
-					{
-						state = IDLE;
-					}
-				}*/
-				if (c1->rect.y + c1->rect.h * 0.5f < c2->rect.y)
+				if ((c1->rect.y + c1->rect.h < c2->rect.y)|| ((position.y + current_animation->GetCurrentFrame().h * 0.8 < c2->rect.y)&&(lastPosition.y < position.y)))
 				{
 					grounded = true;
 					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 					current_speed.y = 0;
 					state = IDLE;
+				}
+				if ((state == RUN_FORWARD)||(state == RUN_BACKWARD))
+				{
+					position == lastPosition;
 				}
 				break;
 			case COLLIDER_CHANGE_LEVEL:
