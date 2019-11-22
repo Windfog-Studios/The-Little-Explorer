@@ -47,6 +47,7 @@ public:
 
 	bool grounded = false;
 	float gravity = 0.0f;
+	float max_falling_speed = 0.0f;
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;

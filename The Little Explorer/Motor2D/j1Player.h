@@ -39,20 +39,20 @@ private:
 
 
 public:
-	float jumpImpulse;
-	float doubleJumpImpulse;
-	float max_running_speed;
-	float acceleration;
-	float deceleration;
-	float side_speed;
-	bool can_double_jump = true;
-	bool can_go_right = true;
-	bool can_go_left = true;
+	float	jumpImpulse;
+	float	doubleJumpImpulse;
+	float	max_running_speed;
+	float	acceleration;
+	float	deceleration;
+	float	max_side_speed;
+	bool	can_double_jump = true;
+	bool	can_go_right = true;
+	bool	can_go_left = true;
 
-	fPoint lastPosition;
+	fPoint		lastPosition;
 	EntityState last_state;
 
-	p2SString folder;
+	p2SString	 folder;
 	Player_Input player_input;
 
 	Animation walk;
@@ -63,7 +63,7 @@ public:
 
 	//fx
 	p2SString jump_fx_path;
-	uint jump_fx;
+	uint	  jump_fx;
 
 	bool god = false;
 	bool controls_blocked = false;

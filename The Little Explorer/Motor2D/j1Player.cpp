@@ -33,7 +33,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	//set initial attributes of the player
 	max_running_speed = config.child("max_running_speed").attribute("value").as_float();
-	side_speed = config.child("side_speed").attribute("value").as_float();
+	max_side_speed = config.child("max_side_speed").attribute("value").as_float();
 	acceleration = config.child("acceleration").attribute("value").as_float();
 	deceleration = config.child("deceleration").attribute("value").as_float();
 
@@ -41,6 +41,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
 
 	gravity = config.child("gravity").attribute("value").as_float();
+	max_falling_speed = config.child("max_falling_speed").attribute("value").as_float();
 
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
@@ -234,8 +235,8 @@ bool j1Player::PreUpdate(){
 
 			if (state == JUMP)
 			{
-				if ((player_input.pressing_D)&&(current_speed.x < side_speed)) current_speed.x += acceleration;
-				if ((player_input.pressing_A)&&(current_speed.x > -side_speed)) current_speed.x -= acceleration;
+				if ((player_input.pressing_D)&&(current_speed.x < max_side_speed)) current_speed.x += acceleration;
+				if ((player_input.pressing_A)&&(current_speed.x > -max_side_speed)) current_speed.x -= acceleration;
 
 				//double jump
 				if ((player_input.pressing_space) && (can_double_jump == true) && (current_speed.y <= jumpImpulse * 0.5f))
@@ -256,9 +257,8 @@ bool j1Player::PreUpdate(){
 			}
 			if (state == FALL)
 			{
-
-				if ((player_input.pressing_D) && (can_go_right == true)) current_speed.x += side_speed * 0.25;
-				if ((player_input.pressing_A) && (can_go_left == true)) current_speed.x -= side_speed * 0.25;
+				if ((player_input.pressing_D) && (can_go_right == true)&&(current_speed.x < max_side_speed)) current_speed.x += acceleration;
+				if ((player_input.pressing_A) && (can_go_left == true)&&(current_speed.x > max_side_speed)) current_speed.x -= acceleration;
 
 				if ((player_input.pressing_space) && (can_double_jump == true) & (current_speed.y <= jumpImpulse * 0.5f))
 				{
@@ -370,7 +370,7 @@ bool j1Player::PostUpdate() {
 void j1Player::MovementControl(float dt) {
 
 	if (!grounded){
-		if (!god) current_speed.y -= gravity;
+		if ((!god)&&(current_speed.y > max_falling_speed)) current_speed.y -= gravity;
 		position.y -= current_speed.y * dt;
 	}
 
@@ -417,10 +417,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					position.y = c2->rect.y + c2->rect.h;
 					current_speed.y = 0;
 				}
-				if ((position.y > c2->rect.y)&&(position.x > c2->rect.x)&&(position.y + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w))
+				if ((position.y > c2->rect.y)&&(position.x > c2->rect.x)&&(position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w)&&(position.x < c2->rect.x + c2->rect.w))
 				{
 					position.y = lastPosition.y;
-					if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+					if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+						//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+					}
 
 				}
 				break;
