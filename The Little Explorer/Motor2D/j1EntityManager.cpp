@@ -19,7 +19,6 @@
 j1EntityManager::j1EntityManager(){
 
 	name.create("entityManager");
-
 }
 
 

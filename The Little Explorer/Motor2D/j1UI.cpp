@@ -56,7 +56,7 @@ void j1UI::LevelTransition(float dt) {
 	switch (direction)
 	{
 	case CLOSE:
-		if (left_square.x <= -camera->x - transition_speed * 0.5f)
+		if (left_square.x <= -camera->x)
 		{
 			left_square.x += transition_speed * dt;
 			right_square.x -= transition_speed * dt;
@@ -68,7 +68,7 @@ void j1UI::LevelTransition(float dt) {
 			direction = STATIC;
 			App->scene->Reset_Camera(0);
 			left_square.x = -camera->x;
-			right_square.x = -camera->x + camera->w / 2;
+			right_square.x = -camera->x + camera->w * 0.5f;
 			left_square.y = -camera->y;
 			right_square.y = -camera->y;
 			App->scene->ResetLevel();
@@ -95,6 +95,8 @@ void j1UI::LevelTransition(float dt) {
 		time = SDL_GetTicks();
 		if (transition_moment - time <= - transition_time * 1000)
 		{
+			left_square.x = -camera->x;
+			right_square.x = -camera->x + camera->w * 0.5f;
 			direction = OPEN;
 		}
 		else 
