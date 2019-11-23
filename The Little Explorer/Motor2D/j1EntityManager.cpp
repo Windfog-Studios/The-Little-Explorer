@@ -15,16 +15,16 @@
 #include "j1WalkingEnemy.h"
 
 
-j1EntityManager::j1EntityManager()
-{
+j1EntityManager::j1EntityManager(){
+
 	name.create("entityManager");
 }
 
 
-j1EntityManager::~j1EntityManager()
-{}
+j1EntityManager::~j1EntityManager(){
+}
 
-j1Entity* j1EntityManager::CreateEntity(EntityType type)
+j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int position_y)
 {
 	//static_assert(EntityType::UNKNOWN == 4, "code needs update");
 	j1Entity* entity = nullptr;
@@ -45,7 +45,9 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type)
 	default:
 		break;
 	}
-	entities.add(entity);
+
+	if (entity != nullptr) entities.add(entity);
+
 	return entity;
 }
 
@@ -64,13 +66,14 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 bool j1EntityManager::Start()
 {
 	bool ret = true;
-	j1Player* player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER);
+	j1Player* player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER, App->scene->player_x_position, App->scene->player_y_position);
 	return ret;
 }
 
 bool j1EntityManager::PreUpdate()
 {
 	bool ret = true;
+
 	return ret;
 }
 
@@ -98,11 +101,13 @@ void j1EntityManager::OnCollision(Collider* c1, Collider* c2){
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
 	bool ret = true;
+
 	return ret;
 }
 
 bool j1EntityManager::Save(pugi::xml_node& data)
 {
 	bool ret = true;
+
 	return ret;
 }
