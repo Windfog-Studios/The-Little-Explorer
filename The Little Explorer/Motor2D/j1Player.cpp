@@ -385,7 +385,6 @@ void j1Player::MovementControl(float dt) {
 		if ((floor(current_speed.x) <= 30) && (floor(current_speed.x) >= -30))
 			current_speed.x = 0;
 
-
 		position.x += current_speed.x * dt;
 	}
 	else

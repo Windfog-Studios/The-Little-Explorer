@@ -28,12 +28,29 @@ j1WalkingEnemy::~j1WalkingEnemy() {
 bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-	current_speed.x = -50.0f;
+	gravity = 925;
+	current_speed.x = -60;
 
-	collider->SetPos(position.x, position.y);
-	raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
+	if (last_collider != nullptr)
+	{
+		if (!raycast->CheckCollision(last_collider->rect))
+		{
+			grounded = false;
+		}
+	}
+
+	//Movement Control
+	if (!grounded) {
+		//if (current_speed.y > max_falling_speed) 
+		current_speed.y -= gravity * dt;
+		position.y -= current_speed.y * dt;
+	}
 
 	position.x += current_speed.x * dt;
+
+	//collider control
+	collider->SetPos(position.x, position.y);
+	raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
 
 	return ret;
 }
@@ -46,10 +63,40 @@ bool j1WalkingEnemy::PostUpdate() {
 }
 
 void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
+
+	if (c1 == raycast)
+	{
+		last_collider = c2;
+	}
+
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		position = lastPosition;
+		//position = lastPosition;
+		if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
+		{
+			grounded = true;
+			position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+			current_speed.y = 0;
+			state = IDLE;
+		}
+
+		if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+			position.x = lastPosition.x;
+		}
+		if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
+		{
+			position.y = c2->rect.y + c2->rect.h;
+			current_speed.y = 0;
+		}
+		if ((position.y > c2->rect.y) && (position.x > c2->rect.x) && (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w) && (position.x < c2->rect.x + c2->rect.w))
+		{
+			position.y = lastPosition.y;
+			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+				//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+			}
+
+		}
 		break;
 	default:
 		break;
