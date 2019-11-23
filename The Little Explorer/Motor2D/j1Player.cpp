@@ -382,7 +382,7 @@ void j1Player::MovementControl(float dt) {
 		//deceleration
 		if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= deceleration * dt;
 		if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += deceleration * dt;
-		if ((floor(current_speed.x) <= 20) && (floor(current_speed.x) >= -20))
+		if ((floor(current_speed.x) <= 30) && (floor(current_speed.x) >= -30))
 			current_speed.x = 0;
 
 
@@ -400,8 +400,8 @@ void j1Player::MovementControl(float dt) {
 		position.y += current_speed.y * dt;
 	}
 
-	//LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
-	//LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
+	LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
+	LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
 
 	//LOG("Grounded %i", grounded);
 }

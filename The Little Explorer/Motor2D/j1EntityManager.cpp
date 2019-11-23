@@ -32,7 +32,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	switch (type)
 	{
 	case EntityType::PLAYER:
-		entity = new j1Player();
+		//entity = new j1Player();
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
@@ -49,7 +49,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	}
 
-	if ((entity != nullptr)&&(entity != player)) entities.add(entity);
+	if ((entity != nullptr)&&(entity->type != EntityType::PLAYER)) entities.add(entity);
 
 	return entity;
 }
@@ -104,10 +104,7 @@ bool j1EntityManager::PostUpdate()
 	bool ret = true;
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		if (entity->data != player)
-		{
 			entity->data->PostUpdate();
-		}
 	}
 	return ret;
 }
@@ -127,6 +124,11 @@ bool j1EntityManager::CleanUp()
 }
 
 void j1EntityManager::OnCollision(Collider* c1, Collider* c2){
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		entity->data->OnCollision(c1,c2);
+	}
+	LOG("yes");
 }
 
 bool j1EntityManager::Load(pugi::xml_node& data)

@@ -12,7 +12,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 
-	void OnCollision(Collider* c1, Collider* c2) {}
+	void OnCollision(Collider* c1, Collider* c2);
 
 	void MovementControl(float dt) {}
 

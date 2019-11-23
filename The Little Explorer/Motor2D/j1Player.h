@@ -46,7 +46,6 @@ public:
 	bool	can_go_right = true;
 	bool	can_go_left = true;
 
-	fPoint		lastPosition;
 	EntityState last_state;
 
 	p2SString	 folder;

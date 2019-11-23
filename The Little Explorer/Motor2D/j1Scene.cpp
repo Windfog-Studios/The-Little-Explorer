@@ -53,8 +53,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	debug_tex = App->tex->Load("maps/path2.png");
-	App->entities->CreateEntity(EntityType::WALKING_ENEMY, 300, 800);
+	App->entities->CreateEntity(EntityType::WALKING_ENEMY, 350, 700);
 
 	//App->map->Load("Level2.tmx");
 
@@ -97,7 +96,7 @@ bool j1Scene::Update(float dt)
 	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
 
 	SDL_Rect*	camera = &App->render->camera;
-	fPoint*		player_position = &App->player->position;
+	iPoint*		player_position = &App->player->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;

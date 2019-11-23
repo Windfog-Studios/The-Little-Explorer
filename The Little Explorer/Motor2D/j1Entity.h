@@ -39,8 +39,9 @@ public:
 
 public: 
 
-	fPoint position;
-	fPoint current_speed;
+	iPoint position;
+	iPoint lastPosition;
+	iPoint current_speed;
 	int initial_x_position = 0;
 	int initial_y_position = 0;
 	int health = 0;
