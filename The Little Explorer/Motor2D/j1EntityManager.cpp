@@ -18,6 +18,7 @@
 j1EntityManager::j1EntityManager(){
 
 	name.create("entityManager");
+
 }
 
 
@@ -35,6 +36,8 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
+		entity->position.x = position_x;
+		entity->position.y = position_y;
 		break;
 	case EntityType::TRAP:
 		break;
@@ -66,7 +69,9 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 bool j1EntityManager::Start()
 {
 	bool ret = true;
-	j1Player* player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER, App->scene->player_x_position, App->scene->player_y_position);
+
+	player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER, App->scene->player_x_position, App->scene->player_y_position);
+
 	return ret;
 }
 
@@ -86,12 +91,22 @@ bool j1EntityManager::Update(float dt)
 bool j1EntityManager::PostUpdate()
 {
 	bool ret = true;
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		if (entity->data != player)
+		{
+			entity->data->PostUpdate();
+		}
+
+	}
 	return ret;
 }
 
 bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
+	App->tex->UnLoad(walking_enemy_tex);
+	walking_enemy_tex = nullptr;
 	return ret;
 }
 

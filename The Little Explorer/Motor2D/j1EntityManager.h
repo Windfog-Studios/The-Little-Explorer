@@ -6,6 +6,7 @@
 #include "Animation.h"
 
 class j1Entity;
+struct SDL_Texture;
 
 enum class EntityType
 {
@@ -41,6 +42,10 @@ public:
 	p2List<j1Entity*> entities;
 	pugi::xml_node config;
 
+	SDL_Texture* walking_enemy_tex;
+	SDL_Texture* flying_enemy_tex;
+
+	j1Player* player;
 };
 
 #endif // !_ENTITY_MANAGER_H_

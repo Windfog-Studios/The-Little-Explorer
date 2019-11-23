@@ -13,6 +13,7 @@
 #include "j1Pathfinding.h"
 #include "j1Collision.h"
 #include "brofiler/Brofiler/Brofiler.h"
+#include "j1EntityManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -53,6 +54,7 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png");
+	App->entities->CreateEntity(EntityType::WALKING_ENEMY, 300, 800);
 
 	//App->map->Load("Level2.tmx");
 
