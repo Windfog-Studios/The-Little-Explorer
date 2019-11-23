@@ -386,6 +386,17 @@ void j1Player::MovementControl(float dt) {
 
 		position.x += current_speed.x * dt;
 	}
+	else
+	{
+		if ((!player_input.pressing_A) && (!player_input.pressing_D))current_speed.x = 0;
+		if ((!player_input.pressing_W) && ((!player_input.pressing_W))) current_speed.y = 0;
+
+		if (player_input.pressing_W) current_speed.y = -jumpImpulse;
+		if (player_input.pressing_S) current_speed.y = jumpImpulse;
+
+		position.x += current_speed.x * dt;
+		position.y += current_speed.y * dt;
+	}
 
 	LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
 	LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
