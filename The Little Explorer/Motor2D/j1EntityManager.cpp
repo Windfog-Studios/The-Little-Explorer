@@ -13,6 +13,7 @@
 #include "j1UI.h"
 #include "j1Particles.h"
 #include "j1WalkingEnemy.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 
 j1EntityManager::j1EntityManager(){
@@ -49,7 +50,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	}
 
-	if (entity != nullptr) entities.add(entity);
+	if ((entity != nullptr)&&(entity != player)) entities.add(entity);
 
 	return entity;
 }
@@ -84,12 +85,23 @@ bool j1EntityManager::PreUpdate()
 
 bool j1EntityManager::Update(float dt)
 {
+	BROFILER_CATEGORY("EntitiesUpdate", Profiler::Color::MediumPurple)
 	bool ret = true;
+
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		if (entity->data != player)
+		{
+			entity->data->Update(dt);
+		}
+	}
+
 	return ret;
 }
 
 bool j1EntityManager::PostUpdate()
 {
+	BROFILER_CATEGORY("EntitiesPostUpdate", Profiler::Color::Khaki)
 	bool ret = true;
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
@@ -97,7 +109,6 @@ bool j1EntityManager::PostUpdate()
 		{
 			entity->data->PostUpdate();
 		}
-
 	}
 	return ret;
 }
@@ -107,6 +118,12 @@ bool j1EntityManager::CleanUp()
 	bool ret = true;
 	App->tex->UnLoad(walking_enemy_tex);
 	walking_enemy_tex = nullptr;
+
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		entity->data->DestroyEntity(entity->data);
+	}
+
 	return ret;
 }
 

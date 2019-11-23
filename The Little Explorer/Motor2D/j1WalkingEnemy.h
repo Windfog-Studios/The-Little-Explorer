@@ -9,7 +9,7 @@ public:
 	virtual ~j1WalkingEnemy();
 
 	bool Awake(pugi::xml_node&) { return true; }
-	bool Update(float dt) { return true; }
+	bool Update(float dt);
 	bool PostUpdate();
 
 	void OnCollision(Collider* c1, Collider* c2) {}

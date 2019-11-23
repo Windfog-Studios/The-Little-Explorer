@@ -4,6 +4,7 @@
 #include "p2Log.h"
 #include "j1Textures.h"
 #include "j1EntityManager.h"
+#include "j1Collision.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("WalkingEnemy");
@@ -11,10 +12,19 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });
+	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)App->entities);
+
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
 
+}
+
+bool j1WalkingEnemy::Update(float dt) {
+	bool ret = true;
+	position.x--;
+	collider->SetPos(position.x, position.y);
+	return ret;
 }
 
 bool  j1WalkingEnemy::PostUpdate() {
