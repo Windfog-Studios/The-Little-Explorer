@@ -98,6 +98,9 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 
 		}
 		break;
+	case COLLIDER_PLAYER:
+		state = DIE;
+		break;
 	default:
 		break;
 	}

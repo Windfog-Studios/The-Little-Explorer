@@ -20,6 +20,7 @@ enum EntityState {
 	SLIDE_BACKWARD,
 	CROUCH_UP,
 	CROUCH_DOWN,
+	DIE,
 };
 
 class j1Entity : public j1EntityManager
