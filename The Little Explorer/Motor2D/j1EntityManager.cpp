@@ -12,6 +12,7 @@
 #include "j1Audio.h"
 #include "j1UI.h"
 #include "j1Particles.h"
+#include "j1WalkingEnemy.h"
 
 
 j1EntityManager::j1EntityManager()
@@ -32,10 +33,10 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type)
 	case EntityType::PLAYER:
 		entity = new j1Player();
 		break;
-	case EntityType::ENEMY:
-		//ret = new j1Enemy();
+	case EntityType::WALKING_ENEMY:
+		entity = new j1WalkingEnemy();
 		break;
-	case EntityType::TRAPS:
+	case EntityType::TRAP:
 		break;
 	case EntityType::PARTICLES:
 		break;

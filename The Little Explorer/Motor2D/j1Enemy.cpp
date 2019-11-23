@@ -1,5 +1,5 @@
 #include "j1Enemy.h"
-
+/*
 j1Enemy::j1Enemy() : j1Entity(EntityType::ENEMY){
 
 }
@@ -22,3 +22,4 @@ bool j1Enemy::CleanUp() {
 }
 
 void j1Enemy::OnCollision(Collider* c1, Collider* c2) {}
+*/

@@ -35,9 +35,6 @@ public:
 
 	bool LoadAnimations();
 	
-private:
-
-
 public:
 	float	jumpImpulse;
 	float	doubleJumpImpulse;
