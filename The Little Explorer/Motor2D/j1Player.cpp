@@ -278,14 +278,13 @@ bool j1Player::PreUpdate(){
 					fall.Reset();
 				}
 			}
+			if (state == DIE)
+			{
+				//add die result
+			}
 		}
 	}
 
-	if (god)
-	{
-		if (player_input.pressing_W) position.y -= current_speed.x;
-		if (player_input.pressing_S) position.y += current_speed.x;
-	}
 	return true;
 }
 
@@ -352,6 +351,8 @@ bool j1Player::Update(float dt){
 		break;
 	case FALL:
 		current_animation = &fall;
+		break;
+	case DIE:
 		break;
 	default:
 		LOG("No state found");
@@ -481,6 +482,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					App->ui->ResetTransition();
 					controls_blocked = true;
 				}
+				break;
+			case COLLIDER_ENEMY:
 				break;
 			default:
 				break;

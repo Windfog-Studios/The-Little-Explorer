@@ -64,6 +64,8 @@ public:
 	Animation jump;
 	Animation run;
 	Animation fall;
+	Animation attack;
+	Animation die;
 	Animation* current_animation = nullptr;
 
 	EntityType type = EntityType::UNKNOWN;

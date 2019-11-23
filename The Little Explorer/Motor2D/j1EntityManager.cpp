@@ -54,9 +54,13 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	return entity;
 }
 
-void j1EntityManager::DestroyEntity(j1Entity* delete_entity)
+void j1EntityManager::DestroyEntity(j1Entity* entity)
 {
-	RELEASE(delete_entity);
+	//RELEASE(entity);
+	p2List_item<j1Entity*>* item;
+	item = entities.At(entities.find(entity));
+	entities.del(item);
+	entity->CleanUp();
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config)
@@ -89,7 +93,7 @@ bool j1EntityManager::Update(float dt)
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		if (entity->data != player)
+		if ((entity->data != player)&&(entity != nullptr))
 		{
 			entity->data->Update(dt);
 		}

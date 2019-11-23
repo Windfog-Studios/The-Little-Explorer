@@ -17,6 +17,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
+	App->entities->DestroyEntity(this);
 	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
@@ -39,6 +40,35 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 	}
 
+	switch (state)
+	{
+	case IDLE:
+		current_animation = &idle;
+		break;
+	case JUMP:
+		current_animation = &jump;
+		break;
+	case RUN_FORWARD:
+		current_animation = &run;
+		flip = SDL_FLIP_NONE;
+		break;
+	case RUN_BACKWARD:
+		current_animation = &run;
+		flip = SDL_FLIP_HORIZONTAL;
+		break;
+	case FALL:
+		current_animation = &fall;
+		break;
+	case ATTACK:
+		current_animation = &attack;
+		break;
+	case DIE:
+		current_animation = &die;
+		break;
+	default:
+		break;
+	}
+
 	//Movement Control
 	if (!grounded) {
 		//if (current_speed.y > max_falling_speed) 
@@ -49,8 +79,11 @@ bool j1WalkingEnemy::Update(float dt) {
 	position.x += current_speed.x * dt;
 
 	//collider control
-	collider->SetPos(position.x, position.y);
-	raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
+	
+	if (collider != nullptr) 
+		collider->SetPos(position.x, position.y);
+	if ((raycast != nullptr)&&(collider != nullptr)) 
+		raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
 
 	return ret;
 }
@@ -58,7 +91,6 @@ bool j1WalkingEnemy::Update(float dt) {
 bool j1WalkingEnemy::PostUpdate() {
 	bool ret = true;
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), SDL_FLIP_HORIZONTAL);
-	LOG("Walking Enemy Blit");
 	return ret;
 }
 
@@ -99,6 +131,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
+		App->entities->DestroyEntity(this);
 		state = DIE;
 		break;
 	default:
