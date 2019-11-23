@@ -57,12 +57,12 @@
     <position x="320" y="450" />
     <max_running_speed value="200"/>
     <acceleration value="75"/>
-    <deceleration value="750"/>
+    <deceleration value="775"/>
     <jumpImpulse value="475"/>
     <doubleJumpImpulse value = "375" />
     <max_side_speed value="150"/>
-    <gravity value="32.5"/>
-    <max_falling_speed value="-400"/>
+    <gravity value="925"/>
+    <max_falling_speed value="-600"/>
   </player>
   <particles>
     <folder>sprites/particles</folder>

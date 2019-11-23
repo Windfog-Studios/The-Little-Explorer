@@ -367,21 +367,25 @@ bool j1Player::PostUpdate() {
 	return true;	
 }
 
+//control over all player movement physics
 void j1Player::MovementControl(float dt) {
 
-	if (!grounded){
-		if ((!god)&&(current_speed.y > max_falling_speed)) current_speed.y -= gravity;
-		position.y -= current_speed.y * dt;
+	if (!god)
+	{
+		if (!grounded) {
+			if (current_speed.y > max_falling_speed) current_speed.y -= gravity * dt;
+			position.y -= current_speed.y * dt;
+		}
+
+		//deceleration
+		if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= deceleration * dt;
+		if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += deceleration * dt;
+		if ((floor(current_speed.x) <= 20) && (floor(current_speed.x) >= -20))
+			current_speed.x = 0;
+
+
+		position.x += current_speed.x * dt;
 	}
-
-	//deceleration
-	if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= deceleration * dt;
-	if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += deceleration * dt;
-	if ((floor(current_speed.x)<=20)&&(floor(current_speed.x) >= -20))
-		current_speed.x = 0;
-
-
-	position.x += current_speed.x * dt;
 
 	LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
 	LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));

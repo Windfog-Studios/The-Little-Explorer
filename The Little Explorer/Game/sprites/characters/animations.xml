@@ -16,12 +16,12 @@
  </animation>
 <animation name="run" loop="true">
   <data>
-  <frame x="21" y="156" w="46" h="53" speed="0.1"/>
-  <frame x="79" y="157" w="44" h="52" speed="0.1"/>
-  <frame x="136" y="155" w="41" h="54" speed="0.1"/>
-  <frame x="196" y="155" w="46" h="54" speed="0.1"/>
-  <frame x="260" y="157" w="42" h="52" speed="0.1"/>
-  <frame x="322" y="155" w="40" h="54" speed="0.1"/>
+  <frame x="21" y="156" w="46" h="53" speed="0.05"/>
+  <frame x="79" y="157" w="44" h="52" speed="0.05"/>
+  <frame x="136" y="155" w="41" h="54" speed="0.05"/>
+  <frame x="196" y="155" w="46" h="54" speed="0.05"/>
+  <frame x="260" y="157" w="42" h="52" speed="0.05"/>
+  <frame x="322" y="155" w="40" h="54" speed="0.05"/>
   </data>
  </animation>
 <animation name="crouch_down" loop="false">

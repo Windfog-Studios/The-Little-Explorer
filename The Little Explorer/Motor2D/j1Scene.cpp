@@ -140,7 +140,7 @@ bool j1Scene::Update(float dt)
 				camera_frame.x -= floor(CAMERA_SPEED * dt);
 			}
 
-			if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width)) {
+			if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width - 10)) {
 				App->render->camera.x -= floor(CAMERA_SPEED * dt);
 				camera_frame.x += floor(CAMERA_SPEED * dt);
 			}
