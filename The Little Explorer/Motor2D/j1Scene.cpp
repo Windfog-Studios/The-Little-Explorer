@@ -96,7 +96,7 @@ bool j1Scene::Update(float dt)
 	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
 
 	SDL_Rect*	camera = &App->render->camera;
-	iPoint*		player_position = &App->player->position;
+	iPoint*		player_position = &App->entities->player->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;
@@ -141,7 +141,7 @@ bool j1Scene::Update(float dt)
 				camera_frame.x -= floor(CAMERA_SPEED * dt);
 			}
 
-			if ((player_position->x + App->player->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width - 10)) {
+			if ((player_position->x + App->entities->player->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width - 10)) {
 				App->render->camera.x -= floor(CAMERA_SPEED * dt);
 				camera_frame.x += floor(CAMERA_SPEED * dt);
 			}
@@ -151,7 +151,7 @@ bool j1Scene::Update(float dt)
 				camera_frame.y -= floor(CAMERA_SPEED * dt);
 			}
 
-			if (((player_position->y + App->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height)) {
+			if (((player_position->y + App->entities->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height)) {
 				App->render->camera.y -= floor(CAMERA_SPEED * dt);
 				camera_frame.y += floor(CAMERA_SPEED * dt);
 			}

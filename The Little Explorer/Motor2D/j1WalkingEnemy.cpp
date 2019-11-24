@@ -7,7 +7,7 @@
 #include "j1Collision.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
-	name.create("WalkingEnemy");
+	name.create("walking_enemy");
 	texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });

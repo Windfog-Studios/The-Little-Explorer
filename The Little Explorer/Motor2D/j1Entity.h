@@ -48,8 +48,8 @@ public:
 	int health = 0;
 
 	bool grounded = false;
-	float gravity = 0.0f;
-	float max_falling_speed = 0.0f;
+	int gravity = 0;
+	int max_falling_speed = 0;
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;

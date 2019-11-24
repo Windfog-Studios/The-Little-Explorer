@@ -46,24 +46,36 @@
   </map>
 
   <scene>
-  <camera_frame x="300" y="175" w="300" h="300" />
+   <camera_frame x="300" y="175" w="300" h="300" />
   </scene>
 
-  <player>
-    <folder>sprites/characters</folder>
-    <folder>audio/fx</folder>
-    <dieFX source="Die.wav"/>
-    <jumpFX source="JumpSoundEffect.wav"/>
-    <position x="320" y="450" />
-    <max_running_speed value="200"/>
-    <acceleration value="75"/>
-    <deceleration value="775"/>
-    <jumpImpulse value="475"/>
-    <doubleJumpImpulse value = "375" />
-    <max_side_speed value="150"/>
+  <entities>
     <gravity value="925"/>
-    <max_falling_speed value="-600"/>
-  </player>
+    <player>
+      <folder>sprites/characters</folder>
+      <folder>audio/fx</folder>
+      <dieFX source="Die.wav"/>
+      <jumpFX source="JumpSoundEffect.wav"/>
+      <health value="100"/>
+      <damage value="30"/>
+      <position x="320" y="450" />
+      <max_running_speed value="200"/>
+      <acceleration value="75"/>
+      <deceleration value="775"/>
+      <jumpImpulse value="475"/>
+      <doubleJumpImpulse value = "375" />
+      <max_side_speed value="150"/>
+      <max_falling_speed value="-600"/>
+    </player>
+    <enemies>
+      <walking_enemy>
+        <health value="100"/>
+        <damage value="10"/>
+        <running_speed value="150"/>
+      </walking_enemy>
+    </enemies>
+  </entities>
+
   <particles>
     <folder>sprites/particles</folder>
     <dust source="particles.png"/>
