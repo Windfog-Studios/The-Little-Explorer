@@ -300,6 +300,7 @@ bool j1Player::Update(float dt){
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
 			grounded = false;
+			if((state != JUMP)&&(!god)) state = FALL;
 		}
 	}
 
@@ -373,6 +374,7 @@ bool j1Player::PostUpdate() {
 //control over all player movement physics
 void j1Player::MovementControl(float dt) {
 
+	//normal mode
 	if (!god)
 	{
 		if (!grounded) {
@@ -383,18 +385,21 @@ void j1Player::MovementControl(float dt) {
 		//deceleration
 		if ((!player_input.pressing_D) && (current_speed.x > 0)) current_speed.x -= deceleration * dt;
 		if ((!player_input.pressing_A) && (current_speed.x < 0)) current_speed.x += deceleration * dt;
-		if ((floor(current_speed.x) <= 30) && (floor(current_speed.x) >= -30))
-			current_speed.x = 0;
+		if ((floor(current_speed.x) <= 30) && (floor(current_speed.x) >= -30)) current_speed.x = 0;
 
 		position.x += current_speed.x * dt;
 	}
 	else
 	{
+		//god mode
 		if ((!player_input.pressing_A) && (!player_input.pressing_D))current_speed.x = 0;
 		if ((!player_input.pressing_W) && ((!player_input.pressing_W))) current_speed.y = 0;
 
 		if (player_input.pressing_W) current_speed.y = -jumpImpulse;
 		if (player_input.pressing_S) current_speed.y = jumpImpulse;
+
+		if (current_speed.x > 0) state = RUN_FORWARD;
+		if (current_speed.x < 0) state = RUN_BACKWARD;
 
 		position.x += current_speed.x * dt;
 		position.y += current_speed.y * dt;
@@ -466,9 +471,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					current_speed.y = 0;
 					state = IDLE;
 				}
-				if ((state == RUN_FORWARD)||(state == RUN_BACKWARD))
+				if (grounded)
 				{
-					position == lastPosition;
+					if (position.y + current_animation->GetCurrentFrame().h * 0.5f > c2->rect.y)
+					{
+						if (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + COLLIDER_MARGIN) position.x = c2->rect.x - current_animation->GetCurrentFrame().w;
+						if (position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) position.x = c2->rect.x + c2->rect.w;
+					}
 				}
 				break;
 			case COLLIDER_CHANGE_LEVEL:

@@ -53,7 +53,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	App->entities->CreateEntity(EntityType::WALKING_ENEMY, 360, 775);
+	App->entities->CreateEntity(EntityType::WALKING_ENEMY, 800, 475);
 
 	//App->map->Load("Level2.tmx");
 
