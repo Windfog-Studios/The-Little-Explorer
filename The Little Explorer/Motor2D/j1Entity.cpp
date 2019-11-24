@@ -14,7 +14,7 @@ j1Entity::~j1Entity() {
 
 bool j1Entity::Awake(pugi::xml_node&) {
 
-	gravity = config.child("gravity").attribute("value").as_float();
+	//gravity = config.child("gravity").attribute("value").as_float();
 
 	return true;
 }

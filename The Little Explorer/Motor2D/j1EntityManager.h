@@ -25,7 +25,7 @@ public:
 	j1EntityManager();
 	~j1EntityManager();
 
-	virtual bool Awake(pugi::xml_node& config);
+	virtual bool Awake(pugi::xml_node&);
 	virtual bool Start();
 	virtual bool PreUpdate();
 	virtual bool Update(float dt);
@@ -40,7 +40,7 @@ public:
 public:
 
 	p2List<j1Entity*> entities;
-	pugi::xml_node config;
+	pugi::xml_node config_data;
 
 	SDL_Texture* walking_enemy_tex;
 	SDL_Texture* flying_enemy_tex;

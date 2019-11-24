@@ -15,7 +15,7 @@
 
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
-	name.create("player");
+	//name.create("player");
 	LoadAnimations();
 
 	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
