@@ -5218,8 +5218,8 @@
    <tile gid="977"/>
    <tile gid="978"/>
    <tile gid="976"/>
-   <tile gid="977"/>
-   <tile gid="978"/>
+   <tile gid="976"/>
+   <tile gid="976"/>
    <tile gid="976"/>
    <tile gid="977"/>
    <tile gid="978"/>
@@ -51854,8 +51854,8 @@
    <tile gid="0"/>
    <tile gid="274"/>
    <tile gid="275"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="220"/>
+   <tile gid="222"/>
    <tile gid="333"/>
    <tile gid="334"/>
    <tile gid="189"/>
@@ -52851,9 +52851,9 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1"/>
-   <tile gid="2"/>
-   <tile gid="3"/>
+   <tile gid="0"/>
+   <tile gid="302"/>
+   <tile gid="303"/>
    <tile gid="1091"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -53051,9 +53051,9 @@
    <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="2"/>
-   <tile gid="29"/>
-   <tile gid="30"/>
-   <tile gid="31"/>
+   <tile gid="2"/>
+   <tile gid="302"/>
+   <tile gid="303"/>
    <tile gid="2"/>
    <tile gid="2"/>
    <tile gid="0"/>
@@ -53251,9 +53251,9 @@
    <tile gid="30"/>
    <tile gid="30"/>
    <tile gid="30"/>
-   <tile gid="238"/>
-   <tile gid="130"/>
-   <tile gid="237"/>
+   <tile gid="30"/>
+   <tile gid="30"/>
+   <tile gid="30"/>
    <tile gid="30"/>
    <tile gid="31"/>
    <tile gid="2"/>
@@ -56053,7 +56053,6 @@
   <object id="6" type="Platform" x="2498.33" y="314.667" width="60.5" height="68"/>
   <object id="7" type="Platform" x="2592.67" y="410.667" width="62" height="69.3333"/>
   <object id="14" type="Collider" x="0.666667" y="829.333" width="284" height="113.333"/>
-  <object id="18" type="Collider" x="128.667" y="796" width="93.3333" height="61.3333"/>
   <object id="23" type="Platform" x="672" y="384" width="96" height="64"/>
   <object id="44" type="Collider" x="288" y="864" width="61.3323" height="160"/>
   <object id="46" type="Collider" x="576" y="832" width="352" height="448"/>
