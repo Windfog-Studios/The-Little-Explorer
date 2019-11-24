@@ -51,8 +51,6 @@ bool j1Particles::Start()
 {
 	dust_tex = App->tex->Load("sprites/particles/particles.png");
 	dust.texture = dust_tex;
-	LOG("dust particle created");
-	dust.texture = dust_tex;
 	return true;
 }
 

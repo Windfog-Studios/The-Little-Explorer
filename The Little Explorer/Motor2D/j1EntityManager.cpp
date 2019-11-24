@@ -17,8 +17,7 @@
 
 
 j1EntityManager::j1EntityManager(){
-
-	name.create("entityManager");
+	name.create("entities");
 }
 
 
@@ -32,7 +31,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	switch (type)
 	{
 	case EntityType::PLAYER:
-		//entity = new j1Player();
+		entity = new j1Player();
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
@@ -49,7 +48,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	}
 
-	if ((entity != nullptr)&&(entity->type != EntityType::PLAYER)) entities.add(entity);
+	if (entity != nullptr) entities.add(entity);
 
 	return entity;
 }
@@ -63,9 +62,10 @@ void j1EntityManager::DestroyEntity(j1Entity* entity)
 	entity->CleanUp();
 }
 
-bool j1EntityManager::Awake(pugi::xml_node& config)
-{
+bool j1EntityManager::Awake(pugi::xml_node& config){
 	bool ret = true;
+
+
 
 	return ret;
 }
@@ -75,6 +75,20 @@ bool j1EntityManager::Start()
 	bool ret = true;
 
 	player = (j1Player*)App->entities->CreateEntity(EntityType::PLAYER, App->scene->player_x_position, App->scene->player_y_position);
+
+	return ret;
+}
+
+bool j1EntityManager::CleanUp()
+{
+	bool ret = true;
+	App->tex->UnLoad(walking_enemy_tex);
+	walking_enemy_tex = nullptr;
+
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		entity->data->DestroyEntity(entity->data);
+	}
 
 	return ret;
 }
@@ -93,7 +107,7 @@ bool j1EntityManager::Update(float dt)
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		if ((entity->data != player)&&(entity != nullptr))
+		if (entity != nullptr)
 		{
 			entity->data->Update(dt);
 		}
@@ -108,22 +122,8 @@ bool j1EntityManager::PostUpdate()
 	bool ret = true;
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-			entity->data->PostUpdate();
+		entity->data->PostUpdate();
 	}
-	return ret;
-}
-
-bool j1EntityManager::CleanUp()
-{
-	bool ret = true;
-	App->tex->UnLoad(walking_enemy_tex);
-	walking_enemy_tex = nullptr;
-
-	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
-	{
-		entity->data->DestroyEntity(entity->data);
-	}
-
 	return ret;
 }
 
