@@ -241,8 +241,8 @@ void j1Scene::Reset_Camera(int kind_of_reset) {
 }
 
 void j1Scene::ResetLevel() {
-	App->player->position.x = player_x_position;
-	App->player->position.y = player_y_position;
+	App->entities->player->position.x = player_x_position;
+	App->entities->player->position.y = player_y_position;
 	App->player->flip = SDL_FLIP_NONE;
 }
 
