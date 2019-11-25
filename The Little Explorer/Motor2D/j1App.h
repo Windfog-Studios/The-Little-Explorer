@@ -21,6 +21,8 @@ class j1Collision;
 class j1UI;
 class j1EntityManager;
 class j1PathFinding;
+class j1WalkingEnemy;
+class j1FlyingEnemy;
 
 class j1App
 {

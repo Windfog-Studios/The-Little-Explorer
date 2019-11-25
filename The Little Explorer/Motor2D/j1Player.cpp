@@ -47,8 +47,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 
 	//colliders
-	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->player); //a collider to start
-	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER, (j1Module*)App->player);
+	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
+	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER, (j1Module*)App->entities->player);
 
 	position.x = initial_x_position = App->scene->player_x_position;
 	position.y = initial_x_position = App->scene->player_y_position;
@@ -411,95 +411,6 @@ void j1Player::MovementControl(float dt) {
 	//LOG("Grounded %i", grounded);
 }
 
-void j1Player::OnCollision(Collider* c1, Collider* c2) {
-
-	if (c1 == raycast)
-	{
-		last_collider = c2;
-	}
-
-	if (!god)
-	{
-		switch (c2->type)
-		{
-			case COLLIDER_WALL:
-				if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
-				{
-					grounded = true;
-					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
-					current_speed.y = 0;
-					state = IDLE;
-				}
-				
-				if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-					position.x = lastPosition.x;
-				}
-				if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
-				{
-					position.y = c2->rect.y + c2->rect.h;
-					current_speed.y = 0;
-				}
-				if ((position.y > c2->rect.y)&&(position.x > c2->rect.x)&&(position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w)&&(position.x < c2->rect.x + c2->rect.w))
-				{
-					position.y = lastPosition.y;
-					if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-						//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
-					}
-
-				}
-				break;
-			case COLLIDER_DEATH:
-				if (!god) {
-					current_speed.x = 0;
-					
-					if (App->ui->transition == false)
-					{
-						App->audio->PlayFx(die_fx);
-						App->ui->transition = true;
-						App->scene->blocked_camera = true;
-						App->ui->ResetTransition();
-						App->scene->Reset_Camera(1);
-						controls_blocked = true;
-					}
-				}
-				break;
-			case COLLIDER_PLATFORM:
-				if ((c1->rect.y + c1->rect.h < c2->rect.y)|| ((position.y + current_animation->GetCurrentFrame().h * 0.8 < c2->rect.y)&&(lastPosition.y < position.y)))
-				{
-					grounded = true;
-					position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
-					current_speed.y = 0;
-					state = IDLE;
-				}
-				if (grounded)
-				{
-					if (position.y + current_animation->GetCurrentFrame().h * 0.5f > c2->rect.y)
-					{
-						if (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + COLLIDER_MARGIN) position.x = c2->rect.x - current_animation->GetCurrentFrame().w;
-						if (position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) position.x = c2->rect.x + c2->rect.w;
-					}
-				}
-				break;
-			case COLLIDER_CHANGE_LEVEL:
-				if (App->ui->transition == false)
-				{
-					if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
-					if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
-					App->ui->transition = true;
-					App->ui->loaded = false;
-					App->ui->transition_moment = SDL_GetTicks();
-					App->ui->ResetTransition();
-					controls_blocked = true;
-				}
-				break;
-			case COLLIDER_ENEMY:
-				break;
-			default:
-				break;
-		}
-	}
-}
-
 bool j1Player::LoadAnimations() {
 	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
 	bool ret = true;
@@ -565,5 +476,94 @@ bool j1Player::Load(pugi::xml_node& data)
 	position.y = data.child("position").attribute("y").as_int();
 
 	return true;
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+
+	if (c1 == raycast)
+	{
+		last_collider = c2;
+	}
+
+	if (!god)
+	{
+		switch (c2->type)
+		{
+		case COLLIDER_WALL:
+			if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
+			{
+				grounded = true;
+				position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+				current_speed.y = 0;
+				state = IDLE;
+			}
+
+			if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+				position.x = lastPosition.x;
+			}
+			if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
+			{
+				position.y = c2->rect.y + c2->rect.h;
+				current_speed.y = 0;
+			}
+			if ((position.y > c2->rect.y) && (position.x > c2->rect.x) && (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w) && (position.x < c2->rect.x + c2->rect.w))
+			{
+				position.y = lastPosition.y;
+				if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+					//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+				}
+
+			}
+			break;
+		case COLLIDER_DEATH:
+			if (!god) {
+				current_speed.x = 0;
+
+				if (App->ui->transition == false)
+				{
+					App->audio->PlayFx(die_fx);
+					App->ui->transition = true;
+					App->scene->blocked_camera = true;
+					App->ui->ResetTransition();
+					App->scene->Reset_Camera(1);
+					controls_blocked = true;
+				}
+			}
+			break;
+		case COLLIDER_PLATFORM:
+			if ((c1->rect.y + c1->rect.h < c2->rect.y) || ((position.y + current_animation->GetCurrentFrame().h * 0.8 < c2->rect.y) && (lastPosition.y < position.y)))
+			{
+				grounded = true;
+				position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+				current_speed.y = 0;
+				state = IDLE;
+			}
+			if (grounded)
+			{
+				if (position.y + current_animation->GetCurrentFrame().h * 0.5f > c2->rect.y)
+				{
+					if (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + COLLIDER_MARGIN) position.x = c2->rect.x - current_animation->GetCurrentFrame().w;
+					if (position.x > c2->rect.x + c2->rect.w - COLLIDER_MARGIN) position.x = c2->rect.x + c2->rect.w;
+				}
+			}
+			break;
+		case COLLIDER_CHANGE_LEVEL:
+			if (App->ui->transition == false)
+			{
+				if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
+				if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
+				App->ui->transition = true;
+				App->ui->loaded = false;
+				App->ui->transition_moment = SDL_GetTicks();
+				App->ui->ResetTransition();
+				controls_blocked = true;
+			}
+			break;
+		case COLLIDER_ENEMY:
+			break;
+		default:
+			break;
+		}
+	}
 }
 

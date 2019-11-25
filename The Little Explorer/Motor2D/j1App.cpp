@@ -12,6 +12,8 @@
 #include "j1Map.h"
 #include "j1App.h"
 #include "j1Player.h"
+#include "j1WalkingEnemy.h"
+#include "j1FlyingEnemy.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
 #include "j1UI.h"
@@ -33,7 +35,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 	entities = new j1EntityManager();
-	//player = new j1Player();
 	particles = new j1Particles();
 	collision = new j1Collision();
 	ui = new j1UI();
@@ -48,7 +49,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(map);
 	AddModule(entities);
-	//AddModule(player);
 	AddModule(particles);
 	AddModule(collision);
 	AddModule(ui);
