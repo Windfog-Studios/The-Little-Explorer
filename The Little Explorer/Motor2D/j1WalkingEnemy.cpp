@@ -11,8 +11,8 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });
-	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)App->entities);
-	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)App->entities);
+	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)App->entities->walking_enemy);
+	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)App->entities->walking_enemy);
 	lastPosition = position;
 }
 
