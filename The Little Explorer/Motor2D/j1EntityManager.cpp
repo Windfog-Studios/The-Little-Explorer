@@ -58,8 +58,8 @@ void j1EntityManager::DestroyEntity(j1Entity* entity)
 	//RELEASE(entity);
 	p2List_item<j1Entity*>* item;
 	item = entities.At(entities.find(entity));
-	entities.del(item);
 	entity->CleanUp();
+	entities.del(item);
 }
 
 

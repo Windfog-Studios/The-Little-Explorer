@@ -6,6 +6,8 @@
 #include "j1Collision.h"
 #include "j1EntityManager.h"
 #include "j1Player.h"
+#include "j1Pathfinding.h"
+#include "j1Map.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
@@ -16,6 +18,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
 	current_speed.x = -60;
+	player = App->entities->player;
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
@@ -33,13 +36,41 @@ bool j1WalkingEnemy::Update(float dt) {
 	lastPosition = position;
 	gravity = 925;
 
+	//what to do when getting to a gap
 	if (last_collider != nullptr)
 	{
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
 			grounded = false;
-			//position.x += lastPosition.x;
 			current_speed.x = -current_speed.x;
+		}
+	}
+
+	//guard path
+	if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
+
+	//pathfind
+	if (abs(player->position.x - position.x) < 400)
+	{
+			static iPoint origin = App->map->WorldToMap(position.x, position.y);
+			static iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
+ 			App->pathfinding->CreatePath(origin, destination);
+			going_after_player = true;
+	}
+
+	if (going_after_player)
+	{
+		int x, y;
+		SDL_Rect Debug_rect = { 0,0,32,32 };
+
+ 		path_to_player = App->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path_to_player->Count(); ++i)
+		{
+ 			iPoint pos = App->map->MapToWorld(path_to_player->At(i)->x, path_to_player->At(i)->y);
+			Debug_rect.x = pos.x;
+			Debug_rect.y = pos.y;
+			if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
 		}
 	}
 

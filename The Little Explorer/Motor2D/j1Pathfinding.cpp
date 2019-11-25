@@ -169,15 +169,12 @@ int PathNode::CalculateF(const iPoint& destination)
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::Azure)
-	//if origin or destination are not walkable, return -1
+
 	if ((!IsWalkable(origin))||(!IsWalkable(destination)))
 	{
 		return -1;
 	}
 	last_path.Clear();
-	// TODO 2: Create two lists: open, close
-	// Add the origin tile to open
-	// Iterate while we have tile in the open list
 	
 	PathList open, close;
 	PathNode node(0,origin.DistanceNoSqrt(destination),origin, nullptr);
@@ -186,7 +183,6 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	open.list.add(node);
 
 	while (open.list.count() > 0){
-		// TODO 3: Move the lowest score cell from open list to the closed list
 		p2List_item<PathNode>* item;
 
 		item = open.GetNodeLowestScore();
@@ -224,7 +220,6 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 			for (; path_item->data.parent != nullptr; path_item = close.Find(path_item->data.parent->pos))
 			{
-				// Backtrack to create the final path
 				last_path.PushBack(path_item->data.pos);
 				if (path_item->data.parent == nullptr) {
 					last_path.PushBack(close.list.start->data.pos);
@@ -235,14 +230,6 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			return last_path.Count();
 		}
 	}
-
-	// TODO 5: Fill a list of all adjancent nodes
-
-	// TODO 6: Iterate adjancent nodes:
-	// ignore nodes in the closed list
-	// If it is NOT found, calculate its F and add it to the open list
-	// If it is already in the open list, check if it is a better path (compare G)
-	// If it is a better path, Update the parent
 	return -1;
 }
 

@@ -4,6 +4,7 @@
 #include "j1Textures.h"
 #include "j1Collision.h"
 #include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 
 j1Entity::j1Entity(EntityType type) : j1EntityManager() {
 }
@@ -22,15 +23,6 @@ bool j1Entity::Awake(pugi::xml_node&) {
 bool j1Entity::Start() {
 	bool ret = true;
 
-	return ret;
-}
-
-bool j1Entity::CleanUp() {
-	bool ret = true;
-	ret =App->tex->UnLoad(texture);
-	collider->to_delete = true;
-	collider = nullptr;
-	texture = nullptr;
 	return ret;
 }
 

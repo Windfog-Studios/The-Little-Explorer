@@ -72,7 +72,7 @@ void j1UI::LevelTransition(float dt) {
 			left_square.y = -camera->y;
 			right_square.y = -camera->y;
 			App->scene->ResetLevel();
-			App->player->state = IDLE;
+			App->entities->player->state = IDLE;
 		}
 		break;
 	case OPEN:
@@ -88,7 +88,7 @@ void j1UI::LevelTransition(float dt) {
 			direction = CLOSE;
 			transition = false;
 			App->scene->blocked_camera = false;
-			App->player->controls_blocked = false;
+			App->entities->player->controls_blocked = false;
 		}
 		break;
 	case STATIC:

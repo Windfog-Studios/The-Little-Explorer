@@ -35,7 +35,7 @@ public:
 	virtual bool PreUpdate();
 	virtual bool Update(float dt);
 	virtual bool PostUpdate();
-	virtual bool CleanUp();
+	virtual bool CleanUp() { return true; }
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
 
 public: 

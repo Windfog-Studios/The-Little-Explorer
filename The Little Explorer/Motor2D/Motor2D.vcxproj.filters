@@ -40,34 +40,31 @@
     <ClCompile Include="j1Collision.cpp">
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClCompile>
-    <ClCompile Include="j1Particles.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="j1Player.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1Entity.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1Enemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="j1WalkingEnemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="j1FlyingEnemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="j1Map.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClCompile>
+    <ClCompile Include="j1UI.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Particles.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1EntityManager.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1Pathfinding.cpp">
+    <ClCompile Include="j1FlyingEnemy.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1UI.cpp">
+    <ClCompile Include="j1WalkingEnemy.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,34 +132,31 @@
     <ClInclude Include="j1Collision.h">
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClInclude>
-    <ClInclude Include="j1Particles.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="j1Player.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Entity.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Enemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="j1WalkingEnemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="j1FlyingEnemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="j1Map.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
+    </ClInclude>
+    <ClInclude Include="j1UI.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Particles.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1EntityManager.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1Pathfinding.h">
+    <ClInclude Include="j1WalkingEnemy.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1UI.h">
+    <ClInclude Include="j1FlyingEnemy.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
   </ItemGroup>
@@ -190,9 +184,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Entities">
       <UniqueIdentifier>{4f434b92-82c7-449f-9eee-0d5f29879820}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Enemies">
-      <UniqueIdentifier>{7bd26e59-f92a-4032-92d0-3893b48124fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
