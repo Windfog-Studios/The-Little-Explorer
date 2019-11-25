@@ -37,6 +37,7 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp() { return true; }
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
+	iPoint PathFind();
 
 public: 
 

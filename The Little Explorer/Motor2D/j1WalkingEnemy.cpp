@@ -74,6 +74,14 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 	}
 
+	if ((path_to_player != nullptr)&&(path_to_player->Count() != 0))
+	{
+		if (path_to_player->At(1)->x < position.x) current_speed.x = -10;
+		if (path_to_player->At(1)->x > position.x) current_speed.x = 10;
+	}
+
+
+	//state machine
 	switch (state)
 	{
 	case IDLE:
