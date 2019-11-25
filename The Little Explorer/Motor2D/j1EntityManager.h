@@ -46,7 +46,7 @@ public:
 	SDL_Texture* flying_enemy_tex;
 
 	j1Player* player;
-	j1WalkingEnemy* exampleWalkingEnemy;
+	//j1WalkingEnemy* exampleWalkingEnemy;
 	//j1FlyingEnemy* exampleFlyingEnemy;
 };
 

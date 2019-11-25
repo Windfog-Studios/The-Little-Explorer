@@ -67,14 +67,12 @@
       <max_falling_speed value="-600"/>
       <gravity value="925"/>
     </player>
-    <enemies>
-      <walking_enemy>
-        <health value="100"/>
-        <damage value="10"/>
-        <running_speed value="150"/>
-        <gravity value="925"/>
-      </walking_enemy>
-    </enemies>
+    <walking_enemy>
+      <health value="100"/>
+      <damage value="10"/>
+      <running_speed value="150"/>
+      <gravity value="925"/>
+    </walking_enemy>
   </entities>
 
   <particles>
