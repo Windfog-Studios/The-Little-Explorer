@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="96" tileheight="96" nextobjectid="1">
  <tileset firstgid="1" name="Minotaur - Sprite Sheet" tilewidth="96" tileheight="96" tilecount="200" columns="10">
-  <image source="../../../../../../../Desktop/Minotaur - Sprite Sheet.png" width="1024" height="1920"/>
+  <image source="Minotaur - Sprite Sheet.png" width="1024" height="1920"/>
   <tile id="0">
    <animation>
     <frame tileid="0" duration="100"/>
