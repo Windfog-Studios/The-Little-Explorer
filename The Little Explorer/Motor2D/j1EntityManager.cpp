@@ -63,6 +63,7 @@ void j1EntityManager::DestroyEntity(j1Entity* entity)
 	entity->CleanUp();
 }
 
+
 bool j1EntityManager::Awake(pugi::xml_node& config){
 	bool ret = true;
 	config_data = config;
