@@ -32,7 +32,6 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	{
 	case EntityType::PLAYER:
 		entity = new j1Player();
-		//entity->Awake(config_data.child("player"));
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
@@ -69,13 +68,14 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	config_data = config;
 	player = new j1Player();
 	player->Awake(config.child("player"));
+	entities.add(player);
 	return ret;
 }
 
 bool j1EntityManager::Start()
 {
 	bool ret = true;
-
+	player->Start();
 	return ret;
 }
 
@@ -96,7 +96,7 @@ bool j1EntityManager::CleanUp()
 bool j1EntityManager::PreUpdate()
 {
 	bool ret = true;
-
+	player->PreUpdate();
 	return ret;
 }
 

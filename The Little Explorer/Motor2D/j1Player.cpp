@@ -17,11 +17,6 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	//name.create("player");
 	LoadAnimations();
-
-	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
-
-	die_fx = App->audio->LoadFx(die_fx_path.GetString());
-	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 }
 
 j1Player::~j1Player(){ }
@@ -44,6 +39,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
 
+	gravity = config.child("gravity").attribute("value").as_int();
 	max_falling_speed = config.child("max_falling_speed").attribute("value").as_float();
 
 	//player fx
@@ -61,6 +57,11 @@ bool j1Player::Awake(pugi::xml_node& config) {
 }
 
 bool j1Player::Start(){
+
+	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
+
+	die_fx = App->audio->LoadFx(die_fx_path.GetString());
+	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 
 	return true;
 }
