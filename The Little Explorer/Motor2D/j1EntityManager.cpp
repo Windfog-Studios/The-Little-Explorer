@@ -34,7 +34,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		entity = new j1Player();
 		break;
 	case EntityType::WALKING_ENEMY:
-		entity = walking_enemy = new j1WalkingEnemy();
+		entity = new j1WalkingEnemy();
 		entity->position.x = position_x;
 		entity->position.y = position_y;
 		break;
@@ -125,10 +125,6 @@ bool j1EntityManager::PostUpdate()
 		entity->data->PostUpdate();
 	}
 	return ret;
-}
-
-void j1EntityManager::OnCollision(Collider* c1, Collider* c2){
-
 }
 
 bool j1EntityManager::Load(pugi::xml_node& data)

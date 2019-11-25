@@ -3,17 +3,19 @@
 #include "j1Render.h"
 #include "p2Log.h"
 #include "j1Textures.h"
-#include "j1EntityManager.h"
 #include "j1Collision.h"
+#include "j1EntityManager.h"
+#include "j1Player.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
 	texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });
-	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)App->entities->walking_enemy);
-	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)App->entities->walking_enemy);
+	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)this);
+	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
+	current_speed.x = -60;
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
@@ -30,13 +32,14 @@ bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
 	gravity = 925;
-	current_speed.x = -60;
 
 	if (last_collider != nullptr)
 	{
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
 			grounded = false;
+			//position.x += lastPosition.x;
+			current_speed.x = -current_speed.x;
 		}
 	}
 
