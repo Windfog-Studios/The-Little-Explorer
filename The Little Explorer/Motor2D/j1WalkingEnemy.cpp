@@ -50,12 +50,12 @@ bool j1WalkingEnemy::Update(float dt) {
 	if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	if (abs(player->position.x - position.x) < 400)
+	if (abs(player->position.x - position.x) < 800)
 	{
-			static iPoint origin = App->map->WorldToMap(position.x, position.y);
-			static iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
- 			App->pathfinding->CreatePath(origin, destination);
-			going_after_player = true;
+			iPoint origin = App->map->WorldToMap(position.x, position.y);
+			iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
+  			App->pathfinding->CreatePath(origin, destination);
+ 			going_after_player = true;
 	}
 
 	if (going_after_player)
