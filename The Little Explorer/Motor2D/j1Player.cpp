@@ -405,9 +405,8 @@ void j1Player::MovementControl(float dt) {
 		position.y += current_speed.y * dt;
 	}
 
-	LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
-	LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
-
+	//LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
+	//LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
 	//LOG("Grounded %i", grounded);
 }
 

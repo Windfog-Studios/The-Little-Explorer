@@ -17,7 +17,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
-	current_speed.x = -60;
+	//current_speed.x = -60;
 	player = App->entities->player;
 }
 
@@ -35,6 +35,7 @@ bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
 	gravity = 925;
+	
 
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
@@ -42,44 +43,15 @@ bool j1WalkingEnemy::Update(float dt) {
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
 			grounded = false;
-			current_speed.x = -current_speed.x;
+			//current_speed.x = -current_speed.x;
 		}
 	}
 
 	//guard path
-	if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
+	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	if (abs(player->position.x - position.x) < 800)
-	{
-			iPoint origin = App->map->WorldToMap(position.x, position.y);
-			iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
-  			App->pathfinding->CreatePath(origin, destination);
- 			going_after_player = true;
-	}
-
-	if (going_after_player)
-	{
-		int x, y;
-		SDL_Rect Debug_rect = { 0,0,32,32 };
-
- 		path_to_player = App->pathfinding->GetLastPath();
-
-		for (uint i = 0; i < path_to_player->Count(); ++i)
-		{
- 			iPoint pos = App->map->MapToWorld(path_to_player->At(i)->x, path_to_player->At(i)->y);
-			Debug_rect.x = pos.x;
-			Debug_rect.y = pos.y;
-			if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
-		}
-	}
-
-	if ((path_to_player != nullptr)&&(path_to_player->Count() != 0))
-	{
-		if (path_to_player->At(1)->x < position.x) current_speed.x = -10;
-		if (path_to_player->At(1)->x > position.x) current_speed.x = 10;
-	}
-
+	PathfindtoPlayer(800);
 
 	//state machine
 	switch (state)
@@ -136,6 +108,66 @@ bool j1WalkingEnemy::PostUpdate() {
 	return ret;
 }
 
+void j1WalkingEnemy::PathfindtoPlayer(int range) {
+
+	//if the player is close we create a path to him
+	if (abs(player->position.x - position.x) < range)
+	{
+		iPoint origin = App->map->WorldToMap(position.x, position.y);
+		iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
+		App->pathfinding->CreatePath(origin, destination);
+		going_after_player = true;
+	}
+	else { going_after_player = false; }
+
+	//pathfinding debug
+	if (going_after_player)
+	{
+		int x, y;
+		SDL_Rect Debug_rect = { 0,0,32,32 };
+
+		path_to_player = App->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path_to_player->Count(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path_to_player->At(i)->x, path_to_player->At(i)->y);
+			Debug_rect.x = pos.x;
+			Debug_rect.y = pos.y;
+			if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
+		}
+	}
+
+	//try to reach the player
+	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
+	{
+		int i = 0;
+		iPoint current_map_position = App->map->WorldToMap(position.x, position.y);
+		iPoint tile_to_go;
+		tile_to_go.x = path_to_player->At(i)->x;
+		tile_to_go.y = path_to_player->At(i)->y;
+
+		if (current_map_position.x == tile_to_go.x)
+		{
+			i++;
+			tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
+		}
+
+		if (current_map_position.x < tile_to_go.x) {
+			current_speed.x = 20;
+		}
+		if (current_map_position.x > tile_to_go.x) {
+			current_speed.x = -20;
+		}
+		if (current_map_position.y > tile_to_go.y) {
+			LOG("Going up");
+			position.y -= 30;
+		}
+		if (current_map_position.y < tile_to_go.y) {
+			LOG("Going down");
+		}
+	}
+}
+
 void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1 == raycast)
@@ -173,8 +205,8 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		App->entities->DestroyEntity(this);
-		state = DIE;
+		//App->entities->DestroyEntity(this);
+		//state = DIE;
 		break;
 	default:
 		break;

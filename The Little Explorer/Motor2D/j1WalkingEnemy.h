@@ -22,6 +22,8 @@ public:
 
 	bool LoadAnimations() { return true; }
 
+	void PathfindtoPlayer(int range);
+
 private:
 	int path_minimum = 100;
 	int path_maximum = 125;
