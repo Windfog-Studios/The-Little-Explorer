@@ -51,7 +51,7 @@ bool j1WalkingEnemy::Update(float dt) {
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	PathfindtoPlayer(800);
+	PathfindtoPlayer(400);
 
 	//state machine
 	switch (state)
@@ -152,15 +152,17 @@ void j1WalkingEnemy::PathfindtoPlayer(int range) {
 			tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 		}
 
-		if (current_map_position.x < tile_to_go.x) {
-			current_speed.x = 20;
-		}
 		if (current_map_position.x > tile_to_go.x) {
+			LOG("Going left");
 			current_speed.x = -20;
+		}
+		if (current_map_position.x < tile_to_go.x) {
+			LOG("Going right");
+			current_speed.x = 40;
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			LOG("Going up");
-			position.y -= 30;
+			//position.y -= 30;
 		}
 		if (current_map_position.y < tile_to_go.y) {
 			LOG("Going down");
@@ -178,7 +180,6 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		//position = lastPosition;
 		if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
 		{
 			grounded = true;
@@ -201,7 +202,6 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
 				//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			}
-
 		}
 		break;
 	case COLLIDER_PLAYER:
