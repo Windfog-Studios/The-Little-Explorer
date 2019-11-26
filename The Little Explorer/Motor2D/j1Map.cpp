@@ -158,12 +158,14 @@ bool j1Map::CleanUp()
 		LOG("Objectgroups releasing");
 		for (uint i = 0; i < item3->data->size; i++)
 		{
-			while (item3->data->collider[i] != nullptr)
-			{
-				if ((item3->data->collider[i]->to_delete == false))
+			if (item3->data->name != "Enemies") {
+				while (item3->data->collider[i] != nullptr)
 				{
-					item3->data->collider[i]->to_delete = true;
-					item3->data->collider[i] = nullptr;
+					if ((item3->data->collider[i]->to_delete == false))
+					{
+						item3->data->collider[i]->to_delete = true;
+						item3->data->collider[i] = nullptr;
+					}
 				}
 			}
 		}

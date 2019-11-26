@@ -76,6 +76,8 @@ public:
 	p2SString song;
 	p2SString folder;
 
+	int camera_margin = 5;
+
 private:
 	SDL_Texture* debug_tex;
 };
