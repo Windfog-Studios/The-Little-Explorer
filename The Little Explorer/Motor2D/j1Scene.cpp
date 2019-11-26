@@ -29,8 +29,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	folder.create(config.child("folder").child_value());
-	camera_frame.x = camera_frame_x_margin = config.child("camera_frame").attribute("x").as_int();
-	camera_frame.y = camera_frame_y_margin = config.child("camera_frame").attribute("y").as_int();
+	camera_frame_x_margin = config.child("camera_frame").attribute("x").as_int();
+	camera_frame_y_margin = config.child("camera_frame").attribute("y").as_int();
 	camera_frame.w = config.child("camera_frame").attribute("w").as_int();
 	camera_frame.h = config.child("camera_frame").attribute("h").as_int();
 	bool ret = true;
@@ -41,6 +41,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
+	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
+	camera_frame.y = -App->render->initial_camera_y + camera_frame_y_margin;
 	//initial map
 	//App->map->Load("hello2.tmx");
 	if (App->map->Load("Level1.tmx") == true)
@@ -137,7 +139,7 @@ bool j1Scene::Update(float dt)
 	if (!blocked_camera) {
 		if (!camera_manual_control)
 		{
-			if (((player_position->x < camera_frame_x_center)) && (-camera->x > 0)) {
+			if (((player_position->x < camera_frame_x_center)) && (-camera->x > camera_margin)) {
 				App->render->camera.x += floor(CAMERA_SPEED * dt);
 				camera_frame.x -= floor(CAMERA_SPEED * dt);
 			}
@@ -147,12 +149,12 @@ bool j1Scene::Update(float dt)
 				camera_frame.x += floor(CAMERA_SPEED * dt);
 			}
 
-			if (((player_position->y < camera_frame_y_center)) && (camera_frame.y - camera_frame_y_margin > 0)) {
+			if (((player_position->y < camera_frame_y_center)) && (camera_frame.y - camera_frame_y_margin > camera_margin)) {
 				App->render->camera.y += floor(CAMERA_SPEED * dt);
 				camera_frame.y -= floor(CAMERA_SPEED * dt);
 			}
 
-			if (((player_position->y + App->entities->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height)) {
+			if (((player_position->y + App->entities->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height - camera_margin)) {
 				App->render->camera.y -= floor(CAMERA_SPEED * dt);
 				camera_frame.y += floor(CAMERA_SPEED * dt);
 			}
