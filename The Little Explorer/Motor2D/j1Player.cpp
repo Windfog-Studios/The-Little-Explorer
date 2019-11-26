@@ -50,9 +50,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
 	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER, (j1Module*)App->entities->player);
 
-	position.x = initial_x_position = App->scene->player_x_position;
-	position.y = initial_x_position = App->scene->player_y_position;
-
 	return ret;
 }
 
@@ -62,6 +59,9 @@ bool j1Player::Start(){
 
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
+
+	position.x = initial_x_position = App->scene->player_x_position;
+	position.y = initial_x_position = App->scene->player_y_position;
 
 	return true;
 }

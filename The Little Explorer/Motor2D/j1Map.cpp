@@ -1,3 +1,4 @@
+#include <math.h>
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -9,7 +10,8 @@
 #include "j1Player.h"
 #include "j1Scene.h"
 #include "brofiler/Brofiler/Brofiler.h"
-#include <math.h>
+#include "j1EntityManager.h"
+
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -524,6 +526,9 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 
 				if (type == "Level Change") 
 				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_CHANGE_LEVEL);
+
+				if (type == "Knight")
+				App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].x, objectgroup->object[i].x);
 
 				object = object.next_sibling("object");
 				i++;

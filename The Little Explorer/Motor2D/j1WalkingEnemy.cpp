@@ -154,7 +154,10 @@ void j1WalkingEnemy::PathfindtoPlayer(int range) {
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
+			if (i > 1)
+			{
+				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
+			}
 		}
 
 		if (current_map_position.x > tile_to_go.x) {
