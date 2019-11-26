@@ -37,13 +37,13 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp() { return true; }
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
-	iPoint PathFind();
 
 public: 
 
 	iPoint position;
 	iPoint lastPosition;
 	iPoint current_speed;
+	iPoint speed;
 	int initial_x_position = 0;
 	int initial_y_position = 0;
 	int health = 0;
