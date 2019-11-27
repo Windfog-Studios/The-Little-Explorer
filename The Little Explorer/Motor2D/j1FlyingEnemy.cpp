@@ -72,11 +72,11 @@ bool j1FlyingEnemy::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			LOG("Going left");
-			state = RUN_BACKWARD;
+			state = EntityState::RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
 			LOG("Going right");
-			state = RUN_FORWARD;
+			state = EntityState::RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			LOG("Going up");

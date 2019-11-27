@@ -172,14 +172,24 @@ bool j1EntityManager::PostUpdate()
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
 	bool ret = true;
+	p2List_item<j1Entity*>* item;
 
+	for (item = entities.start; item != nullptr; item = item->next)
+	{
+		//item->data->Load();
+	}
 	return ret;
 }
 
 bool j1EntityManager::Save(pugi::xml_node& data)
 {
 	bool ret = true;
+	p2List_item<j1Entity*>* item;
 
+	for (item = entities.start; item != nullptr; item = item->next)
+	{
+		//item->data->Load();
+	}
 	return ret;
 }
 
