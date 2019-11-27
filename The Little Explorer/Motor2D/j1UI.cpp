@@ -73,6 +73,7 @@ void j1UI::LevelTransition(float dt) {
 			right_square.y = -camera->y;
 			App->scene->ResetLevel();
 			App->entities->player->state = IDLE;
+			App->entities->player->isVisible = true;
 		}
 		break;
 	case OPEN:

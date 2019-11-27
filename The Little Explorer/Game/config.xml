@@ -76,7 +76,7 @@
     <flying_enemy>
       <health value="100"/>
       <damage value="10"/>
-      <flying_speed value="50"/>
+      <flying_speed value="75"/>
     </flying_enemy>
   </entities>
 

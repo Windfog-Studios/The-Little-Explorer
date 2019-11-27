@@ -518,7 +518,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		case COLLIDER_DEATH:
 			if (!god) {
 				current_speed.x = 0;
-
+				isVisible = false;
+				if (!particles_created) {
+					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
+				}
 				if (App->ui->transition == false){
 					App->audio->PlayFx(die_fx);
 					App->ui->transition = true;
@@ -528,6 +533,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					controls_blocked = true;
 				}
 			}
+			state = DIE;
 			break;
 		case COLLIDER_PLATFORM:
 			if ((c1->rect.y + c1->rect.h < c2->rect.y) || ((position.y + current_animation->GetCurrentFrame().h * 0.8 < c2->rect.y) && (lastPosition.y < position.y)))

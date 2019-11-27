@@ -46,7 +46,7 @@ bool j1Entity::PostUpdate() {
 void j1Entity::PathfindtoPlayer(int range, j1Entity* player) {
 
 	//if the player is close we create a path to him
-	if (abs(player->position.x - position.x) < range)
+	if ((abs(player->position.x - position.x) < range)&&(player->state != DIE))
 	{
 		iPoint origin = App->map->WorldToMap(position.x, position.y);
 		iPoint destination = App->map->WorldToMap(player->position.x, player->position.y);
