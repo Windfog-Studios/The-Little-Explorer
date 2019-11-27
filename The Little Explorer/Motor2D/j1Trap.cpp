@@ -11,8 +11,7 @@
 
 j1Trap::j1Trap() :j1Entity(EntityType::TRAP) {
 	name.create("trap");
-	texture = App->tex->Load("sprites/characters/long_wood_spike_02.png");
-	current_animation = &idle;
+	texture = App->entities->trap_texture;
 	{
 		idle.PushBack({ 16,119,34,9 }, 0.3f);
 		idle.PushBack({ 16,232,34,25 }, 0.3f);

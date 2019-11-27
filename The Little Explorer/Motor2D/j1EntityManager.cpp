@@ -111,6 +111,9 @@ bool j1EntityManager::CleanUp()
 	App->tex->UnLoad(flying_enemy_texture);
 	flying_enemy_texture = nullptr;
 
+	App->tex->UnLoad(trap_texture);
+	trap_texture = nullptr;
+
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
 		entity->data->DestroyEntity(entity->data);
@@ -169,4 +172,6 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 
 void j1EntityManager::LoadTextures() {
 	walking_enemy_texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
+	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
+	trap_texture = App->tex->Load("sprites/characters/long_wood_spike_02.png");
 }

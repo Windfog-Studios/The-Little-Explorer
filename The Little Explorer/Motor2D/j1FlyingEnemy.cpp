@@ -11,7 +11,7 @@
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	name.create("flying_enemy");
-	texture = App->tex->Load("sprites/characters/Sprite_bat.png");
+	texture = App->entities->flying_enemy_texture;
 	current_animation = &idle;
 	idle.PushBack({ 0,66,45,26 });
 	collider = App->collision->AddCollider({ 0,66,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
