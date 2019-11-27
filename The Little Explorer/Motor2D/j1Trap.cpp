@@ -13,12 +13,7 @@ j1Trap::j1Trap() :j1Entity(EntityType::TRAP) {
 	name.create("trap");
 	texture = App->entities->trap_texture;
 	{
-		idle.PushBack({ 16,119,34,9 }, 0.3f);
-		idle.PushBack({ 16,232,34,25 }, 0.3f);
-		idle.PushBack({ 16,335,34,49 }, 0.3f);
-		idle.PushBack({ 16,437,34,75 }, 0.3f);
-		idle.PushBack({ 16,539,34,102 }, 0.3f);
-		idle.loop = false;
+		idle.PushBack({ 61,26,53,54 }, 0.3f);
 	}
 	collider = App->collision->AddCollider({ 16,119,34,8 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
@@ -26,7 +21,7 @@ j1Trap::j1Trap() :j1Entity(EntityType::TRAP) {
 	player = App->entities->player;
 	speed.x = 20;
 	health = 50;
-	flip = SDL_FLIP_HORIZONTAL;
+	//flip = SDL_FLIP_HORIZONTAL;
 }
 
 j1Trap::~j1Trap() {
