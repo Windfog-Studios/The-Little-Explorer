@@ -55,6 +55,41 @@ bool j1WalkingEnemy::Update(float dt) {
 	//pathfind
 	PathfindtoPlayer(400, player);
 
+	//movement
+	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
+	{
+		int i = 0;
+		iPoint current_map_position = App->map->WorldToMap(position.x, position.y);
+		iPoint tile_to_go;
+		tile_to_go.x = path_to_player->At(i)->x;
+		tile_to_go.y = path_to_player->At(i)->y;
+
+		if (current_map_position.x == tile_to_go.x)
+		{
+			i++;
+			if (i > 1)
+			{
+				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
+			}
+		}
+
+		if (current_map_position.x > tile_to_go.x) {
+			LOG("Going left");
+			state = RUN_BACKWARD;
+		}
+		if (current_map_position.x < tile_to_go.x) {
+			LOG("Going right");
+			state = RUN_FORWARD;
+		}
+		if (current_map_position.y > tile_to_go.y) {
+			LOG("Going up");
+			//position.y -= 30;
+		}
+		if (current_map_position.y < tile_to_go.y) {
+			LOG("Going down");
+		}
+	}
+
 	//state machine
 	switch (state)
 	{
