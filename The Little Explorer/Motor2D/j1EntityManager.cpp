@@ -184,5 +184,5 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 void j1EntityManager::LoadTextures() {
 	walking_enemy_texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
-	trap_texture = App->tex->Load("sprites/characters/long_wood_spike_02.png");
+	trap_texture = App->tex->Load("sprites/characters/Plant bite anim.png");
 }
