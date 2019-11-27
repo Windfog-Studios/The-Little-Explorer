@@ -3,6 +3,8 @@
 #include "SDL/include/SDL.h"
 #include "Animation.h"
 #include "j1EntityManager.h"
+#include "p2DynArray.h"
+#include "p2Log.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -37,6 +39,7 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp() { return true; }
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
+	void PathfindtoPlayer(int range, j1Entity* player);
 
 public: 
 
@@ -73,7 +76,12 @@ public:
 	EntityState state = EntityState::IDLE;
 	SDL_Texture* texture = nullptr;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
+
 	bool visible = true;
+	bool going_after_player = false;
+
+	const p2DynArray<iPoint>* path_to_player;
+
 };
 #endif // !_j1ENTITY_H
 

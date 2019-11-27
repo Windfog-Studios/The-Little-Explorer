@@ -1,7 +1,6 @@
 #ifndef _j1WALKING_ENEMY_H
 #define _j1WALKING_ENEMY_H
 #include "j1Entity.h"
-#include "p2DynArray.h"
 
 class j1WalkingEnemy : public j1Entity
 {
@@ -22,14 +21,9 @@ public:
 
 	bool LoadAnimations() { return true; }
 
-	void PathfindtoPlayer(int range);
-
 private:
 	int path_minimum = 100;
 	int path_maximum = 125;
-	bool going_after_player = false;
-
-	const p2DynArray<iPoint>* path_to_player;
 };
 
 #endif // !_j1WALKING_ENEMY_H
