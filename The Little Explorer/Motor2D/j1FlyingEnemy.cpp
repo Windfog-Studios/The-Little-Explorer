@@ -64,7 +64,7 @@ bool j1FlyingEnemy::Update(float dt) {
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			if (i > 1)
+			if (i > 2)
 			{
 				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 			}
@@ -80,10 +80,11 @@ bool j1FlyingEnemy::Update(float dt) {
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			LOG("Going up");
-			//position.y -= 30;
+			current_speed.y = -speed.y;
 		}
 		if (current_map_position.y < tile_to_go.y) {
 			LOG("Going down");
+			current_speed.y = speed.y;
 		}
 	}
 
@@ -122,6 +123,7 @@ bool j1FlyingEnemy::Update(float dt) {
 
 	//Movement Control
 	position.x += current_speed.x * dt;
+	position.y += current_speed.y * dt;
 
 	//collider control
 

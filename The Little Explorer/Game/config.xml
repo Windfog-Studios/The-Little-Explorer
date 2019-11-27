@@ -71,7 +71,7 @@
     <walking_enemy>
       <health value="100"/>
       <damage value="10"/>
-      <running_speed value="150"/>
+      <running_speed value="100"/>
     </walking_enemy>
     <flying_enemy>
       <health value="100"/>
