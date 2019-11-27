@@ -80,14 +80,24 @@ void j1EntityManager::DestroyEntity(j1Entity* entity)
 
 bool j1EntityManager::Awake(pugi::xml_node& config){
 	bool ret = true;
+
 	config_data = config;
+
 	player = new j1Player();
 	player->Awake(config.child("player"));
 	entities.add(player);
 
+	gravity = config.child("gravity").attribute("value").as_int();
+
 	//load walking enemy data
+	walking_enemy_speed = config.child("walking_enemy").child("running_speed").attribute("value").as_int();
+	walking_enemy_health = config.child("walking_enemy").child("health").attribute("value").as_int();
+	walking_enemy_damage = config.child("walking_enemy").child("damage").attribute("value").as_int();
 
-
+	//flying enemy data
+	flying_enemy_speed = config.child("flying_enemy").child("flying_speed").attribute("value").as_int();
+	flying_enemy_health = config.child("flying_enemy").child("health").attribute("value").as_int();
+	flying_enemy_damage = config.child("flying_enemy").child("damage").attribute("value").as_int();
 	return ret;
 }
 
@@ -165,4 +175,5 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 
 void j1EntityManager::LoadTextures() {
 	walking_enemy_texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
+	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
 }

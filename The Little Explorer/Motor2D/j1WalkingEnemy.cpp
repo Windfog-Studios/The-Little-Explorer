@@ -18,18 +18,21 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
 	player = App->entities->player;
-	speed.x = 20;
-	health = 50;
+	speed.x = App->entities->walking_enemy_speed;
+	health = App->entities->walking_enemy_health;
+	damage = App->entities->walking_enemy_damage;
 	flip = SDL_FLIP_HORIZONTAL;
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
+	/*
 	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
 	collider = nullptr;
 	raycast->to_delete = true;
 	raycast = nullptr;
+	*/
 }
 
 bool j1WalkingEnemy::Update(float dt) {
@@ -64,6 +67,11 @@ bool j1WalkingEnemy::Update(float dt) {
 		tile_to_go.x = path_to_player->At(i)->x;
 		tile_to_go.y = path_to_player->At(i)->y;
 
+		if (tile_to_go.y < current_map_position.y)
+		{
+			i++;
+		}
+
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
@@ -83,7 +91,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			LOG("Going up");
-			//position.y -= 30;
+			position.y -= 3;
 		}
 		if (current_map_position.y < tile_to_go.y) {
 			LOG("Going down");
@@ -102,7 +110,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		break;
 	case RUN_FORWARD:
 		//current_animation = &run;
-		current_speed.x = speed.x * 2;
+		current_speed.x = speed.x;
 		flip = SDL_FLIP_NONE;
 		break;
 	case RUN_BACKWARD:

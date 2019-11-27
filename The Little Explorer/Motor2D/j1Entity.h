@@ -47,9 +47,12 @@ public:
 	iPoint lastPosition;
 	iPoint current_speed;
 	iPoint speed;
+
 	int initial_x_position = 0;
 	int initial_y_position = 0;
+
 	int health = 0;
+	int damage = 0;
 
 	bool grounded = false;
 	int gravity = 0;

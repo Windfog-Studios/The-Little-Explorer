@@ -50,9 +50,11 @@ public:
 	j1Player* player;
 
 public:
+	int gravity = 0;
+
 	//speed
 	int walking_enemy_speed = 0;
-	iPoint flying_enemy_speed;
+	int flying_enemy_speed;
 
 	//health
 	int walking_enemy_health = 0;
