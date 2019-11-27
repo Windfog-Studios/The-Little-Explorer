@@ -10,18 +10,15 @@ public:
 	virtual ~j1FlyingEnemy();
 
 	bool Awake(pugi::xml_node&) { return true; }
-	bool Update(float dt) { return true; }
-	bool PostUpdate() { return true; }
+	bool Update(float dt);
+	bool PostUpdate();
 
-	void OnCollision(Collider* c1, Collider* c2){}
+	void OnCollision(Collider* c1, Collider* c2);
 
 	bool Save(pugi::xml_node& data) const { return true; }
 	bool Load(pugi::xml_node& data) { return true; }
 
 	bool LoadAnimations() { return true; }
-
-	void PathfindtoPlayer(int range);
-
 
 private:
 	int path_minimum = 100;

@@ -532,6 +532,9 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				if (type == "Knight")
 				App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].x, objectgroup->object[i].x);
 
+				if (type == "Bat")
+				App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].x, objectgroup->object[i].x);
+				
 				object = object.next_sibling("object");
 				i++;
 			}
