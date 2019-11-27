@@ -158,17 +158,14 @@ bool j1Map::CleanUp()
 		LOG("Objectgroups releasing");
 		for (uint i = 0; i < item3->data->size; i++)
 		{
-			if (item3->data->object->type == ObjectType::COLLIDER)
+			if (item3->data->object[i].type == ObjectType::COLLIDER)
 			{
-				if ((item3->data->object->collider->to_delete == false))
-				{
-					item3->data->object->collider->to_delete = true;
-					item3->data->object->collider = nullptr;
-				}
+				item3->data->object[i].collider->to_delete = true;
+				item3->data->object[i].collider = nullptr;
 			}
 			else if(item3->data->object->type == ObjectType::ENEMY)
 			{
-				App->entities->DestroyEntity(item3->data->object->entity);
+				App->entities->DestroyEntity(item3->data->object[i].entity);
 			}
 
 		}
@@ -521,29 +518,35 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				
 				p2SString type(object_node.attribute("type").as_string());
 
-				if (type =="Collider")
-				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_WALL);
-				objectgroup->object[i].type = ObjectType::COLLIDER;
+				if (type == "Collider") {
+					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_WALL);
+					objectgroup->object[i].type = ObjectType::COLLIDER;
+				}
 
-				if (type == "Death")
-				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_DEATH);
-				objectgroup->object[i].type = ObjectType::COLLIDER;
+				if (type == "Death") {
+					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_DEATH);
+					objectgroup->object[i].type = ObjectType::COLLIDER;
+				}
 
-				if (type == "Platform")
-				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_PLATFORM);
-				objectgroup->object[i].type = ObjectType::COLLIDER;
+				if (type == "Platform") {
+					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_PLATFORM);
+					objectgroup->object[i].type = ObjectType::COLLIDER;
+				}
 
-				if (type == "Level Change") 
-				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_CHANGE_LEVEL);
-				objectgroup->object[i].type = ObjectType::COLLIDER;
+				if (type == "Level Change") {
+					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_CHANGE_LEVEL);
+					objectgroup->object[i].type = ObjectType::COLLIDER;
+				}
 
-				if (type == "Knight")
-				objectgroup->object->entity = App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-				objectgroup->object[i].type = ObjectType::ENEMY;
+				if (type == "Knight") {
+					objectgroup->object->entity = App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
+					objectgroup->object[i].type = ObjectType::ENEMY;
+				}
 
-				if (type == "Bat")
-				objectgroup->object->entity = App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-				objectgroup->object[i].type = ObjectType::ENEMY;
+				if (type == "Bat") {
+					objectgroup->object->entity = App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
+					objectgroup->object[i].type = ObjectType::ENEMY;
+				}
 				
 				object_node = object_node.next_sibling("object");
 				i++;
