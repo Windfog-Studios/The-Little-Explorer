@@ -14,6 +14,7 @@
 #include "j1Player.h"
 #include "j1WalkingEnemy.h"
 #include "j1FlyingEnemy.h"
+#include "j1Trap.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
 #include "j1UI.h"
