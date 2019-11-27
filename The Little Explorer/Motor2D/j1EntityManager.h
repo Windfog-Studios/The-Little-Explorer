@@ -45,10 +45,6 @@ public:
 	SDL_Texture* walking_enemy_tex;
 	SDL_Texture* flying_enemy_tex;
 
-	j1Player* player;
-	j1WalkingEnemy* walking_enemy;
-	//j1FlyingEnemy* exampleFlyingEnemy;
-
 private:
 	//speed
 	int walking_enemy_speed = 0;
