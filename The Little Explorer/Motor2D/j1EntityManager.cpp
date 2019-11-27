@@ -68,8 +68,16 @@ void j1EntityManager::DestroyEntity(j1Entity* entity)
 
 	if (entity != nullptr) {
 		item = entities.At(entities.find(entity));
-		entity->CleanUp();
-		entities.del(item);
+		if (entity->collider != nullptr)
+		{
+			entity->collider->to_delete = true;
+			entity->collider = nullptr;
+		}
+		if (entity->raycast != nullptr) {
+			entity->raycast->to_delete = true;
+			entity->raycast = nullptr;
+		}
+		entities.del(item);;
 	}
 }
 
@@ -80,6 +88,10 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	player = new j1Player();
 	player->Awake(config.child("player"));
 	entities.add(player);
+
+	//load walking enemy data
+
+
 	return ret;
 }
 
@@ -93,11 +105,11 @@ bool j1EntityManager::Start()
 bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
-	App->tex->UnLoad(walking_enemy_tex);
-	walking_enemy_tex = nullptr;
+	App->tex->UnLoad(walking_enemy_texture);
+	walking_enemy_texture = nullptr;
 
-	App->tex->UnLoad(flying_enemy_tex);
-	flying_enemy_tex = nullptr;
+	App->tex->UnLoad(flying_enemy_texture);
+	flying_enemy_texture = nullptr;
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
@@ -153,4 +165,8 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 	bool ret = true;
 
 	return ret;
+}
+
+void j1EntityManager::LoadTextures() {
+	walking_enemy_texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 }

@@ -28,15 +28,20 @@ public:
 
 	virtual bool Awake(pugi::xml_node&);
 	virtual bool Start();
+
 	virtual bool PreUpdate();
 	virtual bool Update(float dt);
 	virtual bool PostUpdate();
+
 	virtual bool CleanUp();
+
 	virtual bool Load(pugi::xml_node& data);
 	virtual bool Save(pugi::xml_node& data);
 
 	j1Entity* CreateEntity(EntityType type, int position_x, int position_y);
 	virtual void DestroyEntity(j1Entity* delete_entity);
+
+	void LoadTextures();
 public:
 
 	p2List<j1Entity*> entities;
@@ -45,9 +50,10 @@ public:
 	SDL_Texture* walking_enemy_tex;
 	SDL_Texture* flying_enemy_tex;
 	SDL_Texture* trap_tex;
+
 	j1Player* player;
 
-private:
+public:
 	//speed
 	int walking_enemy_speed = 0;
 	iPoint flying_enemy_speed;
@@ -68,10 +74,17 @@ private:
 	SDL_Texture* trap_texture = nullptr;
 
 	//sfx
+	uint walking_enemy_attack_fx;
+	uint flying_enemy_attack_fx;
+
 
 	j1WalkingEnemy* walking_enemy;
 	j1FlyingEnemy* flying_enemy;
 	j1Trap* trap;
+
+	uint walking_enemy_die_fx;
+	uint flying_enemy_die_fx;
+
 
 };
 

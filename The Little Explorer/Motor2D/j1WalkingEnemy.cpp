@@ -11,7 +11,7 @@
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
-	texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
+	texture = App->entities->walking_enemy_texture;
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });
 	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)this);
@@ -24,7 +24,6 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
-	App->entities->DestroyEntity(this);
 	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
@@ -185,7 +184,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		//App->entities->DestroyEntity(this);
+		App->entities->DestroyEntity(this);
 		//state = DIE;
 		break;
 	default:
