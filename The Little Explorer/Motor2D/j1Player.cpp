@@ -48,7 +48,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	//colliders
 	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
-	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER, (j1Module*)App->entities->player);
+	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player);
 
 	return ret;
 }
