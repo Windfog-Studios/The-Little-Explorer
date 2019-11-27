@@ -12,6 +12,7 @@
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
 
+	//animations
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });
 	flip = SDL_FLIP_HORIZONTAL;
@@ -44,8 +45,6 @@ j1WalkingEnemy::~j1WalkingEnemy() {
 bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-	gravity = 925;
-	
 
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
@@ -81,7 +80,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			if (i > 1)
+			if (i > 2)
 			{
 				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 			}
