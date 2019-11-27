@@ -58,6 +58,7 @@ bool j1WalkingEnemy::Update(float dt) {
 	//movement
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
 	{
+		//compare position to tile to go
 		int i = 0;
 		iPoint current_map_position = App->map->WorldToMap(position.x, position.y);
 		iPoint tile_to_go;

@@ -72,5 +72,4 @@ void j1Entity::PathfindtoPlayer(int range, j1Entity* player) {
 		}
 	}
 
-	//try to reach the player
 }
