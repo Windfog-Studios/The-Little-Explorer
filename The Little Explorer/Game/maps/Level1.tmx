@@ -64132,31 +64132,11 @@
   </data>
  </layer>
  <objectgroup id="10" name="Enemies">
-  <object id="262" name="Knight" type="Knight" x="1173" y="284" width="26" height="26">
-   <properties>
-    <property name="speed" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="264" name="Knight" type="Knight" x="797.667" y="592" width="32" height="32">
-   <properties>
-    <property name="speed" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="266" name="Knight" type="Knight" x="739" y="784.333" width="32" height="32">
-   <properties>
-    <property name="speed" type="int" value="2"/>
-   </properties>
-  </object>
+  <object id="262" name="Knight" type="Knight" x="1173" y="284" width="26" height="26"/>
+  <object id="264" name="Knight" type="Knight" x="797.667" y="592" width="32" height="32"/>
+  <object id="266" name="Knight" type="Knight" x="739" y="784.333" width="32" height="32"/>
   <object id="267" name="Knight" type="Knight" x="174.333" y="786.833" width="32" height="32"/>
-  <object id="269" name="Bat" type="Bat" x="309" y="775" width="32" height="32">
-   <properties>
-    <property name="speed" type="int" value="2"/>
-   </properties>
-  </object>
-  <object id="270" name="Bat" type="Bat" x="831" y="768" width="32" height="32">
-   <properties>
-    <property name="speed" type="int" value="2"/>
-   </properties>
-  </object>
+  <object id="269" name="Bat" type="Bat" x="309" y="775" width="32" height="32"/>
+  <object id="270" name="Bat" type="Bat" x="831" y="768" width="32" height="32"/>
  </objectgroup>
 </map>
