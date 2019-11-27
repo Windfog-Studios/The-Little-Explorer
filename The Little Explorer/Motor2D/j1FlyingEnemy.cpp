@@ -18,9 +18,9 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
 	player = App->entities->player;
-	speed.x = 20;
-	health = 50;
-	flip = SDL_FLIP_HORIZONTAL;
+	speed.x = speed.y = App->entities->flying_enemy_speed;
+	health = App->entities->flying_enemy_health;
+	flip = SDL_FLIP_NONE;
 }
 
 j1FlyingEnemy::~j1FlyingEnemy() {
@@ -37,8 +37,6 @@ j1FlyingEnemy::~j1FlyingEnemy() {
 bool j1FlyingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-	gravity = 925;
-
 
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
