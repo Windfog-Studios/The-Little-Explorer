@@ -249,6 +249,7 @@ void j1Scene::ResetLevel() {
 	App->entities->player->position.x = player_x_position;
 	App->entities->player->position.y = player_y_position;
 	App->entities->player->flip = SDL_FLIP_NONE;
+	if (!App->entities->player->isVisible) App->entities->player->isVisible = true;
 }
 
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {

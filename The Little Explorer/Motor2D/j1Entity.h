@@ -39,15 +39,13 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp() { return true; };
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
-	void PathfindtoPlayer(int range, j1Entity* player);
+			void PathfindtoPlayer(int range, j1Entity* player);
 
 public: 
-
 	iPoint position;
 	iPoint lastPosition;
 	iPoint current_speed;
 	iPoint speed;
-
 	int initial_x_position = 0;
 	int initial_y_position = 0;
 
@@ -63,7 +61,6 @@ public:
 	Collider* last_collider = nullptr;
 	
 	uint die_fx = 0;
-
 	p2SString die_fx_path;
 
 	p2List<Animation*> animations;
@@ -80,7 +77,8 @@ public:
 	SDL_Texture* texture = nullptr;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-	bool visible = true;
+	bool isVisible = true;
+
 	bool going_after_player = false;
 
 	const p2DynArray<iPoint>* path_to_player;

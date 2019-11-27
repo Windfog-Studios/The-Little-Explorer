@@ -364,7 +364,7 @@ bool j1Player::Update(float dt){
 }
 
 bool j1Player::PostUpdate() {
-	if (visible)
+	if (isVisible)
 	{
 		App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 	}
@@ -518,8 +518,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if (!god) {
 				current_speed.x = 0;
 
-				if (App->ui->transition == false)
-				{
+				if (App->ui->transition == false){
 					App->audio->PlayFx(die_fx);
 					App->ui->transition = true;
 					App->scene->blocked_camera = true;
@@ -559,6 +558,18 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			break;
 		case COLLIDER_ENEMY:
+			isVisible = false;
+			App->particles->AddParticle(App->particles->dust, position.x -10, position.y, COLLIDER_NONE, 0, flip);
+			App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
+			App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h -5, COLLIDER_NONE, 0, flip);
+			if (App->ui->transition == false){
+				App->audio->PlayFx(die_fx);
+				App->ui->transition = true;
+				App->scene->blocked_camera = true;
+				App->ui->ResetTransition();
+				App->scene->Reset_Camera(1);
+				controls_blocked = true;
+			}
 			break;
 		default:
 			break;
