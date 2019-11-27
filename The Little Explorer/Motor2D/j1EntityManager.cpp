@@ -14,6 +14,7 @@
 #include "j1Particles.h"
 #include "j1WalkingEnemy.h"
 #include "j1FlyingEnemy.h"
+#include "j1Trap.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 
@@ -44,6 +45,9 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		entity->position.x = position_x;
 		entity->position.y = position_y;
 	case EntityType::TRAP:
+		entity = new j1Trap();
+		entity->position.x = position_x;
+		entity->position.y = position_y;
 		break;
 	case EntityType::PARTICLES:
 		break;

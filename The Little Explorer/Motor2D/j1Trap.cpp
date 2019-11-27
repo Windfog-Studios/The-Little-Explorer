@@ -1,4 +1,4 @@
-#include "j1WalkingEnemy.h"
+#include "j1Trap.h"
 #include "j1Entity.h"
 #include "j1Render.h"
 #include "p2Log.h"
@@ -9,37 +9,42 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 
-j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
-	name.create("walking_enemy");
-	texture = App->entities->walking_enemy_texture;
+j1Trap::j1Trap() :j1Entity(EntityType::TRAP) {
+	name.create("trap");
+	texture = App->tex->Load("sprites/characters/long_wood_spike_02.png");
 	current_animation = &idle;
-	idle.PushBack({ 16,34,27,30 });
-	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)this);
+	{
+		idle.PushBack({ 16,119,34,9 }, 0.3f);
+		idle.PushBack({ 16,232,34,25 }, 0.3f);
+		idle.PushBack({ 16,335,34,49 }, 0.3f);
+		idle.PushBack({ 16,437,34,75 }, 0.3f);
+		idle.PushBack({ 16,539,34,102 }, 0.3f);
+		idle.loop = false;
+	}
+	collider = App->collision->AddCollider({ 16,119,34,8 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
 	player = App->entities->player;
-	speed.x = App->entities->walking_enemy_speed;
-	health = App->entities->walking_enemy_health;
-	damage = App->entities->walking_enemy_damage;
+	speed.x = 20;
+	health = 50;
 	flip = SDL_FLIP_HORIZONTAL;
 }
 
-j1WalkingEnemy::~j1WalkingEnemy() {
-	/*
+j1Trap::~j1Trap() {
+	App->entities->DestroyEntity(this);
 	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
 	collider = nullptr;
 	raycast->to_delete = true;
 	raycast = nullptr;
-	*/
 }
 
-bool j1WalkingEnemy::Update(float dt) {
+bool j1Trap::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
 	gravity = 925;
-	
+
 
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
@@ -54,78 +59,12 @@ bool j1WalkingEnemy::Update(float dt) {
 	//guard path
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
-	//pathfind
-	PathfindtoPlayer(400, player);
-
-	//movement
-	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
-	{
-		//compare position to tile to go
-		int i = 0;
-		iPoint current_map_position = App->map->WorldToMap(position.x, position.y);
-		iPoint tile_to_go;
-		tile_to_go.x = path_to_player->At(i)->x;
-		tile_to_go.y = path_to_player->At(i)->y;
-
-		if (tile_to_go.y < current_map_position.y)
-		{
-			i++;
-		}
-
-		if (current_map_position.x == tile_to_go.x)
-		{
-			i++;
-			if (i > 1)
-			{
-				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
-			}
-		}
-
-		if (current_map_position.x > tile_to_go.x) {
-			LOG("Going left");
-			state = RUN_BACKWARD;
-		}
-		if (current_map_position.x < tile_to_go.x) {
-			LOG("Going right");
-			state = RUN_FORWARD;
-		}
-		if (current_map_position.y > tile_to_go.y) {
-			LOG("Going up");
-			position.y -= 3;
-		}
-		if (current_map_position.y < tile_to_go.y) {
-			LOG("Going down");
-		}
-	}
-
 	//state machine
 	switch (state)
 	{
 		run = idle;
 	case IDLE:
 		current_animation = &idle;
-		break;
-	case JUMP:
-		current_animation = &jump;
-		break;
-	case RUN_FORWARD:
-		//current_animation = &run;
-		current_speed.x = speed.x;
-		flip = SDL_FLIP_NONE;
-		break;
-	case RUN_BACKWARD:
-		//current_animation = &run;
-		current_speed.x = -speed.x;
-		flip = SDL_FLIP_HORIZONTAL;
-		break;
-	case FALL:
-		current_animation = &fall;
-		break;
-	case ATTACK:
-		current_animation = &attack;
-		break;
-	case DIE:
-		current_animation = &die;
 		break;
 	default:
 		break;
@@ -139,25 +78,25 @@ bool j1WalkingEnemy::Update(float dt) {
 	}
 
 	position.x += current_speed.x * dt;
-	
+
 	//collider control
-	
-	if (collider != nullptr) 
+
+	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
-	if ((raycast != nullptr)&&(collider != nullptr)) 
+	if ((raycast != nullptr) && (collider != nullptr))
 		raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
 
 	return ret;
 }
 
-bool j1WalkingEnemy::PostUpdate() {
+bool j1Trap::PostUpdate() {
 	bool ret = true;
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 	return ret;
 }
 
 
-void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
+void j1Trap::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1 == raycast)
 	{
@@ -192,7 +131,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		App->entities->DestroyEntity(this);
+		//App->entities->DestroyEntity(this);
 		//state = DIE;
 		break;
 	default:

@@ -47,6 +47,10 @@ public:
 	p2List<j1Entity*> entities;
 	pugi::xml_node config_data;
 
+	SDL_Texture* walking_enemy_tex;
+	SDL_Texture* flying_enemy_tex;
+	SDL_Texture* trap_tex;
+
 	j1Player* player;
 
 public:
@@ -59,21 +63,30 @@ public:
 	//health
 	int walking_enemy_health = 0;
 	int flying_enemy_health = 0;
+	int trap_health = 0;
 
 	//damage
 	int walking_enemy_damage = 0;
 	int flying_enemy_damage = 0;
+	int trap_damage = 0;
 
 	//textures
 	SDL_Texture* walking_enemy_texture = nullptr;
 	SDL_Texture* flying_enemy_texture = nullptr;
+	SDL_Texture* trap_texture = nullptr;
 
 	//sfx
 	uint walking_enemy_attack_fx;
 	uint flying_enemy_attack_fx;
 
+
+	j1WalkingEnemy* walking_enemy;
+	j1FlyingEnemy* flying_enemy;
+	j1Trap* trap;
+
 	uint walking_enemy_die_fx;
 	uint flying_enemy_die_fx;
+
 
 };
 
