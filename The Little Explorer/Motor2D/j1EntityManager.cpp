@@ -13,6 +13,7 @@
 #include "j1UI.h"
 #include "j1Particles.h"
 #include "j1WalkingEnemy.h"
+#include "j1FlyingEnemy.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 
@@ -38,6 +39,10 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		entity->position.x = position_x;
 		entity->position.y = position_y;
 		break;
+	case EntityType::FLYING_ENEMY:
+		entity = new j1FlyingEnemy();
+		entity->position.x = position_x;
+		entity->position.y = position_y;
 	case EntityType::TRAP:
 		break;
 	case EntityType::PARTICLES:
@@ -84,6 +89,9 @@ bool j1EntityManager::CleanUp()
 	bool ret = true;
 	App->tex->UnLoad(walking_enemy_tex);
 	walking_enemy_tex = nullptr;
+
+	App->tex->UnLoad(flying_enemy_tex);
+	flying_enemy_tex = nullptr;
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{

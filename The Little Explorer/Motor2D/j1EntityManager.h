@@ -46,7 +46,7 @@ public:
 
 	j1Player* player;
 	j1WalkingEnemy* walking_enemy;
-	//j1FlyingEnemy* exampleFlyingEnemy;
+	j1FlyingEnemy* flying_enemy;
 };
 
 #endif // !_ENTITY_MANAGER_H_
