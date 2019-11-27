@@ -44,6 +44,7 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		entity = new j1FlyingEnemy();
 		entity->position.x = position_x;
 		entity->position.y = position_y;
+		break;
 	case EntityType::TRAP:
 		entity = new j1Trap();
 		entity->position.x = position_x;
@@ -184,5 +185,4 @@ void j1EntityManager::LoadTextures() {
 	walking_enemy_texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
 	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
 	trap_texture = App->tex->Load("sprites/characters/long_wood_spike_02.png");
-
 }

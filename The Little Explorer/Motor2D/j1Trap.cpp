@@ -42,8 +42,6 @@ j1Trap::~j1Trap() {
 bool j1Trap::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-	gravity = 925;
-
 
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
