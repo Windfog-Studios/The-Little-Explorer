@@ -158,20 +158,24 @@ bool j1Map::CleanUp()
 		LOG("Objectgroups releasing");
 		for (uint i = 0; i < item3->data->size; i++)
 		{
-			if (item3->data->name != "Enemies") {
-				while (item3->data->collider[i] != nullptr)
+			if (item3->data->object->type == ObjectType::COLLIDER)
+			{
+				if ((item3->data->object->collider->to_delete == false))
 				{
-					if ((item3->data->collider[i]->to_delete == false))
-					{
-						item3->data->collider[i]->to_delete = true;
-						item3->data->collider[i] = nullptr;
-					}
+					item3->data->object->collider->to_delete = true;
+					item3->data->object->collider = nullptr;
 				}
 			}
+			else if(item3->data->object->type == ObjectType::ENEMY)
+			{
+				App->entities->DestroyEntity(item3->data->object->entity);
+			}
+
 		}
-		delete[] item3->data->collider;
+		//delete[] item3->data->collider;
 		RELEASE(item3->data);
 		item3 = item3->next;
+		
 	}
 	data.objectgroups.clear();
 
@@ -490,13 +494,13 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 	bool ret = true;
-	pugi::xml_node object = node.child("object");
+	pugi::xml_node object_node = node.child("object");
 	SDL_Rect rect = { 0,0,0,0 };
 	objectgroup->name = node.attribute("name").as_string();
 	uint i = 0u;
 	p2SString type;
 
-		if (object == NULL)
+		if (object_node == NULL)
 		{
 			LOG("Error loading object group");
 			ret = false;
@@ -504,38 +508,44 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 		
 		else
 		{
-			objectgroup->object = new SDL_Rect[MAX_COLLIDERS];
-			objectgroup->collider = new Collider*[MAX_COLLIDERS];
-
-			while (object != NULL)
+			//objectgroup->object = new SDL_Rect[MAX_COLLIDERS];
+			//objectgroup->collider = new Collider*[MAX_COLLIDERS];
+			objectgroup->object = new Object[MAX_OBJECTS];
+			while (object_node != NULL)
 			{
-				objectgroup->object[i].x = object.attribute("x").as_int();
-				objectgroup->object[i].y = object.attribute("y").as_int();
-				objectgroup->object[i].w = object.attribute("width").as_int();
-				objectgroup->object[i].h = object.attribute("height").as_int();
+				objectgroup->object[i].rect.x = object_node.attribute("x").as_int();
+				objectgroup->object[i].rect.y = object_node.attribute("y").as_int();
+				objectgroup->object[i].rect.w = object_node.attribute("width").as_int();
+				objectgroup->object[i].rect.h = object_node.attribute("height").as_int();
 				//objectgroup->object[i].y -= COLLIDER_OFFSET;
 				
-				p2SString type(object.attribute("type").as_string());
+				p2SString type(object_node.attribute("type").as_string());
 
 				if (type =="Collider")
-				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_WALL);
+				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_WALL);
+				objectgroup->object[i].type = ObjectType::COLLIDER;
 
 				if (type == "Death")
-				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_DEATH);
+				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_DEATH);
+				objectgroup->object[i].type = ObjectType::COLLIDER;
 
 				if (type == "Platform")
-				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_PLATFORM);
+				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_PLATFORM);
+				objectgroup->object[i].type = ObjectType::COLLIDER;
 
 				if (type == "Level Change") 
-				objectgroup->collider[i] = App->collision->AddCollider(objectgroup->object[i], COLLIDER_CHANGE_LEVEL);
+				objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_CHANGE_LEVEL);
+				objectgroup->object[i].type = ObjectType::COLLIDER;
 
 				if (type == "Knight")
-				App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].x, objectgroup->object[i].x);
+				objectgroup->object->entity = App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
+				objectgroup->object[i].type = ObjectType::ENEMY;
 
 				if (type == "Bat")
-				App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].x, objectgroup->object[i].x);
+				objectgroup->object->entity = App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
+				objectgroup->object[i].type = ObjectType::ENEMY;
 				
-				object = object.next_sibling("object");
+				object_node = object_node.next_sibling("object");
 				i++;
 			}
 			objectgroup->size = i;

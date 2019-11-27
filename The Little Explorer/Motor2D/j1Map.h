@@ -5,10 +5,13 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Collision.h"
 
 #define COLLIDER_OFFSET 320
+#define	MAX_OBJECTS 300
 
 struct Collider;
+class j1Entity;
 
 struct Properties
 {
@@ -80,10 +83,21 @@ struct TileSet
 	int					offset_y;
 };
 
+enum ObjectType {
+	COLLIDER,
+	ENEMY
+};
+
+struct Object {
+	SDL_Rect rect;
+	ObjectType type;
+	j1Entity* entity;
+	Collider* collider;
+};
+
 struct ObjectGroup {
 	p2SString name = "No name";
-	SDL_Rect* object;
-	Collider** collider;
+	Object* object;
 	uint size = 0u;
 };
 

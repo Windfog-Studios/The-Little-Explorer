@@ -33642,7 +33642,7 @@
  </layer>
  <objectgroup name="Colliders">
   <object id="1" type="Collider" x="0" y="702.667" width="352" height="576"/>
-  <object id="4" type="Collider" x="340" y="798" width="128" height="128"/>
+  <object id="4" type="Collider" x="352" y="800" width="128" height="128"/>
   <object id="5" type="Collider" x="640" y="896" width="288" height="96"/>
   <object id="6" type="Platform" x="1056" y="800" width="160" height="64"/>
   <object id="7" type="Platform" x="1088" y="544" width="128" height="64"/>

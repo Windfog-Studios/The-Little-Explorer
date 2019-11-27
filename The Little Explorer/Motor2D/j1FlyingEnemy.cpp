@@ -126,12 +126,13 @@ bool j1FlyingEnemy::Update(float dt) {
 	}
 
 	//Movement Control
+	/*
 	if (!grounded) {
 		//if (current_speed.y > max_falling_speed) 
 		current_speed.y -= gravity * dt;
 		position.y -= current_speed.y * dt;
 	}
-
+	*/
 	position.x += current_speed.x * dt;
 
 	//collider control

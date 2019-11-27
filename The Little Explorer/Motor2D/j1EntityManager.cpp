@@ -60,11 +60,13 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 
 void j1EntityManager::DestroyEntity(j1Entity* entity)
 {
-	//RELEASE(entity);
 	p2List_item<j1Entity*>* item;
-	item = entities.At(entities.find(entity));
-	entity->CleanUp();
-	entities.del(item);
+
+	if (entity != nullptr) {
+		item = entities.At(entities.find(entity));
+		entity->CleanUp();
+		entities.del(item);
+	}
 }
 
 

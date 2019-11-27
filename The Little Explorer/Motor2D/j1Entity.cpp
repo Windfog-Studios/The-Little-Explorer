@@ -68,7 +68,7 @@ void j1Entity::PathfindtoPlayer(int range, j1Entity* player) {
 			iPoint pos = App->map->MapToWorld(path_to_player->At(i)->x, path_to_player->At(i)->y);
 			Debug_rect.x = pos.x;
 			Debug_rect.y = pos.y;
-			if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
+			if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 40);
 		}
 	}
 
