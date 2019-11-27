@@ -47,10 +47,6 @@ public:
 	p2List<j1Entity*> entities;
 	pugi::xml_node config_data;
 
-	SDL_Texture* walking_enemy_tex;
-	SDL_Texture* flying_enemy_tex;
-	SDL_Texture* trap_tex;
-
 	j1Player* player;
 
 public:

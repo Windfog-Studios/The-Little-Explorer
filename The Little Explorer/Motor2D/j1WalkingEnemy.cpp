@@ -11,17 +11,24 @@
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
-	texture = App->entities->walking_enemy_texture;
+
+	//animations
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });
-	collider = App->collision->AddCollider({ 16,34,27,30 },COLLIDER_ENEMY,(j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
-	lastPosition = position;
+	flip = SDL_FLIP_HORIZONTAL;
+
+	//variable declaration from EntityManager
 	player = App->entities->player;
+	gravity = App->entities->gravity;
 	speed.x = App->entities->walking_enemy_speed;
+	texture = App->entities->walking_enemy_texture;
 	health = App->entities->walking_enemy_health;
 	damage = App->entities->walking_enemy_damage;
-	flip = SDL_FLIP_HORIZONTAL;
+	lastPosition = position;
+
+	//colliders
+	collider = App->collision->AddCollider({ 16,34,27,30 }, COLLIDER_ENEMY, (j1Module*)this);
+	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
@@ -38,8 +45,6 @@ j1WalkingEnemy::~j1WalkingEnemy() {
 bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-	gravity = 925;
-	
 
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
@@ -75,7 +80,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			if (i > 1)
+			if (i > 2)
 			{
 				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 			}

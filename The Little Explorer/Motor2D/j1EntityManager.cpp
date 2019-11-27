@@ -88,10 +88,6 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 
 	config_data = config;
 
-	player = new j1Player();
-	player->Awake(config.child("player"));
-	entities.add(player);
-
 	gravity = config.child("gravity").attribute("value").as_int();
 
 	//load walking enemy data
@@ -103,6 +99,12 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	flying_enemy_speed = config.child("flying_enemy").child("flying_speed").attribute("value").as_int();
 	flying_enemy_health = config.child("flying_enemy").child("health").attribute("value").as_int();
 	flying_enemy_damage = config.child("flying_enemy").child("damage").attribute("value").as_int();
+
+	//player creation
+	player = new j1Player();
+	player->Awake(config.child("player"));
+	entities.add(player);
+
 	return ret;
 }
 

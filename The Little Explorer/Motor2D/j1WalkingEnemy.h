@@ -8,7 +8,6 @@ public:
 	j1WalkingEnemy();
 	virtual ~j1WalkingEnemy();
 
-	bool Awake(pugi::xml_node&) { return true; }
 	bool Update(float dt);
 	bool PostUpdate();
 
@@ -22,8 +21,8 @@ public:
 	bool LoadAnimations() { return true; }
 
 private:
-	int path_minimum = 100;
-	int path_maximum = 125;
+	//int path_minimum = 100;
+	//int path_maximum = 125;
 };
 
 #endif // !_j1WALKING_ENEMY_H

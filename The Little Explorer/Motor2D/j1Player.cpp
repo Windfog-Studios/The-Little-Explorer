@@ -30,6 +30,8 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	current_animation = &idle;
 
+	gravity = App->entities->gravity;
+
 	//set initial attributes of the player
 	max_running_speed = config.child("max_running_speed").attribute("value").as_float();
 	max_side_speed = config.child("max_side_speed").attribute("value").as_float();
@@ -39,7 +41,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
 
-	gravity = config.child("gravity").attribute("value").as_int();
 	max_falling_speed = config.child("max_falling_speed").attribute("value").as_float();
 
 	//player fx
@@ -559,9 +560,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 		case COLLIDER_ENEMY:
 			isVisible = false;
-			App->particles->AddParticle(App->particles->dust, position.x -10, position.y, COLLIDER_NONE, 0, flip);
-			App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
-			App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h -5, COLLIDER_NONE, 0, flip);
+			if (!particles_created) {
+ 				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
+			}
 			if (App->ui->transition == false){
 				App->audio->PlayFx(die_fx);
 				App->ui->transition = true;

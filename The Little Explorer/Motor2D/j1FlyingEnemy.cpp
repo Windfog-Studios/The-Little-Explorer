@@ -11,16 +11,23 @@
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	name.create("flying_enemy");
+
+	//animations
 	texture = App->entities->flying_enemy_texture;
 	current_animation = &idle;
 	idle.PushBack({ 0,66,45,26 });
+	flip = SDL_FLIP_NONE;
+
+	//variables from EntityManager
+	player = App->entities->player;
+	speed.x = speed.y = App->entities->flying_enemy_speed;
+	health = App->entities->flying_enemy_health;
+	damage = App->entities->flying_enemy_damage;
+	lastPosition = position;
+
+	//colliders
 	collider = App->collision->AddCollider({ 0,66,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
-	lastPosition = position;
-	player = App->entities->player;
-	speed.x = 20;
-	health = 50;
-	flip = SDL_FLIP_HORIZONTAL;
 }
 
 j1FlyingEnemy::~j1FlyingEnemy() {
@@ -37,18 +44,6 @@ j1FlyingEnemy::~j1FlyingEnemy() {
 bool j1FlyingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-	gravity = 925;
-
-
-	//what to do when getting to a gap
-	if (last_collider != nullptr)
-	{
-		if (!raycast->CheckCollision(last_collider->rect))
-		{
-			grounded = false;
-			//current_speed.x = -current_speed.x;
-		}
-	}
 
 	//guard path
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
@@ -69,7 +64,7 @@ bool j1FlyingEnemy::Update(float dt) {
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			if (i > 1)
+			if (i > 2)
 			{
 				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 			}
@@ -85,10 +80,11 @@ bool j1FlyingEnemy::Update(float dt) {
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			LOG("Going up");
-			//position.y -= 30;
+			current_speed.y = -speed.y;
 		}
 		if (current_map_position.y < tile_to_go.y) {
 			LOG("Going down");
+			current_speed.y = speed.y;
 		}
 	}
 
@@ -104,13 +100,13 @@ bool j1FlyingEnemy::Update(float dt) {
 		break;
 	case RUN_FORWARD:
 		//current_animation = &run;
-		current_speed.x = speed.x * 2;
-		flip = SDL_FLIP_NONE;
+		current_speed.x = speed.x;
+		flip = SDL_FLIP_HORIZONTAL;
 		break;
 	case RUN_BACKWARD:
 		//current_animation = &run;
 		current_speed.x = -speed.x;
-		flip = SDL_FLIP_HORIZONTAL;
+		flip = SDL_FLIP_NONE;
 		break;
 	case FALL:
 		current_animation = &fall;
@@ -126,14 +122,8 @@ bool j1FlyingEnemy::Update(float dt) {
 	}
 
 	//Movement Control
-	/*
-	if (!grounded) {
-		//if (current_speed.y > max_falling_speed) 
-		current_speed.y -= gravity * dt;
-		position.y -= current_speed.y * dt;
-	}
-	*/
 	position.x += current_speed.x * dt;
+	position.y += current_speed.y * dt;
 
 	//collider control
 

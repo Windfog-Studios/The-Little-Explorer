@@ -9,7 +9,6 @@ public:
 	j1FlyingEnemy();
 	virtual ~j1FlyingEnemy();
 
-	bool Awake(pugi::xml_node&) { return true; }
 	bool Update(float dt);
 	bool PostUpdate();
 
@@ -20,12 +19,6 @@ public:
 
 	bool LoadAnimations() { return true; }
 
-private:
-	int path_minimum = 100;
-	int path_maximum = 125;
-	bool going_after_player = false;
-
-	const p2DynArray<iPoint>* path_to_player;
 };
 
 #endif // !_j1FLYING_ENEMY_H

@@ -56092,7 +56092,11 @@
   <object id="132" type="Collider" x="2336" y="480" width="192" height="320"/>
   <object id="135" type="Collider" x="3040" y="832" width="288" height="64"/>
   <object id="136" type="Collider" x="1856" y="832" width="64" height="93"/>
-  <object id="137" type="Level Change" x="6336" y="608" width="63" height="419"/>
+  <object id="137" type="Trigger" x="6336" y="608" width="63" height="419">
+   <properties>
+    <property name="level_change" type="bool" value="true"/>
+   </properties>
+  </object>
   <object id="217" type="Collider" x="2304" y="1120" width="64" height="64"/>
   <object id="218" type="Collider" x="1984" y="1088" width="64" height="64"/>
   <object id="219" type="Death" x="928" y="1248" width="224" height="32"/>
@@ -64135,7 +64139,8 @@
   <object id="262" name="Knight" type="Knight" x="1173" y="284" width="26" height="26"/>
   <object id="264" name="Knight" type="Knight" x="797.667" y="592" width="32" height="32"/>
   <object id="266" name="Knight" type="Knight" x="739" y="784.333" width="32" height="32"/>
-  <object id="267" name="Knight" type="Knight" x="174.333" y="786.833" width="32" height="32"/>
+  <object id="267" name="Knight" type="Knight" x="704.333" y="345.833" width="32" height="32"/>
+  <object id="269" name="Bat" type="Bat" x="448" y="768" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="831" y="770.667" width="32" height="32"/>
   <object id="271" name="Trap" type="Trap" x="1233" y="277" width="32" height="32"/>
   <object id="272" name="Trap" type="Trap" x="878" y="596" width="32" height="32"/>
