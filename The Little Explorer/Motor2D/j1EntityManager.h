@@ -63,6 +63,11 @@ private:
 	SDL_Texture* flying_enemy_texture = nullptr;
 
 	//sfx
+
+	j1Player* player;
+	j1WalkingEnemy* walking_enemy;
+	j1FlyingEnemy* flying_enemy;
+
 };
 
 #endif // !_ENTITY_MANAGER_H_
