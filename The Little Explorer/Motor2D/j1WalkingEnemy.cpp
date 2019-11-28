@@ -20,7 +20,13 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	health = App->entities->walking_enemy_health;
 	damage = App->entities->walking_enemy_damage;
 	lastPosition = position;
+
 	animations = App->entities->walking_enemy_animations;
+	//idle.PushBack({ 16,34,27,30 });
+	if (App->entities->walking_enemy_animations.start != nullptr)
+	{
+		idle = *App->entities->walking_enemy_animations.start->data;
+	}
 	flip = SDL_FLIP_HORIZONTAL;
 	current_animation = &idle;
 
@@ -43,7 +49,6 @@ j1WalkingEnemy::~j1WalkingEnemy() {
 bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
-
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
 	{
@@ -109,10 +114,10 @@ bool j1WalkingEnemy::Update(float dt) {
 		current_animation = &idle;
 		break;
 	case JUMP:
-		current_animation = &jump;
+		//current_animation = &jump;
 		break;
 	case RUN_FORWARD:
-		//current_animation = &run;
+		current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_NONE;
 		break;
@@ -122,13 +127,13 @@ bool j1WalkingEnemy::Update(float dt) {
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
 	case FALL:
-		current_animation = &fall;
+		//current_animation = &fall;
 		break;
 	case ATTACK:
-		current_animation = &attack;
+		//current_animation = &attack;
 		break;
 	case DIE:
-		current_animation = &die;
+		//current_animation = &die;
 		break;
 	default:
 		break;

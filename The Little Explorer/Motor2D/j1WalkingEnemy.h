@@ -18,8 +18,6 @@ public:
 	bool Save(pugi::xml_node& data) const { return true; }
 	bool Load(pugi::xml_node& data) { return true; }
 
-	bool LoadAnimations() { return true; }
-
 private:
 	//int path_minimum = 100;
 	//int path_maximum = 125;
