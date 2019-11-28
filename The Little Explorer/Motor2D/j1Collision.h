@@ -13,7 +13,7 @@ enum COLLIDER_TYPE
 	COLLIDER_WALL,
 	COLLIDER_DEATH,
 	COLLIDER_PLATFORM,
-	COLLIDER_CHANGE_LEVEL,
+	TRIGGER,
 	COLLIDER_ENEMY,
 	COLLIDER_MAX,
 };
@@ -24,6 +24,7 @@ struct Collider
 	bool to_delete = false;
 	COLLIDER_TYPE type;
 	j1Module* callback = nullptr;
+	bool level_change = false;
 
 	Collider() {}
 

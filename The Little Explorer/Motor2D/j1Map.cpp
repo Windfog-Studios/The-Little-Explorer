@@ -517,9 +517,15 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 					objectgroup->object[i].type = ObjectType::COLLIDER;
 				}
 
-				if (type == "Level Change") {
-					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_CHANGE_LEVEL);
+				if (type == "Trigger") {
+					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, TRIGGER);
 					objectgroup->object[i].type = ObjectType::COLLIDER;
+					if (object_node.child("properties").child("property").attribute("name").as_string() == "level_change")
+					{
+						if (object_node.child("properties").child("property").attribute("value").as_string() == "true") {
+							objectgroup->object[i].collider->level_change = true;
+						}
+					}
 				}
 
 				if (type == "Player") {
