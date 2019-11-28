@@ -79,7 +79,7 @@ Artist: http://www.vittoriocazzadore.it/
 ## Innovation
 
 - The player can double jump.
-- All player animations coordinates are loaded from an xml file.
+- All player animations coordinates are loaded from a tmx file.
 - When double jumping, the player leaves particles behind him.
 - When changing between levels a transition animation is done.
 - Colliders are made of objectgroups instead of tiles.

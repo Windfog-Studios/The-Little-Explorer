@@ -82,6 +82,7 @@ bool j1Entity::LoadAnimations(const char* path) {
 
 	pugi::xml_document animation_file;
 	pugi::xml_parse_result result = animation_file.load_file(file.GetString());
+	p2SString image(animation_file.child("tileset").child("image").attribute("source").as_string());
 
 	if (result == NULL)
 	{
@@ -112,21 +113,26 @@ bool j1Entity::LoadAnimations(const char* path) {
 
 		if (animation_name == "idle") 
 			animations.add(&idle);
-		if (animation_name == "walk") animations.add(&walk);
-		if (animation_name == "slide") animations.add(&slide);
-		if (animation_name == "run") animations.add(&run);
-		if (animation_name == "crouch") animations.add(&crouch);
-		if (animation_name == "jump") animations.add(&jump);
+		if (animation_name == "walk")
+			animations.add(&walk);
+		if (animation_name == "slide") 
+			animations.add(&slide);
+		if (animation_name == "run") 
+			animations.add(&run);
+		if (animation_name == "crouch") 
+			animations.add(&crouch);
+		if (animation_name == "jump") 
+			animations.add(&jump);
 
 		id = animation.attribute("id").as_int();
 
 		item_animation = animations.end;
 		while (frame != nullptr) {
 			tile_id = frame.attribute("tileid").as_int();
-			speed = frame.attribute("duration").as_int() * 0.5f;
-			rect.x = rect.w * ((tile_id - id) % columns);
+			speed = frame.attribute("duration").as_int() * 0.01f;
+			rect.x = rect.w * ((tile_id) % columns);
 			rect.y = rect.h * ((tile_id) / columns);
-			item_animation->data->PushBack(rect, speed);
+			item_animation->data->PushBack(rect, 0.05f);
 			frame = frame.next_sibling();
 		}
 

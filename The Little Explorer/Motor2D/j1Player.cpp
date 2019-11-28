@@ -48,7 +48,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 
 	//colliders
-	collider = App->collision->AddCollider(SDL_Rect{ 0,0,32,64 }, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
+	collider = App->collision->AddCollider(SDL_Rect{0,0,32,64}, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
 	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player);
 
 	return ret;
