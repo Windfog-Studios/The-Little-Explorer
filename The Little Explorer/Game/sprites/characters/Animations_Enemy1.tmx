@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="sheet_hero_idle" tilewidth="64" tileheight="64" tilecount="64" columns="8">
   <image source="sheet_hero_idle.png" width="512" height="512"/>
   <tile id="0">
+   <properties>
+    <property name="idle" value=""/>
+   </properties>
    <animation>
     <frame tileid="0" duration="100"/>
     <frame tileid="1" duration="100"/>
@@ -15,6 +18,9 @@
    </animation>
   </tile>
   <tile id="8">
+   <properties>
+    <property name="attack" value=""/>
+   </properties>
    <animation>
     <frame tileid="8" duration="100"/>
     <frame tileid="9" duration="100"/>

@@ -44,7 +44,8 @@ public:
 	virtual void DestroyEntity(j1Entity* delete_entity);
 	void DestroyAllEntities();
 
-	void LoadTextures();
+	void LoadEnemiesInfo();
+
 public:
 
 	p2List<j1Entity*> entities;
@@ -78,14 +79,12 @@ public:
 	uint walking_enemy_attack_fx;
 	uint flying_enemy_attack_fx;
 
-
-	j1WalkingEnemy* walking_enemy;
-	j1FlyingEnemy* flying_enemy;
-	j1Trap* trap;
-
 	uint walking_enemy_die_fx;
 	uint flying_enemy_die_fx;
 
+	//animations
+	p2List<Animation*> walking_enemy_animations;
+	p2List<Animation*> flying_enemy_animations;
 
 };
 

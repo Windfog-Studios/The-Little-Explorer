@@ -75,7 +75,7 @@ void j1Entity::PathfindtoPlayer(int range, j1Entity* player) {
 
 }
 
-bool j1Entity::LoadAnimations(const char* path) {
+bool j1Entity::LoadAnimations(const char* path, p2List<Animation*>& animation_list) {
 	bool ret = true;
 
 	p2SString file("sprites/characters/%s", path);
@@ -112,28 +112,31 @@ bool j1Entity::LoadAnimations(const char* path) {
 		p2SString animation_name(animation.child("properties").child("property").attribute("name").as_string());
 
 		if (animation_name == "idle") 
-			animations.add(&idle);
+			animation_list.add(&idle);
 		if (animation_name == "walk")
-			animations.add(&walk);
+			animation_list.add(&walk);
 		if (animation_name == "slide") 
-			animations.add(&slide);
+			animation_list.add(&slide);
 		if (animation_name == "run") 
-			animations.add(&run);
+			animation_list.add(&run);
 		if (animation_name == "crouch_down") 
-			animations.add(&crouch_down);
+			animation_list.add(&crouch_down);
 		if (animation_name == "crouch_up")
-			animations.add(&crouch_up);
+			animation_list.add(&crouch_up);
 		if (animation_name == "jump") 
-			animations.add(&jump);
+			animation_list.add(&jump);
 		if (animation_name == "fall")
-			animations.add(&fall);
+			animation_list.add(&fall);
+		if (animation_name == "attack")
+			animation_list.add(&attack);
 
 		id = animation.attribute("id").as_int();
 
-		item_animation = animations.end;
+		item_animation = animation_list.end;
+
 		while (frame != nullptr) {
 			tile_id = frame.attribute("tileid").as_int();
-			speed = frame.attribute("duration").as_int() * 0.01f;
+			speed = frame.attribute("duration").as_int() * 0.001f;
 			rect.x = rect.w * ((tile_id) % columns);
 			rect.y = rect.h * ((tile_id) / columns);
 			item_animation->data->PushBack(rect, speed);

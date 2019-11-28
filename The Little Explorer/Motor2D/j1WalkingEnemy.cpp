@@ -12,11 +12,6 @@
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
 	
-	//animations
-	current_animation = &idle;
-	idle.PushBack({ 16,34,27,30 });
-	flip = SDL_FLIP_HORIZONTAL;
-
 	//variable declaration from EntityManager
 	player = App->entities->player;
 	gravity = App->entities->gravity;
@@ -25,6 +20,9 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	health = App->entities->walking_enemy_health;
 	damage = App->entities->walking_enemy_damage;
 	lastPosition = position;
+	animations = App->entities->walking_enemy_animations;
+	flip = SDL_FLIP_HORIZONTAL;
+	current_animation = &idle;
 
 	//colliders
 	collider = App->collision->AddCollider({ 16,34,27,30 }, COLLIDER_ENEMY, (j1Module*)this);

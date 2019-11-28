@@ -45,7 +45,7 @@ bool j1Scene::Start()
 	camera_frame.y = -App->render->initial_camera_y + camera_frame_y_margin;
 	//initial map
 	//App->map->Load("hello2.tmx");
-	App->entities->LoadTextures();
+	App->entities->LoadEnemiesInfo();
 
 	if (App->map->Load("Level1.tmx") == true)
 	{

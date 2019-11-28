@@ -205,10 +205,18 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 	return ret;
 }
 
-void j1EntityManager::LoadTextures() {
-	walking_enemy_texture = App->tex->Load("sprites/characters/Enemies/knight_spritesheet.png");
+void j1EntityManager::LoadEnemiesInfo() {
+
+	j1Entity* empty_entity = CreateEntity(EntityType::WALKING_ENEMY,0,0);
+
+	walking_enemy_texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
 	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
 	trap_texture = App->tex->Load("sprites/characters/Plant bite anim.png");
+
+	empty_entity->LoadAnimations("Animations_Enemy1.tmx", walking_enemy_animations);
+
+	DestroyEntity(empty_entity);
+	LOG("");
 }
 
 void j1EntityManager::DestroyAllEntities() {
