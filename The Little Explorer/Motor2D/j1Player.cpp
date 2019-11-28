@@ -16,7 +16,7 @@
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	//name.create("player");
-	LoadAnimations();
+	LoadAnimations("Animations_traveller.tmx");
 }
 
 j1Player::~j1Player(){ }
@@ -48,7 +48,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 
 	//colliders
-	collider = App->collision->AddCollider(current_animation->GetCurrentFrame(), COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
+	collider = App->collision->AddCollider(SDL_Rect{ 0,0,32,64 }, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
 	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player);
 
 	return ret;
@@ -56,7 +56,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start(){
 
-	texture = App->tex->Load("sprites/characters/spritesheet_traveler.png");
+	texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
 
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
@@ -411,6 +411,7 @@ void j1Player::MovementControl(float dt) {
 	//LOG("Grounded %i", grounded);
 }
 
+/*
 bool j1Player::LoadAnimations() {
 	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
 	bool ret = true;
@@ -460,6 +461,7 @@ bool j1Player::LoadAnimations() {
 
 	return ret;
 }
+*/
 
 bool j1Player::Save(pugi::xml_node& data) const {
 

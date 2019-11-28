@@ -6,6 +6,7 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "p2Log.h"
 
 j1Entity::j1Entity(EntityType type) : j1EntityManager() {
 }
@@ -72,4 +73,66 @@ void j1Entity::PathfindtoPlayer(int range, j1Entity* player) {
 		}
 	}
 
+}
+
+bool j1Entity::LoadAnimations(const char* path) {
+	bool ret = true;
+
+	p2SString file("sprites/characters/%s", path);
+
+	pugi::xml_document animation_file;
+	pugi::xml_parse_result result = animation_file.load_file(file.GetString());
+
+	if (result == NULL)
+	{
+		LOG("Could not load animation tmx file %s. pugi error: %s", path, result.description());
+		ret = false;
+	}
+
+
+	int tile_width = animation_file.child("map").child("tileset").attribute("tilewidth").as_int();
+	int tile_height = animation_file.child("map").child("tileset").attribute("tileheight").as_int();
+	int columns = animation_file.child("map").child("tileset").attribute("columns").as_int();
+	int firstgid = animation_file.child("map").child("tileset").attribute("firstgid").as_int();
+	int id, tile_id;
+	float speed;
+
+	pugi::xml_node animation = animation_file.child("map").child("tileset").child("tile");
+	pugi::xml_node frame = animation.child("animation").child("frame");
+
+	SDL_Rect rect;
+	rect.w = tile_width;
+	rect.h = tile_height;
+
+	p2List_item<Animation*>* item_animation;
+
+	while (animation != nullptr)
+	{
+		p2SString animation_name(animation.child("properties").child("property").attribute("name").as_string());
+
+		if (animation_name == "idle") 
+			animations.add(&idle);
+		if (animation_name == "walk") animations.add(&walk);
+		if (animation_name == "slide") animations.add(&slide);
+		if (animation_name == "run") animations.add(&run);
+		if (animation_name == "crouch") animations.add(&crouch);
+		if (animation_name == "jump") animations.add(&jump);
+
+		id = animation.attribute("id").as_int();
+
+		item_animation = animations.end;
+		while (frame != nullptr) {
+			tile_id = frame.attribute("tileid").as_int();
+			speed = frame.attribute("duration").as_int() * 0.5f;
+			rect.x = rect.w * ((tile_id - id) % columns);
+			rect.y = rect.h * ((tile_id) / columns);
+			item_animation->data->PushBack(rect, speed);
+			frame = frame.next_sibling();
+		}
+
+		animation = animation.next_sibling();
+		frame = animation.child("animation").child("frame");
+	}
+
+	return ret;
 }

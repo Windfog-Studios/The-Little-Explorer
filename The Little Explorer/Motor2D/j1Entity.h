@@ -40,6 +40,7 @@ public:
 	virtual bool CleanUp() { return true; };
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
 			void PathfindtoPlayer(int range, j1Entity* player);
+			bool LoadAnimations(const char* animation_file);
 
 public: 
 	iPoint position;
@@ -65,6 +66,9 @@ public:
 
 	p2List<Animation*> animations;
 	Animation idle;
+	Animation walk;
+	Animation slide;
+	Animation crouch;
 	Animation jump;
 	Animation run;
 	Animation fall;
