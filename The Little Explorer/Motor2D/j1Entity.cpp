@@ -132,7 +132,7 @@ bool j1Entity::LoadAnimations(const char* path) {
 			speed = frame.attribute("duration").as_int() * 0.01f;
 			rect.x = rect.w * ((tile_id) % columns);
 			rect.y = rect.h * ((tile_id) / columns);
-			item_animation->data->PushBack(rect, 0.05f);
+			item_animation->data->PushBack(rect, speed);
 			frame = frame.next_sibling();
 		}
 
