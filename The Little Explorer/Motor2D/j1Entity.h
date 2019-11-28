@@ -68,7 +68,8 @@ public:
 	Animation idle;
 	Animation walk;
 	Animation slide;
-	Animation crouch;
+	Animation crouch_down;
+	Animation crouch_up;
 	Animation jump;
 	Animation run;
 	Animation fall;
