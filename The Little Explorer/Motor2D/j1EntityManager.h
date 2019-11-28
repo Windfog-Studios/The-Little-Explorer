@@ -9,7 +9,6 @@
 class j1Entity;
 struct SDL_Texture;
 
-
 enum class EntityType
 {
 	PLAYER,
@@ -19,7 +18,6 @@ enum class EntityType
 	PARTICLES,
 	UNKNOWN
 };
-
 
 class j1EntityManager : public j1Module
 {

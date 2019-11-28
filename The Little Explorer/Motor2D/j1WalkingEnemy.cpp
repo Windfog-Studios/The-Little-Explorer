@@ -11,7 +11,7 @@
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
-	
+
 	//animations
 	current_animation = &idle;
 	idle.PushBack({ 16,34,27,30 });

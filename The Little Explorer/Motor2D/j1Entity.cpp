@@ -119,14 +119,10 @@ bool j1Entity::LoadAnimations(const char* path) {
 			animations.add(&slide);
 		if (animation_name == "run") 
 			animations.add(&run);
-		if (animation_name == "crouch_down") 
-			animations.add(&crouch_down);
-		if (animation_name == "crouch_up")
-			animations.add(&crouch_up);
+		if (animation_name == "crouch") 
+			animations.add(&crouch);
 		if (animation_name == "jump") 
 			animations.add(&jump);
-		if (animation_name == "fall")
-			animations.add(&fall);
 
 		id = animation.attribute("id").as_int();
 

@@ -4,17 +4,18 @@
 	<window />
 	<textures />
 	<audio />
-	<scene>
-		<camera_frame x="396" y="659" />
-		<level number="1" />
-	</scene>
 	<map />
-	<entities />
+	<scene>
+		<camera_limits x="1564" y="283" />
+		<level number="2" />
+	</scene>
+	<player>
+		<position x="1711" y="392" />
+	</player>
 	<particles />
 	<:anonymous />
 	<ui />
-	<pathfinding />
 	<renderer>
-		<camera x="-96" y="-484" />
+		<camera x="-1264" y="-108" />
 	</renderer>
 </game_state>
