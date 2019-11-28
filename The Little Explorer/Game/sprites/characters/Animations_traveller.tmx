@@ -82,17 +82,17 @@
     <property name="jump" value=""/>
    </properties>
    <animation>
-    <frame tileid="70" duration="1"/>
-    <frame tileid="71" duration="1"/>
-    <frame tileid="72" duration="10"/>
-    <frame tileid="73" duration="10"/>
-    <frame tileid="74" duration="10"/>
-    <frame tileid="75" duration="10"/>
-    <frame tileid="76" duration="10"/>
-    <frame tileid="77" duration="10"/>
-    <frame tileid="78" duration="10"/>
-    <frame tileid="80" duration="10"/>
-    <frame tileid="81" duration="10"/>
+    <frame tileid="70" duration="20"/>
+    <frame tileid="71" duration="20"/>
+    <frame tileid="72" duration="20"/>
+    <frame tileid="73" duration="20"/>
+    <frame tileid="74" duration="20"/>
+    <frame tileid="75" duration="20"/>
+    <frame tileid="76" duration="20"/>
+    <frame tileid="77" duration="20"/>
+    <frame tileid="78" duration="20"/>
+    <frame tileid="80" duration="20"/>
+    <frame tileid="81" duration="20"/>
    </animation>
   </tile>
   <tile id="82">
