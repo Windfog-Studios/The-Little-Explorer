@@ -33,13 +33,9 @@ bool j1Map::Awake(pugi::xml_node& config)
 	folder.create(config.child("folder").child_value());
 
 	//level 1 data
-	level_1_player_x = config.child("level1").child("player_position").attribute("x").as_int();
-	level_1_player_y = config.child("level1").child("player_position").attribute("y").as_int();
 	level_1_music = config.child("level1").child("music").attribute("song").as_string();
 
 	//level 2 data
-	level_2_player_x = config.child("level2").child("player_position").attribute("x").as_int();
-	level_2_player_y = config.child("level2").child("player_position").attribute("y").as_int();
 	level_2_music = config.child("level2").child("music").attribute("song").as_string();
 
 	return ret;
@@ -165,12 +161,8 @@ bool j1Map::CleanUp()
 					item3->data->object[i].collider = nullptr;
 				}
 			}
-			else if(item3->data->object->type == ObjectType::ENEMY)
-			{
-				App->entities->DestroyEntity(item3->data->object[i].entity);
-			}
-
 		}
+		App->entities->DestroyAllEntities();
 		//delete[] item3->data->collider;
 		RELEASE(item3->data);
 		item3 = item3->next;
@@ -202,14 +194,10 @@ bool j1Map::Load(const char* file_name)
 
 	if (file_name == "Level1.tmx") {
 		App->scene->current_level = LEVEL_1;
-		App->scene->player_x_position = level_1_player_x;
-		App->scene->player_y_position = level_1_player_y;
 		App->audio->PlayMusic(level_1_music.GetString());
 	}
 	if (file_name == "Level2.tmx") {
 		App->scene->current_level = LEVEL_2; 
-		App->scene->player_x_position = level_2_player_x;
-		App->scene->player_y_position = level_2_player_y;
 		App->audio->PlayMusic(level_2_music.GetString());
 	}
 
@@ -218,12 +206,6 @@ bool j1Map::Load(const char* file_name)
 	{
 		ret = LoadMap();
 	}
-
-	//load map's player info
-
-	data.player_initial_x = map_file.child("map").child("player").child("position").attribute("x").as_int();
-	data.player_initial_y = map_file.child("map").child("player").child("position").attribute("y").as_int();
-	LOG("Player position x: %i y: %i", data.player_initial_x, data.player_initial_y);
 
 	// Load all tilesets info ----------------------------------------------
 	pugi::xml_node tileset;
@@ -538,6 +520,11 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				if (type == "Level Change") {
 					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, COLLIDER_CHANGE_LEVEL);
 					objectgroup->object[i].type = ObjectType::COLLIDER;
+				}
+
+				if (type == "Player") {
+					App->entities->player->position.x = App->scene->player_x_position = objectgroup->object[i].rect.x;
+					App->entities->player->position.y = App->scene->player_y_position = objectgroup->object[i].rect.y;
 				}
 
 				if (type == "Knight") {

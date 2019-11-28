@@ -198,3 +198,12 @@ void j1EntityManager::LoadTextures() {
 	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
 	trap_texture = App->tex->Load("sprites/characters/Plant bite anim.png");
 }
+
+void j1EntityManager::DestroyAllEntities() {
+	p2List_item<j1Entity*>* item;
+
+	for (item = entities.start; item != nullptr; item = item->next)
+	{
+		DestroyEntity(item->data);
+	}
+}
