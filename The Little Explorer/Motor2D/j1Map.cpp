@@ -520,11 +520,16 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				if (type == "Trigger") {
 					objectgroup->object[i].collider = App->collision->AddCollider(objectgroup->object[i].rect, TRIGGER);
 					objectgroup->object[i].type = ObjectType::COLLIDER;
-					if (object_node.child("properties").child("property").attribute("name").as_string() == "level_change")
-					{
-						if (object_node.child("properties").child("property").attribute("value").as_string() == "true") {
-							objectgroup->object[i].collider->level_change = true;
+					pugi::xml_node property_node = object_node.child("properties").child("property");
+					while (property_node != nullptr) {
+						p2SString property(property_node.attribute("name").as_string());
+						if (property == "level_change")
+						{
+							if (property_node.attribute("value").as_int() == 1) {
+								objectgroup->object[i].collider->level_change = true;
+							}
 						}
+						property_node = property_node.next_sibling("property");
 					}
 				}
 

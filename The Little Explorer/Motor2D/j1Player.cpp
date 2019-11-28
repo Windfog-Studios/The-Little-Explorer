@@ -553,7 +553,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			break;
 		case TRIGGER:
-			if (App->ui->transition == false)
+			if ((App->ui->transition == false)&&(c2->level_change))
 			{
 				if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
 				if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
