@@ -10,6 +10,7 @@
 #define INVALID_WALK_CODE 255
 #define NORMAL_MOVEMENT_COST 1
 #define DIAGONAL_MOVEMENT_COST 2
+#define MAX_PATH_ITERATIONS 50
 
 class j1PathFinding : public j1Module
 {
