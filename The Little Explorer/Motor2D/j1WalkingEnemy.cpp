@@ -27,6 +27,9 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	{
 		idle = *App->entities->walking_enemy_animations.start->data;
 	}
+
+	//animations = App->entities->walking_enemy_animations;
+
 	flip = SDL_FLIP_HORIZONTAL;
 	current_animation = &idle;
 
