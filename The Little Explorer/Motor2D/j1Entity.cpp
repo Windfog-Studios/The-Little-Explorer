@@ -75,7 +75,7 @@ void j1Entity::PathfindtoPlayer(int range, j1Entity* player) {
 
 }
 
-bool j1Entity::LoadAnimations(const char* path, p2List<Animation*>& animation_list) {
+bool j1Entity::LoadAnimations(const char* path) {
 	bool ret = true;
 
 	p2SString file("sprites/characters/%s", path);
@@ -112,27 +112,27 @@ bool j1Entity::LoadAnimations(const char* path, p2List<Animation*>& animation_li
 		p2SString animation_name(animation.child("properties").child("property").attribute("name").as_string());
 
 		if (animation_name == "idle") 
-			animation_list.add(&idle);
+			animations.add(&idle);
 		if (animation_name == "walk")
-			animation_list.add(&walk);
+			animations.add(&walk);
 		if (animation_name == "slide") 
-			animation_list.add(&slide);
+			animations.add(&slide);
 		if (animation_name == "run") 
-			animation_list.add(&run);
+			animations.add(&run);
 		if (animation_name == "crouch_down") 
-			animation_list.add(&crouch_down);
+			animations.add(&crouch_down);
 		if (animation_name == "crouch_up")
-			animation_list.add(&crouch_up);
+			animations.add(&crouch_up);
 		if (animation_name == "jump") 
-			animation_list.add(&jump);
+			animations.add(&jump);
 		if (animation_name == "fall")
-			animation_list.add(&fall);
+			animations.add(&fall);
 		if (animation_name == "attack")
-			animation_list.add(&attack);
+			animations.add(&attack);
 
 		id = animation.attribute("id").as_int();
 
-		item_animation = animation_list.end;
+		item_animation = animations.end;
 
 		while (frame != nullptr) {
 			tile_id = frame.attribute("tileid").as_int();

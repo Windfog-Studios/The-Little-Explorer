@@ -44,8 +44,6 @@ public:
 	virtual void DestroyEntity(j1Entity* delete_entity);
 	void DestroyAllEntities();
 
-	void LoadEnemiesInfo();
-
 public:
 
 	p2List<j1Entity*> entities;
@@ -59,23 +57,13 @@ public:
 	j1WalkingEnemy* reference_walking_enemy = nullptr;
 	j1FlyingEnemy* reference_flying_enemy = nullptr;
 
-	//speed
-	int walking_enemy_speed = 0;
-	int flying_enemy_speed;
-
 	//health
-	int walking_enemy_health = 0;
-	int flying_enemy_health = 0;
 	int trap_health = 0;
 
 	//damage
-	int walking_enemy_damage = 0;
-	int flying_enemy_damage = 0;
 	int trap_damage = 0;
 
 	//textures
-	SDL_Texture* walking_enemy_texture = nullptr;
-	SDL_Texture* flying_enemy_texture = nullptr;
 	SDL_Texture* trap_texture = nullptr;
 
 	//sfx
@@ -85,9 +73,6 @@ public:
 	uint walking_enemy_die_fx;
 	uint flying_enemy_die_fx;
 
-	//animations
-	p2List<Animation*> walking_enemy_animations;
-	p2List<Animation*> flying_enemy_animations;
 
 };
 

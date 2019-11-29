@@ -40,7 +40,7 @@ public:
 	virtual bool CleanUp() { return true; };
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
 			void PathfindtoPlayer(int range, j1Entity* player);
-			bool LoadAnimations(const char* animation_file, p2List<Animation*>& animation_list);
+			bool LoadAnimations(const char* animation_file);
 
 public: 
 	iPoint position;

@@ -90,16 +90,6 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 
 	gravity = config.child("gravity").attribute("value").as_int();
 
-	//load walking enemy data
-	walking_enemy_speed = config.child("walking_enemy").child("running_speed").attribute("value").as_int();
-	walking_enemy_health = config.child("walking_enemy").child("health").attribute("value").as_int();
-	walking_enemy_damage = config.child("walking_enemy").child("damage").attribute("value").as_int();
-
-	//flying enemy data
-	flying_enemy_speed = config.child("flying_enemy").child("flying_speed").attribute("value").as_int();
-	flying_enemy_health = config.child("flying_enemy").child("health").attribute("value").as_int();
-	flying_enemy_damage = config.child("flying_enemy").child("damage").attribute("value").as_int();
-
 	//player creation
 	player = new j1Player();
 	player->Awake(config.child("player"));
@@ -107,8 +97,11 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 
 	//reference walking enemy
 	reference_walking_enemy = new j1WalkingEnemy();
+	reference_walking_enemy->Awake(config.child("walking_enemy"));
 
 	//reference flying enemy
+	reference_flying_enemy = new j1FlyingEnemy();
+	reference_flying_enemy->Awake(config.child("flying_enemy"));
 
 	return ret;
 }
@@ -116,21 +109,42 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 bool j1EntityManager::Start()
 {
 	bool ret = true;
+
 	player->Start();
+	reference_walking_enemy->texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
+	reference_flying_enemy->texture = App->tex->Load("sprites/characters/Sprite_bat.png");
+
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		if (entity->data->type == EntityType::WALKING_ENEMY){
+			entity->data->texture = reference_walking_enemy->texture;}
+		if (entity->data->type == EntityType::FLYING_ENEMY){
+			entity->data->texture = reference_flying_enemy->texture; }
+	}
+
 	return ret;
 }
 
 bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
+	/*
 	App->tex->UnLoad(walking_enemy_texture);
 	walking_enemy_texture = nullptr;
 
 	App->tex->UnLoad(flying_enemy_texture);
 	flying_enemy_texture = nullptr;
+	*/
 
 	App->tex->UnLoad(trap_texture);
 	trap_texture = nullptr;
+
+
+	App->tex->UnLoad(reference_walking_enemy->texture);
+	reference_walking_enemy->texture = nullptr;
+
+	App->tex->UnLoad(reference_flying_enemy->texture);
+	reference_flying_enemy->texture = nullptr;
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
@@ -208,20 +222,6 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 	}
 	
 	return ret;
-}
-
-void j1EntityManager::LoadEnemiesInfo() {
-
-	j1Entity* empty_entity = CreateEntity(EntityType::WALKING_ENEMY,0,0);
-
-	walking_enemy_texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
-	flying_enemy_texture = App->tex->Load("sprites/characters/Sprite_bat.png");
-	trap_texture = App->tex->Load("sprites/characters/Plant bite anim.png");
-
-	empty_entity->LoadAnimations("Animations_Enemy1.tmx", walking_enemy_animations);
-
-	DestroyEntity(empty_entity);
-	LOG("");
 }
 
 void j1EntityManager::DestroyAllEntities() {

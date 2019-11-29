@@ -9,18 +9,37 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 
-j1WalkingEnemy::j1WalkingEnemy(bool reference_walking_enemy) :j1Entity(EntityType::WALKING_ENEMY) {
+j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
 	
 	//variable declaration from EntityManager
 	player = App->entities->player;
 	gravity = App->entities->gravity;
-	speed.x = App->entities->walking_enemy_speed;
-	texture = App->entities->walking_enemy_texture;
-	health = App->entities->walking_enemy_health;
-	damage = App->entities->walking_enemy_damage;
+	type = EntityType::WALKING_ENEMY;
+
+	if (App->entities->reference_walking_enemy != nullptr)
+	{
+		speed = App->entities->reference_walking_enemy->speed;
+		health = App->entities->reference_walking_enemy->health;
+		damage = App->entities->reference_walking_enemy->damage;
+
+		animations = App->entities->reference_walking_enemy->animations;
+		idle = *animations.start->data;
+		attack = *animations.start->next->data;
+		run = *animations.end->data;
+		//run = animations
+		/*
+		p2List_item<Animation*>* animation = animations.start;
+		for (p2List_item<Animation*>* item = App->entities->reference_walking_enemy->animations.start; item != nullptr; item = item->next)
+		{
+			animations.add(item->data);
+		}
+		*/
+	}
+
 	lastPosition = position;
 
+	/*
 	animations = App->entities->walking_enemy_animations;
 	//idle.PushBack({ 16,34,27,30 });
 	if (App->entities->walking_enemy_animations.start != nullptr)
@@ -29,9 +48,9 @@ j1WalkingEnemy::j1WalkingEnemy(bool reference_walking_enemy) :j1Entity(EntityTyp
 	}
 
 	//animations = App->entities->walking_enemy_animations;
+	*/
 
 	flip = SDL_FLIP_HORIZONTAL;
-	current_animation = &idle;
 
 	//colliders
 	collider = App->collision->AddCollider({ 16,34,27,30 }, COLLIDER_ENEMY, (j1Module*)this);
@@ -47,6 +66,18 @@ j1WalkingEnemy::~j1WalkingEnemy() {
 	raycast->to_delete = true;
 	raycast = nullptr;
 	*/
+}
+
+bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
+	bool ret = true;
+
+	speed.x = speed.y = config.child("running_speed").attribute("value").as_int();
+	health = config.child("health").attribute("value").as_int();
+	damage = config.child("damage").attribute("value").as_int();
+
+	LoadAnimations("Animations_Enemy1.tmx");
+
+	return ret;
 }
 
 bool j1WalkingEnemy::Update(float dt) {
@@ -112,7 +143,6 @@ bool j1WalkingEnemy::Update(float dt) {
 	//state machine
 	switch (state)
 	{
-		run = idle;
 	case IDLE:
 		current_animation = &idle;
 		break;
@@ -125,7 +155,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		flip = SDL_FLIP_NONE;
 		break;
 	case RUN_BACKWARD:
-		//current_animation = &run;
+		current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
