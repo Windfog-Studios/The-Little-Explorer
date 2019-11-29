@@ -86,7 +86,7 @@ public:
 
 	bool going_after_player = false;
 
-	const p2DynArray<iPoint>* path_to_player;
+	const p2DynArray<iPoint>* path_to_player = nullptr;
 
 };
 #endif // !_j1ENTITY_H

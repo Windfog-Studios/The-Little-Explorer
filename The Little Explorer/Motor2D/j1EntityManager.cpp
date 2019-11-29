@@ -105,6 +105,11 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	player->Awake(config.child("player"));
 	entities.add(player);
 
+	//reference walking enemy
+	reference_walking_enemy = new j1WalkingEnemy();
+
+	//reference flying enemy
+
 	return ret;
 }
 

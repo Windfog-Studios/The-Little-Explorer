@@ -5,7 +5,7 @@
 class j1WalkingEnemy : public j1Entity
 {
 public:
-	j1WalkingEnemy();
+	j1WalkingEnemy(bool reference_walking_enemy = false);
 	virtual ~j1WalkingEnemy();
 
 	bool Update(float dt);

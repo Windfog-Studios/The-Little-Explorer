@@ -9,7 +9,7 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 
-j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
+j1WalkingEnemy::j1WalkingEnemy(bool reference_walking_enemy) :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
 	
 	//variable declaration from EntityManager
