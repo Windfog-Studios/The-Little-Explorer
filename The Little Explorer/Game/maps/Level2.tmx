@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="72">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="73">
  <tileset firstgid="1" name="Castle" tilewidth="32" tileheight="32" tilecount="529" columns="23">
   <image source="tile_castle.png" width="763" height="763"/>
  </tileset>
@@ -64111,5 +64111,6 @@
  </layer>
  <objectgroup id="10" name="Enemies">
   <object id="70" name="Bat" type="Bat" x="288" y="640" width="32" height="32"/>
+  <object id="72" name="Player" type="Player" x="122.667" y="650.667" width="32" height="32"/>
  </objectgroup>
 </map>
