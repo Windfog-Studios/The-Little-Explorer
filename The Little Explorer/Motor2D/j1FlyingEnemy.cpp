@@ -27,8 +27,17 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		speed = App->entities->reference_flying_enemy->speed;
 		health = App->entities->reference_flying_enemy->health;
 		damage = App->entities->reference_flying_enemy->damage;
+
 		animations = App->entities->reference_flying_enemy->animations;
+
+		//to be changed
+		/*
+		idle = *animations.start->data;
+		attack = *animations.start->next->data;
+		run = *animations.end->data;
+		*/
 	}
+
 	lastPosition = position;
 
 	//colliders
