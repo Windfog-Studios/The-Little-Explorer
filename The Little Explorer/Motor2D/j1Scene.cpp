@@ -255,7 +255,7 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 	App->map->CleanUp();
 	if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
 	if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
-	ResetLevel();
+	//ResetLevel();
 }
 
 bool j1Scene::Save(pugi::xml_node& data) const {
