@@ -16,7 +16,7 @@
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	//name.create("player");
-	LoadAnimations("Animations_traveller.tmx", animations);
+	LoadAnimations("Animations_traveller.tmx");
 }
 
 j1Player::~j1Player(){ }

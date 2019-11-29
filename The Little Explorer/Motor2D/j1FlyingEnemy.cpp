@@ -11,18 +11,24 @@
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	name.create("flying_enemy");
+	type = EntityType::FLYING_ENEMY;
 
+	
 	//animations
-	texture = App->entities->flying_enemy_texture;
+	//texture = App->entities->flying_enemy_texture;
 	current_animation = &idle;
 	idle.PushBack({ 0,66,45,26 });
 	flip = SDL_FLIP_NONE;
 
 	//variables from EntityManager
 	player = App->entities->player;
-	speed.x = speed.y = App->entities->flying_enemy_speed;
-	health = App->entities->flying_enemy_health;
-	damage = App->entities->flying_enemy_damage;
+	if (App->entities->reference_flying_enemy != nullptr)
+	{
+		speed = App->entities->reference_flying_enemy->speed;
+		health = App->entities->reference_flying_enemy->health;
+		damage = App->entities->reference_flying_enemy->damage;
+		animations = App->entities->reference_flying_enemy->animations;
+	}
 	lastPosition = position;
 
 	//colliders
@@ -40,6 +46,17 @@ j1FlyingEnemy::~j1FlyingEnemy() {
 	raycast = nullptr;
 }
 
+bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
+	bool ret = true;
+
+	speed.x = speed.y = config.child("flying_speed").attribute("value").as_int();
+	health = config.child("health").attribute("value").as_int();
+	damage = config.child("damage").attribute("value").as_int();
+
+	LoadAnimations("Animations_flyingEnemy1");
+
+	return ret;
+}
 
 bool j1FlyingEnemy::Update(float dt) {
 	bool ret = true;
@@ -102,11 +119,13 @@ bool j1FlyingEnemy::Update(float dt) {
 		//current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
+		current_animation = &run;
 		break;
 	case RUN_BACKWARD:
 		//current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_NONE;
+		current_animation = &run;
 		break;
 	case FALL:
 		current_animation = &fall;

@@ -5,9 +5,10 @@
 class j1WalkingEnemy : public j1Entity
 {
 public:
-	j1WalkingEnemy(bool reference_walking_enemy = false);
+	j1WalkingEnemy();
 	virtual ~j1WalkingEnemy();
 
+	bool Awake(pugi::xml_node& config);
 	bool Update(float dt);
 	bool PostUpdate();
 

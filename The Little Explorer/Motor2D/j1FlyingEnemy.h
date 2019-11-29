@@ -9,6 +9,7 @@ public:
 	j1FlyingEnemy();
 	virtual ~j1FlyingEnemy();
 
+	bool Awake(pugi::xml_node& config);
 	bool Update(float dt);
 	bool PostUpdate();
 
@@ -16,8 +17,6 @@ public:
 
 	bool Save(pugi::xml_node& data) const { return true; }
 	bool Load(pugi::xml_node& data) { return true; }
-
-	bool LoadAnimations() { return true; }
 
 };
 

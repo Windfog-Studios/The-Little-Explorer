@@ -41,10 +41,10 @@
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClCompile>
     <ClCompile Include="j1Player.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1Entity.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1Map.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
@@ -59,16 +59,16 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1EntityManager.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1FlyingEnemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1WalkingEnemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1Trap.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +136,10 @@
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClInclude>
     <ClInclude Include="j1Player.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Entity.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Map.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
@@ -154,16 +154,16 @@
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1EntityManager.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1WalkingEnemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1FlyingEnemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1Trap.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +188,7 @@
     <Filter Include="Desenvolupament  ========\Modules\Bases">
       <UniqueIdentifier>{1445edbd-6d6b-461e-a7be-18ffc92b134e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities">
+    <Filter Include="Desenvolupament  ========\Entities">
       <UniqueIdentifier>{4f434b92-82c7-449f-9eee-0d5f29879820}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
