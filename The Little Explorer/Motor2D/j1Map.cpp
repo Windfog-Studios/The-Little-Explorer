@@ -537,6 +537,11 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 								objectgroup->object[i].collider->level_change = true;
 							}
 						}
+						if (property == "Checkpoint") {
+							if (property_node.attribute("value").as_int() == 1) {
+								objectgroup->object[i].collider->isCheckpoint = true;
+							}
+						}
 						property_node = property_node.next_sibling("property");
 					}
 				}

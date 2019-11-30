@@ -565,6 +565,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				App->ui->ResetTransition();
 				controls_blocked = true;
 			}
+			if (c2->isCheckpoint) {
+				if (!c2->checkpoint_tiggered){
+					App->entities->CheckPointSave();
+				}
+				c2->checkpoint_tiggered = true;
+			}
+
 			break;
 		case COLLIDER_ENEMY:
 			if(!god){

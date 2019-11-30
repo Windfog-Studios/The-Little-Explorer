@@ -25,6 +25,8 @@ struct Collider
 	COLLIDER_TYPE type;
 	j1Module* callback = nullptr;
 	bool level_change = false;
+	bool checkpoint_tiggered = false;
+	bool isCheckpoint = false;
 
 	Collider() {}
 
