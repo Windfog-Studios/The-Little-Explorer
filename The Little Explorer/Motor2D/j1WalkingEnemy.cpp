@@ -133,6 +133,11 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 	}
 
+	if ((attack_collider != nullptr) && (state != ATTACK)) {
+		attack_collider->to_delete;
+		attack_collider = nullptr;
+	}
+
 	//state machine
 	switch (state)
 	{
@@ -226,11 +231,6 @@ bool j1WalkingEnemy::Update(float dt) {
 	{
 		position.x += current_speed.x * dt;
 	}
-
-	
-	//raycast control
-	if ((raycast != nullptr)&&(collider != nullptr)) 
-		//raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
 
 	return ret;
 }

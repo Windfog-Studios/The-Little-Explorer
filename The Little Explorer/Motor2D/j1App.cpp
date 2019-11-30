@@ -364,8 +364,8 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 	// need to add functionality to file_system module for this to work
 }
 
-bool j1App::LoadGameNow()
-{
+bool j1App::LoadGameNow(){
+	BROFILER_CATEGORY("LoadAll", Profiler::Color::MediumPurple)
 	bool ret = false;
 
 	pugi::xml_document data;
@@ -401,8 +401,8 @@ bool j1App::LoadGameNow()
 	return ret;
 }
 
-bool j1App::SavegameNow() const
-{
+bool j1App::SavegameNow() const {
+	BROFILER_CATEGORY("SaveAll", Profiler::Color::GreenYellow)
 	bool ret = true;
 
 	LOG("Saving Game State to %s...", save_game.GetString());

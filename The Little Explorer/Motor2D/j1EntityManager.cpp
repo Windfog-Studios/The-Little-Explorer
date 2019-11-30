@@ -26,8 +26,8 @@ j1EntityManager::j1EntityManager(){
 j1EntityManager::~j1EntityManager(){
 }
 
-j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int position_y)
-{
+j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int position_y){
+	BROFILER_CATEGORY("EntityCreation", Profiler::Color::Linen)
 	//static_assert(EntityType::UNKNOWN == 4, "code needs update");
 	j1Entity* entity = nullptr;
 	switch (type)
@@ -63,8 +63,8 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	return entity;
 }
 
-void j1EntityManager::DestroyEntity(j1Entity* entity)
-{
+void j1EntityManager::DestroyEntity(j1Entity* entity){
+	BROFILER_CATEGORY("EntityDestruction", Profiler::Color::Orange)
 	p2List_item<j1Entity*>* item;
 
 	if (entity != nullptr) {
