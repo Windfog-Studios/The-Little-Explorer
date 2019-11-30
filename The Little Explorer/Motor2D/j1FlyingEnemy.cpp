@@ -87,8 +87,7 @@ bool j1FlyingEnemy::Update(float dt) {
 		tile_to_go.x = path_to_player->At(i)->x;
 		tile_to_go.y = path_to_player->At(i)->y;
 
-		if (current_map_position.x == tile_to_go.x)
-		{
+		if (current_map_position.x == tile_to_go.x){
 			i++;
 			if (i > 2) tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 		}
@@ -156,9 +155,7 @@ bool j1FlyingEnemy::Update(float dt) {
 
 bool j1FlyingEnemy::PostUpdate() {
 	bool ret = true;
-
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
-
 	return ret;
 }
 

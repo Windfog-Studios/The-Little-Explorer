@@ -42,7 +42,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 
 	//colliders
 	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
+	raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
@@ -174,6 +174,25 @@ bool j1WalkingEnemy::Update(float dt) {
 		break;
 	default:
 		break;
+	}
+
+	if (last_collider != nullptr)
+	{
+		if (!raycast->CheckCollision(last_collider->rect))
+		{
+			grounded = false;
+			current_speed.x = -current_speed.x;
+			if (lastPosition.x < position.x)
+			{
+				//position.x = lastPosition.x - current_animation->GetCurrentFrame().w;
+				position.x = lastPosition.x;
+			}
+			else
+			{
+				position.x = lastPosition.x;
+			}
+			
+		}
 	}
 
 	//Movement Control
