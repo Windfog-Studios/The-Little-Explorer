@@ -46,6 +46,7 @@ bool j1Scene::Start()
 	//initial map
 	//App->map->Load("hello2.tmx");
 
+	///*
 	if (App->map->Load("Level1.tmx") == true)
 	{
 		int w, h;
@@ -55,8 +56,19 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+	//*/
 
-	//App->map->Load("Level2.tmx");
+	/*
+	if (App->map->Load("Level2.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	*/
 
 	return true;
 }

@@ -71,9 +71,6 @@ void j1UI::LevelTransition(float dt) {
 			right_square.x = -camera->x + camera->w * 0.5f;
 			left_square.y = -camera->y;
 			right_square.y = -camera->y;
-			App->scene->ResetLevel();
-			App->entities->player->state = IDLE;
-			App->entities->player->isVisible = true;
 		}
 		break;
 	case OPEN:
@@ -109,9 +106,11 @@ void j1UI::LevelTransition(float dt) {
 				}
 				else if ((App->scene->current_level == LEVEL_1) && (App->scene->want_to_load == LEVEL_2)) {
 					App->scene->LevelChange(LEVEL_2, LEVEL_1);
+					//App->scene->ResetLevel();
 				}
 				else if ((App->scene->current_level == LEVEL_2) && (App->scene->want_to_load == LEVEL_1)) {
 					App->scene->LevelChange(LEVEL_1, LEVEL_2);
+					//App->scene->ResetLevel();
 				}
 			}
 			loaded = true;

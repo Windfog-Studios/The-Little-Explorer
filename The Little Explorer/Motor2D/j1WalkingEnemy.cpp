@@ -55,6 +55,7 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	speed.x = speed.y = config.child("running_speed").attribute("value").as_int();
 	health = config.child("health").attribute("value").as_int();
 	damage = config.child("damage").attribute("value").as_int();
+	range = config.child("range").attribute("value").as_int();
 
 	LoadAnimations("Animations_Enemy1.tmx");
 
@@ -78,7 +79,7 @@ bool j1WalkingEnemy::Update(float dt) {
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	PathfindtoPlayer(400, player);
+	PathfindtoPlayer(range, player);
 
 	//movement
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))

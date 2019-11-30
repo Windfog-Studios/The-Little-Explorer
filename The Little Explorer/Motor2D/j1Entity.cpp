@@ -8,12 +8,9 @@
 #include "j1Map.h"
 #include "p2Log.h"
 
-j1Entity::j1Entity(EntityType type) : j1EntityManager() {
-}
+j1Entity::j1Entity(EntityType type) : j1EntityManager() {}
 
-j1Entity::~j1Entity() {
-
-}
+j1Entity::~j1Entity() {}
 
 bool j1Entity::Awake(pugi::xml_node& config) {
 	

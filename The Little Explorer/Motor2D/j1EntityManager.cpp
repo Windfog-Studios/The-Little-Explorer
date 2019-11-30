@@ -82,6 +82,17 @@ void j1EntityManager::DestroyEntity(j1Entity* entity)
 	}
 }
 
+void j1EntityManager::DestroyAllEntities() {
+	p2List_item<j1Entity*>* item;
+
+	for (item = entities.start; item != nullptr; item = item->next)
+	{
+		if (item->data != player) {
+			DestroyEntity(item->data);
+		}
+	}
+	LOG("");
+}
 
 bool j1EntityManager::Awake(pugi::xml_node& config){
 	bool ret = true;
@@ -222,15 +233,4 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 	}
 	
 	return ret;
-}
-
-void j1EntityManager::DestroyAllEntities() {
-	p2List_item<j1Entity*>* item;
-
-	for (item = entities.start; item != nullptr; item = item->next)
-	{
-		if (item->data->type != EntityType::PLAYER) {
-			DestroyEntity(item->data);
-		}
-	}
 }

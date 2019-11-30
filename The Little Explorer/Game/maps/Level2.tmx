@@ -64111,7 +64111,7 @@
   </data>
  </layer>
  <objectgroup name="Enemies">
-  <object id="70" name="Bat" type="Bat" x="288" y="640" width="32" height="32"/>
-  <object id="72" name="Player" type="Player" x="122.667" y="650.667" width="32" height="32"/>
+  <object id="70" name="Bat" type="Bat" x="512" y="608" width="32" height="32"/>
+  <object id="72" name="Player" type="Player" x="128" y="608" width="32" height="32"/>
  </objectgroup>
 </map>

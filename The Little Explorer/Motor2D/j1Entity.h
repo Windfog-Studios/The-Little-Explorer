@@ -52,6 +52,7 @@ public:
 
 	int health = 0;
 	int damage = 0;
+	int range = 0;
 
 	bool grounded = false;
 	int gravity = 0;
