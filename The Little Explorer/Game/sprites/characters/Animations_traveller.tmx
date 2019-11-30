@@ -82,8 +82,8 @@
     <property name="jump" value=""/>
    </properties>
    <animation>
-    <frame tileid="70" duration="10"/>
-    <frame tileid="71" duration="10"/>
+    <frame tileid="70" duration="250"/>
+    <frame tileid="71" duration="250"/>
     <frame tileid="72" duration="100"/>
     <frame tileid="73" duration="100"/>
     <frame tileid="74" duration="100"/>
