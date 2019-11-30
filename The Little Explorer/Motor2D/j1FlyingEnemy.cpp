@@ -75,7 +75,7 @@ bool j1FlyingEnemy::Update(float dt) {
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	PathfindtoPlayer(100, player);
+	PathfindtoPlayer(range, player);
 	
 	//movement
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
@@ -90,12 +90,10 @@ bool j1FlyingEnemy::Update(float dt) {
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			if (i > 2)
-			{
-				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
-			}
+			if (i > 2) tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 		}
 
+		//movement control
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
 			state = EntityState::RUN_BACKWARD;
@@ -121,16 +119,14 @@ bool j1FlyingEnemy::Update(float dt) {
 		current_animation = &idle;
 		break;
 	case RUN_FORWARD:
-		//current_animation = &run;
+		current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
-		//current_animation = &run;
 		break;
 	case RUN_BACKWARD:
-		//current_animation = &run;
+		current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_NONE;
-		//current_animation = &run;
 		break;
 	case ATTACK:
 		current_animation = &attack;
@@ -151,7 +147,7 @@ bool j1FlyingEnemy::Update(float dt) {
 	if (collider != nullptr)
 		collider->SetPos(position.x, position.y);
 	if ((raycast != nullptr) && (collider != nullptr))
-		raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
+		raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h -4);
 
 	return ret;
 }
@@ -160,17 +156,17 @@ bool j1FlyingEnemy::Update(float dt) {
 
 bool j1FlyingEnemy::PostUpdate() {
 	bool ret = true;
+
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
+
 	return ret;
 }
 
 
 void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 
-	if (c1 == raycast)
-	{
+	if (c1 == raycast) 
 		last_collider = c2;
-	}
 
 	switch (c2->type)
 	{
@@ -195,7 +191,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 			position.y = lastPosition.y;
 			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-				//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+			//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			}
 		}
 		break;

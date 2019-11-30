@@ -40,12 +40,15 @@ public:
 	int transition_time = 5;
 	int transition_moment = 0;
 	float transition_speed = 0;
+
 	TransitionDirection direction = CLOSE;
 	SDL_Rect* camera;
 	SDL_Rect left_square;
 	SDL_Rect right_square;
+
 	bool loaded = false;
 	bool transition = false;
+
 	int deltaTime = 0;
 	int time = 0;
 };

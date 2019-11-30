@@ -31,6 +31,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	current_animation = &idle;
 
 	gravity = App->entities->gravity;
+	max_falling_speed = App->entities->max_falling_speed;
 
 	//set initial attributes of the player
 	max_running_speed = config.child("max_running_speed").attribute("value").as_float();
@@ -40,8 +41,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
-
-	max_falling_speed = config.child("max_falling_speed").attribute("value").as_float();
 
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
@@ -107,31 +106,18 @@ bool j1Player::PreUpdate(){
 			{
 				can_double_jump = true;
 
-				if (player_input.pressing_D)
-				{
-					state = RUN_FORWARD;
-				}
+				if (player_input.pressing_D) state = RUN_FORWARD;
 
-				if (player_input.pressing_A)
-				{
-					state = RUN_BACKWARD;
-				}
-
-				if (player_input.pressing_S)
-				{
-					state = CROUCH_DOWN;
-				}
+				if (player_input.pressing_A) state = RUN_BACKWARD;
+		
+				if (player_input.pressing_S) state = CROUCH_DOWN;
 
 				if (player_input.pressing_F)
 				{
 					if (flip == SDL_FLIP_NONE)
-					{
-						state = SLIDE_FORWARD;
-					}
+					{state = SLIDE_FORWARD;}
 					else
-					{
-						state = SLIDE_BACKWARD;
-					}
+					{state = SLIDE_BACKWARD;}
 				}
 
 				if ((player_input.pressing_space) && (!god))
@@ -154,10 +140,7 @@ bool j1Player::PreUpdate(){
 					}
 				}
 
-				if (!player_input.pressing_D)
-				{
-					state = IDLE;
-				}
+				if (!player_input.pressing_D) state = IDLE;
 
 				if ((player_input.pressing_space) && (!god))
 				{
@@ -167,10 +150,7 @@ bool j1Player::PreUpdate(){
 					grounded = false;
 				}
 
-				if (player_input.pressing_F)
-				{
-					state = SLIDE_FORWARD;
-				}
+				if (player_input.pressing_F) state = SLIDE_FORWARD;
 			}
 
 			if (state == RUN_BACKWARD)
@@ -183,10 +163,7 @@ bool j1Player::PreUpdate(){
 					}
 				}
 
-				if (!player_input.pressing_A)
-				{
-					state = IDLE;
-				}
+				if (!player_input.pressing_A) state = IDLE;
 
 				if ((player_input.pressing_space)&&(!god))
 				{
@@ -196,10 +173,7 @@ bool j1Player::PreUpdate(){
 					grounded = false;
 				}
 
-				if (player_input.pressing_F)
-				{
-					state = SLIDE_BACKWARD;
-				}
+				if (player_input.pressing_F) state = SLIDE_BACKWARD;
 			}
 
 
@@ -222,18 +196,12 @@ bool j1Player::PreUpdate(){
 
 			if (state == SLIDE_FORWARD)
 			{
-				if (!player_input.pressing_F)
-				{
-					state = IDLE;
-				}
+				if (!player_input.pressing_F) state = IDLE;
 			}
 
 			if (state == SLIDE_BACKWARD)
 			{
-				if (!player_input.pressing_F)
-				{
-					state = IDLE;
-				}
+				if (!player_input.pressing_F) state = IDLE;
 			}
 
 			if (state == JUMP)
@@ -274,10 +242,7 @@ bool j1Player::PreUpdate(){
 					App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
 				}
 
-				if (current_animation->Finished())
-				{
-					fall.Reset();
-				}
+				if (current_animation->Finished()) fall.Reset();
 			}
 			if (state == DIE)
 			{
@@ -567,20 +532,24 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			break;
 		case COLLIDER_ENEMY:
-			isVisible = false;
-			if (!particles_created) {
- 				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
-				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
+			/*
+			if(!god){
+			  isVisible = false;
+				if (!particles_created) {
+ 					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
+				}
+				if (App->ui->transition == false){
+					App->audio->PlayFx(die_fx);
+					App->ui->transition = true;
+					App->scene->blocked_camera = true;
+					App->ui->ResetTransition();
+					App->scene->Reset_Camera(1);
+					controls_blocked = true;
+				}
 			}
-			if (App->ui->transition == false){
-				App->audio->PlayFx(die_fx);
-				App->ui->transition = true;
-				App->scene->blocked_camera = true;
-				App->ui->ResetTransition();
-				App->scene->Reset_Camera(1);
-				controls_blocked = true;
-			}
+			*/
 			break;
 		default:
 			break;

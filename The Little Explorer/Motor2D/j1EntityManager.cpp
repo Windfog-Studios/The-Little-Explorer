@@ -100,6 +100,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	config_data = config;
 
 	gravity = config.child("gravity").attribute("value").as_int();
+	max_falling_speed = config.child("max_falling_speed").attribute("value").as_int();
 
 	//player creation
 	player = new j1Player();

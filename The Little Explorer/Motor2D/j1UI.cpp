@@ -80,6 +80,7 @@ void j1UI::LevelTransition(float dt) {
 			right_square.x += transition_speed * dt;
 			App->render->DrawQuad(left_square, 0, 0, 0, 255);
 			App->render->DrawQuad(right_square, 0, 0, 0, 255);
+			App->scene->ResetLevel();
 		}
 		else
 		{
