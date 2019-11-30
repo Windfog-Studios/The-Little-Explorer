@@ -41,7 +41,7 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 
 	//colliders
 	collider = App->collision->AddCollider({ 0,66,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
+	raycast = App->collision->AddCollider({ 16,34,20,40}, COLLIDER_ENEMY, (j1Module*)this);
 }
 
 j1FlyingEnemy::~j1FlyingEnemy() {
@@ -106,7 +106,7 @@ bool j1FlyingEnemy::Update(float dt) {
 			//LOG("Going up");
 			current_speed.y = -speed.y;
 		}
-		if (current_map_position.y < tile_to_go.y) {
+		if ((current_map_position.y < tile_to_go.y)&&(last_collider == nullptr)) {
 			//LOG("Going down");
 			current_speed.y = speed.y;
 		}

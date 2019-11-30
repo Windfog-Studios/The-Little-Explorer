@@ -274,16 +274,25 @@ bool j1Player::Update(float dt){
 	{
 	case IDLE:
 		current_animation = &idle;
+		collider->SetSize(32, 56);
+		if (flip == SDL_FLIP_NONE)
+			collider->SetPos(position.x, position.y + 8);
+		else
+			collider->SetPos(position.x + 32, position.y + 8);
 		break;
 
 	case RUN_FORWARD:
 		current_animation = &run;
 		flip = SDL_FLIP_NONE;
+		collider->SetSize(46, 54);
+			collider->SetPos(position.x, position.y + 10);
 		break;
 
 	case RUN_BACKWARD:
 		current_animation = &run;
 		flip = SDL_FLIP_HORIZONTAL;
+		collider->SetSize(46, 54);
+		collider->SetPos(position.x +18, position.y + 10);
 		break;
 
 	case CROUCH_DOWN:
@@ -306,18 +315,28 @@ bool j1Player::Update(float dt){
 
 	case JUMP:
 		current_animation = &jump;
-		if (current_speed.y <= 0)
-		{
+
+		if (current_speed.y <= 0){
 			state = FALL;
 			jump.Reset();
 		}
-		if ((last_state = RUN_FORWARD)||(last_state == RUN_BACKWARD))
-		{
+		if ((last_state = RUN_FORWARD)||(last_state == RUN_BACKWARD)){
 			current_speed.x *= 0.5f;
 		}
+
+		collider->SetSize(32, 64);
+		if (flip == SDL_FLIP_NONE)
+			collider->SetPos(position.x, position.y);
+		else
+			collider->SetPos(position.x + 32, position.y);
 		break;
 	case FALL:
 		current_animation = &fall;
+		collider->SetSize(50, 64);
+		if (flip == SDL_FLIP_NONE)
+			collider->SetPos(position.x, position.y + 6);
+		else
+			collider->SetPos(position.x + 14, position.y + 6);
 		break;
 	case DIE:
 		break;
