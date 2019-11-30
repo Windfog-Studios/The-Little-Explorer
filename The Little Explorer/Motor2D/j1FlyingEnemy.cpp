@@ -111,6 +111,12 @@ bool j1FlyingEnemy::Update(float dt) {
 		}
 	}
 
+	if ((going_after_player)&&(abs(player->position.x - position.x) > range))
+	{
+		if (state == RUN_FORWARD) state = RUN_BACKWARD;
+		if (state == RUN_BACKWARD) state = RUN_FORWARD;
+	}
+
 	//state machine
 	switch (state)
 	{

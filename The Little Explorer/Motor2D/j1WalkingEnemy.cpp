@@ -99,8 +99,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		tile_to_go.x = path_to_player->At(i)->x;
 		tile_to_go.y = path_to_player->At(i)->y;
 
-		if (tile_to_go.y < current_map_position.y)
-			i++;
+		if (tile_to_go.y < current_map_position.y) i++;
 
 		if (current_map_position.x == tile_to_go.x)
 		{
@@ -118,7 +117,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			//LOG("Going up");
-			position.y -= 3;
+			//position.y -= 3;
 		}
 		if (current_map_position.y < tile_to_go.y) {
 			//LOG("Going down");
@@ -140,15 +139,19 @@ bool j1WalkingEnemy::Update(float dt) {
 		current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_NONE;
-		if (collider != nullptr) 
+		if (collider != nullptr) {
 			collider->SetPos(position.x + 16, position.y + 30);
+			raycast->SetPos(position.x + 40, position.y + current_animation->GetCurrentFrame().h);
+		}
 		break;
 	case RUN_BACKWARD:
 		current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
-		if (collider != nullptr) 
+		if (collider != nullptr) {
 			collider->SetPos(position.x + 16, position.y + 30);
+			raycast->SetPos(position.x + 16, position.y + current_animation->GetCurrentFrame().h);
+		}
 		break;
 	case FALL:
 		current_animation = &idle;
@@ -202,12 +205,15 @@ bool j1WalkingEnemy::Update(float dt) {
 		current_speed.y -= gravity * dt;
 		position.y -= current_speed.y * dt;
 	}
+	if (grounded)
+	{
+		position.x += current_speed.x * dt;
+	}
 
-	position.x += current_speed.x * dt;
 	
 	//raycast control
 	if ((raycast != nullptr)&&(collider != nullptr)) 
-		raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
+		//raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
 
 	return ret;
 }
