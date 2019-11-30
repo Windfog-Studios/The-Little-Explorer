@@ -16,7 +16,7 @@
 
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
-	//name.create("player");
+	name.create("player");
 	LoadAnimations("Animations_traveller.tmx");
 	crouch_down.loop = false;
 	crouch_down.loop = false;

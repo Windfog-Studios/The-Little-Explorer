@@ -218,25 +218,37 @@ void j1EntityManager::RellocateEntities() {
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
-	CleanUp();
 	bool ret = true;
 	p2List_item<j1Entity*>* item;
 	
-	for (pugi::xml_node WALKING_ENEMY = data.child("walking_enemy"); WALKING_ENEMY; WALKING_ENEMY = WALKING_ENEMY.next_sibling("walking_enemy"))
+	pugi::xml_node entity_node = data.first_child();
+
+	DestroyAllEntities();
+
+	while (entity_node != nullptr)
 	{
-		CreateEntity(EntityType::WALKING_ENEMY, WALKING_ENEMY.attribute("position_x").as_int(), WALKING_ENEMY.attribute("position_y").as_int());
+		p2SString entity_name(entity_node.name());
+		int x_position = entity_node.attribute("position_x").as_int();
+		int y_position = entity_node.attribute("position_y").as_int();
+
+		if (entity_name == "player") {
+			player->position.x = x_position;
+			player->position.y = y_position;
+		}
+
+		if (entity_name == "walking_enemy") 
+			CreateEntity(EntityType::WALKING_ENEMY, x_position, y_position);
+
+		if (entity_name == "flying_enemy") 
+			CreateEntity(EntityType::FLYING_ENEMY, x_position, y_position);
+
+		entity_node = entity_node.next_sibling();
 	}
-	
-	for (pugi::xml_node FLYING_ENEMY = data.child("flying_enemy"); FLYING_ENEMY; FLYING_ENEMY = FLYING_ENEMY.next_sibling("flying_enemy"))
-	{
-		CreateEntity(EntityType::FLYING_ENEMY, FLYING_ENEMY.attribute("position_x").as_int(), FLYING_ENEMY.attribute("position_y").as_int());
-	}
-	
-	
+
 	return ret;
 }
 
-bool j1EntityManager::Save(pugi::xml_node& data)
+bool j1EntityManager::Save(pugi::xml_node& data) const
 {
 	bool ret = true;
 	p2List_item<j1Entity*>* item;
