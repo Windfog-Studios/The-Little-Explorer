@@ -49,6 +49,7 @@ struct MapLayer
 	uint*		data;
 	Properties	properties;
 	float		ParallaxSpeed;
+	float		ParallaxSpeed2;
 
 	MapLayer() : data(NULL)
 	{}
@@ -75,6 +76,7 @@ struct TileSet
 	int					tile_width;
 	int					tile_height;
 	SDL_Texture*		texture;
+	SDL_Texture*		parallax;
 	int					tex_width;
 	int					tex_height;
 	int					num_tiles_width;

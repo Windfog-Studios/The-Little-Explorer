@@ -68,10 +68,20 @@ void j1Map::Draw()
 					iPoint pos = MapToWorld(x, y);
 					//camera cooling
 					if ((pos.x < -App->render->camera.x + App->render->camera.w) || (pos.x > -App->render->camera.x) ) {
+						/*
 						if (layer->ParallaxSpeed != NULL)
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed);
 						}
+						*/
+						
+						if (layer->properties.Get("speed", 0) == 1) {
+							tileset->parallax = tileset->texture;
+							App->render->Blit(tileset->parallax, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed2);
+							App->render->Blit(tileset->parallax, pos.x+6000, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed2);
+							tileset->texture = tileset->parallax;
+						}
+						
 						else
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE);
@@ -449,9 +459,9 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		
 		LoadProperties(node, layer->properties);
 		pugi::xml_node layer_data = node.child("data");
-		layer->ParallaxSpeed = node.child("properties").child("property").attribute("value").as_float();
+		//layer->ParallaxSpeed = node.child("properties").child("property").attribute("value").as_float();
+		layer->ParallaxSpeed2 = node.child("properties").child("property").attribute("value").as_float();
 		
-
 		if (layer_data == NULL)
 		{
 			LOG("Error parsing map xml file: Cannot find 'layer/data' tag.");

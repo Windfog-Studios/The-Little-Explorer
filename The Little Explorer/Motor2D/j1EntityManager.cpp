@@ -229,6 +229,8 @@ void j1EntityManager::DestroyAllEntities() {
 
 	for (item = entities.start; item != nullptr; item = item->next)
 	{
-		DestroyEntity(item->data);
+		if (item->data->type != EntityType::PLAYER) {
+			DestroyEntity(item->data);
+		}
 	}
 }
