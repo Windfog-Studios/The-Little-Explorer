@@ -257,6 +257,7 @@ void j1Scene::ResetLevel() {
 	App->entities->player->position.y = player_y_position;
 	App->entities->player->flip = SDL_FLIP_NONE;
 	App->entities->player->isVisible = true;
+	App->entities->player->particles_created = false;
 	App->entities->player->state = IDLE;
 	//App->entities->player->particles_created = false;
 }

@@ -507,8 +507,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				isVisible = false;
 				if (!particles_created) {
 					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x +2, position.y + current_animation->GetCurrentFrame().h -2, COLLIDER_NONE, 0, flip);
+					particles_created = true;
 				}
 				if (App->ui->transition == false){
 					App->audio->PlayFx(die_fx);
