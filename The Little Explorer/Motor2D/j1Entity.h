@@ -55,12 +55,13 @@ public:
 	int detection_range = 0;
 
 	bool grounded = false;
-	int gravity = 0;
-	int max_falling_speed = 0;
+	int	 gravity = 0;
+	int	 max_falling_speed = 0;
 
 	Collider* collider = nullptr;
 	Collider* raycast = nullptr;
 	Collider* last_collider = nullptr;
+	Collider* attack_collider = nullptr;
 	
 	uint die_fx = 0;
 	p2SString die_fx_path;
@@ -86,6 +87,7 @@ public:
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 	bool isVisible = true;
+	bool particles_created = false;
 
 	bool going_after_player = false;
 
