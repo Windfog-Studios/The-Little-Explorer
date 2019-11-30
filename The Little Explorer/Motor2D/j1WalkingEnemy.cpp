@@ -7,6 +7,7 @@
 #include "j1EntityManager.h"
 #include "j1Player.h"
 #include "j1Pathfinding.h"
+#include "j1Particles.h"
 #include "j1Map.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
@@ -44,6 +45,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	//colliders
 	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
+	//SDL_Rect attack_collider_rect{0,0,26,12};
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
@@ -114,12 +116,12 @@ bool j1WalkingEnemy::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
-			if (abs(current_map_position.x - destination.x) < attacking_range +1) state = ATTACK;
+			if (current_map_position.DistanceManhattan(destination) < attacking_range +1) state = ATTACK;
 			else state = RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
 			//LOG("Going right");
-			if (abs(current_map_position.x - destination.x) <= attacking_range) state = ATTACK;
+			if (current_map_position.DistanceManhattan(destination) <= attacking_range) state = ATTACK;
 			else state = RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
@@ -171,11 +173,18 @@ bool j1WalkingEnemy::Update(float dt) {
 	case ATTACK:
 		current_animation = &attack;
 		current_speed.x = 0;
-		if (collider != nullptr)
-			if (flip == SDL_FLIP_NONE)
+		if (attack_collider == nullptr) 
+			attack_collider = App->collision->AddCollider({ 0,0,26,12 }, COLLIDER_DEATH);
+		if (collider != nullptr) {
+			if (flip == SDL_FLIP_NONE) {
 				collider->SetPos(position.x + 16, position.y + 30);
-			else
+				attack_collider->SetPos(position.x + 26, position.y + 52);
+			}
+			else {
 				collider->SetPos(position.x + 22, position.y + 30);
+				attack_collider->SetPos(position.x, position.y + 54);
+			}
+		}
 		break;
 	case DIE:
 		//current_animation = &die;
@@ -230,7 +239,11 @@ bool j1WalkingEnemy::PostUpdate() {
 	BROFILER_CATEGORY("WalkingEnemyPostUpdate", Profiler::Color::Orange)
 	bool ret = true;
 	if (current_animation == nullptr) current_animation = last_animation;
-	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
+	if (isVisible)
+	{
+		App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
+	}
+
 	return ret;
 }
 
@@ -271,6 +284,12 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		break;
 	case COLLIDER_PLAYER:
 	//	App->entities->DestroyEntity(this);
+		if (!particles_created)
+		{
+			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
+			isVisible = false;
+			particles_created = true;
+		}
 		//state = DIE;
 		break;
 	default:

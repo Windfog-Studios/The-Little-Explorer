@@ -18,6 +18,7 @@ j1Particles::j1Particles():j1Module()
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	active[i] = nullptr;
 
+
 	//dust
 	{
 		dust.anim.PushBack({ 3,3,45,43 }, 0.3f);

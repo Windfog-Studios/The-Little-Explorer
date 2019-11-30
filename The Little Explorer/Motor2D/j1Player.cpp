@@ -567,13 +567,13 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			break;
 		case COLLIDER_ENEMY:
-			/*
 			if(!god){
 			  isVisible = false;
 				if (!particles_created) {
- 					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+  					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
 					App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
 					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
+					particles_created = true;
 				}
 				if (App->ui->transition == false){
 					App->audio->PlayFx(die_fx);
@@ -584,7 +584,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					controls_blocked = true;
 				}
 			}
-			*/
 			break;
 		default:
 			break;

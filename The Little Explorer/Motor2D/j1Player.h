@@ -60,8 +60,6 @@ public:
 
 	bool god = false;
 	bool controls_blocked = false;
-
-	bool particles_created = false;
 };
 
 #endif // !_j1PLAYER_H_
