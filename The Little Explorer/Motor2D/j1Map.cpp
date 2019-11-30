@@ -74,14 +74,13 @@ void j1Map::Draw()
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed);
 						}
 						*/
-						
 						if (layer->properties.Get("speed", 0) == 1) {
 							tileset->parallax = tileset->texture;
 							App->render->Blit(tileset->parallax, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed2);
 							App->render->Blit(tileset->parallax, pos.x+6000, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed2);
 							tileset->texture = tileset->parallax;
 						}
-						
+
 						else
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE);

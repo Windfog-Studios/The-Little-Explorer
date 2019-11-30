@@ -8015,7 +8015,8 @@
  </layer>
  <layer name="Clouds" width="200" height="40">
   <properties>
-   <property name="ParallaxSpeed" type="float" value="0.9"/>
+   <property name="ParallaxSpeed2" type="float" value="1.5"/>
+   <property name="speed" type="int" value="1"/>
   </properties>
   <data>
    <tile gid="589"/>
