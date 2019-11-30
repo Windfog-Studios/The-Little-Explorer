@@ -139,17 +139,9 @@ bool j1EntityManager::Start()
 bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
-	/*
-	App->tex->UnLoad(walking_enemy_texture);
-	walking_enemy_texture = nullptr;
-
-	App->tex->UnLoad(flying_enemy_texture);
-	flying_enemy_texture = nullptr;
-	*/
 
 	App->tex->UnLoad(trap_texture);
 	trap_texture = nullptr;
-
 
 	App->tex->UnLoad(reference_walking_enemy->texture);
 	reference_walking_enemy->texture = nullptr;
@@ -157,6 +149,7 @@ bool j1EntityManager::CleanUp()
 	App->tex->UnLoad(reference_flying_enemy->texture);
 	reference_flying_enemy->texture = nullptr;
 
+	//destroy all entities
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
 		entity->data->DestroyEntity(entity->data);
@@ -177,14 +170,23 @@ bool j1EntityManager::Update(float dt)
 	BROFILER_CATEGORY("EntitiesUpdate", Profiler::Color::MediumPurple)
 	bool ret = true;
 
-	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
-	{
-		if (entity != nullptr)
+		for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 		{
 			entity->data->Update(dt);
 		}
-	}
+	accumulated_time += dt;
+	//LOG("Accumulated time: %f", accumulated_time);
 
+	/*if (entity != nullptr)
+		{
+			if (entity->data == player) {
+				entity->data->Update(dt);
+			}
+			else if (accumulated_time > time_between_updates) {
+				entity->data->Update(dt);
+				accumulated_time = 0;
+			}
+	}*/
 	return ret;
 }
 

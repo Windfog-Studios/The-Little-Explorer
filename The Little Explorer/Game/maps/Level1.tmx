@@ -64143,7 +64143,6 @@
   <object id="267" name="Knight" type="Knight" x="704.333" y="345.833" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="288" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="1504" y="192" width="32" height="32"/>
-  <object id="271" name="Trap" type="Trap" x="884.333" y="595" width="32" height="32"/>
   <object id="272" name="Bat" type="Bat" x="2496" y="352" width="32" height="32"/>
   <object id="273" name="Bat" type="Bat" x="3709.33" y="544" width="32" height="32"/>
   <object id="274" name="Bat" type="Bat" x="3457.33" y="129.333" width="32" height="32"/>

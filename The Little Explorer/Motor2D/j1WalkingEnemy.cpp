@@ -17,20 +17,26 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	gravity = App->entities->gravity;
 	type = EntityType::WALKING_ENEMY;
 
+	//copy variables from reference_enemy
 	if (App->entities->reference_walking_enemy != nullptr)
 	{
 		speed = App->entities->reference_walking_enemy->speed;
 		health = App->entities->reference_walking_enemy->health;
 		damage = App->entities->reference_walking_enemy->damage;
+		range = App->entities->reference_walking_enemy->range;
+		texture = App->entities->reference_walking_enemy->texture;
 
 		animations = App->entities->reference_walking_enemy->animations;
 		idle = *animations.At(0)->data;
 		attack = *animations.At(1)->data;
 		run = *animations.At(2)->data;
+
+		current_animation = &idle;
 	}
 
+	//lastPosition = position;
+	//last_animation = &idle;
 	lastPosition = position;
-
 	flip = SDL_FLIP_HORIZONTAL;
 
 	//colliders
@@ -65,6 +71,7 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 bool j1WalkingEnemy::Update(float dt) {
 	bool ret = true;
 	lastPosition = position;
+	last_animation = current_animation;
 	//what to do when getting to a gap
 	if (last_collider != nullptr)
 	{
@@ -164,7 +171,6 @@ bool j1WalkingEnemy::Update(float dt) {
 	position.x += current_speed.x * dt;
 	
 	//collider control
-	
 	if (collider != nullptr) 
 		collider->SetPos(position.x, position.y);
 	if ((raycast != nullptr)&&(collider != nullptr)) 
@@ -175,6 +181,7 @@ bool j1WalkingEnemy::Update(float dt) {
 
 bool j1WalkingEnemy::PostUpdate() {
 	bool ret = true;
+	if (current_animation == nullptr) current_animation = last_animation;
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 	return ret;
 }

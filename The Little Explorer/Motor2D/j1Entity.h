@@ -78,6 +78,7 @@ public:
 	Animation die;
 	Animation rest;
 	Animation* current_animation = nullptr;
+	Animation* last_animation = nullptr;
 
 	EntityType type = EntityType::UNKNOWN;
 	EntityState state = EntityState::IDLE;

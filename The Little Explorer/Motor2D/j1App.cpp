@@ -222,7 +222,7 @@ void j1App::FinishUpdate()
 
 	dt = perf_timer.ReadMs() * 0.001;
 	//LOG("dt: %.4f delay: %.2f", dt, delay);
-	LOG("dt: %.4f", dt);
+	LOG("dt: %.4f ms", dt * 1000);
 }
 
 // Call modules before each loop iteration

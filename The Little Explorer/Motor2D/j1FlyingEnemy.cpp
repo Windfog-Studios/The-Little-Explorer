@@ -11,22 +11,20 @@
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	name.create("flying_enemy");
-	type = EntityType::FLYING_ENEMY;
-
-	
-	//animations
-	//texture = App->entities->flying_enemy_texture;
-	current_animation = &idle;
-	idle.PushBack({ 0,66,45,26 });
-	flip = SDL_FLIP_NONE;
 
 	//variables from EntityManager
+	type = EntityType::FLYING_ENEMY;
 	player = App->entities->player;
+
+
+	//copy variables from reference_enemy
 	if (App->entities->reference_flying_enemy != nullptr)
 	{
 		speed = App->entities->reference_flying_enemy->speed;
 		health = App->entities->reference_flying_enemy->health;
 		damage = App->entities->reference_flying_enemy->damage;
+		range = App->entities->reference_flying_enemy->range;
+		texture = App->entities->reference_flying_enemy->texture;
 
 		animations = App->entities->reference_flying_enemy->animations;
 		rest = *animations.At(0)->data;
@@ -39,6 +37,7 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	}
 
 	lastPosition = position;
+	flip = SDL_FLIP_NONE;
 
 	//colliders
 	collider = App->collision->AddCollider({ 0,66,45,26 }, COLLIDER_ENEMY, (j1Module*)this);

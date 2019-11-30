@@ -73,7 +73,8 @@ public:
 	uint walking_enemy_die_fx;
 	uint flying_enemy_die_fx;
 
-
+	float time_between_updates = 0.01f;
+	float accumulated_time = 0;
 };
 
 #endif // !_ENTITY_MANAGER_H_

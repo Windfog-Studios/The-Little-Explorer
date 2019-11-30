@@ -293,7 +293,7 @@ bool j1Player::Update(float dt){
 
 	MovementControl(dt); //calculate new position
 
-	collider->SetPos(floor(position.x), position.y);
+	collider->SetPos(floor(position.x), position.y + 6);
 	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
 
 	if (last_collider != nullptr)

@@ -106,11 +106,9 @@ void j1UI::LevelTransition(float dt) {
 				}
 				else if ((App->scene->current_level == LEVEL_1) && (App->scene->want_to_load == LEVEL_2)) {
 					App->scene->LevelChange(LEVEL_2, LEVEL_1);
-					//App->scene->ResetLevel();
 				}
 				else if ((App->scene->current_level == LEVEL_2) && (App->scene->want_to_load == LEVEL_1)) {
 					App->scene->LevelChange(LEVEL_1, LEVEL_2);
-					//App->scene->ResetLevel();
 				}
 			}
 			loaded = true;
