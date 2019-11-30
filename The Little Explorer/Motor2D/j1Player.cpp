@@ -261,8 +261,7 @@ bool j1Player::Update(float dt){
 
 	MovementControl(dt); //calculate new position
 
-	collider->SetPos(floor(position.x), position.y + 6);
-	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
+	//collider->SetPos(floor(position.x), position.y + 6);
 
 	if (last_collider != nullptr)
 	{
@@ -310,14 +309,16 @@ bool j1Player::Update(float dt){
 
 	case SLIDE_FORWARD:
 		current_animation = &slide;
-		//colliders to be changed
 		flip = SDL_FLIP_NONE;
+		collider->SetSize(52, 42);
+		collider->SetPos(position.x, position.y + 22);
 		break;
 
 	case SLIDE_BACKWARD:
 		current_animation = &slide;
-		//colliders to be changed
 		flip = SDL_FLIP_HORIZONTAL;
+		collider->SetSize(52, 42);
+		collider->SetPos(position.x  + 12, position.y + 22);
 		break;
 
 	case JUMP:
@@ -351,6 +352,8 @@ bool j1Player::Update(float dt){
 		LOG("No state found");
 		break;
 	}
+
+	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
 
 	return true;
 }

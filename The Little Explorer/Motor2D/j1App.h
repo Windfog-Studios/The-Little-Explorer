@@ -103,6 +103,7 @@ public:
 
 	bool pause = false;
 	bool vsync = false;
+	bool cap_enabled = true;
 
 private:
 

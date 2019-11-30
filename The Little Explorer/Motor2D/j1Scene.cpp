@@ -144,7 +144,6 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-
 	//camera window ------------------
 	if (!blocked_camera) {
 		if (!camera_manual_control)

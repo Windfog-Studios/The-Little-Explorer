@@ -156,7 +156,11 @@ bool j1App::Update()
 	if(ret == true)
 		ret = PostUpdate();
 
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) pause = !pause;
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) 
+		pause = !pause;
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+		cap_enabled = !cap_enabled;
 
 	FinishUpdate();
 	return ret;
@@ -218,7 +222,9 @@ void j1App::FinishUpdate()
 	delay_timer.Start();
 	float delay = 1000 / framerate_cap - last_frame_ms;
 
-	if (last_frame_ms < 1000 / framerate_cap) SDL_Delay(delay);
+	if (cap_enabled) {
+		if (last_frame_ms < 1000 / framerate_cap) SDL_Delay(delay);
+	}
 
 	dt = perf_timer.ReadMs() * 0.001;
 	//LOG("dt: %.4f delay: %.2f", dt, delay);
