@@ -285,7 +285,7 @@ bool j1EntityManager::CheckPointSave() {
 
 	if (ret == true)
 	{
-		data.save_file(App->save_game.GetString());
+		data.save_file(App->checkpoint_save.GetString());
 		LOG("... finished saving", );
 	}
 

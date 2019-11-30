@@ -88,6 +88,7 @@ bool j1App::Awake()
 	pugi::xml_node		app_config;
 
 	save_game = "save_file.xml";
+	checkpoint_save = "checkpoint.xml";
 	load_game = "save_file.xml";
 
 	bool ret = false;
