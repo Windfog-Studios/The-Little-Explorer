@@ -37,18 +37,18 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
-		entity->position.x = position_x;
-		entity->position.y = position_y;
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::FLYING_ENEMY:
 		entity = new j1FlyingEnemy();
-		entity->position.x = position_x;
-		entity->position.y = position_y;
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::TRAP:
 		entity = new j1Trap();
-		entity->position.x = position_x;
-		entity->position.y = position_y;
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::PARTICLES:
 		break;
@@ -203,6 +203,18 @@ bool j1EntityManager::PostUpdate()
 	return ret;
 }
 
+void j1EntityManager::RellocateEntities() {
+	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
+	{
+		if (entity->data != player)
+		{
+			entity->data->position.x = entity->data->initial_x_position;
+			entity->data->position.y = entity->data->initial_y_position;
+			entity->data->state = IDLE;
+			entity->data->going_after_player = false;
+		}
+	}
+}
 
 bool j1EntityManager::Load(pugi::xml_node& data)
 {

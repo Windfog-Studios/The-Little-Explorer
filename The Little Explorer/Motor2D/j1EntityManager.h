@@ -40,9 +40,10 @@ public:
 	virtual bool Load(pugi::xml_node& data);
 	virtual bool Save(pugi::xml_node& data);
 
-	j1Entity* CreateEntity(EntityType type, int position_x, int position_y);
+	j1Entity*	 CreateEntity(EntityType type, int position_x, int position_y);
 	virtual void DestroyEntity(j1Entity* delete_entity);
-	void DestroyAllEntities();
+	void		 DestroyAllEntities();
+	void		 RellocateEntities();
 
 public:
 

@@ -259,6 +259,7 @@ void j1Scene::ResetLevel() {
 	App->entities->player->isVisible = true;
 	App->entities->player->particles_created = false;
 	App->entities->player->state = IDLE;
+	App->entities->RellocateEntities();
 	//App->entities->player->particles_created = false;
 }
 

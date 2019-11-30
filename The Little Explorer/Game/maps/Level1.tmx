@@ -64143,9 +64143,9 @@
   </data>
  </layer>
  <objectgroup name="Enemies">
-  <object id="262" name="Knight" type="Knight" x="1114" y="270" width="26" height="26"/>
-  <object id="264" name="Knight" type="Knight" x="797.667" y="592" width="32" height="32"/>
-  <object id="267" name="Knight" type="Knight" x="704.333" y="345.833" width="32" height="32"/>
+  <object id="262" name="Knight" type="Knight" x="1120" y="256" width="31" height="31"/>
+  <object id="264" name="Knight" type="Knight" x="800" y="576" width="32" height="32"/>
+  <object id="267" name="Knight" type="Knight" x="704" y="320" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="288" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="1504" y="192" width="32" height="32"/>
   <object id="272" name="Bat" type="Bat" x="2496" y="352" width="32" height="32"/>
@@ -64166,6 +64166,6 @@
   <object id="287" name="Knight" type="Knight" x="6208" y="928" width="32" height="32"/>
   <object id="288" name="Player" type="Player" x="49" y="750" width="32" height="32"/>
   <object id="290" name="Bat" type="Bat" x="448" y="736" width="32" height="32"/>
-  <object id="291" name="Knight" type="Knight" x="224" y="736" width="32" height="32"/>
+  <object id="291" name="Knight" type="Knight" x="224" y="768" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -282,6 +282,31 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			}
 		}
 		break;
+	case COLLIDER_PLATFORM:
+		if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
+		{
+			grounded = true;
+			position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+			current_speed.y = 0;
+			state = IDLE;
+		}
+
+		if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+			position.x = lastPosition.x;
+		}
+		if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
+		{
+			position.y = c2->rect.y + c2->rect.h;
+			current_speed.y = 0;
+		}
+		if ((position.y > c2->rect.y) && (position.x > c2->rect.x) && (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w) && (position.x < c2->rect.x + c2->rect.w))
+		{
+			position.y = lastPosition.y;
+			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
+				//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
+			}
+		}
+		break;
 	case COLLIDER_PLAYER:
 	//	App->entities->DestroyEntity(this);
 		if (!particles_created)
