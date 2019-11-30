@@ -112,12 +112,12 @@ bool j1WalkingEnemy::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
-			if (abs(current_map_position.x - destination.x) < attacking_range +1) state = ATTACK;
+			if (current_map_position.DistanceManhattan(destination) < attacking_range +1) state = ATTACK;
 			else state = RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
 			//LOG("Going right");
-			if (abs(current_map_position.x - destination.x) <= attacking_range) state = ATTACK;
+			if (current_map_position.DistanceManhattan(destination) <= attacking_range) state = ATTACK;
 			else state = RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
