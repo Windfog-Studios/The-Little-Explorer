@@ -20,8 +20,7 @@ public:
 	bool Load(pugi::xml_node& data) { return true; }
 
 private:
-	//int path_minimum = 100;
-	//int path_maximum = 125;
+	float attacking_range = 1;
 };
 
 #endif // !_j1WALKING_ENEMY_H

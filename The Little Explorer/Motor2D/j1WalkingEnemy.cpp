@@ -24,7 +24,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		speed = App->entities->reference_walking_enemy->speed;
 		health = App->entities->reference_walking_enemy->health;
 		damage = App->entities->reference_walking_enemy->damage;
-		range = App->entities->reference_walking_enemy->range;
+		detection_range = App->entities->reference_walking_enemy->detection_range;
 		texture = App->entities->reference_walking_enemy->texture;
 
 		animations = App->entities->reference_walking_enemy->animations;
@@ -62,7 +62,7 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	speed.x = speed.y = config.child("running_speed").attribute("value").as_int();
 	health = config.child("health").attribute("value").as_int();
 	damage = config.child("damage").attribute("value").as_int();
-	range = config.child("range").attribute("value").as_int();
+	detection_range = config.child("detection_range").attribute("value").as_int();
 
 	LoadAnimations("Animations_Enemy1.tmx");
 
@@ -87,7 +87,7 @@ bool j1WalkingEnemy::Update(float dt) {
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	PathfindtoPlayer(range, player);
+	PathfindtoPlayer(detection_range, player);
 
 	//movement
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
@@ -96,8 +96,11 @@ bool j1WalkingEnemy::Update(float dt) {
 		int i = 0;
 		iPoint current_map_position = App->map->WorldToMap(position.x, position.y);
 		iPoint tile_to_go;
+		iPoint destination;
 		tile_to_go.x = path_to_player->At(i)->x;
 		tile_to_go.y = path_to_player->At(i)->y;
+		destination.x = path_to_player->At(path_to_player->Count() - 1)->x;
+		destination.y = path_to_player->At(path_to_player->Count() - 1)->y;
 
 		if (tile_to_go.y < current_map_position.y) i++;
 
@@ -109,11 +112,13 @@ bool j1WalkingEnemy::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
-			state = RUN_BACKWARD;
+			if (abs(current_map_position.x - destination.x) < attacking_range +1) state = ATTACK;
+			else state = RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
 			//LOG("Going right");
-			state = RUN_FORWARD;
+			if (abs(current_map_position.x - destination.x) <= attacking_range) state = ATTACK;
+			else state = RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			//LOG("Going up");
@@ -163,6 +168,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		break;
 	case ATTACK:
 		current_animation = &attack;
+		current_speed.x = 0;
 		if (collider != nullptr)
 			if (flip == SDL_FLIP_NONE)
 				collider->SetPos(position.x + 16, position.y + 30);

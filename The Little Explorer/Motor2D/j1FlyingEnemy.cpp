@@ -23,7 +23,7 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		speed = App->entities->reference_flying_enemy->speed;
 		health = App->entities->reference_flying_enemy->health;
 		damage = App->entities->reference_flying_enemy->damage;
-		range = App->entities->reference_flying_enemy->range;
+		detection_range = App->entities->reference_flying_enemy->detection_range;
 		texture = App->entities->reference_flying_enemy->texture;
 
 		animations = App->entities->reference_flying_enemy->animations;
@@ -60,7 +60,7 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 	speed.x = speed.y = config.child("flying_speed").attribute("value").as_int();
 	health = config.child("health").attribute("value").as_int();
 	damage = config.child("damage").attribute("value").as_int();
-	range = config.child("range").attribute("value").as_int();
+	detection_range = config.child("detection_range").attribute("value").as_int();
 
 	LoadAnimations("Animations_flyingEnemy1.tmx");
 
@@ -75,7 +75,7 @@ bool j1FlyingEnemy::Update(float dt) {
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	PathfindtoPlayer(range, player);
+	PathfindtoPlayer(detection_range, player);
 	
 	//movement
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
@@ -111,7 +111,7 @@ bool j1FlyingEnemy::Update(float dt) {
 		}
 	}
 
-	if ((going_after_player)&&(abs(player->position.x - position.x) > range))
+	if ((going_after_player)&&(abs(player->position.x - position.x) > detection_range))
 	{
 		if (state == RUN_FORWARD) state = RUN_BACKWARD;
 		if (state == RUN_BACKWARD) state = RUN_FORWARD;

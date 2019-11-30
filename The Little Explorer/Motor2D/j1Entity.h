@@ -39,7 +39,7 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp() { return true; };
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
-			void PathfindtoPlayer(int range, j1Entity* player);
+			void PathfindtoPlayer(int detection_range, j1Entity* player);
 			bool LoadAnimations(const char* animation_file);
 
 public: 
@@ -52,7 +52,7 @@ public:
 
 	int health = 0;
 	int damage = 0;
-	int range = 0;
+	int detection_range = 0;
 
 	bool grounded = false;
 	int gravity = 0;

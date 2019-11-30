@@ -70,13 +70,13 @@
       <health value="100"/>
       <damage value="10"/>
       <running_speed value="100"/>
-      <range value="150" />
+      <detection_range value="150" />
     </walking_enemy>
     <flying_enemy>
       <health value="100"/>
       <damage value="10"/>
       <flying_speed value="75"/>
-      <range value="300" />
+      <detection_range value="300" />
     </flying_enemy>
   </entities>
 
