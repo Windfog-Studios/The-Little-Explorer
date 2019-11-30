@@ -29,13 +29,13 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		damage = App->entities->reference_flying_enemy->damage;
 
 		animations = App->entities->reference_flying_enemy->animations;
+		rest = *animations.At(0)->data;
+		die = *animations.At(1)->data;
+		idle = *animations.At(2)->data;
+		attack = idle;
+		run = idle;
 
-		//to be changed
-		/*
-		idle = *animations.start->data;
-		attack = *animations.start->next->data;
-		run = *animations.end->data;
-		*/
+		current_animation = &idle;
 	}
 
 	lastPosition = position;
@@ -62,7 +62,7 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 	health = config.child("health").attribute("value").as_int();
 	damage = config.child("damage").attribute("value").as_int();
 
-	LoadAnimations("Animations_flyingEnemy1");
+	LoadAnimations("Animations_flyingEnemy1.tmx");
 
 	return ret;
 }
@@ -97,19 +97,19 @@ bool j1FlyingEnemy::Update(float dt) {
 		}
 
 		if (current_map_position.x > tile_to_go.x) {
-			LOG("Going left");
+			//LOG("Going left");
 			state = EntityState::RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
-			LOG("Going right");
+			//LOG("Going right");
 			state = EntityState::RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
-			LOG("Going up");
+			//LOG("Going up");
 			current_speed.y = -speed.y;
 		}
 		if (current_map_position.y < tile_to_go.y) {
-			LOG("Going down");
+			//LOG("Going down");
 			current_speed.y = speed.y;
 		}
 	}
@@ -117,27 +117,20 @@ bool j1FlyingEnemy::Update(float dt) {
 	//state machine
 	switch (state)
 	{
-		run = idle;
 	case IDLE:
 		current_animation = &idle;
-		break;
-	case JUMP:
-		current_animation = &jump;
 		break;
 	case RUN_FORWARD:
 		//current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
-		current_animation = &run;
+		//current_animation = &run;
 		break;
 	case RUN_BACKWARD:
 		//current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_NONE;
-		current_animation = &run;
-		break;
-	case FALL:
-		current_animation = &fall;
+		//current_animation = &run;
 		break;
 	case ATTACK:
 		current_animation = &attack;

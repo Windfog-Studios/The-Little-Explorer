@@ -110,40 +110,44 @@ bool j1Entity::LoadAnimations(const char* path) {
 	while (animation != nullptr)
 	{
 		p2SString animation_name(animation.child("properties").child("property").attribute("name").as_string());
+			if (animation_name == "idle")
+				animations.add(&idle);
+			else if (animation_name == "walk")
+				animations.add(&walk);
+			else if (animation_name == "slide")
+				animations.add(&slide);
+			else if (animation_name == "run")
+				animations.add(&run);
+			else if (animation_name == "crouch_down")
+				animations.add(&crouch_down);
+			else if (animation_name == "crouch_up")
+				animations.add(&crouch_up);
+			else if (animation_name == "jump")
+				animations.add(&jump);
+			else if (animation_name == "fall")
+				animations.add(&fall);
+			else if (animation_name == "attack")
+				animations.add(&attack);
+			else if (animation_name == "die")
+				animations.add(&die);
+			else if (animation_name == "rest")
+				animations.add(&rest);
+			else goto CHANGE_ANIMATION;
 
-		if (animation_name == "idle") 
-			animations.add(&idle);
-		if (animation_name == "walk")
-			animations.add(&walk);
-		if (animation_name == "slide") 
-			animations.add(&slide);
-		if (animation_name == "run") 
-			animations.add(&run);
-		if (animation_name == "crouch_down") 
-			animations.add(&crouch_down);
-		if (animation_name == "crouch_up")
-			animations.add(&crouch_up);
-		if (animation_name == "jump") 
-			animations.add(&jump);
-		if (animation_name == "fall")
-			animations.add(&fall);
-		if (animation_name == "attack")
-			animations.add(&attack);
+			id = animation.attribute("id").as_int();
 
-		id = animation.attribute("id").as_int();
+			item_animation = animations.end;
 
-		item_animation = animations.end;
+			while (frame != nullptr) {
+				tile_id = frame.attribute("tileid").as_int();
+				speed = frame.attribute("duration").as_int() * 0.001f;
+				rect.x = rect.w * ((tile_id) % columns);
+				rect.y = rect.h * ((tile_id) / columns);
+				item_animation->data->PushBack(rect, speed);
+				frame = frame.next_sibling();
+			}
 
-		while (frame != nullptr) {
-			tile_id = frame.attribute("tileid").as_int();
-			speed = frame.attribute("duration").as_int() * 0.001f;
-			rect.x = rect.w * ((tile_id) % columns);
-			rect.y = rect.h * ((tile_id) / columns);
-			item_animation->data->PushBack(rect, speed);
-			frame = frame.next_sibling();
-		}
-
-		animation = animation.next_sibling();
+	CHANGE_ANIMATION: animation = animation.next_sibling();
 		frame = animation.child("animation").child("frame");
 	}
 

@@ -24,31 +24,12 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		damage = App->entities->reference_walking_enemy->damage;
 
 		animations = App->entities->reference_walking_enemy->animations;
-		idle = *animations.start->data;
-		attack = *animations.start->next->data;
-		run = *animations.end->data;
-		//run = animations
-		/*
-		p2List_item<Animation*>* animation = animations.start;
-		for (p2List_item<Animation*>* item = App->entities->reference_walking_enemy->animations.start; item != nullptr; item = item->next)
-		{
-			animations.add(item->data);
-		}
-		*/
+		idle = *animations.At(0)->data;
+		attack = *animations.At(1)->data;
+		run = *animations.At(2)->data;
 	}
 
 	lastPosition = position;
-
-	/*
-	animations = App->entities->walking_enemy_animations;
-	//idle.PushBack({ 16,34,27,30 });
-	if (App->entities->walking_enemy_animations.start != nullptr)
-	{
-		idle = *App->entities->walking_enemy_animations.start->data;
-	}
-
-	//animations = App->entities->walking_enemy_animations;
-	*/
 
 	flip = SDL_FLIP_HORIZONTAL;
 
@@ -124,19 +105,19 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 
 		if (current_map_position.x > tile_to_go.x) {
-			LOG("Going left");
+			//LOG("Going left");
 			state = RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
-			LOG("Going right");
+			//LOG("Going right");
 			state = RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
-			LOG("Going up");
+			//LOG("Going up");
 			position.y -= 3;
 		}
 		if (current_map_position.y < tile_to_go.y) {
-			LOG("Going down");
+			//LOG("Going down");
 		}
 	}
 
