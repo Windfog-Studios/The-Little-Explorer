@@ -60,10 +60,10 @@
     <property name="crouch_down" value=""/>
    </properties>
    <animation>
-    <frame tileid="64" duration="100"/>
-    <frame tileid="65" duration="100"/>
-    <frame tileid="66" duration="100"/>
-    <frame tileid="67" duration="100"/>
+    <frame tileid="64" duration="75"/>
+    <frame tileid="65" duration="75"/>
+    <frame tileid="66" duration="75"/>
+    <frame tileid="67" duration="75"/>
    </animation>
   </tile>
   <tile id="67">
@@ -71,10 +71,10 @@
     <property name="crouch_up" value=""/>
    </properties>
    <animation>
-    <frame tileid="67" duration="100"/>
-    <frame tileid="66" duration="100"/>
-    <frame tileid="65" duration="100"/>
-    <frame tileid="64" duration="100"/>
+    <frame tileid="67" duration="75"/>
+    <frame tileid="66" duration="75"/>
+    <frame tileid="65" duration="75"/>
+    <frame tileid="64" duration="75"/>
    </animation>
   </tile>
   <tile id="70">

@@ -17,6 +17,8 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	//name.create("player");
 	LoadAnimations("Animations_traveller.tmx");
+	crouch_down.loop = false;
+	crouch_down.loop = false;
 	LOG("");
 }
 
@@ -298,19 +300,23 @@ bool j1Player::Update(float dt){
 
 	case CROUCH_DOWN:
 		current_animation = &crouch_down;
+		//collider->SetSize(32, 32);
 		break;
 
 	case CROUCH_UP:
 		current_animation = &crouch_up;
+		//collider->SetSize(32, 32);
 		break;
 
 	case SLIDE_FORWARD:
 		current_animation = &slide;
+		//colliders to be changed
 		flip = SDL_FLIP_NONE;
 		break;
 
 	case SLIDE_BACKWARD:
 		current_animation = &slide;
+		//colliders to be changed
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
 
@@ -477,8 +483,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		switch (c2->type)
 		{
 		case COLLIDER_WALL:
-			if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
-			{
+			if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN){
 				grounded = true;
 				position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 				current_speed.y = 0;
@@ -488,13 +493,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
 				position.x = lastPosition.x;
 			}
-			if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
-			{
+			if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN){
 				position.y = c2->rect.y + c2->rect.h;
 				current_speed.y = 0;
 			}
-			if ((position.y > c2->rect.y) && (position.x > c2->rect.x) && (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w) && (position.x < c2->rect.x + c2->rect.w))
-			{
+			if ((position.y > c2->rect.y) && (position.x > c2->rect.x) && (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w) && (position.x < c2->rect.x + c2->rect.w)){
 				position.y = lastPosition.y;
 				if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
 					//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
