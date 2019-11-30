@@ -19,8 +19,7 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 }
 
 // Destructor
-j1Map::~j1Map()
-{}
+j1Map::~j1Map(){}
 
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)

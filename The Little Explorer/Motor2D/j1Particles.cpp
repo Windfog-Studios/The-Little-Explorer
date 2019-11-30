@@ -54,7 +54,6 @@ bool j1Particles::Start()
 	return true;
 }
 
-// Unload assets
 bool j1Particles::CleanUp()
 {
 	LOG("Unloading particles");
@@ -73,7 +72,6 @@ bool j1Particles::CleanUp()
 	return true;
 }
 
-// Update: draw background
 bool j1Particles::Update(float dt)
 {
 	bool ret = true;
@@ -95,10 +93,7 @@ bool j1Particles::Update(float dt)
 			particle_tex = dust_tex;
 
 			if (p->coll != nullptr){}
-			else 
-			{
-				//particle_tex = fx_particles;
-			}
+
 			if (p->flip == SDL_FLIP_NONE)
 			{
 				App->render->Blit(particle_tex, p->position.x, p->position.y, &(p->anim.GetCurrentFrame()));
@@ -184,17 +179,13 @@ bool Particle::Update()
 		if ((SDL_GetTicks() - born) > life)
 			ret = false;
 	}
-	else
-		if (anim.Finished())
+	else {
+		if (anim.Finished()) 
 			ret = false;
+	}
 
 	if (!App->pause)
 	{
-		//if (coll != nullptr){}
-		if (flip == SDL_FLIP_NONE)
-		{
-			
-		}
 		return ret;
 	}
 }

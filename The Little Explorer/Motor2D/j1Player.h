@@ -52,9 +52,6 @@ public:
 	Player_Input player_input;
 
 	Animation walk;
-	Animation crouch_down;
-	Animation crouch_up;
-	Animation slide;
 	pugi::xml_document animation_doc;
 
 	//fx

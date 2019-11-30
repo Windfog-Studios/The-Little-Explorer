@@ -205,7 +205,7 @@ bool j1Scene::Update(float dt)
 	//App->render->Blit(debug_tex, p.x, p.y);
 	Debug_rect.x = p.x;
 	Debug_rect.y = p.y;
-	if (App->collision->debug)App->render->DrawQuad(Debug_rect, 0, 0, 255,80);
+	if (App->collision->debug) App->render->DrawQuad(Debug_rect, 0, 0, 255,80);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
@@ -214,8 +214,7 @@ bool j1Scene::Update(float dt)
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		Debug_rect.x = pos.x;
 		Debug_rect.y = pos.y;
-		if (App->collision->debug)App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
-		//App->render->Blit(debug_tex, pos.x, pos.y);
+		if (App->collision->debug) App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
 	}
 
 	//SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
@@ -258,6 +257,7 @@ void j1Scene::ResetLevel() {
 	App->entities->player->position.y = player_y_position;
 	App->entities->player->flip = SDL_FLIP_NONE;
 	App->entities->player->isVisible = true;
+	App->entities->player->particles_created = false;
 	App->entities->player->state = IDLE;
 	//App->entities->player->particles_created = false;
 }

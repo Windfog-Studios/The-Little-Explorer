@@ -53,6 +53,7 @@ public:
 
 public:
 	int gravity = 0;
+	int max_falling_speed = 0;
 
 	j1WalkingEnemy* reference_walking_enemy = nullptr;
 	j1FlyingEnemy* reference_flying_enemy = nullptr;

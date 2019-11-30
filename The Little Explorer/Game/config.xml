@@ -50,6 +50,7 @@
 
   <entities>
     <gravity value="925"/>
+    <max_falling_speed value="-500"/>
     <player>
       <folder>sprites/characters</folder>
       <folder>audio/fx</folder>
@@ -64,7 +65,6 @@
       <jumpImpulse value="475"/>
       <doubleJumpImpulse value = "375" />
       <max_side_speed value="150"/>
-      <max_falling_speed value="-500"/>
     </player>
     <walking_enemy>
       <health value="100"/>

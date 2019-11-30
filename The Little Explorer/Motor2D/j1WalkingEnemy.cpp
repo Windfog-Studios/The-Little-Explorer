@@ -15,6 +15,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	//variable declaration from EntityManager
 	player = App->entities->player;
 	gravity = App->entities->gravity;
+	max_falling_speed = App->entities->max_falling_speed;
 	type = EntityType::WALKING_ENEMY;
 
 	//copy variables from reference_enemy
@@ -40,7 +41,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	flip = SDL_FLIP_HORIZONTAL;
 
 	//colliders
-	collider = App->collision->AddCollider({ 16,34,27,30 }, COLLIDER_ENEMY, (j1Module*)this);
+	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 }
 
@@ -99,17 +100,12 @@ bool j1WalkingEnemy::Update(float dt) {
 		tile_to_go.y = path_to_player->At(i)->y;
 
 		if (tile_to_go.y < current_map_position.y)
-		{
 			i++;
-		}
 
 		if (current_map_position.x == tile_to_go.x)
 		{
 			i++;
-			if (i > 2)
-			{
-				tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
-			}
+			if (i > 2) tile_to_go = App->map->WorldToMap(path_to_player->At(i)->x, path_to_player->At(i)->y);
 		}
 
 		if (current_map_position.x > tile_to_go.x) {
@@ -134,34 +130,54 @@ bool j1WalkingEnemy::Update(float dt) {
 	{
 	case IDLE:
 		current_animation = &idle;
-		break;
-	case JUMP:
-		//current_animation = &jump;
+		if (collider != nullptr)
+			if (flip == SDL_FLIP_NONE)
+				collider->SetPos(position.x + 16, position.y + 30);
+			else
+				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case RUN_FORWARD:
 		current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_NONE;
+		if (collider != nullptr) 
+			collider->SetPos(position.x + 16, position.y + 30);
 		break;
 	case RUN_BACKWARD:
 		current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
+		if (collider != nullptr) 
+			collider->SetPos(position.x + 16, position.y + 30);
 		break;
 	case FALL:
-		//current_animation = &fall;
+		current_animation = &idle;
+		if (collider != nullptr)
+			if (flip == SDL_FLIP_NONE)
+				collider->SetPos(position.x + 16, position.y + 30);
+			else 
+				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case ATTACK:
-		//current_animation = &attack;
+		current_animation = &attack;
+		if (collider != nullptr)
+			if (flip == SDL_FLIP_NONE)
+				collider->SetPos(position.x + 16, position.y + 30);
+			else
+				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case DIE:
 		//current_animation = &die;
+		break;
+	case JUMP:
+		//current_animation = &jump;
 		break;
 	default:
 		break;
 	}
 
 	//Movement Control
+
 	if (!grounded) {
 		//if (current_speed.y > max_falling_speed) 
 		current_speed.y -= gravity * dt;
@@ -170,9 +186,7 @@ bool j1WalkingEnemy::Update(float dt) {
 
 	position.x += current_speed.x * dt;
 	
-	//collider control
-	if (collider != nullptr) 
-		collider->SetPos(position.x, position.y);
+	//raycast control
 	if ((raycast != nullptr)&&(collider != nullptr)) 
 		raycast->SetPos(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f, position.y + current_animation->GetCurrentFrame().h);
 
@@ -222,7 +236,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		App->entities->DestroyEntity(this);
+	//	App->entities->DestroyEntity(this);
 		//state = DIE;
 		break;
 	default:
