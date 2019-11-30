@@ -8,6 +8,7 @@
 #include "j1Player.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 	name.create("flying_enemy");
@@ -68,6 +69,7 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 }
 
 bool j1FlyingEnemy::Update(float dt) {
+	BROFILER_CATEGORY("FlyingEnemyUpdate", Profiler::Color::Tomato)
 	bool ret = true;
 	lastPosition = position;
 
@@ -160,6 +162,7 @@ bool j1FlyingEnemy::Update(float dt) {
 
 
 bool j1FlyingEnemy::PostUpdate() {
+	BROFILER_CATEGORY("FlyingEnemyPostUpdate", Profiler::Color::Tomato)
 	bool ret = true;
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 	return ret;

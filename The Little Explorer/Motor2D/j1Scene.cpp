@@ -76,6 +76,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
+	BROFILER_CATEGORY("ScenePreUpdate", Profiler::Color::HotPink);
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -225,7 +226,7 @@ bool j1Scene::Update(float dt)
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
-	BROFILER_CATEGORY("ScenePostUpdate", Profiler::Color::Indigo);
+	BROFILER_CATEGORY("ScenePostUpdate", Profiler::Color::HotPink);
 	bool ret = true;
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

@@ -9,6 +9,7 @@
 #include "j1Player.h"
 
 #include "SDL/include/SDL_timer.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1Particles::j1Particles():j1Module()
 {
@@ -74,6 +75,7 @@ bool j1Particles::CleanUp()
 
 bool j1Particles::Update(float dt)
 {
+	BROFILER_CATEGORY("ParticlesUpdate", Profiler::Color::Indigo)
 	bool ret = true;
 	//particle_tex = dust_tex;
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)

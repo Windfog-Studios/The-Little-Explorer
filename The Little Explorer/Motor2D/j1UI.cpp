@@ -44,7 +44,7 @@ bool j1UI::Update(float dt) {
 	return ret;
 }
 bool j1UI::PostUpdate() {
-	BROFILER_CATEGORY("UIPostUpdate", Profiler::Color::GoldenRod)
+	BROFILER_CATEGORY("UIPostUpdate", Profiler::Color::BlueViolet)
 	if (transition) {
 		App->render->DrawQuad(left_square, 0, 0, 0, 255);
 		App->render->DrawQuad(right_square, 0, 0, 0, 255);

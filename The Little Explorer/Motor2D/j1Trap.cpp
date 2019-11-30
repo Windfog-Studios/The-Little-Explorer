@@ -8,6 +8,7 @@
 #include "j1Player.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1Trap::j1Trap() :j1Entity(EntityType::TRAP) {
 	name.create("trap");
@@ -35,6 +36,8 @@ j1Trap::~j1Trap() {
 }
 
 bool j1Trap::Update(float dt) {
+	BROFILER_CATEGORY("TrapUpdate", Profiler::Color::Gold)
+
 	bool ret = true;
 	lastPosition = position;
 
@@ -82,6 +85,7 @@ bool j1Trap::Update(float dt) {
 }
 
 bool j1Trap::PostUpdate() {
+	BROFILER_CATEGORY("TrapPostUpdate", Profiler::Color::Gold)
 	bool ret = true;
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 	return ret;

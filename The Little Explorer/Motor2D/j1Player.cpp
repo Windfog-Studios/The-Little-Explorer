@@ -12,6 +12,7 @@
 #include "j1UI.h"
 #include "j1Particles.h"
 #include "j1EntityManager.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
@@ -81,6 +82,8 @@ bool j1Player::CleanUp() {
 
 
 bool j1Player::PreUpdate(){
+	BROFILER_CATEGORY("PlayerPreUpdate", Profiler::Color::CadetBlue)
+
 	//get player input
 	player_input.pressing_W = App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT;
 	player_input.pressing_A = App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
@@ -258,6 +261,7 @@ bool j1Player::PreUpdate(){
 }
 
 bool j1Player::Update(float dt){
+	BROFILER_CATEGORY("PlayerUpdate", Profiler::Color::CadetBlue)
 
 	MovementControl(dt); //calculate new position
 
@@ -360,6 +364,7 @@ bool j1Player::Update(float dt){
 }
 
 bool j1Player::PostUpdate() {
+	BROFILER_CATEGORY("PlayerPreUpdate", Profiler::Color::CadetBlue)
 	if (isVisible)
 	{
 		App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);

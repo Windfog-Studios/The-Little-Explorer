@@ -8,6 +8,7 @@
 #include "j1Player.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	name.create("walking_enemy");
@@ -70,6 +71,7 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 }
 
 bool j1WalkingEnemy::Update(float dt) {
+	BROFILER_CATEGORY("WalkingEnemyUpdate", Profiler::Color::Orange)
 	bool ret = true;
 	lastPosition = position;
 	last_animation = current_animation;
@@ -225,6 +227,7 @@ bool j1WalkingEnemy::Update(float dt) {
 }
 
 bool j1WalkingEnemy::PostUpdate() {
+	BROFILER_CATEGORY("WalkingEnemyPostUpdate", Profiler::Color::Orange)
 	bool ret = true;
 	if (current_animation == nullptr) current_animation = last_animation;
 	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);

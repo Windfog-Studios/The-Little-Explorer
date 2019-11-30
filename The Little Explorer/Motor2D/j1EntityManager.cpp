@@ -161,6 +161,7 @@ bool j1EntityManager::CleanUp()
 
 bool j1EntityManager::PreUpdate()
 {
+	BROFILER_CATEGORY("EntitiesPreUpdate", Profiler::Color::Bisque)
 	bool ret = true;
 	player->PreUpdate();
 	return ret;
@@ -168,7 +169,7 @@ bool j1EntityManager::PreUpdate()
 
 bool j1EntityManager::Update(float dt)
 {
-	BROFILER_CATEGORY("EntitiesUpdate", Profiler::Color::MediumPurple)
+	BROFILER_CATEGORY("EntitiesUpdate", Profiler::Color::Bisque)
 	bool ret = true;
 
 		for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
@@ -193,7 +194,7 @@ bool j1EntityManager::Update(float dt)
 
 bool j1EntityManager::PostUpdate()
 {
-	BROFILER_CATEGORY("EntitiesPostUpdate", Profiler::Color::Khaki)
+	BROFILER_CATEGORY("EntitiesPostUpdate", Profiler::Color::Bisque)
 	bool ret = true;
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{

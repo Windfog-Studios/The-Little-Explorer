@@ -257,7 +257,7 @@ bool j1App::PreUpdate()
 // Call modules on each loop iteration
 bool j1App::DoUpdate()
 {
-	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Green);
+	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Red);
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	item = modules.start;
@@ -280,7 +280,7 @@ bool j1App::DoUpdate()
 // Call modules after each loop iteration
 bool j1App::PostUpdate()
 {
-	BROFILER_CATEGORY("PostUpdate", Profiler::Color::Blue);
+	BROFILER_CATEGORY("PostUpdate", Profiler::Color::Red);
 	bool ret = true;
 	p2List_item<j1Module*>* item;
 	j1Module* pModule = NULL;
