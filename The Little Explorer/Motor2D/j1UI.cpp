@@ -8,6 +8,7 @@
 #include "j1Textures.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
+
 j1UI::j1UI() : j1Module() {
 	name.create("ui");
 }
@@ -103,10 +104,11 @@ void j1UI::LevelTransition(float dt) {
 		}
 		break;
 	case OPEN:
-		if (left_square.x + left_square.w > camera->x)
+		if (left_square.x + left_square.w > -camera->x)
 		{
 			left_square.x -= transition_speed * dt;
 			right_square.x += transition_speed * dt;
+			//LOG("Left square x: %i camera x: %i", left_square.x, camera->x);
 		}
 		else
 		{
