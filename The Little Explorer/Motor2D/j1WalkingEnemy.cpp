@@ -314,13 +314,19 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		App->audio->PlayFx(die_fx);
+		if (!playing_fx) {
+			App->audio->PlayFx(die_fx);
+			playing_fx = true;
+		}
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
 			particles_created = true;
 		}
-		App->entities->DestroyEntity(this);
+		if (player->state != DIE)
+		{
+			App->entities->DestroyEntity(this);
+		}
 		if (attack_collider != nullptr)
 		{
 			attack_collider->to_delete = true;

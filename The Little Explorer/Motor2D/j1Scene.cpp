@@ -303,7 +303,22 @@ void j1Scene::ResetLevel() {
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 
 	App->map->CleanUp();
-	if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
-	if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
-	//ResetLevel();
+	if (loading_map == LEVEL_1) {
+		App->map->Load("Level1.tmx");
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	if (loading_map == LEVEL_2) {
+		App->map->Load("Level2.tmx");
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 }

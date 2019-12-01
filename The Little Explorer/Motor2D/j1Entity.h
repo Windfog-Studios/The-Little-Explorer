@@ -97,6 +97,8 @@ public:
 	uint double_Jump_fx = 4;
 	p2SString double_Jump_fx_path;
 
+	bool playing_fx = false;
+
 	const p2DynArray<iPoint>* path_to_player = nullptr;
 
 };
