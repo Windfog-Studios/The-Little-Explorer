@@ -171,7 +171,7 @@ bool j1EntityManager::Update(float dt)
 	BROFILER_CATEGORY("EntitiesUpdate", Profiler::Color::Bisque)
 		bool ret = true;
 
-	if (!App->pause){
+	if ((!App->pause)&&(!blocked_movement)){
 		for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 		{
 			entity->data->Update(dt);
@@ -331,6 +331,8 @@ bool j1EntityManager::CheckpointLoad()
 			if (entity_name == "player") {
 				player->position.x = x_position;
 				player->position.y = y_position;
+				player->collider->SetPos(x_position, y_position);
+				player->state = IDLE;
 			}
 
 			if (entity_name == "walking_enemy")

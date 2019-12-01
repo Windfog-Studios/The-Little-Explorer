@@ -104,7 +104,7 @@ void j1UI::LevelTransition(float dt) {
 			direction = CLOSE;
 			transition = false;
 			App->scene->blocked_camera = false;
-			App->entities->player->controls_blocked = false;
+			App->entities->blocked_movement = false;
 		}
 		break;
 	case STATIC:

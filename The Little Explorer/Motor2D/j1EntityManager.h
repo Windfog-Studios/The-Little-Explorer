@@ -79,6 +79,8 @@ public:
 
 	float time_between_updates = 0.01f;
 	float accumulated_time = 0;
+
+	bool blocked_movement = false;
 };
 
 #endif // !_ENTITY_MANAGER_H_
