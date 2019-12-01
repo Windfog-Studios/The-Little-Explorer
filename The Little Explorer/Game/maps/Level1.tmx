@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="293">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="295">
  <tileset firstgid="1" name="jungle_spacing" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
  </tileset>
@@ -56132,6 +56132,16 @@
     <property name="sensor" type="int" value="1"/>
    </properties>
   </object>
+  <object id="293" type="Trigger" x="1152" y="256" width="32" height="64">
+   <properties>
+    <property name="Checkpoint" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="294" type="Trigger" x="3808" y="768" width="32" height="64">
+   <properties>
+    <property name="Checkpoint" type="int" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer name="PathfindingLayer" width="200" height="40">
   <properties>
@@ -64143,7 +64153,7 @@
   </data>
  </layer>
  <objectgroup name="Enemies">
-  <object id="262" name="Knight" type="Knight" x="1120" y="256" width="32" height="32"/>
+  <object id="262" name="Knight" type="Knight" x="1088" y="256" width="32" height="32"/>
   <object id="264" name="Knight" type="Knight" x="160" y="768" width="32" height="32"/>
   <object id="267" name="Knight" type="Knight" x="704" y="320" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="288" width="32" height="32"/>
