@@ -542,8 +542,8 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				}
 
 				if (type == "Player") {
-					objectgroup->object->entity = App->entities->CreateEntity(EntityType::PLAYER, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENEMY;
+					App->entities->player->position.x = App->scene->player_x_position = objectgroup->object[i].rect.x;
+					App->entities->player->position.y = App->scene->player_y_position = objectgroup->object[i].rect.y;
 				}
 
 				if (type == "Knight") {
