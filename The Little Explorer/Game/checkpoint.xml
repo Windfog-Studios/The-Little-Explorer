@@ -1,28 +1,17 @@
 <?xml version="1.0"?>
 <Checkpoint>
 	<render>
-		<camera x="-577" y="-4" />
+		<camera x="-5203" y="-316" />
 	</render>
 	<entities>
-		<player position_x="1115" position_y="256" />
-		<walking_enemy position_x="704" position_y="320" />
-		<flying_enemy position_x="896" position_y="288" />
-		<flying_enemy position_x="1504" position_y="192" />
+		<player position_x="5648" position_y="710" />
 		<flying_enemy position_x="2496" position_y="352" />
-		<flying_enemy position_x="3709" position_y="544" />
-		<flying_enemy position_x="3457" position_y="129" />
 		<flying_enemy position_x="4705" position_y="544" />
 		<flying_enemy position_x="5373" position_y="352" />
-		<flying_enemy position_x="5856" position_y="672" />
-		<flying_enemy position_x="1536" position_y="896" />
-		<walking_enemy position_x="1632" position_y="1120" />
 		<walking_enemy position_x="2368" position_y="416" />
 		<walking_enemy position_x="1952" position_y="192" />
-		<walking_enemy position_x="1694" position_y="193" />
 		<walking_enemy position_x="4224" position_y="960" />
-		<walking_enemy position_x="4416" position_y="800" />
 		<walking_enemy position_x="4800" position_y="160" />
-		<walking_enemy position_x="5021" position_y="162" />
 		<walking_enemy position_x="6208" position_y="928" />
 	</entities>
 </Checkpoint>

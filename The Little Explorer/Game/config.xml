@@ -56,6 +56,7 @@
       <folder>audio/fx</folder>
       <dieFX source="Die.wav"/>
       <jumpFX source="JumpSoundEffect.wav"/>
+      <jump2FX source="DoubleJumpFX.wav"/>
       <health value="100"/>
       <damage value="30"/>
       <position x="320" y="450" />
@@ -69,7 +70,7 @@
     </player>
     <walking_enemy>
       <folder>audio/fx</folder>
-      <die2FX source="Enemydie.wav"/>
+      <die2FX source="WalkingEnemyDie.wav"/>
       <Enemy_attackFX source="Enemy_attack.wav"/>
       <health value="100"/>
       <damage value="10"/>
@@ -78,7 +79,7 @@
     </walking_enemy>
     <walking_enemy2>
       <folder>audio/fx</folder>
-      <die2FX source="Enemydie.wav"/>
+      <die2FX source="WalkingEnemyDie.wav"/>
       <Enemy_attackFX source="Enemy_attack.wav"/>
       <health value="100"/>
       <damage value="10"/>
@@ -86,6 +87,8 @@
       <detection_range value="150" />
     </walking_enemy2>
     <flying_enemy>
+      <folder>audio/fx</folder>
+      <die3FX source="FlyingEnemyDie.wav"/>
       <health value="100"/>
       <damage value="10"/>
       <flying_speed value="75"/>

@@ -64,6 +64,11 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
 
+	Die2_fx_path = config.child("die3FX").attribute("source").as_string();
+
+	Die2_fx = App->audio->LoadFx(Die2_fx_path.GetString());
+	
+
 	LoadAnimations("Animations_flyingEnemy1.tmx");
 
 	return ret;
@@ -211,6 +216,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		position = lastPosition;
 		break;
 	case COLLIDER_PLAYER:
+		App->audio->PlayFx(Die2_fx);
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);

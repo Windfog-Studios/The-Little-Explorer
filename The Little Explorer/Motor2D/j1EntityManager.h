@@ -88,11 +88,6 @@ public:
 
 	bool blocked_movement = false;
 
-	uint WalkingenemyDie_fx = 1;
-	p2SString WalkingenemyDie_fx_path;
-
-	uint Enemy_attack_fx = 2;
-	p2SString Enemy_attack_fx_path;
 };
 
 #endif // !_ENTITY_MANAGER_H_

@@ -50,6 +50,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
+	Double_Jump_fx_path = config.child("jump2FX").attribute("source").as_string();
 	
 	//colliders
 	collider = App->collision->AddCollider(SDL_Rect{0,0,32,64}, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
@@ -64,6 +65,7 @@ bool j1Player::Start(){
 
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
+	Double_Jump_fx = App->audio->LoadFx(Double_Jump_fx_path.GetString());
 	
 	position.x = initial_x_position = App->scene->player_x_position;
 	position.y = initial_y_position = App->scene->player_y_position;
@@ -221,7 +223,7 @@ bool j1Player::PreUpdate(){
 				//double jump
 				if ((player_input.pressing_space) && (can_double_jump == true) && (current_speed.y <= jumpImpulse * 0.5f))
 				{
-					App->audio->PlayFx(jump_fx);
+					App->audio->PlayFx(Double_Jump_fx);
 					jump.Reset();
 					current_speed.y = doubleJumpImpulse;
 					can_double_jump = false;
@@ -244,7 +246,7 @@ bool j1Player::PreUpdate(){
 				{
 					jump.Reset();
 					state = JUMP;
-					App->audio->PlayFx(jump_fx);
+					App->audio->PlayFx(Double_Jump_fx);
 					current_speed.y = doubleJumpImpulse;
 					can_double_jump = false;
 					grounded = false;

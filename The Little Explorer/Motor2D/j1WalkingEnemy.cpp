@@ -72,10 +72,10 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
 
-	WalkingenemyDie_fx_path = config.child("die2FX").attribute("source").as_string();
+	Die_fx_path = config.child("die2FX").attribute("source").as_string();
 	Enemy_attack_fx_path = config.child("Enemy_attackFX").attribute("source").as_string();
 
-	WalkingenemyDie_fx = App->audio->LoadFx(WalkingenemyDie_fx_path.GetString());
+	Die_fx = App->audio->LoadFx(Die_fx_path.GetString());
 	Enemy_attack_fx = App->audio->LoadFx(Enemy_attack_fx_path.GetString());
 
 	LoadAnimations("Animations_Enemy1.tmx");
@@ -313,7 +313,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		App->audio->PlayFx(Enemy_attack_fx);
+		App->audio->PlayFx(Die_fx);
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);

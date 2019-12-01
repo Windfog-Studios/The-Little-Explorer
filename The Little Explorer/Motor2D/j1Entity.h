@@ -63,9 +63,6 @@ public:
 	Collider* last_collider = nullptr;
 	Collider* attack_collider = nullptr;
 	
-	uint die_fx = 0;
-	p2SString die_fx_path;
-	
 	p2List<Animation*> animations;
 	Animation idle;
 	Animation walk;
@@ -90,6 +87,21 @@ public:
 	bool particles_created = false;
 
 	bool going_after_player = false;
+
+	uint die_fx = 0;
+	p2SString die_fx_path;
+
+	uint Die_fx = 1;
+	p2SString Die_fx_path;
+
+	uint Die2_fx = 3;
+	p2SString Die2_fx_path;
+
+	uint Enemy_attack_fx = 2;
+	p2SString Enemy_attack_fx_path;
+
+	uint Double_Jump_fx = 4;
+	p2SString Double_Jump_fx_path;
 
 	const p2DynArray<iPoint>* path_to_player = nullptr;
 
