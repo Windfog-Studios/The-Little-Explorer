@@ -64154,7 +64154,6 @@
  </layer>
  <objectgroup name="Enemies">
   <object id="262" name="Knight" type="Knight" x="1088" y="256" width="32" height="32"/>
-  <object id="264" name="Knight" type="Knight" x="160" y="768" width="32" height="32"/>
   <object id="267" name="Knight" type="Knight" x="704" y="320" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="288" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="1504" y="192" width="32" height="32"/>
@@ -64175,6 +64174,6 @@
   <object id="286" name="Knight" type="Knight" x="5021.33" y="162.667" width="32" height="32"/>
   <object id="287" name="Knight" type="Knight" x="6208" y="928" width="32" height="32"/>
   <object id="288" name="Player" type="Player" x="64" y="768" width="32" height="32"/>
-  <object id="290" name="Bat" type="Bat" x="544" y="736" width="32" height="32"/>
+  <object id="290" name="Bat" type="Bat" x="448" y="736" width="32" height="32"/>
  </objectgroup>
 </map>

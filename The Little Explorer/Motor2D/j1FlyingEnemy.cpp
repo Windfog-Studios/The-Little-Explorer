@@ -220,6 +220,8 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 			App->entities->DestroyEntity(this);
 		}
+		player->current_speed.y = player->enemy_bouncing;
+		player->can_double_jump = true;
 		break;
 	default:
 		break;

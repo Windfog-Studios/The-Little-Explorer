@@ -334,7 +334,8 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			attack_collider->to_delete = true;
 			attack_collider = nullptr;
 		}
-		
+		player->current_speed.y = player->enemy_bouncing;
+		player->can_double_jump = true;
 		break;
 	default:
 		break;

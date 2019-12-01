@@ -45,6 +45,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
+	enemy_bouncing = config.child("enemy_bouncing").attribute("value").as_int();
 
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
