@@ -13,6 +13,7 @@ Role:
 - Collider Implementation
 - Camera Implementation
 - Particle Implementation 
+- Entities artificial intelligence and pathfinding
 
 ### Silvino Medina Cardona
 https://github.com/silvino00
@@ -103,6 +104,7 @@ Page: https://sfx.productioncrate.com/search.html#query=sword&ss=tab&_ga=2.16427
 - There's a transition when the player dies and changes of level.
 - Colliders are made of objectgroups instead of tiles.
 - Checkpoints added
+- Game can be paused
 
 ## License 
 
