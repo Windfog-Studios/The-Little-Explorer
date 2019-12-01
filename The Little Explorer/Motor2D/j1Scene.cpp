@@ -286,10 +286,8 @@ void j1Scene::ResetLevel() {
 	App->entities->player->state = IDLE;
 
 	if (App->entities->player->last_checkpoint == nullptr) {
-		App->entities->player->position.x = App->entities->player->initial_x_position;
-		App->entities->player->position.y = App->entities->player->initial_y_position;
-		App->entities->player->collider->SetPos(App->entities->player->position.x, App->entities->player->position.y);
 		App->entities->RellocateEntities();
+		App->entities->player->collider->SetPos(App->entities->player->position.x, App->entities->player->position.y);
 		ResetCamera(0);
 	}
 	else

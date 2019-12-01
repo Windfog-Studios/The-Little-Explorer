@@ -123,8 +123,6 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ObjectGroup*> objectgroups;
-	int					player_initial_x = 0;
-	int					player_initial_y = 0;
 };
 
 // ----------------------------------------------------
@@ -179,10 +177,6 @@ private:
 	p2SString			folder;
 	bool				map_loaded;
 
-	int level_1_player_x;
-	int level_1_player_y;
-	int level_2_player_x;
-	int level_2_player_y;
 	bool first_time_draw = true;
 
 	p2SString level_1_music;

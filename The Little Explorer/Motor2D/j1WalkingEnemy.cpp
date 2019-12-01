@@ -215,6 +215,7 @@ bool j1WalkingEnemy::Update(float dt) {
 				attack_collider->SetPos(position.x, position.y + 54);
 			}
 		}
+		if (player->state == DIE) state = IDLE;
 		break;
 	case DIE:
 		//current_animation = &die;
