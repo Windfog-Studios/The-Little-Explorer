@@ -72,6 +72,7 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
 	die2_fx_path = config.child("die2FX").attribute("source").as_string();
+	Enemy_attack_fx_path = config.child("Enemy_attackFX").attribute("source").as_string();
 
 	LoadAnimations("Animations_Enemy1.tmx");
 
@@ -81,6 +82,7 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 bool j1WalkingEnemy::Start() {
 
 	die2_fx = App->audio->LoadFx(die2_fx_path.GetString());
+	Enemy_attack_fx = App->audio->LoadFx(Enemy_attack_fx_path.GetString());
 
 	return true;
 }
@@ -190,6 +192,8 @@ bool j1WalkingEnemy::Update(float dt) {
 				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case ATTACK:
+		App->audio->PlayFx(Enemy_attack_fx);
+		App->audio->PlayFx(die2_fx);
 		current_animation = &attack;
 		current_speed.x = 0;
 		if (attack_collider == nullptr) 
@@ -272,7 +276,6 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		App->audio->PlayFx(die2_fx);
 		if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
 		{
 			grounded = true;

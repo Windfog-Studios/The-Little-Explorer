@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Checkpoint>
 	<render>
-		<camera x="0" y="-299" />
+		<camera x="0" y="-314" />
 	</render>
 	<player position_x="750" position_y="0" />
 	<walking_enemy position_x="1120" position_y="256" />

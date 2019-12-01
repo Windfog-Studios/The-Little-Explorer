@@ -28,6 +28,9 @@ public:
 	uint die2_fx;           
 	p2SString die2_fx_path;
 
+	uint Enemy_attack_fx;
+	p2SString Enemy_attack_fx_path;
+
 };
 
 #endif // !_j1WALKING_ENEMY_H
