@@ -107,6 +107,12 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 	}
 
+	if ((state != ATTACK)&&(attack_collider != nullptr))
+	{
+		attack_collider->to_delete = true;
+		attack_collider = nullptr;
+	}
+
 	//guard path
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
