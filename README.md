@@ -77,9 +77,23 @@ All the SFx used was taken from youtube and the page Tune Poket. You can check t
 Page: https://www.youtube.com/watch?v=_eqKyzxa0dM
 Artist: https://audionautix.com/ 
 
+- DoubleJumpFX: 
+Page: https://freesound.org/people/Natty23/sounds/257274/
+Artist: https://freesound.org/people/Natty23/
+
 - DieFX:
 Tune Pocket page: https://www.tunepocket.com/game-over-fail-sound-effects/ 
 Artist: http://www.vittoriocazzadore.it/
+
+- Enemies DieFX:
+Page: https://freesound.org/people/yummie/sounds/209731/
+Artist: https://freesound.org/people/yummie/
+Page: https://freesound.org/people/Breviceps/sounds/445958/
+Artist: https://freesound.org/people/Breviceps/
+
+- Enemy attack sfx:
+Page: https://sfx.productioncrate.com/search.html#query=sword&ss=tab&_ga=2.164274815.1107425616.1575164446-1342997657.1575164446
+ 
 
 ## Innovation
 
@@ -88,6 +102,7 @@ Artist: http://www.vittoriocazzadore.it/
 - When double jumping, the player leaves particles behind him.
 - There's a transition when the player dies and changes of level.
 - Colliders are made of objectgroups instead of tiles.
+- Checkpoints added
 
 ## License 
 
