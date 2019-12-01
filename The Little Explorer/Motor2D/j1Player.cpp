@@ -20,40 +20,6 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 	LoadAnimations("Animations_traveller.tmx");
 	crouch_down.loop = false;
 	crouch_down.loop = false;
-<<<<<<< HEAD
-
-	current_animation = &idle;
-
-	gravity = App->entities->gravity;
-	max_falling_speed = App->entities->max_falling_speed;
-	type = EntityType::PLAYER;
-
-	//set initial attributes of the player
-	if (App->entities->player != nullptr)
-	{
-		max_running_speed = App->entities->player->max_running_speed;
-		max_side_speed = App->entities->player->max_side_speed;
-		acceleration = App->entities->player->acceleration;
-		deceleration = App->entities->player->deceleration;
-
-		jumpImpulse = App->entities->player->jumpImpulse;
-		doubleJumpImpulse = App->entities->player->doubleJumpImpulse;
-		enemy_bouncing = App->entities->player->enemy_bouncing;
-
-		//player fx
-		die_fx = App->entities->player->die_fx;
-		jump_fx = App->entities->player->jump_fx;
-		double_Jump_fx = App->entities->player->double_Jump_fx;
-	}
-
-	lastPosition = position;
-
-	//colliders
-	collider = App->collision->AddCollider(SDL_Rect{ 0,0,32,64 }, COLLIDER_PLAYER, this);
-	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, this);
-=======
-	LOG("");
->>>>>>> parent of f077944... player is an entity more
 }
 
 j1Player::~j1Player(){ }

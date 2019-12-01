@@ -110,7 +110,7 @@ bool j1Scene::Update(float dt)
 	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
 
 	SDL_Rect*	camera = &App->render->camera;
-	iPoint*		player_position = &App->entities->getPlayer()->position;
+	iPoint*		player_position = &App->entities->player->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;
@@ -294,7 +294,9 @@ void j1Scene::ResetLevel() {
 	}
 	else
 	{
+		//LOG("camera previous position: %i", App->render->camera.x);
 		App->entities->CheckpointLoad();
+		//LOG("camera teleport");
 		ResetCamera(1);
 	}
 	App->ui->ResetTransition(STATIC);

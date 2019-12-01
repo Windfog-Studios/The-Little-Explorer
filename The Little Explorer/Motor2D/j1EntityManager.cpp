@@ -186,15 +186,7 @@ bool j1EntityManager::PreUpdate()
 {
 	BROFILER_CATEGORY("EntitiesPreUpdate", Profiler::Color::Bisque)
 	bool ret = true;
-<<<<<<< HEAD
-	if (getPlayer() != nullptr)
-	{
-		player->PreUpdate();
-	}
-
-=======
 	player->PreUpdate();
->>>>>>> parent of f077944... player is an entity more
 	return ret;
 }
 
@@ -239,13 +231,10 @@ bool j1EntityManager::PostUpdate()
 void j1EntityManager::RellocateEntities() {
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		if (entity->data != player)
-		{
-			entity->data->position.x = entity->data->initial_x_position;
-			entity->data->position.y = entity->data->initial_y_position;
-			//entity->data->state = IDLE;
-			entity->data->going_after_player = false;
-		}
+		entity->data->position.x = entity->data->initial_x_position;
+		entity->data->position.y = entity->data->initial_y_position;
+		//entity->data->state = IDLE;
+		entity->data->going_after_player = false;
 	}
 }
 
@@ -366,9 +355,7 @@ bool j1EntityManager::CheckpointLoad()
 			if (entity_name == "player") {
 				player->position.x = x_position;
 				player->position.y = y_position;
-
 				player->collider->SetPos(player->position.x, player->position.y);
-				player->state = IDLE;
 			}
 
 			if (entity_name == "walking_enemy")
