@@ -95,6 +95,8 @@ bool j1Player::PreUpdate(){
 	lastPosition = position;
 	last_state = state;
 
+	//LOG("State %s", state);
+
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		god = !god;
 		if (god)
@@ -355,6 +357,7 @@ bool j1Player::Update(float dt){
 		if (!god) {
 			current_speed.x = 0;
 			isVisible = false;
+			current_animation = &idle;
 			if (!particles_created) {
 				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
@@ -538,7 +541,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 		case COLLIDER_DEATH:
 			state = DIE;
-			current_animation = &idle;
 			break;
 		case COLLIDER_PLATFORM:
 			if ((c1->rect.y + c1->rect.h < c2->rect.y) || ((position.y + current_animation->GetCurrentFrame().h * 0.7 < c2->rect.y) && (lastPosition.y < position.y)))
@@ -579,8 +581,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 			break;
 		case COLLIDER_ENEMY:
-			state = DIE;
-			current_animation = &idle;
+				state = DIE;
 			break;
 		default:
 			break;

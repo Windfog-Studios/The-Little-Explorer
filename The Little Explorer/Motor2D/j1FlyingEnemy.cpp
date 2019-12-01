@@ -86,8 +86,11 @@ bool j1FlyingEnemy::Update(float dt) {
 		int i = 0;
 		iPoint current_map_position = App->map->WorldToMap(position.x, position.y);
 		iPoint tile_to_go;
+		iPoint destination;
 		tile_to_go.x = path_to_player->At(i)->x;
 		tile_to_go.y = path_to_player->At(i)->y;
+		destination.x = path_to_player->At(path_to_player->Count() - 1)->x;
+		destination.y = path_to_player->At(path_to_player->Count() - 1)->y;
 
 		if (current_map_position.x == tile_to_go.x){
 			i++;
@@ -109,6 +112,9 @@ bool j1FlyingEnemy::Update(float dt) {
 		}
 		if ((current_map_position.y < tile_to_go.y)&&(last_collider == nullptr)) {
 			//LOG("Going down");
+			current_speed.y = speed.y;
+		}
+		if (path_to_player->Count() == 1){
 			current_speed.y = speed.y;
 		}
 	}
@@ -177,6 +183,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
+		/*
 		if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
 		{
 			grounded = true;
@@ -199,7 +206,8 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
 			//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			}
-		}
+		}*/
+		position = lastPosition;
 		break;
 	case COLLIDER_PLAYER:
 		//App->entities->DestroyEntity(this);

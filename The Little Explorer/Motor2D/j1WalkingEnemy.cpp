@@ -149,11 +149,6 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 	}
 
-	if ((attack_collider != nullptr) && (state != ATTACK)) {
-		attack_collider->to_delete;
-		attack_collider = nullptr;
-	}
-
 	//state machine
 	switch (state)
 	{
@@ -196,12 +191,13 @@ bool j1WalkingEnemy::Update(float dt) {
 		App->audio->PlayFx(die2_fx);
 		current_animation = &attack;
 		current_speed.x = 0;
-		if (attack_collider == nullptr) 
-			attack_collider = App->collision->AddCollider({ 0,0,26,12 }, COLLIDER_DEATH);
+		if (attack_collider == nullptr) {
+			attack_collider = App->collision->AddCollider({ 0,0,26,12 }, COLLIDER_ENEMY);
+		}
 		if (collider != nullptr) {
 			if (flip == SDL_FLIP_NONE) {
 				collider->SetPos(position.x + 16, position.y + 30);
-				attack_collider->SetPos(position.x + 26, position.y + 52);
+				attack_collider->SetPos(position.x + 40, position.y + 52);
 			}
 			else {
 				collider->SetPos(position.x + 22, position.y + 30);
@@ -225,16 +221,9 @@ bool j1WalkingEnemy::Update(float dt) {
 		{
 			grounded = false;
 			current_speed.x = -current_speed.x;
-			if (lastPosition.x < position.x)
-			{
-				//position.x = lastPosition.x - current_animation->GetCurrentFrame().w;
+			if (lastPosition.x < position.x) {
 				position.x = lastPosition.x;
 			}
-			else
-			{
-				position.x = lastPosition.x;
-			}
-			
 		}
 	}
 
@@ -249,6 +238,11 @@ bool j1WalkingEnemy::Update(float dt) {
 	if (grounded)
 	{
 		position.x += current_speed.x * dt;
+	}
+
+	if ((attack_collider != nullptr) && (state != ATTACK)) {
+		attack_collider->to_delete = true;
+		attack_collider = nullptr;
 	}
 
 	return ret;
