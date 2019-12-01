@@ -13,6 +13,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1WalkingEnemy.h"
+#include "j1WalkingEnemy2.h"
 #include "j1FlyingEnemy.h"
 #include "j1Trap.h"
 #include "j1Particles.h"

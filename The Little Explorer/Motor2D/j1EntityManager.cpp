@@ -13,6 +13,7 @@
 #include "j1UI.h"
 #include "j1Particles.h"
 #include "j1WalkingEnemy.h"
+#include "j1WalkingEnemy2.h"
 #include "j1FlyingEnemy.h"
 #include "j1Trap.h"
 #include "brofiler/Brofiler/Brofiler.h"
@@ -37,6 +38,11 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
+		break;
+	case EntityType::WALKING_ENEMY2:
+		entity = new j1WalkingEnemy2();
 		entity->position.x = entity->initial_x_position = position_x;
 		entity->position.y = entity->initial_y_position = position_y;
 		break;
@@ -110,6 +116,10 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	reference_walking_enemy = new j1WalkingEnemy();
 	reference_walking_enemy->Awake(config.child("walking_enemy"));
 
+	//reference walking enemy2
+	reference_walking_enemy2 = new j1WalkingEnemy2();
+	reference_walking_enemy2->Awake(config.child("walking_enemy2"));
+
 	//reference flying enemy
 	reference_flying_enemy = new j1FlyingEnemy();
 	reference_flying_enemy->Awake(config.child("flying_enemy"));
@@ -124,6 +134,7 @@ bool j1EntityManager::Start()
 	player->Start();
 	reference_walking_enemy->texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
 	reference_flying_enemy->texture = App->tex->Load("sprites/characters/Sprite_bat.png");
+	reference_walking_enemy2->texture = App->tex->Load("sprites/characters/Minotaur - Sprite Sheet.png");
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
@@ -131,6 +142,9 @@ bool j1EntityManager::Start()
 			entity->data->texture = reference_walking_enemy->texture;}
 		if (entity->data->type == EntityType::FLYING_ENEMY){
 			entity->data->texture = reference_flying_enemy->texture; }
+		if (entity->data->type == EntityType::WALKING_ENEMY2) {
+			entity->data->texture = reference_walking_enemy2->texture;
+		}
 	}
 
 	return ret;
@@ -148,6 +162,9 @@ bool j1EntityManager::CleanUp()
 
 	App->tex->UnLoad(reference_flying_enemy->texture);
 	reference_flying_enemy->texture = nullptr;
+
+	App->tex->UnLoad(reference_walking_enemy2->texture);
+	reference_walking_enemy2->texture = nullptr;
 
 	//destroy all entities
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
@@ -241,6 +258,9 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 
 		if (entity_name == "flying_enemy") 
 			CreateEntity(EntityType::FLYING_ENEMY, x_position, y_position);
+
+		if (entity_name == "walking_enemy2")
+			CreateEntity(EntityType::WALKING_ENEMY2, x_position, y_position);
 
 		entity_node = entity_node.next_sibling();
 	}
@@ -340,6 +360,9 @@ bool j1EntityManager::CheckpointLoad()
 
 			if (entity_name == "flying_enemy")
 				CreateEntity(EntityType::FLYING_ENEMY, x_position, y_position);
+
+			if (entity_name == "walking_enemy2")
+				CreateEntity(EntityType::WALKING_ENEMY2, x_position, y_position);
 
 			entity_node = entity_node.next_sibling();
 		}

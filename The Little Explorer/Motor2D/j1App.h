@@ -22,6 +22,7 @@ class j1UI;
 class j1EntityManager;
 class j1PathFinding;
 class j1WalkingEnemy;
+class j1WalkingEnemy2;
 class j1FlyingEnemy;
 class j1Trap;
 

@@ -1,4 +1,4 @@
-#include "j1WalkingEnemy.h"
+#include "j1WalkingEnemy2.h"
 #include "j1Player.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -15,25 +15,25 @@
 #include "j1EntityManager.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
-j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
-	name.create("walking_enemy");
-	
+j1WalkingEnemy2::j1WalkingEnemy2() :j1Entity(EntityType::WALKING_ENEMY2) {
+	name.create("walking_enemy2");
+
 	//variable declaration from EntityManager
 	player = App->entities->player;
 	gravity = App->entities->gravity;
 	max_falling_speed = App->entities->max_falling_speed;
-	type = EntityType::WALKING_ENEMY;
+	type = EntityType::WALKING_ENEMY2;
 
 	//copy variables from reference_enemy
-	if (App->entities->reference_walking_enemy != nullptr)
+	if (App->entities->reference_walking_enemy2 != nullptr)
 	{
-		speed = App->entities->reference_walking_enemy->speed;
-		health = App->entities->reference_walking_enemy->health;
-		damage = App->entities->reference_walking_enemy->damage;
-		detection_range = App->entities->reference_walking_enemy->detection_range;
-		texture = App->entities->reference_walking_enemy->texture;
+		speed = App->entities->reference_walking_enemy2->speed;
+		health = App->entities->reference_walking_enemy2->health;
+		damage = App->entities->reference_walking_enemy2->damage;
+		detection_range = App->entities->reference_walking_enemy2->detection_range;
+		texture = App->entities->reference_walking_enemy2->texture;
 
-		animations = App->entities->reference_walking_enemy->animations;
+		animations = App->entities->reference_walking_enemy2->animations;
 		idle = *animations.At(0)->data;
 		attack = *animations.At(1)->data;
 		run = *animations.At(2)->data;
@@ -47,13 +47,13 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	flip = SDL_FLIP_HORIZONTAL;
 
 	//colliders
-	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
+	collider = App->collision->AddCollider({ 27,47,60,70 }, COLLIDER_ENEMY, (j1Module*)this);
+	raycast = App->collision->AddCollider({ 16,34,8,10 }, COLLIDER_ENEMY, (j1Module*)this);
 	//SDL_Rect attack_collider_rect{0,0,26,12};
 
 }
 
-j1WalkingEnemy::~j1WalkingEnemy() {
+j1WalkingEnemy2::~j1WalkingEnemy2() {
 	/*
 	App->tex->UnLoad(texture);
 	texture = nullptr;
@@ -64,7 +64,7 @@ j1WalkingEnemy::~j1WalkingEnemy() {
 	*/
 }
 
-bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
+bool j1WalkingEnemy2::Awake(pugi::xml_node& config) {
 	bool ret = true;
 
 	speed.x = speed.y = config.child("running_speed").attribute("value").as_int();
@@ -78,14 +78,14 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	die2_fx = App->audio->LoadFx(die2_fx_path.GetString());
 	Enemy_attack_fx = App->audio->LoadFx(Enemy_attack_fx_path.GetString());
 
-	LoadAnimations("Animations_Enemy1.tmx");
+	LoadAnimations("Animations_Enemy2.tmx");
 
 	return ret;
 }
 
-bool j1WalkingEnemy::Update(float dt) {
-	BROFILER_CATEGORY("WalkingEnemyUpdate", Profiler::Color::Orange)
-	bool ret = true;
+bool j1WalkingEnemy2::Update(float dt) {
+	BROFILER_CATEGORY("WalkingEnemy2Update", Profiler::Color::Orange)
+		bool ret = true;
 
 	lastPosition = position;
 	last_animation = current_animation;
@@ -128,13 +128,13 @@ bool j1WalkingEnemy::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
-			if ((current_map_position.DistanceManhattan(destination) < attacking_range + 1)&&((position.x - player->position.x) < 40))
+			if ((current_map_position.DistanceManhattan(destination) < attacking_range + 1) && ((position.x - player->position.x) < 40))
 				state = ATTACK;
 			else state = RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
 			//LOG("Going right");
-			if (current_map_position.DistanceManhattan(destination) <= attacking_range) 
+			if (current_map_position.DistanceManhattan(destination) <= attacking_range)
 				state = ATTACK;
 			else state = RUN_FORWARD;
 		}
@@ -181,24 +181,24 @@ bool j1WalkingEnemy::Update(float dt) {
 		if (collider != nullptr)
 			if (flip == SDL_FLIP_NONE)
 				collider->SetPos(position.x + 16, position.y + 30);
-			else 
+			else
 				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case ATTACK:
 		App->audio->PlayFx(Enemy_attack_fx);
-			current_animation = &attack;
+		current_animation = &attack;
 		current_speed.x = 0;
 		if (attack_collider == nullptr) {
 			attack_collider = App->collision->AddCollider({ 0,0,26,12 }, COLLIDER_ENEMY);
 		}
 		if (collider != nullptr) {
 			if (flip == SDL_FLIP_NONE) {
-				collider->SetPos(position.x + 16, position.y + 30);
-				attack_collider->SetPos(position.x + 40, position.y + 52);
+				collider->SetPos(position.x + 56, position.y + 80);
+				attack_collider->SetPos(position.x + 80, position.y + 92);
 			}
 			else {
-				collider->SetPos(position.x + 22, position.y + 30);
-				attack_collider->SetPos(position.x, position.y + 54);
+				collider->SetPos(position.x + 82, position.y + 80);
+				attack_collider->SetPos(position.x, position.y + 84);
 			}
 		}
 		break;
@@ -245,9 +245,9 @@ bool j1WalkingEnemy::Update(float dt) {
 	return ret;
 }
 
-bool j1WalkingEnemy::PostUpdate() {
-	BROFILER_CATEGORY("WalkingEnemyPostUpdate", Profiler::Color::Orange)
-	bool ret = true;
+bool j1WalkingEnemy2::PostUpdate() {
+	BROFILER_CATEGORY("WalkingEnemy2PostUpdate", Profiler::Color::Orange)
+		bool ret = true;
 	if (current_animation == nullptr) current_animation = last_animation;
 	if (isVisible)
 	{
@@ -258,7 +258,7 @@ bool j1WalkingEnemy::PostUpdate() {
 }
 
 
-void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
+void j1WalkingEnemy2::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1 == raycast)
 	{
@@ -329,7 +329,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			attack_collider->to_delete = true;
 			attack_collider = nullptr;
 		}
-		
+
 		break;
 	default:
 		break;

@@ -14,6 +14,7 @@ enum class EntityType
 {
 	PLAYER,
 	WALKING_ENEMY,
+	WALKING_ENEMY2,
 	FLYING_ENEMY,
 	TRAP,
 	PARTICLES,
@@ -60,6 +61,7 @@ public:
 
 	j1WalkingEnemy* reference_walking_enemy = nullptr;
 	j1FlyingEnemy* reference_flying_enemy = nullptr;
+	j1WalkingEnemy2* reference_walking_enemy2 = nullptr;
 
 	//health
 	int trap_health = 0;
@@ -73,14 +75,22 @@ public:
 	//sfx
 	uint walking_enemy_attack_fx;
 	uint flying_enemy_attack_fx;
+	uint walking_enemy2_attack_fx;
 
 	uint walking_enemy_die_fx;
 	uint flying_enemy_die_fx;
+	uint walking_enemy2_die_fx;
 
 	float time_between_updates = 0.01f;
 	float accumulated_time = 0;
 
 	bool blocked_movement = false;
+
+	uint die2_fx = 1;
+	p2SString die2_fx_path;
+
+	uint Enemy_attack_fx = 2;
+	p2SString Enemy_attack_fx_path;
 };
 
 #endif // !_ENTITY_MANAGER_H_

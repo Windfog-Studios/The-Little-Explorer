@@ -1,13 +1,14 @@
-#ifndef _j1WALKING_ENEMY_H
-#define _j1WALKING_ENEMY_H
+#pragma once
+#ifndef _j1WALKING_ENEMY2_H
+#define _j1WALKING_ENEMY2_H
 #include "j1Entity.h"
 #include "j1Audio.h"
 
-class j1WalkingEnemy : public j1Entity
+class j1WalkingEnemy2 : public j1Entity
 {
 public:
-	j1WalkingEnemy();
-	virtual ~j1WalkingEnemy();
+	j1WalkingEnemy2();
+	virtual ~j1WalkingEnemy2();
 
 	bool Awake(pugi::xml_node& config);
 	bool Update(float dt);
@@ -26,4 +27,3 @@ private:
 };
 
 #endif // !_j1WALKING_ENEMY_H
-

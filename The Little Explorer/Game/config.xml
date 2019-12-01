@@ -75,6 +75,15 @@
       <running_speed value="100"/>
       <detection_range value="150" />
     </walking_enemy>
+    <walking_enemy2>
+      <folder>audio/fx</folder>
+      <die2FX source="Enemydie.wav"/>
+      <Enemy_attackFX source="Enemy_attack.wav"/>
+      <health value="100"/>
+      <damage value="10"/>
+      <running_speed value="100"/>
+      <detection_range value="150" />
+    </walking_enemy2>
     <flying_enemy>
       <health value="100"/>
       <damage value="10"/>
