@@ -217,13 +217,17 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		position = lastPosition;
 		break;
 	case COLLIDER_PLAYER:
-		if (!playing_fx) App->audio->PlayFx(die_fx);
+		if (!playing_fx) {
+			App->audio->PlayFx(die_fx);
+			playing_fx = true;
+		}
 
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
 			particles_created = true;
 		}
+
 		if (player->state != DIE)
 		{
 			App->entities->DestroyEntity(this);

@@ -20,7 +20,36 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 	LoadAnimations("Animations_traveller.tmx");
 	crouch_down.loop = false;
 	crouch_down.loop = false;
-	LOG("");
+
+	current_animation = &idle;
+
+	gravity = App->entities->gravity;
+	max_falling_speed = App->entities->max_falling_speed;
+	type = EntityType::PLAYER;
+
+	//set initial attributes of the player
+	if (App->entities->player != nullptr)
+	{
+		max_running_speed = App->entities->player->max_running_speed;
+		max_side_speed = App->entities->player->max_side_speed;
+		acceleration = App->entities->player->acceleration;
+		deceleration = App->entities->player->deceleration;
+
+		jumpImpulse = App->entities->player->jumpImpulse;
+		doubleJumpImpulse = App->entities->player->doubleJumpImpulse;
+		enemy_bouncing = App->entities->player->enemy_bouncing;
+
+		//player fx
+		die_fx = App->entities->player->die_fx;
+		jump_fx = App->entities->player->jump_fx;
+		double_Jump_fx = App->entities->player->double_Jump_fx;
+	}
+
+	lastPosition = position;
+
+	//colliders
+	collider = App->collision->AddCollider(SDL_Rect{ 0,0,32,64 }, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
+	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player);
 }
 
 j1Player::~j1Player(){ }
@@ -51,24 +80,19 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 	double_Jump_fx_path = config.child("jump2FX").attribute("source").as_string();
-	
-	//colliders
-	collider = App->collision->AddCollider(SDL_Rect{0,0,32,64}, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
-	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player);
+	double_Jump_fx = App->audio->LoadFx(double_Jump_fx_path.GetString());
+
+	die_fx = App->audio->LoadFx(die_fx_path.GetString());
+	attack_fx = App->audio->LoadFx(attack_fx_path.GetString());
+	double_Jump_fx = App->audio->LoadFx(double_Jump_fx_path.GetString());
+
+	position.x = initial_x_position = App->scene->player_x_position;
+	position.y = initial_y_position = App->scene->player_y_position;
 
 	return ret;
 }
 
 bool j1Player::Start(){
-
-	texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
-
-	die_fx = App->audio->LoadFx(die_fx_path.GetString());
-	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
-	double_Jump_fx = App->audio->LoadFx(double_Jump_fx_path.GetString());
-	
-	position.x = initial_x_position = App->scene->player_x_position;
-	position.y = initial_y_position = App->scene->player_y_position;
 
 	return true;
 }
