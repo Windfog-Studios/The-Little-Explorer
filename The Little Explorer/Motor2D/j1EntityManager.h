@@ -88,8 +88,8 @@ public:
 
 	bool blocked_movement = false;
 
-	uint die2_fx = 1;
-	p2SString die2_fx_path;
+	uint WalkingenemyDie_fx = 1;
+	p2SString WalkingenemyDie_fx_path;
 
 	uint Enemy_attack_fx = 2;
 	p2SString Enemy_attack_fx_path;

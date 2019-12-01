@@ -72,10 +72,10 @@ bool j1WalkingEnemy2::Awake(pugi::xml_node& config) {
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
 
-	die2_fx_path = config.child("die2FX").attribute("source").as_string();
+	WalkingenemyDie_fx_path = config.child("die2FX").attribute("source").as_string();
 	Enemy_attack_fx_path = config.child("Enemy_attackFX").attribute("source").as_string();
 
-	die2_fx = App->audio->LoadFx(die2_fx_path.GetString());
+	WalkingenemyDie_fx = App->audio->LoadFx(WalkingenemyDie_fx_path.GetString());
 	Enemy_attack_fx = App->audio->LoadFx(Enemy_attack_fx_path.GetString());
 
 	LoadAnimations("Animations_Enemy2.tmx");

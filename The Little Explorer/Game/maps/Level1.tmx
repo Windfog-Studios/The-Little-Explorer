@@ -51612,10 +51612,10 @@
    <tile gid="1124"/>
    <tile gid="1125"/>
    <tile gid="1126"/>
-   <tile gid="253"/>
-   <tile gid="254"/>
-   <tile gid="254"/>
-   <tile gid="255"/>
+   <tile gid="228"/>
+   <tile gid="229"/>
+   <tile gid="229"/>
+   <tile gid="230"/>
    <tile gid="1028"/>
    <tile gid="1029"/>
    <tile gid="1030"/>
@@ -51812,11 +51812,11 @@
    <tile gid="1124"/>
    <tile gid="1129"/>
    <tile gid="292"/>
-   <tile gid="228"/>
-   <tile gid="229"/>
-   <tile gid="229"/>
-   <tile gid="230"/>
-   <tile gid="1028"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
    <tile gid="1029"/>
    <tile gid="1030"/>
    <tile gid="1031"/>
@@ -56126,7 +56126,7 @@
   <object id="260" type="Death" x="5248" y="482" width="128" height="64"/>
   <object id="261" type="Death" x="1088" y="1024" width="96" height="32"/>
   <object id="268" type="Platform" x="1088" y="1056" width="96" height="64"/>
-  <object id="289" type="Collider" x="5248" y="544" width="128" height="64"/>
+  <object id="289" type="Collider" x="5248" y="544" width="128" height="32"/>
   <object id="291" type="Trigger" x="1216" y="256" width="32" height="32">
    <properties>
     <property name="sensor" type="int" value="1"/>
@@ -59903,11 +59903,11 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="28"/>
-   <tile gid="28"/>
-   <tile gid="28"/>
-   <tile gid="28"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
+   <tile gid="146"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -64144,7 +64144,6 @@
  </layer>
  <objectgroup name="Enemies">
   <object id="262" name="Knight" type="Knight" x="1120" y="256" width="32" height="32"/>
-  <object id="264" name="Knight" type="Knight" x="160" y="768" width="32" height="32"/>
   <object id="267" name="Knight" type="Knight" x="704" y="320" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="288" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="1504" y="192" width="32" height="32"/>
