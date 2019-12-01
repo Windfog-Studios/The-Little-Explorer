@@ -1,6 +1,7 @@
 #ifndef _j1WALKING_ENEMY_H
 #define _j1WALKING_ENEMY_H
 #include "j1Entity.h"
+#include "j1Audio.h"
 
 class j1WalkingEnemy : public j1Entity
 {
@@ -9,6 +10,7 @@ public:
 	virtual ~j1WalkingEnemy();
 
 	bool Awake(pugi::xml_node& config);
+	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
 
@@ -21,6 +23,11 @@ public:
 
 private:
 	float attacking_range = 1;
+
+public:
+	uint die2_fx;           
+	p2SString die2_fx_path;
+
 };
 
 #endif // !_j1WALKING_ENEMY_H

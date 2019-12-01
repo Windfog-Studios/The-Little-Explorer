@@ -65,7 +65,7 @@ public:
 	
 	uint die_fx = 0;
 	p2SString die_fx_path;
-
+	
 	p2List<Animation*> animations;
 	Animation idle;
 	Animation walk;

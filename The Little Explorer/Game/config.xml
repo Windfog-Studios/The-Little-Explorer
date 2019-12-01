@@ -67,6 +67,8 @@
       <max_side_speed value="150"/>
     </player>
     <walking_enemy>
+      <folder>audio/fx</folder>
+      <die2FX source="Enemydie.wav"/>
       <health value="100"/>
       <damage value="10"/>
       <running_speed value="100"/>

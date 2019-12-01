@@ -26,7 +26,6 @@ bool j1Entity::Start() {
 }
 
 bool j1Entity::PreUpdate() {
-
 	bool ret = true;
 	return ret;
 }
