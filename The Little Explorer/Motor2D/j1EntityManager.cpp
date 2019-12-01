@@ -351,7 +351,8 @@ bool j1EntityManager::CheckpointLoad()
 			if (entity_name == "player") {
 				player->position.x = x_position;
 				player->position.y = y_position;
-				player->collider->SetPos(x_position, y_position);
+
+				player->collider->SetPos(player->position.x, player->position.y);
 				player->state = IDLE;
 			}
 

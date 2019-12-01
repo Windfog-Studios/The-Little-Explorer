@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <Checkpoint>
 	<render>
-		<camera x="0" y="-446" />
+		<camera x="-577" y="-4" />
 	</render>
 	<entities>
-		<player position_x="154" position_y="765" />
-		<walking_enemy position_x="1120" position_y="256" />
-		<walking_enemy position_x="800" position_y="576" />
+		<player position_x="1115" position_y="256" />
 		<walking_enemy position_x="704" position_y="320" />
 		<flying_enemy position_x="896" position_y="288" />
 		<flying_enemy position_x="1504" position_y="192" />
@@ -26,6 +24,5 @@
 		<walking_enemy position_x="4800" position_y="160" />
 		<walking_enemy position_x="5021" position_y="162" />
 		<walking_enemy position_x="6208" position_y="928" />
-		<flying_enemy position_x="448" position_y="736" />
 	</entities>
 </Checkpoint>

@@ -45,6 +45,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 	jumpImpulse = config.child("jumpImpulse").attribute("value").as_float();
 	doubleJumpImpulse = config.child("doubleJumpImpulse").attribute("value").as_float();
+	enemy_bouncing = config.child("enemy_bouncing").attribute("value").as_int();
 
 	//player fx
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
@@ -65,7 +66,7 @@ bool j1Player::Start(){
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 	
 	position.x = initial_x_position = App->scene->player_x_position;
-	position.y = initial_x_position = App->scene->player_y_position;
+	position.y = initial_y_position = App->scene->player_y_position;
 
 	return true;
 }
@@ -368,12 +369,7 @@ bool j1Player::Update(float dt){
 			if (App->ui->transition == false) {
 				App->audio->PlayFx(die_fx);
 				App->ui->transition = true;
-				App->scene->blocked_camera = true;
-				App->entities->blocked_movement = true;
-				collider->SetPos(initial_x_position, initial_y_position);
-				current_speed.y = 0;
 				App->ui->ResetTransition();
-				App->scene->Reset_Camera(1);
 			}
 		}
 		break;
@@ -582,8 +578,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 
 		case COLLIDER_ENEMY:
-			if ((position.y < c2->rect.y)&&(state != FALL))
-			{
+			if ((position.y < c2->rect.y) && (state != FALL)) {
 				state = DIE;
 			}
 			break;

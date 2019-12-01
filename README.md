@@ -16,6 +16,8 @@ Role:
 
 ### Silvino Medina Cardona
 https://github.com/silvino00
+
+Roles: 
 - Level Design
 - Audio
 - Spritesheet design 
@@ -31,6 +33,7 @@ You can check our repository using this link: https://github.com/Windfog-Studios
 A - Move left
 D - Move Right
 S - Crouch
+F - Slide
 SPACE - Jump
 
 If SPACE is pressed while jumping a double jump will be performed.
@@ -39,10 +42,12 @@ If SPACE is pressed while jumping a double jump will be performed.
 F1 - Start from the first level
 F2 - Start from the second level
 F3 - Start from the beggining of the current level
+F4 - Pause 
 F5 - Save
 F6 - Load
-F9 - View colliders and camera
+F9 - View colliders and camera frame
 F10 - God Mode
+F11 - Enable/Disable FPS cap
 
 ## Credits
 
@@ -79,9 +84,9 @@ Artist: http://www.vittoriocazzadore.it/
 ## Innovation
 
 - The player can double jump.
-- All player animations coordinates are loaded from a tmx file.
+- All animations are loaded from a TMX file. 
 - When double jumping, the player leaves particles behind him.
-- When changing between levels a transition animation is done.
+- There's a transition when the player dies and changes of level.
 - Colliders are made of objectgroups instead of tiles.
 
 ## License 

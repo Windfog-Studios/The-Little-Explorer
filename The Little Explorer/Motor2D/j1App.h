@@ -15,7 +15,6 @@ class j1Textures;
 class j1Audio;
 class j1Scene;
 class j1Map;
-class j1Player;
 class j1Particles;
 class j1Collision;
 class j1UI;
@@ -25,6 +24,7 @@ class j1WalkingEnemy;
 class j1WalkingEnemy2;
 class j1FlyingEnemy;
 class j1Trap;
+
 
 class j1App
 {
@@ -88,7 +88,6 @@ public:
 	j1Audio*			audio;
 	j1Scene*			scene;
 	j1Map*				map;
-	j1Player*			player;
 	j1Particles*		particles;
 	j1Collision*		collision;
 	j1UI*				ui;

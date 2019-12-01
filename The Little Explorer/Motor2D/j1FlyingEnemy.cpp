@@ -8,6 +8,7 @@
 #include "j1Player.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "j1Particles.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
@@ -210,8 +211,17 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		position = lastPosition;
 		break;
 	case COLLIDER_PLAYER:
-		//App->entities->DestroyEntity(this);
-		//state = DIE;
+		if (!particles_created)
+		{
+			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
+			particles_created = true;
+		}
+		if (player->state != DIE)
+		{
+			App->entities->DestroyEntity(this);
+		}
+		player->current_speed.y = player->enemy_bouncing;
+		player->can_double_jump = true;
 		break;
 	default:
 		break;

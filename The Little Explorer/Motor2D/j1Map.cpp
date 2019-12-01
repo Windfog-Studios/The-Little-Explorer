@@ -67,12 +67,7 @@ void j1Map::Draw()
 					iPoint pos = MapToWorld(x, y);
 					//camera cooling
 					if ((pos.x < -App->render->camera.x + App->render->camera.w) || (pos.x > -App->render->camera.x) ) {
-						/*
-						if (layer->ParallaxSpeed != NULL)
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed);
-						}
-						*/
+
 						if (layer->properties.Get("speed", 0) == 1) {
 							tileset->parallax = tileset->texture;
 							App->render->Blit(tileset->parallax, pos.x, pos.y, &r, SDL_FLIP_NONE, layer->ParallaxSpeed2);

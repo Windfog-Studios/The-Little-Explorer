@@ -65,6 +65,7 @@
       <jumpImpulse value="475"/>
       <doubleJumpImpulse value = "375" />
       <max_side_speed value="150"/>
+      <enemy_bouncing value="300"/>
     </player>
     <walking_enemy>
       <folder>audio/fx</folder>
