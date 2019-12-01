@@ -89,13 +89,20 @@ bool j1WalkingEnemy::Update(float dt) {
 
 	lastPosition = position;
 	last_animation = current_animation;
-	//what to do when getting to a gap
+
+	if (raycast == nullptr) {
+		raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
+	}
+
 	if (last_collider != nullptr)
 	{
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
 			grounded = false;
-			//current_speed.x = -current_speed.x;
+			current_speed.x = -current_speed.x;
+			if (lastPosition.x < position.x) {
+				position.x = lastPosition.x;
+			}
 		}
 	}
 
@@ -210,18 +217,6 @@ bool j1WalkingEnemy::Update(float dt) {
 		break;
 	default:
 		break;
-	}
-
-	if (last_collider != nullptr)
-	{
-		if (!raycast->CheckCollision(last_collider->rect))
-		{
-			grounded = false;
-			current_speed.x = -current_speed.x;
-			if (lastPosition.x < position.x) {
-				position.x = lastPosition.x;
-			}
-		}
 	}
 
 	//Movement Control
