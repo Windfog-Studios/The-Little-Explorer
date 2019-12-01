@@ -83,7 +83,8 @@ void j1UI::LevelTransition(float dt) {
 			{
 				App->entities->CheckpointLoad();
 			}
-			App->scene->Reset_Camera(0);
+			else App->scene->Reset_Camera(0);
+
 			left_square.x = -camera->x;
 			right_square.x = -camera->x + camera->w * 0.5f;
 			left_square.y = -camera->y;

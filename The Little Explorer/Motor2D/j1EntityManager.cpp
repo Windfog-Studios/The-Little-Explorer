@@ -329,9 +329,15 @@ bool j1EntityManager::CheckpointLoad()
 			int y_position = entity_node.attribute("position_y").as_int();
 
 			if (entity_name == "player") {
-				player->position.x = x_position;
-				player->position.y = y_position;
-				player->collider->SetPos(x_position, y_position);
+				if (player->last_checkpoint != nullptr) {
+					player->position.x = x_position;
+					player->position.y = y_position;
+				}
+				else {
+					player->position.x = player->initial_x_position;
+					player->position.y = player->initial_y_position;
+				}
+				player->collider->SetPos(player->position.x, player->position.y);
 				player->state = IDLE;
 			}
 
