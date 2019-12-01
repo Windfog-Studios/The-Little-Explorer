@@ -27,6 +27,7 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		damage = App->entities->reference_flying_enemy->damage;
 		detection_range = App->entities->reference_flying_enemy->detection_range;
 		texture = App->entities->reference_flying_enemy->texture;
+		die_fx = App->entities->reference_flying_enemy->die_fx;
 
 		animations = App->entities->reference_flying_enemy->animations;
 		rest = *animations.At(0)->data;
@@ -64,9 +65,9 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
 
-	Die2_fx_path = config.child("die3FX").attribute("source").as_string();
+	die_fx_path = config.child("die3FX").attribute("source").as_string();
 
-	Die2_fx = App->audio->LoadFx(Die2_fx_path.GetString());
+	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	
 
 	LoadAnimations("Animations_flyingEnemy1.tmx");
@@ -216,7 +217,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		position = lastPosition;
 		break;
 	case COLLIDER_PLAYER:
-		App->audio->PlayFx(Die2_fx);
+		App->audio->PlayFx(die_fx);
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);

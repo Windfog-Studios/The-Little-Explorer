@@ -37,6 +37,7 @@ j1WalkingEnemy2::j1WalkingEnemy2() :j1Entity(EntityType::WALKING_ENEMY2) {
 		idle = *animations.At(0)->data;
 		attack = *animations.At(1)->data;
 		run = *animations.At(2)->data;
+		die_fx = App->entities->reference_walking_enemy2->die_fx;
 
 		current_animation = &idle;
 	}
@@ -179,7 +180,7 @@ bool j1WalkingEnemy2::Update(float dt) {
 				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case ATTACK:
-		App->audio->PlayFx(Enemy_attack_fx);
+		App->audio->PlayFx(attack_fx);
 		current_animation = &attack;
 		current_speed.x = 0;
 		if (attack_collider == nullptr) {

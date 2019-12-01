@@ -91,17 +91,11 @@ public:
 	uint die_fx = 0;
 	p2SString die_fx_path;
 
-	uint Die_fx = 1;
-	p2SString Die_fx_path;
+	uint attack_fx = 2;
+	p2SString attack_fx_path;
 
-	uint Die2_fx = 3;
-	p2SString Die2_fx_path;
-
-	uint Enemy_attack_fx = 2;
-	p2SString Enemy_attack_fx_path;
-
-	uint Double_Jump_fx = 4;
-	p2SString Double_Jump_fx_path;
+	uint double_Jump_fx = 4;
+	p2SString double_Jump_fx_path;
 
 	const p2DynArray<iPoint>* path_to_player = nullptr;
 

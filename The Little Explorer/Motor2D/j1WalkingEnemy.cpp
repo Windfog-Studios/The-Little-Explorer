@@ -32,6 +32,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		damage = App->entities->reference_walking_enemy->damage;
 		detection_range = App->entities->reference_walking_enemy->detection_range;
 		texture = App->entities->reference_walking_enemy->texture;
+		die_fx = App->entities->reference_walking_enemy->die_fx;
 
 		animations = App->entities->reference_walking_enemy->animations;
 		idle = *animations.At(0)->data;
@@ -72,11 +73,11 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
 
-	Die_fx_path = config.child("die2FX").attribute("source").as_string();
-	Enemy_attack_fx_path = config.child("Enemy_attackFX").attribute("source").as_string();
+	die_fx_path = config.child("die2FX").attribute("source").as_string();
+	attack_fx_path = config.child("Enemy_attackFX").attribute("source").as_string();
 
-	Die_fx = App->audio->LoadFx(Die_fx_path.GetString());
-	Enemy_attack_fx = App->audio->LoadFx(Enemy_attack_fx_path.GetString());
+	die_fx = App->audio->LoadFx(die_fx_path.GetString());
+	attack_fx = App->audio->LoadFx(attack_fx_path.GetString());
 
 	LoadAnimations("Animations_Enemy1.tmx");
 
@@ -192,7 +193,7 @@ bool j1WalkingEnemy::Update(float dt) {
 				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case ATTACK:
-		App->audio->PlayFx(Enemy_attack_fx);
+		App->audio->PlayFx(attack_fx);
 			current_animation = &attack;
 		current_speed.x = 0;
 		if (attack_collider == nullptr) {
@@ -313,7 +314,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		App->audio->PlayFx(Die_fx);
+		App->audio->PlayFx(die_fx);
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
