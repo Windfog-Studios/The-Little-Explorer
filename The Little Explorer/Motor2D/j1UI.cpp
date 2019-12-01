@@ -37,14 +37,11 @@ bool j1UI::CleanUp() {
 bool j1UI::Update(float dt) {
 	BROFILER_CATEGORY("UIUpdate", Profiler::Color::BlueViolet)
 	bool ret = true;
-	SDL_Rect rect = { 10,10,10,10 };
-	rect.x = -camera->x;
 	if (transition) LevelTransition(dt);
-	//App->render->DrawQuad(rect, 255, 0, 0, 255);
 	return ret;
 }
 bool j1UI::PostUpdate() {
-	BROFILER_CATEGORY("UIPostUpdate", Profiler::Color::BlueViolet)
+	BROFILER_CATEGORY("UIPostUpdate", Profiler::Color::LawnGreen)
 	if (transition) {
 		App->render->DrawQuad(left_square, 0, 0, 0, 255);
 		App->render->DrawQuad(right_square, 0, 0, 0, 255);
@@ -66,6 +63,10 @@ void j1UI::LevelTransition(float dt) {
 		else
 		{
 			direction = STATIC;
+			if (App->entities->player->last_collider != nullptr)
+			{
+				App->entities->CheckpointLoad();
+			}
 			App->scene->Reset_Camera(0);
 			left_square.x = -camera->x;
 			right_square.x = -camera->x + camera->w * 0.5f;

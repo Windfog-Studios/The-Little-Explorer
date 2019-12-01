@@ -567,7 +567,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			if (c2->isCheckpoint) {
 				if (!c2->checkpoint_tiggered){
-					App->entities->CheckPointSave();
+					App->entities->CheckpointSave();
+					last_checkpoint = c2;
 				}
 				c2->checkpoint_tiggered = true;
 			}

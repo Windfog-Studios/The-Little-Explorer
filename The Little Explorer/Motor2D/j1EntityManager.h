@@ -39,7 +39,8 @@ public:
 
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;
-	bool CheckPointSave();
+	bool CheckpointSave();
+	bool CheckpointLoad();
 
 	j1Entity*	 CreateEntity(EntityType type, int position_x, int position_y);
 	virtual void DestroyEntity(j1Entity* delete_entity);

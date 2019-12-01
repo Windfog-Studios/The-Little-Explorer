@@ -60,6 +60,8 @@ public:
 
 	bool god = false;
 	bool controls_blocked = false;
+
+	Collider* last_checkpoint = nullptr;
 };
 
 #endif // !_j1PLAYER_H_

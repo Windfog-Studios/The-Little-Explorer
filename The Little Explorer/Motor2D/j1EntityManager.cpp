@@ -219,7 +219,6 @@ void j1EntityManager::RellocateEntities() {
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
 	bool ret = true;
-	p2List_item<j1Entity*>* item;
 	
 	pugi::xml_node entity_node = data.first_child();
 
@@ -263,24 +262,33 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 	return ret;
 }
 
-bool j1EntityManager::CheckPointSave() {
+bool j1EntityManager::CheckpointSave() {
 	bool ret = true;
 	LOG("Checkpoint triggered");
 
 	// xml object were we will store all data
 	pugi::xml_document data;
 	pugi::xml_node root;
+	pugi::xml_node entities_node;
 
 	root = data.append_child("Checkpoint");
-
-		ret = App->render->Save(root.append_child("render"));
+	ret = App->render->Save(root.append_child("render"));
+	entities_node = root.append_child("entities");
 
 		p2List_item<j1Entity*>* entity;
 		for (entity = entities.start; entity != nullptr; entity = entity->next)
 		{
-			pugi::xml_node child = root.append_child(entity->data->name.GetString());
-			child.append_attribute("position_x") = entity->data->initial_x_position;
-			child.append_attribute("position_y") = entity->data->initial_y_position;
+			pugi::xml_node child = entities_node.append_child(entity->data->name.GetString());
+			if (entity->data == player)
+			{
+				child.append_attribute("position_x") = entity->data->position.x;
+				child.append_attribute("position_y") = entity->data->position.y;
+			}
+			else
+			{
+				child.append_attribute("position_x") = entity->data->initial_x_position;
+				child.append_attribute("position_y") = entity->data->initial_y_position;
+			}
 		}
 
 	if (ret == true)
@@ -290,5 +298,48 @@ bool j1EntityManager::CheckPointSave() {
 	}
 
 	data.reset();
+	return ret;
+}
+
+bool j1EntityManager::CheckpointLoad()
+{
+	bool ret = true;
+
+	pugi::xml_document doc;
+	pugi::xml_node root;
+
+	DestroyAllEntities();
+
+	pugi::xml_parse_result result = doc.load_file(App->checkpoint_save.GetString());
+
+	if (result == NULL) LOG("Error loading checkpoint data from %s", App->checkpoint_save.GetString());
+
+	else {
+		root = doc.first_child();
+		App->render->camera.x = root.child("render").child("camera").attribute("x").as_int();
+		App->render->camera.y = root.child("render").child("camera").attribute("y").as_int();
+
+		pugi::xml_node entity_node = root.child("entities").first_child();
+
+		while (entity_node != nullptr)
+		{
+			p2SString entity_name(entity_node.name());
+			int x_position = entity_node.attribute("position_x").as_int();
+			int y_position = entity_node.attribute("position_y").as_int();
+
+			if (entity_name == "player") {
+				player->position.x = x_position;
+				player->position.y = y_position;
+			}
+
+			if (entity_name == "walking_enemy")
+				CreateEntity(EntityType::WALKING_ENEMY, x_position, y_position);
+
+			if (entity_name == "flying_enemy")
+				CreateEntity(EntityType::FLYING_ENEMY, x_position, y_position);
+
+			entity_node = entity_node.next_sibling();
+		}
+	}
 	return ret;
 }
