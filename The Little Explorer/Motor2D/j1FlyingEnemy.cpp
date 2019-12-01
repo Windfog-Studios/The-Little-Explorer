@@ -33,9 +33,9 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		rest = *animations.At(0)->data;
 		die = *animations.At(1)->data;
 		idle = *animations.At(2)->data;
+
 		attack = idle;
 		run = idle;
-
 		current_animation = &idle;
 	}
 
@@ -217,7 +217,8 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		position = lastPosition;
 		break;
 	case COLLIDER_PLAYER:
-		App->audio->PlayFx(die_fx);
+		if (!playing_fx) App->audio->PlayFx(die_fx);
+
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);

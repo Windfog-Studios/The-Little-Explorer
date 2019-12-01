@@ -110,7 +110,7 @@ bool j1Scene::Update(float dt)
 	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
 
 	SDL_Rect*	camera = &App->render->camera;
-	iPoint*		player_position = &App->entities->player->position;
+	iPoint*		player_position = &App->entities->getPlayer()->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;
@@ -303,7 +303,22 @@ void j1Scene::ResetLevel() {
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 
 	App->map->CleanUp();
-	if (loading_map == LEVEL_1) App->map->Load("Level1.tmx");
-	if (loading_map == LEVEL_2) App->map->Load("Level2.tmx");
-	//ResetLevel();
+	if (loading_map == LEVEL_1) {
+		App->map->Load("Level1.tmx");
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	if (loading_map == LEVEL_2) {
+		App->map->Load("Level2.tmx");
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 }
