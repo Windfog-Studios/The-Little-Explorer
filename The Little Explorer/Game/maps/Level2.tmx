@@ -56131,6 +56131,7 @@
  </objectgroup>
  <layer name="Pathfinding" width="200" height="40">
   <properties>
+   <property name="Navigation" type="int" value="1"/>
    <property name="Nodraw" type="int" value="1"/>
    <property name="Normal_Collider" type="int" value="1"/>
   </properties>
