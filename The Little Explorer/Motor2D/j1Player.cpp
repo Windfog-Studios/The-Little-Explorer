@@ -521,7 +521,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				grounded = true;
 				position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 				current_speed.y = 0;
-				state = IDLE;
+				if (state != DIE) state = IDLE;
 			}
 
 			if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
@@ -538,9 +538,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 
 			}
-			break;
-		case COLLIDER_DEATH:
-			state = DIE;
 			break;
 		case COLLIDER_PLATFORM:
 			if ((c1->rect.y + c1->rect.h < c2->rect.y) || ((position.y + current_animation->GetCurrentFrame().h * 0.7 < c2->rect.y) && (lastPosition.y < position.y)))
@@ -578,8 +575,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 				c2->checkpoint_tiggered = true;
 			}
-
 			break;
+
+		case COLLIDER_DEATH:
+			state = DIE;
+			break;
+
 		case COLLIDER_ENEMY:
 				state = DIE;
 			break;

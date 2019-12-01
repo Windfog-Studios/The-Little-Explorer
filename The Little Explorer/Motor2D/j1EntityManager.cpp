@@ -211,7 +211,7 @@ void j1EntityManager::RellocateEntities() {
 		{
 			entity->data->position.x = entity->data->initial_x_position;
 			entity->data->position.y = entity->data->initial_y_position;
-			entity->data->state = IDLE;
+			//entity->data->state = IDLE;
 			entity->data->going_after_player = false;
 		}
 	}
