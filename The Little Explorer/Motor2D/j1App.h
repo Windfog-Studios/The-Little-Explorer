@@ -106,6 +106,8 @@ public:
 	bool vsync = false;
 	bool cap_enabled = true;
 
+	mutable p2SString	checkpoint_save;
+
 private:
 
 	p2List<j1Module*>	modules;

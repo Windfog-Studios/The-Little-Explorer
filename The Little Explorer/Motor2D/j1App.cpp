@@ -88,6 +88,7 @@ bool j1App::Awake()
 	pugi::xml_node		app_config;
 
 	save_game = "save_file.xml";
+	checkpoint_save = "checkpoint.xml";
 	load_game = "save_file.xml";
 
 	bool ret = false;
@@ -213,9 +214,21 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
+	p2SString cap_string;
+	if (cap_enabled)
+		cap_string = "ON";
+	else 
+		cap_string = "OFF";
+
+	p2SString vsync_string;
+	if (vsync)
+		vsync_string = "ON";
+	else
+		vsync_string = "OFF";
+
 	static char title[256];
-	sprintf_s(title, 256, "The Little Explorer - FPS: %i Av.FPS: %.2f Last Frame Ms: %02.2u Cap %i Vsync %i ",
-				frames_on_last_update,avg_fps, last_frame_ms, 1, vsync);
+	sprintf_s(title, 256, "The Little Explorer | FPS: %i Av.FPS: %.2f Last Frame Ms: %02.2u | Cap: %s Vsync: %s ",
+				frames_on_last_update,avg_fps, last_frame_ms, cap_string.GetString(), vsync_string.GetString());
 	App->win->SetTitle(title);
 
 	j1PerfTimer delay_timer;
@@ -228,7 +241,7 @@ void j1App::FinishUpdate()
 
 	dt = perf_timer.ReadMs() * 0.001;
 	//LOG("dt: %.4f delay: %.2f", dt, delay);
-	LOG("dt: %.4f ms", dt * 1000);
+	//LOG("dt: %.4f ms", dt * 1000);
 }
 
 // Call modules before each loop iteration
@@ -364,8 +377,8 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 	// need to add functionality to file_system module for this to work
 }
 
-bool j1App::LoadGameNow()
-{
+bool j1App::LoadGameNow(){
+	BROFILER_CATEGORY("LoadAll", Profiler::Color::MediumPurple)
 	bool ret = false;
 
 	pugi::xml_document data;
@@ -401,8 +414,8 @@ bool j1App::LoadGameNow()
 	return ret;
 }
 
-bool j1App::SavegameNow() const
-{
+bool j1App::SavegameNow() const {
+	BROFILER_CATEGORY("SaveAll", Profiler::Color::GreenYellow)
 	bool ret = true;
 
 	LOG("Saving Game State to %s...", save_game.GetString());

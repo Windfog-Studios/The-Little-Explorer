@@ -26,8 +26,8 @@ j1EntityManager::j1EntityManager(){
 j1EntityManager::~j1EntityManager(){
 }
 
-j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int position_y)
-{
+j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int position_y){
+	BROFILER_CATEGORY("EntityCreation", Profiler::Color::Linen)
 	//static_assert(EntityType::UNKNOWN == 4, "code needs update");
 	j1Entity* entity = nullptr;
 	switch (type)
@@ -63,8 +63,8 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	return entity;
 }
 
-void j1EntityManager::DestroyEntity(j1Entity* entity)
-{
+void j1EntityManager::DestroyEntity(j1Entity* entity){
+	BROFILER_CATEGORY("EntityDestruction", Profiler::Color::Orange)
 	p2List_item<j1Entity*>* item;
 
 	if (entity != nullptr) {
@@ -260,5 +260,35 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 		child.append_attribute("position_y") = item->data->position.y;
 	}
 	
+	return ret;
+}
+
+bool j1EntityManager::CheckPointSave() {
+	bool ret = true;
+	LOG("Checkpoint triggered");
+
+	// xml object were we will store all data
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	root = data.append_child("Checkpoint");
+
+		ret = App->render->Save(root.append_child("render"));
+
+		p2List_item<j1Entity*>* entity;
+		for (entity = entities.start; entity != nullptr; entity = entity->next)
+		{
+			pugi::xml_node child = root.append_child(entity->data->name.GetString());
+			child.append_attribute("position_x") = entity->data->initial_x_position;
+			child.append_attribute("position_y") = entity->data->initial_y_position;
+		}
+
+	if (ret == true)
+	{
+		data.save_file(App->checkpoint_save.GetString());
+		LOG("... finished saving", );
+	}
+
+	data.reset();
 	return ret;
 }
