@@ -5,6 +5,8 @@
 #include "j1App.h"
 #include "SDL/include/SDL_rect.h"
 
+struct SDL_Texture;
+
 enum TransitionDirection {
 	STATIC,
 	OPEN,
@@ -42,6 +44,8 @@ public:
 	SDL_Rect* camera;
 	SDL_Rect left_square;
 	SDL_Rect right_square;
+
+	SDL_Texture* pause_tex = nullptr;
 
 	bool loaded = false;
 	bool transition = false;

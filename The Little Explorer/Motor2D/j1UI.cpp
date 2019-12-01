@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "j1Scene.h"
 #include "j1Player.h"
+#include "j1Textures.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1UI::j1UI() : j1Module() {
@@ -22,6 +23,7 @@ bool j1UI::Awake(pugi::xml_node& config) {
 bool j1UI::Start() {
 	//transition values
 	camera = &App->render->camera;
+	pause_tex = App->tex->Load("sprites/UI/pause.png");
 
 	left_square = {
 		(int)(-camera->x - camera->w * 0.5f),
@@ -39,6 +41,8 @@ bool j1UI::Start() {
 
 bool j1UI::CleanUp() {
 	LOG("Freeing UI");
+	App->tex->UnLoad(pause_tex);
+	pause_tex = nullptr;
 	return true;
 }
 
@@ -50,10 +54,14 @@ bool j1UI::Update(float dt) {
 }
 bool j1UI::PostUpdate() {
 	BROFILER_CATEGORY("UIPostUpdate", Profiler::Color::LawnGreen)
+
 	if (transition) {
 		App->render->DrawQuad(left_square, 0, 0, 0, 255);
 		App->render->DrawQuad(right_square, 0, 0, 0, 255);
 	}
+
+	if (App->pause) App->render->Blit(pause_tex, -camera->x + 150, -camera->y + 294, NULL);
+
 	return true;
 }
 void j1UI::LevelTransition(float dt) {

@@ -91,7 +91,6 @@ void j1EntityManager::DestroyAllEntities() {
 			DestroyEntity(item->data);
 		}
 	}
-	LOG("");
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config){
@@ -170,12 +169,14 @@ bool j1EntityManager::PreUpdate()
 bool j1EntityManager::Update(float dt)
 {
 	BROFILER_CATEGORY("EntitiesUpdate", Profiler::Color::Bisque)
-	bool ret = true;
+		bool ret = true;
 
+	if (!App->pause){
 		for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 		{
 			entity->data->Update(dt);
 		}
+	}
 	accumulated_time += dt;
 	//LOG("Accumulated time: %f", accumulated_time);
 

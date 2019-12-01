@@ -35,19 +35,12 @@ public:
 	// Destructor
 	virtual ~j1App();
 
-	// Called before render is available
 	bool Awake();
-
-	// Called before the first frame
 	bool Start();
-
-	// Called each loop iteration
 	bool Update();
 
-	// Called before quitting
 	bool CleanUp();
 
-	// Add a new module to handle
 	void AddModule(j1Module* module);
 
 	// Exposing some properties for reading
@@ -100,13 +93,12 @@ public:
 	j1UI*				ui;
 	j1EntityManager*	entities;
 	j1PathFinding*		pathfinding;
-	j1WalkingEnemy*     walkingenemy;
+
+	mutable p2SString	checkpoint_save;
 
 	bool pause = false;
 	bool vsync = false;
 	bool cap_enabled = true;
-
-	mutable p2SString	checkpoint_save;
 
 private:
 
