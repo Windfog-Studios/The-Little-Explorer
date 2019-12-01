@@ -31,7 +31,6 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	BROFILER_CATEGORY("EntityCreation", Profiler::Color::Linen)
 	//static_assert(EntityType::UNKNOWN == 4, "code needs update");
 	j1Entity* entity = nullptr;
-
 	switch (type)
 	{
 	case EntityType::PLAYER:
@@ -39,24 +38,31 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::WALKING_ENEMY2:
 		entity = new j1WalkingEnemy2();
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::FLYING_ENEMY:
 		entity = new j1FlyingEnemy();
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::TRAP:
 		entity = new j1Trap();
+		entity->position.x = entity->initial_x_position = position_x;
+		entity->position.y = entity->initial_y_position = position_y;
+		break;
+	case EntityType::PARTICLES:
 		break;
 	case EntityType::UNKNOWN:
 		break;
 	default:
 		break;
 	}
-
-	entity->position.x = entity->initial_x_position = position_x;
-	entity->position.y = entity->initial_y_position = position_y;
 
 	if (entity != nullptr) entities.add(entity);
 
@@ -87,7 +93,9 @@ void j1EntityManager::DestroyAllEntities() {
 
 	for (item = entities.start; item != nullptr; item = item->next)
 	{
-		DestroyEntity(item->data);
+		if (item->data != player) {
+			DestroyEntity(item->data);
+		}
 	}
 }
 
@@ -102,18 +110,19 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	//player creation
 	player = new j1Player();
 	player->Awake(config.child("player"));
+	entities.add(player);
 
 	//reference walking enemy
 	reference_walking_enemy = new j1WalkingEnemy();
 	reference_walking_enemy->Awake(config.child("walking_enemy"));
 
-	//reference flying enemy
-	reference_flying_enemy = new j1FlyingEnemy();
-	reference_flying_enemy->Awake(config.child("flying_enemy"));
-
 	//reference walking enemy2
 	reference_walking_enemy2 = new j1WalkingEnemy2();
 	reference_walking_enemy2->Awake(config.child("walking_enemy2"));
+
+	//reference flying enemy
+	reference_flying_enemy = new j1FlyingEnemy();
+	reference_flying_enemy->Awake(config.child("flying_enemy"));
 
 	return ret;
 }
@@ -122,15 +131,13 @@ bool j1EntityManager::Start()
 {
 	bool ret = true;
 
-	player->texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
+	player->Start();
 	reference_walking_enemy->texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
 	reference_flying_enemy->texture = App->tex->Load("sprites/characters/Sprite_bat.png");
 	reference_walking_enemy2->texture = App->tex->Load("sprites/characters/Minotaur - Sprite Sheet.png");
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		if (entity->data->type == EntityType::PLAYER) {
-			entity->data->texture = player->texture;}
 		if (entity->data->type == EntityType::WALKING_ENEMY){
 			entity->data->texture = reference_walking_enemy->texture;}
 		if (entity->data->type == EntityType::FLYING_ENEMY){
@@ -146,9 +153,6 @@ bool j1EntityManager::Start()
 bool j1EntityManager::CleanUp()
 {
 	bool ret = true;
-
-	App->tex->UnLoad(player->texture);
-	player->texture = nullptr;
 
 	App->tex->UnLoad(trap_texture);
 	trap_texture = nullptr;
@@ -182,11 +186,15 @@ bool j1EntityManager::PreUpdate()
 {
 	BROFILER_CATEGORY("EntitiesPreUpdate", Profiler::Color::Bisque)
 	bool ret = true;
+<<<<<<< HEAD
 	if (getPlayer() != nullptr)
 	{
 		player->PreUpdate();
 	}
 
+=======
+	player->PreUpdate();
+>>>>>>> parent of f077944... player is an entity more
 	return ret;
 }
 
@@ -231,9 +239,13 @@ bool j1EntityManager::PostUpdate()
 void j1EntityManager::RellocateEntities() {
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		entity->data->position.x = entity->data->initial_x_position;
-		entity->data->position.y = entity->data->initial_y_position;
-		entity->data->going_after_player = false;
+		if (entity->data != player)
+		{
+			entity->data->position.x = entity->data->initial_x_position;
+			entity->data->position.y = entity->data->initial_y_position;
+			//entity->data->state = IDLE;
+			entity->data->going_after_player = false;
+		}
 	}
 }
 
@@ -251,8 +263,10 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		int x_position = entity_node.attribute("position_x").as_int();
 		int y_position = entity_node.attribute("position_y").as_int();
 
-		if (entity_name == "player") 
-			CreateEntity(EntityType::PLAYER, x_position, y_position);
+		if (entity_name == "player") {
+			player->position.x = x_position;
+			player->position.y = y_position;
+		}
 
 		if (entity_name == "walking_enemy") 
 			CreateEntity(EntityType::WALKING_ENEMY, x_position, y_position);
@@ -349,8 +363,13 @@ bool j1EntityManager::CheckpointLoad()
 			int x_position = entity_node.attribute("position_x").as_int();
 			int y_position = entity_node.attribute("position_y").as_int();
 
-			if (entity_name == "player")
-				CreateEntity(EntityType::PLAYER, x_position, y_position);
+			if (entity_name == "player") {
+				player->position.x = x_position;
+				player->position.y = y_position;
+
+				player->collider->SetPos(player->position.x, player->position.y);
+				player->state = IDLE;
+			}
 
 			if (entity_name == "walking_enemy")
 				CreateEntity(EntityType::WALKING_ENEMY, x_position, y_position);
