@@ -1,14 +1,18 @@
 #include "j1WalkingEnemy.h"
-#include "j1Entity.h"
-#include "j1Render.h"
-#include "p2Log.h"
-#include "j1Textures.h"
-#include "j1Collision.h"
-#include "j1EntityManager.h"
 #include "j1Player.h"
-#include "j1Pathfinding.h"
-#include "j1Particles.h"
+#include "p2Log.h"
+#include "j1App.h"
+#include "j1Textures.h"
+#include "j1Render.h"
+#include "j1Input.h"
+#include "j1Collision.h"
+#include "j1Window.h"
+#include "j1Scene.h"
 #include "j1Map.h"
+#include "j1Audio.h"
+#include "j1UI.h"
+#include "j1Particles.h"
+#include "j1EntityManager.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
@@ -46,6 +50,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	//SDL_Rect attack_collider_rect{0,0,26,12};
+
 }
 
 j1WalkingEnemy::~j1WalkingEnemy() {
@@ -66,15 +71,26 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	health = config.child("health").attribute("value").as_int();
 	damage = config.child("damage").attribute("value").as_int();
 	detection_range = config.child("detection_range").attribute("value").as_int();
+	die2_fx_path = config.child("die2FX").attribute("source").as_string();
+	Enemy_attack_fx_path = config.child("Enemy_attackFX").attribute("source").as_string();
 
 	LoadAnimations("Animations_Enemy1.tmx");
 
 	return ret;
 }
 
+bool j1WalkingEnemy::Start() {
+
+	die2_fx = App->audio->LoadFx(die2_fx_path.GetString());
+	Enemy_attack_fx = App->audio->LoadFx(Enemy_attack_fx_path.GetString());
+
+	return true;
+}
+
 bool j1WalkingEnemy::Update(float dt) {
 	BROFILER_CATEGORY("WalkingEnemyUpdate", Profiler::Color::Orange)
 	bool ret = true;
+
 	lastPosition = position;
 	last_animation = current_animation;
 	//what to do when getting to a gap
@@ -176,6 +192,8 @@ bool j1WalkingEnemy::Update(float dt) {
 				collider->SetPos(position.x + 22, position.y + 30);
 		break;
 	case ATTACK:
+		App->audio->PlayFx(Enemy_attack_fx);
+		App->audio->PlayFx(die2_fx);
 		current_animation = &attack;
 		current_speed.x = 0;
 		if (attack_collider == nullptr) 

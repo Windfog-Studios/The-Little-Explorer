@@ -100,6 +100,7 @@ public:
 	j1UI*				ui;
 	j1EntityManager*	entities;
 	j1PathFinding*		pathfinding;
+	j1WalkingEnemy*     walkingenemy;
 
 	bool pause = false;
 	bool vsync = false;
