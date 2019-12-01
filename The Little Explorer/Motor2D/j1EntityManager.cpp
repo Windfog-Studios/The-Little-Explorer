@@ -171,11 +171,18 @@ bool j1EntityManager::CleanUp()
 	return ret;
 }
 
+j1Entity* j1EntityManager::getPlayer() {
+	for (p2List_item<j1Entity*>* item = entities.start; item != nullptr; item = item->next)
+	{
+		if (item->data == player) return item->data;
+	}
+}
+
 bool j1EntityManager::PreUpdate()
 {
 	BROFILER_CATEGORY("EntitiesPreUpdate", Profiler::Color::Bisque)
 	bool ret = true;
-	if (player != nullptr)
+	if (getPlayer() != nullptr)
 	{
 		player->PreUpdate();
 	}
