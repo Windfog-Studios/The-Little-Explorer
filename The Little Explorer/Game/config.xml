@@ -88,7 +88,7 @@
     <dust source="particles.png"/>
   </particles>
   <ui>
-    <transition_speed value="150.0" />
+    <transition_speed value="200.0" />
   </ui>
 
 </config>

@@ -241,8 +241,9 @@ bool j1WalkingEnemy::Update(float dt) {
 	//Movement Control
 
 	if (!grounded) {
-		//if (current_speed.y > max_falling_speed) 
-		current_speed.y -= gravity * dt;
+		if (current_speed.y > max_falling_speed) {
+			current_speed.y -= gravity * dt;
+		}
 		position.y -= current_speed.y * dt;
 	}
 	if (grounded)

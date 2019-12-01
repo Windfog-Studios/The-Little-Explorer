@@ -42,7 +42,7 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 
 	//colliders
 	collider = App->collision->AddCollider({ 0,66,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,20,40}, COLLIDER_ENEMY, (j1Module*)this);
+	raycast = App->collision->AddCollider({ 16,34,20,2},COLLIDER_ENEMY, (j1Module*)this);
 }
 
 j1FlyingEnemy::~j1FlyingEnemy() {

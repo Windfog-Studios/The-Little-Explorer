@@ -8,9 +8,7 @@
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1UI::j1UI() : j1Module() {
-	
 	name.create("ui");
-
 }
 
 j1UI :: ~j1UI() {}
@@ -24,8 +22,18 @@ bool j1UI::Awake(pugi::xml_node& config) {
 bool j1UI::Start() {
 	//transition values
 	camera = &App->render->camera;
-	left_square = { -camera->x - camera->w / 2,camera->y,camera->w / 2 + (int)transition_speed,camera->h };
-	right_square = { camera->x + camera->w,camera->y,camera->w * 3 / 4,camera->h };
+
+	left_square = {
+		(int)(-camera->x - camera->w * 0.5f),
+		(int)camera->y,
+		(int)(camera->w * 0.5f),
+		camera->h };
+
+	right_square = { 
+		camera->x + camera->w,
+		camera->y,
+		(int)(camera->w * 0.5f), 
+		camera->h};
 	return true;
 }
 
@@ -53,7 +61,7 @@ void j1UI::LevelTransition(float dt) {
 	switch (direction)
 	{
 	case CLOSE:
-		if (left_square.x <= -camera->x)
+		if (left_square.x <= -camera->x - TRANSITION_MARGIN)
 		{
 			left_square.x += transition_speed * dt;
 			right_square.x -= transition_speed * dt;

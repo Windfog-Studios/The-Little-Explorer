@@ -11,28 +11,25 @@ enum TransitionDirection {
 	CLOSE
 };
 
+#define TRANSITION_MARGIN 10
+
 class j1UI : public j1Module
 {
 public:
 
 	j1UI();
-
 	virtual ~j1UI();
 
 	bool Awake(pugi::xml_node& config);
-
 	bool Start();
 
-	//bool PreUpdate();
 
 	bool Update(float dt);
-
 	bool PostUpdate();
 
 	bool CleanUp();
 
 	void LevelTransition(float dt);
-
 	void ResetTransition(TransitionDirection state = CLOSE);
 
 public:

@@ -27,16 +27,13 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);
-
 	// Called before the first frame
 	bool Start();
 
 	// Called before all Updates
 	bool PreUpdate();
-
 	// Called each loop iteration
 	bool Update(float dt);
-
 	// Called before all Updates
 	bool PostUpdate();
 
@@ -44,9 +41,7 @@ public:
 	bool CleanUp();
 
 	void Reset_Camera(int kind_of_reset);
-
 	void ResetLevel();
-
 	void LevelChange(Map unloading_map, Map loading_map);
 
 	bool Save(pugi::xml_node& data) const;

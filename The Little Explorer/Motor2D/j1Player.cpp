@@ -269,7 +269,7 @@ bool j1Player::Update(float dt){
 
 	if (last_collider != nullptr)
 	{
-		if (!raycast->CheckCollision(last_collider->rect))
+		if ((!raycast->CheckCollision(last_collider->rect))&& (state != DIE))
 		{
 			grounded = false;
 			if((state != JUMP)&&(!god)) state = FALL;
@@ -351,6 +351,25 @@ bool j1Player::Update(float dt){
 			collider->SetPos(position.x + 14, position.y + 6);*/
 		break;
 	case DIE:
+		if (!god) {
+			current_speed.x = 0;
+			isVisible = false;
+			if (!particles_created) {
+				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x + 2, position.y + current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, flip);
+				particles_created = true;
+			}
+			if (App->ui->transition == false) {
+				App->audio->PlayFx(die_fx);
+				App->ui->transition = true;
+				App->scene->blocked_camera = true;
+				controls_blocked = true;
+				App->ui->ResetTransition();
+				App->scene->Reset_Camera(1);
+			}
+		}
 		break;
 	default:
 		LOG("No state found");
@@ -515,25 +534,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			break;
 		case COLLIDER_DEATH:
-			if (!god) {
-				current_speed.x = 0;
-				isVisible = false;
-				if (!particles_created) {
-					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x +2, position.y + current_animation->GetCurrentFrame().h -2, COLLIDER_NONE, 0, flip);
-					particles_created = true;
-				}
-				if (App->ui->transition == false){
-					App->audio->PlayFx(die_fx);
-					App->ui->transition = true;
-					App->scene->blocked_camera = true;
-					App->ui->ResetTransition();
-					App->scene->Reset_Camera(1);
-					controls_blocked = true;
-				}
-			}
 			state = DIE;
 			break;
 		case COLLIDER_PLATFORM:
@@ -575,23 +575,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 			break;
 		case COLLIDER_ENEMY:
-			if(!god){
-			  isVisible = false;
-				if (!particles_created) {
-  					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x, position.y + 25, COLLIDER_NONE, 0, flip);
-					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 5, COLLIDER_NONE, 0, flip);
-					particles_created = true;
-				}
-				if (App->ui->transition == false){
-					App->audio->PlayFx(die_fx);
-					App->ui->transition = true;
-					App->scene->blocked_camera = true;
-					App->ui->ResetTransition();
-					App->scene->Reset_Camera(1);
-					controls_blocked = true;
-				}
-			}
+			state = DIE;
 			break;
 		default:
 			break;
