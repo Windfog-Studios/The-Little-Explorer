@@ -64127,15 +64127,15 @@
  <objectgroup name="Enemies">
   <object id="70" name="Bat" type="Bat" x="512" y="608" width="32" height="32"/>
   <object id="72" name="Player" type="Player" x="128" y="608" width="32" height="32"/>
-  <object id="73" name="Knight" type="Knight" x="768" y="800" width="32" height="32"/>
-  <object id="74" name="Knight" type="Knight" x="1120" y="704" width="32" height="32"/>
-  <object id="75" name="Knight" type="Knight" x="1152" y="448" width="32" height="32"/>
-  <object id="76" name="Knight" type="Knight" x="1888" y="352" width="32" height="32"/>
-  <object id="77" name="Knight" type="Knight" x="1472" y="352" width="32" height="32"/>
-  <object id="78" name="Knight" type="Knight" x="2848" y="608" width="32" height="32"/>
+  <object id="73" name="Knight" type="Knight" x="768" y="832" width="32" height="32"/>
+  <object id="74" name="Knight" type="Knight" x="1120" y="736" width="32" height="32"/>
+  <object id="75" name="Knight" type="Knight" x="1152" y="480" width="32" height="32"/>
+  <object id="76" name="Knight" type="Knight" x="1888" y="384" width="32" height="32"/>
+  <object id="77" name="Knight" type="Knight" x="1472" y="384" width="32" height="32"/>
+  <object id="78" name="Knight" type="Knight" x="2848" y="640" width="32" height="32"/>
   <object id="79" name="Knight" type="Knight" x="3934.67" y="291.667" width="32" height="32"/>
-  <object id="80" name="Knight" type="Knight" x="5088" y="704" width="32" height="32"/>
-  <object id="81" name="Knight" type="Knight" x="5280" y="704" width="32" height="32"/>
+  <object id="80" name="Knight" type="Knight" x="5088" y="736" width="32" height="32"/>
+  <object id="81" name="Knight" type="Knight" x="5280" y="736" width="32" height="32"/>
   <object id="82" name="Bat" type="Bat" x="3044" y="397.333" width="32" height="32"/>
   <object id="85" name="Bat" type="Bat" x="5920" y="1024" width="32" height="32"/>
   <object id="86" name="Bat" type="Bat" x="5344" y="992" width="32" height="32"/>

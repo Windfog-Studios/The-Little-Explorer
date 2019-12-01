@@ -95,8 +95,15 @@ bool j1WalkingEnemy::Update(float dt) {
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
 			grounded = false;
-			//current_speed.x = -current_speed.x;
+			current_speed.x = -current_speed.x;
+			if (lastPosition.x < position.x) {
+				position.x = lastPosition.x;
+			}
 		}
+	}
+
+	if (raycast == nullptr) {
+		raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	}
 
 	//guard path
@@ -210,18 +217,6 @@ bool j1WalkingEnemy::Update(float dt) {
 		break;
 	default:
 		break;
-	}
-
-	if (last_collider != nullptr)
-	{
-		if (!raycast->CheckCollision(last_collider->rect))
-		{
-			grounded = false;
-			current_speed.x = -current_speed.x;
-			if (lastPosition.x < position.x) {
-				position.x = lastPosition.x;
-			}
-		}
 	}
 
 	//Movement Control
