@@ -22,6 +22,8 @@ Roles:
 - Level Design
 - Audio
 - Spritesheet design 
+- Animation
+- Secondary entities
 
 We are both students of video game development in the CITM in Terrassa and this is our development project for the first semester of the second year of the degree.  
 
