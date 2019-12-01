@@ -369,12 +369,7 @@ bool j1Player::Update(float dt){
 			if (App->ui->transition == false) {
 				App->audio->PlayFx(die_fx);
 				App->ui->transition = true;
-				App->scene->blocked_camera = true;
-				App->entities->blocked_movement = true;
-				collider->SetPos(initial_x_position, initial_y_position);
-				current_speed.y = 0;
 				App->ui->ResetTransition();
-				App->scene->Reset_Camera(1);
 			}
 		}
 		break;

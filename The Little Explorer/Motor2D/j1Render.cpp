@@ -102,7 +102,7 @@ bool j1Render::Load(pugi::xml_node& data)
 {
 	camera.x = initial_camera_x = data.child("camera").attribute("x").as_int();
 	camera.y = initial_camera_y = data.child("camera").attribute("y").as_int();
-	App->scene->Reset_Camera(1);
+	App->scene->ResetCamera(1);
 	return true;
 }
 

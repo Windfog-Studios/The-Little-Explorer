@@ -69,26 +69,37 @@ void j1UI::LevelTransition(float dt) {
 	switch (direction)
 	{
 	case CLOSE:
-		if (left_square.x <= -camera->x - TRANSITION_MARGIN)
+		if (left_square.x <= -camera->x)
 		{
 			left_square.x += transition_speed * dt;
 			right_square.x -= transition_speed * dt;
 			App->render->DrawQuad(left_square, 0, 0, 0, 255);
 			App->render->DrawQuad(right_square, 0, 0, 0, 255);
+			App->scene->blocked_camera = true;
+			App->entities->blocked_movement = true;
 		}
-		else
+		else direction = STATIC;
+		break;
+	case STATIC:
+		time = SDL_GetTicks();
+		if (time - transition_moment >= transition_time * 1000)
 		{
-			direction = STATIC;
-			if (App->entities->player->last_collider != nullptr)
-			{
-				App->entities->CheckpointLoad();
-			}
-			else App->scene->Reset_Camera(0);
-
 			left_square.x = -camera->x;
 			right_square.x = -camera->x + camera->w * 0.5f;
-			left_square.y = -camera->y;
-			right_square.y = -camera->y;
+
+			if ((App->scene->current_level == LEVEL_1) && (App->scene->want_to_load == LEVEL_2)) 
+			{
+				App->scene->LevelChange(LEVEL_2, LEVEL_1);
+			}
+			else if ((App->scene->current_level == LEVEL_2) && (App->scene->want_to_load == LEVEL_1)) 
+			{
+				App->scene->LevelChange(LEVEL_1, LEVEL_2);
+			}
+			else
+			{
+				App->scene->ResetLevel();
+			}
+			direction = OPEN;
 		}
 		break;
 	case OPEN:
@@ -96,44 +107,13 @@ void j1UI::LevelTransition(float dt) {
 		{
 			left_square.x -= transition_speed * dt;
 			right_square.x += transition_speed * dt;
-			App->render->DrawQuad(left_square, 0, 0, 0, 255);
-			App->render->DrawQuad(right_square, 0, 0, 0, 255);
-			App->scene->ResetLevel();
 		}
 		else
 		{
-			direction = CLOSE;
 			transition = false;
 			App->scene->blocked_camera = false;
 			App->entities->blocked_movement = false;
-		}
-		break;
-	case STATIC:
-		time = SDL_GetTicks();
-		if (transition_moment - time <= - transition_time * 1000)
-		{
-			left_square.x = -camera->x;
-			right_square.x = -camera->x + camera->w * 0.5f;
-			direction = OPEN;
-		}
-		else 
-		{
-			if (loaded == false) {
-				if (App->scene->current_level == App->scene->want_to_load)
-				{
-					App->scene->ResetLevel();
-				}
-				else if ((App->scene->current_level == LEVEL_1) && (App->scene->want_to_load == LEVEL_2)) {
-					App->scene->LevelChange(LEVEL_2, LEVEL_1);
-				}
-				else if ((App->scene->current_level == LEVEL_2) && (App->scene->want_to_load == LEVEL_1)) {
-					App->scene->LevelChange(LEVEL_1, LEVEL_2);
-				}
-			}
-			loaded = true;
-			App->scene->Reset_Camera(0);
-			ResetTransition(STATIC);
-			App->scene->ResetLevel();
+			direction = CLOSE;
 		}
 		break;
 	default:
@@ -141,9 +121,11 @@ void j1UI::LevelTransition(float dt) {
 	}
 }
 
-void j1UI::ResetTransition(TransitionDirection state) {
+void j1UI::ResetTransition(TransitionState state) {
+
 	left_square.y = -camera->y;
 	right_square.y = -camera->y;
+
 	if (state == CLOSE)
 	{
 		left_square.x = -camera->x - left_square.w;
@@ -154,5 +136,4 @@ void j1UI::ResetTransition(TransitionDirection state) {
 		left_square.x = -camera->x;
 		right_square.x = -camera->x + camera->w * 0.5f;
 	}
-	App->scene->blocked_camera = true;
 }

@@ -8,7 +8,9 @@
 
 class j1Entity;
 struct SDL_Texture;
-
+class j1Player;
+class j1WalkingEnemy;
+class j1FlyingEnemy;
 
 enum class EntityType
 {

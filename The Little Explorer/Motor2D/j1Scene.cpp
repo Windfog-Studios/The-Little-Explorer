@@ -267,21 +267,37 @@ bool j1Scene::Load(pugi::xml_node& data)
 	return true;
 }
 
-void j1Scene::Reset_Camera(int kind_of_reset) {
+void j1Scene::ResetCamera(int kind_of_reset) {
 	if (kind_of_reset == 0)
 	{
 		App->render->camera.x = App->render->initial_camera_x;
 		App->render->camera.y = App->render->initial_camera_y;
 	}
+
 	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
 	camera_frame.y = -App->render->camera.y + camera_frame_y_margin;
 }
 
 void j1Scene::ResetLevel() {
+
 	App->entities->player->flip = SDL_FLIP_NONE;
 	App->entities->player->isVisible = true;
 	App->entities->player->particles_created = false;
 	App->entities->player->state = IDLE;
+
+	if (App->entities->player->last_checkpoint == nullptr) {
+		App->entities->player->position.x = App->entities->player->initial_x_position;
+		App->entities->player->position.y = App->entities->player->initial_y_position;
+		App->entities->player->collider->SetPos(App->entities->player->position.x, App->entities->player->position.y);
+		App->entities->RellocateEntities();
+		ResetCamera(0);
+	}
+	else
+	{
+		App->entities->CheckpointLoad();
+		ResetCamera(1);
+	}
+	App->ui->ResetTransition(STATIC);
 }
 
 void j1Scene::LevelChange(Map loading_map, Map unloading_map) {

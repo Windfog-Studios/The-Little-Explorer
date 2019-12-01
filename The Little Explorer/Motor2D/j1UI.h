@@ -7,7 +7,7 @@
 
 struct SDL_Texture;
 
-enum TransitionDirection {
+enum TransitionState {
 	STATIC,
 	OPEN,
 	CLOSE
@@ -32,15 +32,15 @@ public:
 	bool CleanUp();
 
 	void LevelTransition(float dt);
-	void ResetTransition(TransitionDirection state = CLOSE);
+	void ResetTransition(TransitionState state = CLOSE);
 
 public:
 	//transition variables
-	int transition_time = 5;
+	int transition_time = 3;
 	int transition_moment = 0;
 	float transition_speed = 0;
 
-	TransitionDirection direction = CLOSE;
+	TransitionState direction = CLOSE;
 	SDL_Rect* camera;
 	SDL_Rect left_square;
 	SDL_Rect right_square;
