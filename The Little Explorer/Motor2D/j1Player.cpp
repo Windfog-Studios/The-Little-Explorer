@@ -582,7 +582,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 
 		case COLLIDER_ENEMY:
+			if ((position.y < c2->rect.y)&&(state != FALL))
+			{
 				state = DIE;
+			}
 			break;
 		default:
 			break;

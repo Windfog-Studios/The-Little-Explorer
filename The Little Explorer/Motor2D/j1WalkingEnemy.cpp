@@ -132,12 +132,14 @@ bool j1WalkingEnemy::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
-			if (current_map_position.DistanceManhattan(destination) < attacking_range +1) state = ATTACK;
+			if ((current_map_position.DistanceManhattan(destination) < attacking_range + 1)&&((position.x - player->position.x) < 40))
+				state = ATTACK;
 			else state = RUN_BACKWARD;
 		}
 		if (current_map_position.x < tile_to_go.x) {
 			//LOG("Going right");
-			if (current_map_position.DistanceManhattan(destination) <= attacking_range) state = ATTACK;
+			if (current_map_position.DistanceManhattan(destination) <= attacking_range) 
+				state = ATTACK;
 			else state = RUN_FORWARD;
 		}
 		if (current_map_position.y > tile_to_go.y) {
@@ -321,14 +323,18 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-	//	App->entities->DestroyEntity(this);
 		if (!particles_created)
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
-			isVisible = false;
 			particles_created = true;
 		}
-		//state = DIE;
+		App->entities->DestroyEntity(this);
+		if (attack_collider != nullptr)
+		{
+			attack_collider->to_delete = true;
+			attack_collider = nullptr;
+		}
+		
 		break;
 	default:
 		break;
