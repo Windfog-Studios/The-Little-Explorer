@@ -244,10 +244,8 @@ bool j1WalkingEnemy2::PostUpdate() {
 	BROFILER_CATEGORY("WalkingEnemy2PostUpdate", Profiler::Color::Orange)
 		bool ret = true;
 	if (current_animation == nullptr) current_animation = last_animation;
-	if (isVisible)
-	{
-		App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
-	}
+
+	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 
 	return ret;
 }

@@ -542,8 +542,8 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 				}
 
 				if (type == "Player") {
-					App->entities->player->position.x = App->entities->player->initial_x_position = objectgroup->object[i].rect.x;
-					App->entities->player->position.y = App->entities->player->initial_y_position = objectgroup->object[i].rect.y;
+					App->entities->player->initialPosition.x = objectgroup->object[i].rect.x;
+					App->entities->player->initialPosition.y = objectgroup->object[i].rect.y;
 				}
 
 				if (type == "Knight") {

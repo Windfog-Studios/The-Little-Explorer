@@ -42,8 +42,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		current_animation = &idle;
 	}
 
-	//lastPosition = position;
-	//last_animation = &idle;
+	initialPosition = position;
 	lastPosition = position;
 	flip = SDL_FLIP_HORIZONTAL;
 
@@ -252,10 +251,8 @@ bool j1WalkingEnemy::PostUpdate() {
 	BROFILER_CATEGORY("WalkingEnemyPostUpdate", Profiler::Color::Orange)
 	bool ret = true;
 	if (current_animation == nullptr) current_animation = last_animation;
-	if (isVisible)
-	{
-		App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
-	}
+
+	App->render->Blit(texture, position.x, position.y, &current_animation->GetCurrentFrame(), flip);
 
 	return ret;
 }

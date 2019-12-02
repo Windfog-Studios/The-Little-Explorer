@@ -38,23 +38,15 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 		break;
 	case EntityType::WALKING_ENEMY:
 		entity = new j1WalkingEnemy();
-		entity->position.x = entity->initial_x_position = position_x;
-		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::WALKING_ENEMY2:
 		entity = new j1WalkingEnemy2();
-		entity->position.x = entity->initial_x_position = position_x;
-		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::FLYING_ENEMY:
 		entity = new j1FlyingEnemy();
-		entity->position.x = entity->initial_x_position = position_x;
-		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::TRAP:
 		entity = new j1Trap();
-		entity->position.x = entity->initial_x_position = position_x;
-		entity->position.y = entity->initial_y_position = position_y;
 		break;
 	case EntityType::PARTICLES:
 		break;
@@ -63,6 +55,9 @@ j1Entity* j1EntityManager::CreateEntity(EntityType type, int position_x, int pos
 	default:
 		break;
 	}
+
+	entity->position.x = entity->initialPosition.x = position_x;
+	entity->position.y = entity->initialPosition.y = position_y;
 
 	if (entity != nullptr) entities.add(entity);
 
@@ -231,8 +226,7 @@ bool j1EntityManager::PostUpdate()
 void j1EntityManager::RellocateEntities() {
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
-		entity->data->position.x = entity->data->initial_x_position;
-		entity->data->position.y = entity->data->initial_y_position;
+		entity->data->position = entity->data->initialPosition;
 		entity->data->going_after_player = false;
 	}
 }
@@ -310,8 +304,8 @@ bool j1EntityManager::CheckpointSave() {
 			}
 			else
 			{
-				child.append_attribute("position_x") = entity->data->initial_x_position;
-				child.append_attribute("position_y") = entity->data->initial_y_position;
+				child.append_attribute("position_x") = entity->data->initialPosition.x;
+				child.append_attribute("position_y") = entity->data->initialPosition.y;
 			}
 		}
 

@@ -39,6 +39,7 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		current_animation = &idle;
 	}
 
+	initialPosition = position;
 	lastPosition = position;
 	flip = SDL_FLIP_NONE;
 

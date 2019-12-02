@@ -53,15 +53,17 @@ public:
 	p2SString	 folder;
 	Player_Input player_input;
 
-	Animation walk;
 	pugi::xml_document animation_doc;
 
 	//fx
-	p2SString jump_fx_path;
-	uint	  jump_fx;
+	uint		jump_fx;
+	uint		double_Jump_fx = 4;
+	p2SString	jump_fx_path;
+	p2SString	double_Jump_fx_path;
 
 	bool god = false;
 	bool controls_blocked = false;
+	bool isVisible = true;
 
 	Collider* last_checkpoint = nullptr;
 };

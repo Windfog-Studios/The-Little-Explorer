@@ -47,8 +47,7 @@ public:
 	iPoint lastPosition;
 	iPoint current_speed;
 	iPoint speed;
-	int initial_x_position = 0;
-	int initial_y_position = 0;
+	iPoint initialPosition;
 
 	int health = 0;
 	int damage = 0;
@@ -83,19 +82,15 @@ public:
 	SDL_Texture* texture = nullptr;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
-	bool isVisible = true;
 	bool particles_created = false;
 
 	bool going_after_player = false;
 
-	uint die_fx = 0;
-	p2SString die_fx_path;
+	uint		die_fx = 0;
+	p2SString	die_fx_path;
 
-	uint attack_fx = 2;
-	p2SString attack_fx_path;
-
-	uint double_Jump_fx = 4;
-	p2SString double_Jump_fx_path;
+	uint		attack_fx = 2;
+	p2SString	attack_fx_path;
 
 	bool playing_fx = false;
 
