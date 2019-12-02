@@ -65,7 +65,7 @@ bool j1Player::Start(){
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 	double_Jump_fx = App->audio->LoadFx(double_Jump_fx_path.GetString());
-	
+
 	position = initialPosition;
 
 	return true;

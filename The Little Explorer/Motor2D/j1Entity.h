@@ -39,15 +39,15 @@ public:
 	virtual bool PostUpdate();
 	virtual bool CleanUp() { return true; };
 	virtual void OnCollision(Collider* c1, Collider* c2) {};
-			void PathfindtoPlayer(int detection_range, j1Entity* player);
-			bool LoadAnimations(const char* animation_file);
+	void PathfindtoPlayer(int detection_range, j1Entity* player);
+	bool LoadAnimations(const char* animation_file);
 
-public: 
-	iPoint position;
-	iPoint lastPosition;
-	iPoint current_speed;
-	iPoint speed;
-	iPoint initialPosition;
+public:
+	iPoint position = { 0, 0 };
+	iPoint lastPosition = { 0, 0 };
+	iPoint current_speed = {0, 0};
+	iPoint speed = { 0, 0 };
+	iPoint initialPosition = { 0, 0 };
 
 	int health = 0;
 	int damage = 0;
