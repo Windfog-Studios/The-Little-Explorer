@@ -10,9 +10,10 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 
+/*
 j1FadeToBlack::j1FadeToBlack()
 {
-	screen = { 0, 0, App->win->width * App->win->scale, App->win->height * App->win->scale };
+	screen = { 0, 0,(int) App->win->width * App->win->scale,(int) App->win->height * App->win->scale };
 }
 
 j1FadeToBlack::~j1FadeToBlack() {}
@@ -82,3 +83,4 @@ bool j1FadeToBlack::FadeToBlack(Map map_off, Map map_on, float time)
 
 	return ret;
 }
+*/
