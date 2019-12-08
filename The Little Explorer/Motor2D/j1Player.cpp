@@ -12,6 +12,7 @@
 #include "j1UI.h"
 #include "j1Particles.h"
 #include "j1EntityManager.h"
+#include "j1FadeToBlack.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
@@ -554,16 +555,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			}
 			break;
 		case TRIGGER:
-			if ((App->ui->transition == false)&&(c2->level_change))
-			{
-				if (App->scene->current_level == LEVEL_1) App->scene->want_to_load = LEVEL_2;
-				if (App->scene->current_level == LEVEL_2) App->scene->want_to_load = LEVEL_1;
-				App->ui->transition = true;
-				App->ui->loaded = false;
-				App->ui->transition_moment = SDL_GetTicks();
-				App->ui->ResetTransition();
+			if (c2->level_change) {
+				if (App->scene->current_level == LEVEL_1) App->fade_to_black->FadeToBlack(LEVEL_1, LEVEL_2);
+				if (App->scene->current_level == LEVEL_2) App->fade_to_black->FadeToBlack(LEVEL_2, LEVEL_1);
 				App->entities->blocked_movement = true;
 			}
+
 			if (c2->isCheckpoint) {
 				if (!c2->checkpoint_tiggered){
 					App->entities->CheckpointSave();
@@ -571,6 +568,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				}
 				c2->checkpoint_tiggered = true;
 			}
+
+			c2->to_delete = true;
+			c2 = nullptr;
 			break;
 
 		case COLLIDER_DEATH:

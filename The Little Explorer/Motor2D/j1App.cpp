@@ -21,6 +21,7 @@
 #include "j1UI.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
+#include "j1FadeToBlack.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 // Constructor
@@ -41,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new j1Collision();
 	ui = new j1UI();
 	pathfinding = new j1PathFinding();
+	fade_to_black = new j1FadeToBlack();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -55,6 +57,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(ui);
 	AddModule(pathfinding);
+	AddModule(fade_to_black);
 
 	// render last to swap buffer
 	AddModule(render);

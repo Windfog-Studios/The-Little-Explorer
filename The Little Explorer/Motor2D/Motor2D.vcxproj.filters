@@ -74,7 +74,7 @@
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClCompile>
     <ClCompile Include="j1FadeToBlack.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +175,7 @@
       <Filter>Desenvolupament  ========\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1FadeToBlack.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
+      <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

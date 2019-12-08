@@ -14,6 +14,7 @@
 #include "j1Collision.h"
 #include "brofiler/Brofiler/Brofiler.h"
 #include "j1EntityManager.h"
+#include "j1FadeToBlack.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -117,26 +118,15 @@ bool j1Scene::Update(float dt)
 
 	//player inputs ---------------
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		App->ui->transition = true;
-		App->ui->loaded = false;
-		App->ui->transition_moment = SDL_GetTicks();
-		want_to_load = LEVEL_1;
-		App->ui->ResetTransition();
+		App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		App->ui->transition = true;
-		App->ui->loaded = false;
-		App->ui->transition_moment = SDL_GetTicks();
-		want_to_load = LEVEL_2;
-		App->ui->ResetTransition();
+		App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		ResetLevel();
-		App->ui->ResetTransition();
-		App->ui->transition_moment = SDL_GetTicks();
-		App->ui->transition = true;
+		App->fade_to_black->FadeToBlack(current_level, current_level);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -300,7 +290,7 @@ void j1Scene::ResetLevel() {
 	App->ui->ResetTransition(STATIC);
 }
 
-void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
+void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 
 	App->map->CleanUp();
 	if (loading_map == LEVEL_1) {
@@ -311,6 +301,7 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 			App->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
+		current_level = LEVEL_1;
 	}
 	if (loading_map == LEVEL_2) {
 		App->map->Load("Level2.tmx");
@@ -320,5 +311,6 @@ void j1Scene::LevelChange(Map loading_map, Map unloading_map) {
 			App->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
+		current_level = LEVEL_2;
 	}
 }

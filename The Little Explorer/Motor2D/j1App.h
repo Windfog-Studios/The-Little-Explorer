@@ -24,6 +24,7 @@ class j1WalkingEnemy;
 class j1WalkingEnemy2;
 class j1FlyingEnemy;
 class j1Trap;
+class j1FadeToBlack;
 
 
 class j1App
@@ -93,6 +94,7 @@ public:
 	j1UI*				ui;
 	j1EntityManager*	entities;
 	j1PathFinding*		pathfinding;
+	j1FadeToBlack*		fade_to_black;
 
 	mutable p2SString	checkpoint_save;
 

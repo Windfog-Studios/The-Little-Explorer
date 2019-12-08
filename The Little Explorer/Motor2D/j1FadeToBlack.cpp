@@ -9,11 +9,11 @@
 #include "SDL/include/SDL_timer.h"
 #include "j1Map.h"
 #include "j1Scene.h"
+#include "j1EntityManager.h"
 
-/*
+
 j1FadeToBlack::j1FadeToBlack()
 {
-	screen = { 0, 0,(int) App->win->width * App->win->scale,(int) App->win->height * App->win->scale };
 }
 
 j1FadeToBlack::~j1FadeToBlack() {}
@@ -22,6 +22,7 @@ j1FadeToBlack::~j1FadeToBlack() {}
 bool j1FadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
+	screen = { 0, 0,(int)(App->win->width * App->win->scale),(int)(App->win->height * App->win->scale) };
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }
@@ -42,8 +43,8 @@ bool j1FadeToBlack::Update(float dt)
 		if (now >= total_time)
 		{
 			// Enable / disable the modules received when FadeToBlacks() gets called
-			map_off;
-			map_on;
+			App->scene->LevelChange(map_off, map_on);
+			App->entities->blocked_movement = false;
 			// ---
 			total_time += total_time;
 			start_time = SDL_GetTicks();
@@ -83,4 +84,3 @@ bool j1FadeToBlack::FadeToBlack(Map map_off, Map map_on, float time)
 
 	return ret;
 }
-*/
