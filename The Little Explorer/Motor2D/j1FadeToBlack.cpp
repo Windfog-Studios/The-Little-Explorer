@@ -28,7 +28,7 @@ bool j1FadeToBlack::Start()
 }
 
 // Update: draw background
-bool j1FadeToBlack::Update(float dt)
+bool j1FadeToBlack::PostUpdate()
 {
 	if (current_step == fade_step::none)
 		return true;
@@ -38,37 +38,39 @@ bool j1FadeToBlack::Update(float dt)
 
 	switch (current_step)
 	{
-	case fade_step::fade_to_black:
-	{
-		if (now >= total_time)
+		case fade_step::fade_to_black:
 		{
-			App->scene->LevelChange(map_off, map_on);
+			if (now >= total_time)
+			{
+				App->scene->LevelChange(map_off, map_on);
 
-			App->entities->blocked_movement = false;
+				App->entities->blocked_movement = false;
 
-			total_time += total_time;
-			start_time = SDL_GetTicks();
-			current_step = fade_step::fade_from_black;
-		}
-	} break;
+				total_time += total_time;
+				start_time = SDL_GetTicks();
+				current_step = fade_step::fade_from_black;
+				App->entities->player->particles_created = false;
+			}
+		} break;
 
-	case fade_step::fade_from_black:
-	{
-		normalized = 1.0f - normalized;
-
-		if (now >= total_time) {
-			current_step = fade_step::none;
-			App->entities->player->grounded = false;
-			App->entities->player->isVisible = true;
+		case fade_step::fade_from_black:
+		{
+			normalized = 1.0f - normalized;
 			if (App->entities->player->particles_created == false) {
 				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x - 10, App->entities->player->position.y, COLLIDER_NONE, 0, App->entities->player->flip);
 				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x, App->entities->player->position.y + 20, COLLIDER_NONE, 0, App->entities->player->flip);
 				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x - 10, App->entities->player->position.y + App->entities->player->current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, App->entities->player->flip);
 				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x + 2, App->entities->player->position.y + App->entities->player->current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, App->entities->player->flip);
 				App->entities->player->particles_created = true;
+				App->entities->player->isVisible = true;
 			}
-		}
-	} break;
+			if (now >= total_time) {
+				current_step = fade_step::none;
+				//App->entities->player->grounded = false;
+				App->entities->player->particles_created = false;
+				App->entities->player->isVisible = true;
+			}
+		} break;
 	}
 
 	// Finally render the black square with alpha on the screen

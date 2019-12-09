@@ -13,7 +13,8 @@ public:
 	~j1FadeToBlack();
 
 	bool Start();
-	bool Update(float dt);
+	//bool Update(float dt);
+	bool PostUpdate();
 	bool FadeToBlack(Map map_off, Map map_on, float time = 2.0f);
 
 private:

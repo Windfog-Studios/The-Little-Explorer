@@ -357,18 +357,7 @@ bool j1Player::Update(float dt){
 		break;
 	case DIE:
 		if (!god) {
-			if (!particles_created) {
-				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
-				App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
-				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, flip);
-				App->particles->AddParticle(App->particles->dust, position.x + 2, position.y + current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, flip);
-				particles_created = true;
-			}
-			App->audio->PlayFx(die_fx);
-			state = IDLE;
-			current_speed.x = current_speed.y = 0;
-			App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
-			isVisible = false;
+
 		}
 		break;
 	default:
@@ -571,12 +560,34 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 
 		case COLLIDER_DEATH:
-			state = DIE;
+			if (!particles_created) {
+				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, flip);
+				App->particles->AddParticle(App->particles->dust, position.x + 2, position.y + current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, flip);
+				isVisible = false;
+				App->audio->PlayFx(die_fx);
+				state = IDLE;
+				current_speed.x = current_speed.y = 0;
+				App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
+				particles_created = true;
+			}
 			break;
 
 		case COLLIDER_ENEMY:
 			if (state != FALL) {
-				state = DIE;
+				if (!particles_created) {
+					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x - 10, position.y + current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, flip);
+					App->particles->AddParticle(App->particles->dust, position.x + 2, position.y + current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, flip);
+					isVisible = false;
+					App->audio->PlayFx(die_fx);
+					state = IDLE;
+					current_speed.x = current_speed.y = 0;
+					App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
+					particles_created = true;
+				}
 			}
 			break;
 		default:

@@ -322,8 +322,7 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 		App->entities->RellocateEntities();
 	}
 
-	App->entities->player->position = App->entities->player->initialPosition;
-	App->entities->player->grounded = false;
-	App->entities->player->particles_created = false;
+	App->entities->player->position.y = App->entities->player->initialPosition.y - 30;
+	App->entities->player->state = IDLE;
 
 }
