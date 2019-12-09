@@ -10,11 +10,11 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1EntityManager.h"
+#include "j1Player.h"
+#include "j1Particles.h"
 
 
-j1FadeToBlack::j1FadeToBlack()
-{
-}
+j1FadeToBlack::j1FadeToBlack(){}
 
 j1FadeToBlack::~j1FadeToBlack() {}
 
@@ -42,10 +42,10 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		if (now >= total_time)
 		{
-			// Enable / disable the modules received when FadeToBlacks() gets called
 			App->scene->LevelChange(map_off, map_on);
+
 			App->entities->blocked_movement = false;
-			// ---
+
 			total_time += total_time;
 			start_time = SDL_GetTicks();
 			current_step = fade_step::fade_from_black;
@@ -56,8 +56,18 @@ bool j1FadeToBlack::Update(float dt)
 	{
 		normalized = 1.0f - normalized;
 
-		if (now >= total_time)
+		if (now >= total_time) {
 			current_step = fade_step::none;
+			App->entities->player->grounded = false;
+			App->entities->player->isVisible = true;
+			if (App->entities->player->particles_created == false) {
+				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x - 10, App->entities->player->position.y, COLLIDER_NONE, 0, App->entities->player->flip);
+				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x, App->entities->player->position.y + 20, COLLIDER_NONE, 0, App->entities->player->flip);
+				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x - 10, App->entities->player->position.y + App->entities->player->current_animation->GetCurrentFrame().h - 22, COLLIDER_NONE, 0, App->entities->player->flip);
+				App->particles->AddParticle(App->particles->dust, App->entities->player->position.x + 2, App->entities->player->position.y + App->entities->player->current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, App->entities->player->flip);
+				App->entities->player->particles_created = true;
+			}
+		}
 	} break;
 	}
 

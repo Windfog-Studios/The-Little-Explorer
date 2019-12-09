@@ -122,11 +122,12 @@ bool j1Scene::Update(float dt)
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
+		App->fade_to_black->FadeToBlack(current_level, LEVEL_2);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		App->fade_to_black->FadeToBlack(current_level, current_level);
+		App->entities->player->position = App->entities->player->initialPosition;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -292,25 +293,37 @@ void j1Scene::ResetLevel() {
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 
-	App->map->CleanUp();
-	if (loading_map == LEVEL_1) {
-		App->map->Load("Level1.tmx");
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+	if (loading_map != unloading_map)
+	{
+		App->map->CleanUp();
+		if (loading_map == LEVEL_1) {
+			App->map->Load("Level1.tmx");
+			int w, h;
+			uchar* data = NULL;
+			if (App->map->CreateWalkabilityMap(w, h, &data))
+				App->pathfinding->SetMap(w, h, data);
 
-		RELEASE_ARRAY(data);
-		current_level = LEVEL_1;
-	}
-	if (loading_map == LEVEL_2) {
-		App->map->Load("Level2.tmx");
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+			RELEASE_ARRAY(data);
+			current_level = LEVEL_1;
+		}
+		if (loading_map == LEVEL_2) {
+			App->map->Load("Level2.tmx");
+			int w, h;
+			uchar* data = NULL;
+			if (App->map->CreateWalkabilityMap(w, h, &data))
+				App->pathfinding->SetMap(w, h, data);
 
-		RELEASE_ARRAY(data);
-		current_level = LEVEL_2;
+			RELEASE_ARRAY(data);
+			current_level = LEVEL_2;
+		}
 	}
+	else
+	{
+		App->entities->RellocateEntities();
+	}
+
+	App->entities->player->position = App->entities->player->initialPosition;
+	App->entities->player->grounded = false;
+	App->entities->player->particles_created = false;
+
 }

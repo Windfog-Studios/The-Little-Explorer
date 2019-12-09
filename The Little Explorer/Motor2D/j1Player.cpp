@@ -357,9 +357,6 @@ bool j1Player::Update(float dt){
 		break;
 	case DIE:
 		if (!god) {
-			current_speed.x = 0;
-			isVisible = false;
-			current_animation = &idle;
 			if (!particles_created) {
 				App->particles->AddParticle(App->particles->dust, position.x - 10, position.y, COLLIDER_NONE, 0, flip);
 				App->particles->AddParticle(App->particles->dust, position.x, position.y + 20, COLLIDER_NONE, 0, flip);
@@ -367,11 +364,11 @@ bool j1Player::Update(float dt){
 				App->particles->AddParticle(App->particles->dust, position.x + 2, position.y + current_animation->GetCurrentFrame().h - 2, COLLIDER_NONE, 0, flip);
 				particles_created = true;
 			}
-			if (App->ui->transition == false) {
-				App->audio->PlayFx(die_fx);
-				App->ui->transition = true;
-				App->ui->ResetTransition();
-			}
+			App->audio->PlayFx(die_fx);
+			state = IDLE;
+			current_speed.x = current_speed.y = 0;
+			App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
+			isVisible = false;
 		}
 		break;
 	default:
