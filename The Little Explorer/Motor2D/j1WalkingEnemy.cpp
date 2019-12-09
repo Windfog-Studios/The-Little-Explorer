@@ -38,8 +38,6 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		idle = *animations.At(0)->data;
 		attack = *animations.At(1)->data;
 		run = *animations.At(2)->data;
-
-		current_animation = &idle;
 	}
 
 	initialPosition = position;
@@ -49,7 +47,8 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 	//colliders
 	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
-	//SDL_Rect attack_collider_rect{0,0,26,12};
+	
+	state = RUN_FORWARD;
 
 }
 
@@ -98,11 +97,9 @@ bool j1WalkingEnemy::Update(float dt) {
 	{
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
-			grounded = false;
-			current_speed.x = -current_speed.x;
-			if (lastPosition.x < position.x) {
-				position.x = lastPosition.x;
-			}
+			position.x = lastPosition.x;
+			if (state == RUN_FORWARD) state = RUN_BACKWARD;
+			else if (state == RUN_BACKWARD) state = RUN_FORWARD;
 		}
 	}
 
@@ -118,7 +115,7 @@ bool j1WalkingEnemy::Update(float dt) {
 	//pathfind
 	PathfindtoPlayer(detection_range, player);
 
-	//movement
+	//going after player
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
 	{
 		//compare position to tile to go
@@ -165,29 +162,31 @@ bool j1WalkingEnemy::Update(float dt) {
 	{
 	case IDLE:
 		current_animation = &idle;
-		if (collider != nullptr)
-			if (flip == SDL_FLIP_NONE)
+		if (collider != nullptr) {
+			if (flip == SDL_FLIP_NONE) {
 				collider->SetPos(position.x + 16, position.y + 30);
-			else
+				raycast->SetPos(position.x + 16, position.y + current_animation->GetCurrentFrame().h);
+			}
+			else {
 				collider->SetPos(position.x + 22, position.y + 30);
+				raycast->SetPos(position.x + 44, position.y + current_animation->GetCurrentFrame().h);
+			}
+			//if ((!going_after_player)&&(grounded)) state = RUN_FORWARD;
+		}
 		break;
 	case RUN_FORWARD:
 		current_animation = &run;
 		current_speed.x = speed.x;
 		flip = SDL_FLIP_NONE;
-		if (collider != nullptr) {
-			collider->SetPos(position.x + 16, position.y + 30);
-			raycast->SetPos(position.x + 40, position.y + current_animation->GetCurrentFrame().h);
-		}
+		collider->SetPos(position.x + 16, position.y + 30);
+		raycast->SetPos(position.x + 44, position.y + current_animation->GetCurrentFrame().h);
 		break;
 	case RUN_BACKWARD:
 		current_animation = &run;
 		current_speed.x = -speed.x;
 		flip = SDL_FLIP_HORIZONTAL;
-		if (collider != nullptr) {
-			collider->SetPos(position.x + 16, position.y + 30);
-			raycast->SetPos(position.x + 16, position.y + current_animation->GetCurrentFrame().h);
-		}
+		collider->SetPos(position.x + 16, position.y + 30);
+		raycast->SetPos(position.x + 16, position.y + current_animation->GetCurrentFrame().h);
 		break;
 	case FALL:
 		current_animation = &idle;
@@ -196,6 +195,8 @@ bool j1WalkingEnemy::Update(float dt) {
 				collider->SetPos(position.x + 16, position.y + 30);
 			else 
 				collider->SetPos(position.x + 22, position.y + 30);
+
+		raycast->SetPos(position.x + current_animation->GetCurrentFrame().w, position.y + current_animation->GetCurrentFrame().h);
 		break;
 	case ATTACK:
 		App->audio->PlayFx(attack_fx);
@@ -234,8 +235,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 		position.y -= current_speed.y * dt;
 	}
-	if (grounded)
-	{
+	else {
 		position.x += current_speed.x * dt;
 	}
 
@@ -243,7 +243,6 @@ bool j1WalkingEnemy::Update(float dt) {
 		attack_collider->to_delete = true;
 		attack_collider = nullptr;
 	}
-
 	return ret;
 }
 
@@ -273,7 +272,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			grounded = true;
 			position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			current_speed.y = 0;
-			state = IDLE;
+			//state = IDLE;
 		}
 
 		if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
@@ -298,7 +297,7 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			grounded = true;
 			position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			current_speed.y = 0;
-			state = IDLE;
+			//state = IDLE;
 		}
 
 		if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {

@@ -571,6 +571,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				current_speed.x = current_speed.y = 0;
 				App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
 				particles_created = true;
+				position = initialPosition;
 			}
 			break;
 
@@ -587,6 +588,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					current_speed.x = current_speed.y = 0;
 					App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
 					particles_created = true;
+					position = initialPosition;
 				}
 			}
 			break;

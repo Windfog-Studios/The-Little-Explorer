@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="298">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="299">
  <tileset firstgid="1" name="jungle_spacing" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
  </tileset>
@@ -64177,5 +64177,6 @@
   <object id="290" name="Bat" type="Bat" x="480" y="768" width="32" height="32"/>
   <object id="296" name="Knight" type="Knight" x="2112" y="416" width="32" height="32"/>
   <object id="297" name="Bat" type="Bat" x="4256" y="224" width="32" height="32"/>
+  <object id="298" name="Knight" type="Knight" x="608" y="768" width="32" height="32"/>
  </objectgroup>
 </map>
