@@ -97,9 +97,22 @@ bool j1WalkingEnemy::Update(float dt) {
 	{
 		if (!raycast->CheckCollision(last_collider->rect))
 		{
-			position.x = lastPosition.x;
-			if (state == RUN_FORWARD) state = RUN_BACKWARD;
-			else if (state == RUN_BACKWARD) state = RUN_FORWARD;
+			if (last_collider->rect.x - COLLIDER_MARGIN > position.x + current_animation->GetCurrentFrame().w)
+			{
+				state = FALL;
+				grounded = false;
+			}
+			else if (last_collider->rect.x + last_collider->rect.w + COLLIDER_MARGIN < position.x)
+			{
+				state = FALL;
+				grounded = false;
+			}
+			else
+			{
+				position.x = lastPosition.x;
+				if (state == RUN_FORWARD) state = RUN_BACKWARD;
+				else if (state == RUN_BACKWARD) state = RUN_FORWARD;
+			}
 		}
 	}
 
@@ -150,7 +163,7 @@ bool j1WalkingEnemy::Update(float dt) {
 		}
 		if (current_map_position.y > tile_to_go.y) {
 			//LOG("Going up");
-			//position.y -= 3;
+			current_speed.y = -speed.y;
 		}
 		if (current_map_position.y < tile_to_go.y) {
 			//LOG("Going down");
@@ -196,7 +209,7 @@ bool j1WalkingEnemy::Update(float dt) {
 			else 
 				collider->SetPos(position.x + 22, position.y + 30);
 
-		raycast->SetPos(position.x + current_animation->GetCurrentFrame().w, position.y + current_animation->GetCurrentFrame().h);
+		raycast->SetPos(position.x + 20, position.y + current_animation->GetCurrentFrame().h);
 		break;
 	case ATTACK:
 		App->audio->PlayFx(attack_fx);
