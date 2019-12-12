@@ -16,3 +16,41 @@ bool j1UI_Element::MouseHovering() {
 
 	return ret;
 }
+
+iPoint j1UI_Element::GetScreenPos() const {
+	iPoint position;
+	position.x = rect.x;
+	position.y = rect.y;
+	return position;
+}
+
+iPoint j1UI_Element::GetLocalPos() const {
+	iPoint position;
+	if (parent != nullptr)
+	{
+		position.x = rect.x - parent->GetScreenPos().x;
+		position.y = rect.y - parent->GetScreenPos().y;
+	}
+	else
+	{
+		position.x = rect.x;
+		position.y = rect.y;
+	}
+	return position;
+}
+
+SDL_Rect j1UI_Element::GetScreenRect() const {
+	return rect;
+}
+
+SDL_Rect j1UI_Element::GetLocalRect() const {
+	SDL_Rect local_rect = rect;
+
+	if (parent != nullptr)
+	{
+		local_rect.x = rect.x - parent->GetScreenPos().x;
+		local_rect.y = rect.y - parent->GetScreenPos().y;
+	}
+
+	return local_rect;
+}

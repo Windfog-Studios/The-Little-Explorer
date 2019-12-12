@@ -4,8 +4,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 
-GuiButton::GuiButton(){
-}
+GuiButton::GuiButton(){}
 
 void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect) {
 	screen_position = g_position;
@@ -13,8 +12,6 @@ void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_
 	normal_rect = g_normal_rect;
 	hover_rect = g_normal_rect;
 	click_rect = g_click_rect;
-	rect.x = screen_position.x;
-	rect.y = screen_position.y;
 
 	if (parent != nullptr)
 	{

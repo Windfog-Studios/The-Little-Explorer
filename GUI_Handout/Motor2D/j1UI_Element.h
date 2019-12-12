@@ -22,22 +22,22 @@ public:
 	virtual bool Input() { return true; }
 	virtual bool Draw() { return true; }
 
-	//SDL_Rect GetScreenRect() const{}
-	//SDL_Rect GetLocalRect() const{}
-	iPoint GetScreenPos() const { return screen_position; }
-	iPoint GetLocalPos() const { return local_position; }
+	SDL_Rect GetScreenRect() const;
+	SDL_Rect GetLocalRect() const;
+	iPoint GetScreenPos() const;
+	iPoint GetLocalPos() const;
 	void SetLocalPos(iPoint new_position) { local_position = new_position; }
 	bool MouseHovering();
 
 public:		
 	iPoint			local_position;
 	iPoint			screen_position;
-	SDL_Rect		rect;
 	UI_Type			type;
 	j1UI_Element*	parent = nullptr;
+	bool			draggable;
 
 public:
-	bool draggable;
+	SDL_Rect rect;
 };
 
 #endif // !j1UIELEMENT_H
