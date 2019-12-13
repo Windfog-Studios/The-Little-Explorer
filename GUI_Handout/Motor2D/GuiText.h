@@ -6,7 +6,7 @@
 class GuiText : public j1UI_Element
 {
 public:
-	GuiText();
+	GuiText(j1Module* callback);
 	~GuiText();
 
 	void InitializeText(iPoint position, p2SString text);

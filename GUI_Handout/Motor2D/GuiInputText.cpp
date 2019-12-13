@@ -3,9 +3,10 @@
 #include "j1App.h"
 
 
-GuiInputText::GuiInputText(){
-	background = new GuiImage();
-	text = new GuiText();
+GuiInputText::GuiInputText(j1Module* g_callback){
+	background = new GuiImage(g_callback);
+	text = new GuiText(g_callback);
+	callback = g_callback;
 }
 
 GuiInputText::~GuiInputText(){

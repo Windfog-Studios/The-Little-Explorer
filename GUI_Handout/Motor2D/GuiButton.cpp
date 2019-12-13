@@ -4,7 +4,9 @@
 #include "j1Input.h"
 #include "j1Render.h"
 
-GuiButton::GuiButton(){}
+GuiButton::GuiButton(j1Module* g_callback){
+	callback = g_callback;
+}
 
 void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect) {
 	screen_position = g_position;

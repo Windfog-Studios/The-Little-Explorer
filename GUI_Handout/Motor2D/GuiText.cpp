@@ -2,7 +2,9 @@
 #include "j1App.h"
 #include "j1Render.h"
 
-GuiText::GuiText() {}
+GuiText::GuiText(j1Module* g_callback) {
+	callback = g_callback;
+}
 
 GuiText::~GuiText() {}
 

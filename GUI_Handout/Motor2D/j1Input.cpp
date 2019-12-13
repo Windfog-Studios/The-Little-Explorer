@@ -120,9 +120,10 @@ bool j1Input::PreUpdate()
 
 			/*
 			case SDL_TEXTINPUT:
-//				strcat(text, event.text.text);
+				strcat(text, event.text.text);
 				break;
-
+			*/
+			/*
 			case SDL_TEXTEDITING:
 				composition = event.edit.text;
 				cursor = event.edit.start;

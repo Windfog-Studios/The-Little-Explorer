@@ -39,6 +39,8 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
+	SDL_Event event;
+
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		item->data->Input();
@@ -89,6 +91,11 @@ bool j1Gui::PreUpdate()
 		}
 	}
 
+	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
+	{
+		item->data->callback->OnFocus();
+	}
+
 	return true;
 }
 
@@ -123,23 +130,23 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1UI_Element* g_parent, bool draggable) {
+j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* g_parent, bool draggable) {
 	j1UI_Element* ui_element = nullptr;
 	switch (type)
 	{
 	case UI_Type::BUTTON:
-		ui_element = new GuiButton();
+		ui_element = new GuiButton(callback);
 		break;
 	case UI_Type::IMAGE:
-		ui_element = new GuiImage();
+		ui_element = new GuiImage(callback);
 		break;
 	case UI_Type::TEXT:
-		ui_element = new GuiText();
-		break;
-	case UI_Type::MAX_UI_ELEMENTS:
+		ui_element = new GuiText(callback);
 		break;
 	case UI_Type::INPUT_TEXT:
-		ui_element = new GuiInputText();
+		ui_element = new GuiInputText(callback);
+		break;
+	case UI_Type::MAX_UI_ELEMENTS:
 		break;
 	default:
 		break;

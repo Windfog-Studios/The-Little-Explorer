@@ -35,6 +35,7 @@ public:
 	UI_Type			type;
 	j1UI_Element*	parent = nullptr;
 	bool			draggable;
+	j1Module*		callback;
 
 public:
 	SDL_Rect rect;

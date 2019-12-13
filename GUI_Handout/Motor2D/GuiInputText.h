@@ -7,7 +7,7 @@
 class GuiInputText : public j1UI_Element
 {
 public:
-	GuiInputText();
+	GuiInputText(j1Module* callback);
 	~GuiInputText();
 
 	void InitializeInputText(iPoint position, p2SString text, SDL_Rect image_section);

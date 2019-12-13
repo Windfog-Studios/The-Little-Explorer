@@ -3,8 +3,9 @@
 #include "GuiImage.h"
 #include "j1Render.h"
 
-GuiImage::GuiImage() {
+GuiImage::GuiImage(j1Module* g_callback) {
 	tex = (SDL_Texture*)App->gui->GetAtlas();
+	callback = g_callback;
 }
 
 void GuiImage::InitializeImage(iPoint g_position, SDL_Rect g_section) {

@@ -72,6 +72,8 @@ public:
 		return true;
 	}
 
+	virtual void OnFocus() {}
+
 public:
 
 	p2SString	name;
