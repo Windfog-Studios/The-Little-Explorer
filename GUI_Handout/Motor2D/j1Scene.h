@@ -36,6 +36,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void OnFocus(j1UI_Element* element);
+
 private:
 	SDL_Texture*	debug_tex;
 	GuiImage*		banner;

@@ -72,7 +72,7 @@ public:
 		return true;
 	}
 
-	virtual void OnFocus() {}
+	virtual void OnFocus(j1UI_Element* element) {}
 
 public:
 

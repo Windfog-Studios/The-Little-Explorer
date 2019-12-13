@@ -93,7 +93,11 @@ bool j1Gui::PreUpdate()
 
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		item->data->callback->OnFocus();
+		if (focusing_element == item->data)
+		{
+			item->data->callback->OnFocus(item->data);
+			break;
+		}
 	}
 
 	return true;

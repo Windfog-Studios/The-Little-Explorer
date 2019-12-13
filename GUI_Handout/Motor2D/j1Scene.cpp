@@ -179,3 +179,7 @@ bool j1Scene::CleanUp()
 
 	return true;
 }
+
+void OnFocus(j1UI_Element* element) {
+
+}
