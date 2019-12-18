@@ -58,10 +58,10 @@
     <ClCompile Include="GuiText.cpp">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Element.cpp">
+    <ClCompile Include="GuiInputText.cpp">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClCompile>
-    <ClCompile Include="GuiInputText.cpp">
+    <ClCompile Include="j1UI_Element.cpp">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClCompile>
   </ItemGroup>

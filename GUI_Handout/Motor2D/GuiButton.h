@@ -3,13 +3,15 @@
 #include "j1UI_Element.h"
 #include "SDL_image/include/SDL_image.h"
 
+class p2SString;
+
 class GuiButton : public j1UI_Element
 {
 public:
 	GuiButton(j1Module* callback);
 	~GuiButton() {}
 
-	void InitializeButton(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect);
+	void InitializeButton(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect, p2SString text);
 	bool Input();
 	bool Draw();
 

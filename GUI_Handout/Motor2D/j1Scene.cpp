@@ -61,7 +61,7 @@ bool j1Scene::Start()
 	window_text->InitializeText({ 520,105 }, "Window Title");
 
 	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false);
-	button->InitializeButton({ 450, 400 }, {642,169,229,69}, { 0,113,229,69 } ,{ 411,169,229,69 });
+	button->InitializeButton({ 450, 400 }, {642,169,229,69}, { 0,113,229,69 } ,{ 411,169,229,69 }, "Button");
 
 	button_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, button, false);
 	button_text->InitializeText({ 540,422 }, "Button");
@@ -180,6 +180,6 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void OnFocus(j1UI_Element* element) {
+void j1Scene::OnEvent(j1UI_Element* element) {
 
 }

@@ -4,6 +4,8 @@
 
 #include "SDL/include/SDL.h"
 
+class j1Module;
+
 enum class UI_Type
 {
 	BUTTON,

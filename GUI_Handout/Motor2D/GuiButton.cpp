@@ -3,12 +3,14 @@
 #include "j1Gui.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "GuiText.h"
+#include "p2SString.h"
 
 GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
 }
 
-void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect) {
+void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString text) {
 	screen_position = g_position;
 	tex = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
@@ -20,6 +22,8 @@ void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_
 		local_position.x = screen_position.x - parent->screen_position.x;
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
+
+
 }
 
 bool GuiButton::Input() {

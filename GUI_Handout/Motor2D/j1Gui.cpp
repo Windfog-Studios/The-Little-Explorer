@@ -95,7 +95,7 @@ bool j1Gui::PreUpdate()
 	{
 		if (focusing_element == item->data)
 		{
-			item->data->callback->OnFocus(item->data);
+			item->data->callback->OnEvent(item->data);
 			break;
 		}
 	}
