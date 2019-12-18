@@ -145,13 +145,13 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback, j1UI_Elem
 		ui_element = new GuiButton(callback);
 		break;
 	case UI_Type::IMAGE:
-		//ui_element = new GuiImage(callback);
+		ui_element = new GuiImage(callback);
 		break;
 	case UI_Type::TEXT:
-		//ui_element = new GuiText(callback);
+		ui_element = new GuiText(callback);
 		break;
 	case UI_Type::INPUT_TEXT:
-		//ui_element = new GuiInputText(callback);
+		ui_element = new GuiInputText(callback);
 		break;
 	case UI_Type::MAX_UI_ELEMENTS:
 		break;

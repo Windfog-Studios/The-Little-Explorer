@@ -5,11 +5,10 @@
 #include "j1UI_Element.h"
 #include "SDL/include/SDL.h"
 #include "GuiButton.h"
-/*
 #include "GuiImage.h"
 #include "GuiText.h"
 #include "GuiInputText.h"
-*/
+
 class j1Button;
 class j1StaticText;
 class j1Image;
