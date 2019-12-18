@@ -4,8 +4,8 @@
 #include "j1Module.h"
 #include "j1UI_Element.h"
 #include "SDL/include/SDL.h"
-/*
 #include "GuiButton.h"
+/*
 #include "GuiImage.h"
 #include "GuiText.h"
 #include "GuiInputText.h"

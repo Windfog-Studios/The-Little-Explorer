@@ -82,6 +82,9 @@
     <ClCompile Include="j1UI_Element.cpp">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClCompile>
+    <ClCompile Include="GuiButton.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -187,6 +190,9 @@
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClInclude>
     <ClInclude Include="j1UI_Element.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiButton.h">
       <Filter>Desenvolupament  ========\UI</Filter>
     </ClInclude>
   </ItemGroup>

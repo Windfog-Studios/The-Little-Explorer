@@ -142,7 +142,7 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback, j1UI_Elem
 	{
 	
 	case UI_Type::BUTTON:
-		//ui_element = new GuiButton(callback);
+		ui_element = new GuiButton(callback);
 		break;
 	case UI_Type::IMAGE:
 		//ui_element = new GuiImage(callback);

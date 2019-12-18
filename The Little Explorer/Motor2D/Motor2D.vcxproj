@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GuiButton.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
@@ -106,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="GuiButton.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1FadeToBlack.h" />
