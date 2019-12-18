@@ -80,6 +80,7 @@
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
     <ClCompile Include="j1FlyingEnemy.cpp" />
+    <ClCompile Include="j1Gui.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />
@@ -93,6 +94,7 @@
     <ClCompile Include="j1Particles.cpp" />
     <ClCompile Include="j1Timer.cpp" />
     <ClCompile Include="j1UI.cpp" />
+    <ClCompile Include="j1UI_Element.cpp" />
     <ClCompile Include="j1WalkingEnemy.cpp" />
     <ClCompile Include="j1WalkingEnemy2.cpp" />
     <ClCompile Include="p2Log.cpp" />
@@ -108,6 +110,7 @@
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1FadeToBlack.h" />
     <ClInclude Include="j1FlyingEnemy.h" />
+    <ClInclude Include="j1Gui.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
     <ClInclude Include="j1PerfTimer.h" />
@@ -117,6 +120,7 @@
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Trap.h" />
     <ClInclude Include="j1UI.h" />
+    <ClInclude Include="j1UI_Element.h" />
     <ClInclude Include="j1WalkingEnemy.h" />
     <ClInclude Include="j1WalkingEnemy2.h" />
     <ClInclude Include="p2DynArray.h" />

@@ -11,6 +11,7 @@
 
 class j1App;
 struct Collider;
+class j1UI_Element;
 
 class j1Module
 {
@@ -66,9 +67,9 @@ public:
 
 	virtual void OnCollision(Collider* c1, Collider* c2) {}
 
-	virtual void OnFocus(){}
+	virtual void OnEvent(j1UI_Element* element){}
 
-public:
+	public:
 
 	p2SString	name;
 	bool		active;

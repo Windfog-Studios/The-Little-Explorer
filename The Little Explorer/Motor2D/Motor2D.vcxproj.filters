@@ -76,6 +76,12 @@
     <ClCompile Include="j1FadeToBlack.cpp">
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="j1UI_Element.cpp">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1App.h">
@@ -177,6 +183,12 @@
     <ClInclude Include="j1FadeToBlack.h">
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="j1UI_Element.h">
+      <Filter>Desenvolupament  ========\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -202,6 +214,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Entities">
       <UniqueIdentifier>{4f434b92-82c7-449f-9eee-0d5f29879820}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\UI">
+      <UniqueIdentifier>{10a6f384-2099-4c3e-9b87-c0ea1419977d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
