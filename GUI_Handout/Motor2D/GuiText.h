@@ -6,10 +6,11 @@
 class GuiText : public j1UI_Element
 {
 public:
+	GuiText();
 	GuiText(j1Module* callback);
 	~GuiText();
 
-	void InitializeText(iPoint position, p2SString text);
+	void Init(iPoint position, p2SString text);
 	bool Update(float dt);
 	bool Draw();
 

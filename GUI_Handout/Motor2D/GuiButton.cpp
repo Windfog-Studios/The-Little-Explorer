@@ -8,9 +8,12 @@
 
 GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
+	text = new GuiText();
+	click_rect = {0,0,0,0};
+	tex = nullptr;
 }
 
-void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString text) {
+void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text) {
 	screen_position = g_position;
 	tex = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
@@ -23,7 +26,12 @@ void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
 
+	iPoint text_position;
+	text_position.x = screen_position.x + rect.w * 0.5f; //text width has to be deducted
+	text_position.y = screen_position.y + rect.h * 0.5f; //text height has to be deducted
 
+	text->Init(text_position, g_text);
+	text->parent = this;
 }
 
 bool GuiButton::Input() {
@@ -58,10 +66,14 @@ bool GuiButton::Update(float dt) {
 	}
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
+
+	text->Update(dt);
+
 	return true;
 }
 
 bool GuiButton::Draw() {
 	App->render->Blit(tex, screen_position.x, screen_position.y, current_rect);
+		text->Draw();
 	return true;
 }

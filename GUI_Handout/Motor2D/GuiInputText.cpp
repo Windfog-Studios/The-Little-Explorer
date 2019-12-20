@@ -14,7 +14,7 @@ GuiInputText::~GuiInputText(){
 	delete text;
 }
 
-void GuiInputText::InitializeInputText(iPoint position, p2SString g_text, SDL_Rect image_section){
+void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_section){
 	
 	screen_position = position;
 	rect = { position.x, position.y, image_section.w, image_section.h };
@@ -31,8 +31,8 @@ void GuiInputText::InitializeInputText(iPoint position, p2SString g_text, SDL_Re
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
 
-	background->InitializeImage(position, image_section);
-	text->InitializeText({position.x + 10,(int)(position.y + rect.h * 0.25f)}, g_text);
+	background->Init(position, image_section);
+	text->Init({position.x + 10,(int)(position.y + rect.h * 0.25f)}, g_text);
 }
 
 bool GuiInputText::Input() {

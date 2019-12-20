@@ -21,6 +21,7 @@ public:
 	j1UI_Element() {};
 	~j1UI_Element() {};
 
+	virtual void Init(){}
 	virtual bool Input() { return true; }
 	virtual bool Update(float dt) { return true; }
 	virtual bool Draw() { return true; }
@@ -38,6 +39,7 @@ public:
 	UI_Type			type;
 	j1UI_Element*	parent = nullptr;
 	bool			draggable;
+	bool			interactable;
 	j1Module*		callback;
 
 public:

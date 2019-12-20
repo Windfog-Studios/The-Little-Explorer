@@ -7,10 +7,11 @@
 class GuiImage : public j1UI_Element
 {
 public:
+	GuiImage();
 	GuiImage(j1Module* callback);
 	~GuiImage() {}
 
-	void InitializeImage(iPoint position, SDL_Rect section);
+	void Init(iPoint position, SDL_Rect section);
 	bool Update(float dt);
 	bool Draw();
 

@@ -10,9 +10,7 @@ bool j1UI_Element::MouseHovering() {
 
 	if ((mouse.x > rect.x) &&(mouse.x < rect.x + rect.w)
 		&&(mouse.y > rect.y)&&(mouse.y < rect.y + rect.h))
-	{
 		ret = true;
-	}
 
 	return ret;
 }

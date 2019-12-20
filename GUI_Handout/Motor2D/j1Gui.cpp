@@ -11,6 +11,7 @@
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
+	atlas = nullptr;
 }
 
 // Destructor
@@ -57,9 +58,11 @@ bool j1Gui::PreUpdate()
 			{
 				focusing_element = item->data;
 				item->data->screen_position += mouse_motion;
-				item->data->Input();
+				if(item->data->interactable) 
+					item->data->Input();
 				break;
 			}
+
 			focusing_element = nullptr;
 		}
 	}
@@ -110,9 +113,8 @@ bool j1Gui::PostUpdate()
 	}
 
 	if (debug)
-	{
 		DebugDraw();
-	}
+
 	return true;
 }
 
@@ -132,8 +134,10 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* g_parent, bool draggable) {
+j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* parent, bool draggable, bool interactable) {
+
 	j1UI_Element* ui_element = nullptr;
+
 	switch (type)
 	{
 	case UI_Type::BUTTON:
@@ -153,9 +157,12 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 	default:
 		break;
 	}
-	ui_element->parent = g_parent;
-	ui_element->draggable = draggable;
+
 	ui_elements.add(ui_element);
+
+	ui_element->draggable = draggable;
+	ui_element->interactable = interactable;
+	ui_element->parent = parent;
 
 	return ui_element;
 }

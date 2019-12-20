@@ -40,12 +40,9 @@ public:
 
 private:
 	SDL_Texture*	debug_tex;
-	GuiImage*		banner;
-	GuiText*		text;
 	GuiImage*		window;
 	GuiText*		window_text;
 	GuiButton*		button;
-	GuiText*		button_text;
 	GuiInputText*	inputText;
 };
 

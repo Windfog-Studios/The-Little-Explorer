@@ -8,7 +8,7 @@ GuiImage::GuiImage(j1Module* g_callback) {
 	callback = g_callback;
 }
 
-void GuiImage::InitializeImage(iPoint position, SDL_Rect g_section) {
+void GuiImage::Init(iPoint position, SDL_Rect g_section) {
 	screen_position = position;
 	section = g_section;
 	rect.x = screen_position.x;
