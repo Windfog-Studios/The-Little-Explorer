@@ -41,9 +41,6 @@ bool j1Gui::PreUpdate()
 {
 	SDL_Event event;
 
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-		debug = !debug;
-
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		item->data->Input();
@@ -105,7 +102,8 @@ bool j1Gui::Update(float dt) {
 }
 
 // Called after all Updates
-bool j1Gui::PostUpdate(){
+bool j1Gui::PostUpdate()
+{
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		item->data->Draw();

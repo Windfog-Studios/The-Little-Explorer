@@ -8,6 +8,11 @@
 #define CAMERA_CENTER_MARGIN 30
 
 struct SDL_Texture;
+struct SDL_Texture;
+class GuiImage;
+class GuiText;
+class GuiButton;
+class GuiInputText;
 
 enum Map
 {
@@ -72,6 +77,14 @@ public:
 	p2SString folder;
 
 	int camera_margin = 5;
+
+	GuiImage* banner;
+	GuiText* text;
+	GuiImage* window;
+	GuiText* window_text;
+	GuiButton* button;
+	GuiText* button_text;
+	GuiInputText* inputText;
 
 private:
 };

@@ -45,8 +45,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	ui = new j1UI();
 	pathfinding = new j1PathFinding();
 	fade_to_black = new j1FadeToBlack();
-	gui = new j1Gui();
 	font = new j1Fonts();
+	gui = new j1Gui();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -62,8 +62,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(ui);
 	AddModule(pathfinding);
 	AddModule(fade_to_black);
-	AddModule(gui);
 	AddModule(font);
+	AddModule(gui);
 
 	// render last to swap buffer
 	AddModule(render);

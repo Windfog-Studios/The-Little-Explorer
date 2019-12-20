@@ -9,12 +9,12 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Player.h"
-#include "j1UI.h"
 #include "j1Pathfinding.h"
 #include "j1Collision.h"
 #include "brofiler/Brofiler/Brofiler.h"
 #include "j1EntityManager.h"
 #include "j1FadeToBlack.h"
+#include "j1Gui.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -57,6 +57,25 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+
+	App->gui->Start();
+
+	/*
+	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	window->InitializeImage({ 325,350 }, { 0, 512, 483, 512 });
+
+	window_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, window, false);
+	window_text->InitializeText({ 520,405 }, "Window Title");
+
+	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false);
+	button->InitializeButton({ 450, 700 }, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, "Button");
+
+	button_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, button, false);
+	button_text->InitializeText({ 540,722 }, "Button");
+
+	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false);
+	inputText->InitializeInputText({ 400,550 }, "Editable Text", { 488, 569, 344, 61 });
+	*/
 	//*/
 
 	/*
@@ -79,6 +98,7 @@ bool j1Scene::PreUpdate()
 {
 	BROFILER_CATEGORY("ScenePreUpdate", Profiler::Color::HotPink);
 	// debug pathfing ------------------
+	/*
 	static iPoint origin;
 	static bool origin_selected = false;
 
@@ -101,7 +121,7 @@ bool j1Scene::PreUpdate()
 			origin_selected = true;
 		}
 	}
-
+	*/
 	return true;
 }
 
@@ -288,7 +308,6 @@ void j1Scene::ResetLevel() {
 		//LOG("camera teleport");
 		ResetCamera(1);
 	}
-	App->ui->ResetTransition(STATIC);
 }
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {

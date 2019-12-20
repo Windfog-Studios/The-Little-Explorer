@@ -5,25 +5,8 @@
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
-	
-  <renderer>
-    <vsync value="false"/>
-    <camera x ="1000" y ="200"/> 
-  </renderer>
 
-  <window>
-    <resolution width="1024" height="768" scale="1"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
-
-  <file_system>
-    <path>data.zip</path>
-  </file_system>
-
-  <audio>
+ <audio>
     <music>
       <folder>audio/music/</folder>
       <musicVolumeModifier value="0.3" />
@@ -34,21 +17,15 @@
     </sfx>
   </audio>
 
-  <map>
-    <folder>maps/</folder>
-    <level1>
-	<music song="Island_Coconuts.ogg" />
-    </level1>
-    <level2>
-	<music song="Video_Game_Soldiers.ogg" />
-    </level2>
-  </map>
+  <gui>
+    <atlas file="sprites/UI/atlas.png"/>
+  </gui>
 
-  <scene>
-   <camera_frame x="300" y="175" w="300" h="300" />
-  </scene>
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
 
-  <entities>
+ <entities>
     <gravity value="925"/>
     <max_falling_speed value="-400"/>
     <player>
@@ -96,12 +73,36 @@
     </flying_enemy>
   </entities>
 
+  <map>
+    <folder>maps/</folder>
+    <level1>
+	<music song="Island_Coconuts.ogg" />
+    </level1>
+    <level2>
+	<music song="Video_Game_Soldiers.ogg" />
+    </level2>
+  </map>
+
   <particles>
     <folder>sprites/particles</folder>
     <dust source="particles.png"/>
   </particles>
-  <ui>
-    <transition_speed value="200.0" />
-  </ui>
+
+  <renderer>
+    <vsync value="false"/>
+    <camera x ="1000" y ="200"/> 
+  </renderer>
+
+  <scene>
+   <camera_frame x="300" y="175" w="300" h="300" />
+  </scene>
+
+  <window>
+    <resolution width="1024" height="768" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+  </window>
 
 </config>
