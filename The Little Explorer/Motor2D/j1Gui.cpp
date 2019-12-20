@@ -3,9 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
-/*
 #include "j1Fonts.h"
-*/
 #include "j1Input.h"
 #include "j1Gui.h"
 
@@ -50,31 +48,20 @@ bool j1Gui::PreUpdate()
 
 	for (p2List_item<j1UI_Element*>* item = ui_elements.end; item != nullptr; item = item->prev)
 	{
-		if ((App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) && (item->data->draggable))
+		if ((App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)&&(item->data->draggable))
 		{
 			iPoint mouse_motion;
 			App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
 			if (item->data->MouseHovering())
 			{
-				item->data->screen_position += mouse_motion;
-				item->data->rect.x = item->data->screen_position.x;
-				item->data->rect.y = item->data->screen_position.y;
 				focusing_element = item->data;
+				item->data->screen_position += mouse_motion;
 				item->data->Input();
 				break;
 			}
 			focusing_element = nullptr;
 		}
-
-		if (item->data->parent != nullptr)
-		{
-			item->data->screen_position.x = item->data->parent->screen_position.x + item->data->local_position.x;
-			item->data->screen_position.y = item->data->parent->screen_position.y + item->data->local_position.y;
-		}
-
-		item->data->rect.x = item->data->screen_position.x;
-		item->data->rect.y = item->data->screen_position.y;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
@@ -103,6 +90,15 @@ bool j1Gui::PreUpdate()
 	}
 
 	return true;
+}
+
+bool j1Gui::Update(float dt) {
+	bool ret = true;
+	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
+	{
+		item->data->Update(dt);
+	}
+	return ret;
 }
 
 // Called after all Updates
@@ -136,11 +132,10 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* g_parent, bool draggable) {
+j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* g_parent, bool draggable) {
 	j1UI_Element* ui_element = nullptr;
 	switch (type)
 	{
-	
 	case UI_Type::BUTTON:
 		ui_element = new GuiButton(callback);
 		break;
@@ -167,7 +162,7 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback, j1UI_Elem
 
 void j1Gui::DebugDraw() {
 
-	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
+	for(p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		if (focusing_element == item->data) {
 			App->render->DrawQuad(item->data->rect, 0, 255, 0, 255, false);
@@ -178,3 +173,4 @@ void j1Gui::DebugDraw() {
 		}
 	}
 }
+

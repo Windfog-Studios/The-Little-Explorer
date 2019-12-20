@@ -28,6 +28,7 @@ public:
 	bool Start();
 
 	bool PreUpdate();
+	bool Update(float dt);
 	bool PostUpdate();
 
 	bool CleanUp();
@@ -36,7 +37,7 @@ public:
 	virtual bool Draw() { return true; };
 
 	//Hover-Unnhover
-
+	
 	j1UI_Element* CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* parent = nullptr, bool draggable = true);
 	virtual void Initialize() {};
 

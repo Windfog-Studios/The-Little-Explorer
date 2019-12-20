@@ -3,10 +3,10 @@
 #include "j1Gui.h"
 #include "j1Input.h"
 #include "j1Render.h"
-//#include "GuiText.h"
+#include "GuiText.h"
 #include "p2SString.h"
 
-GuiButton::GuiButton(j1Module* g_callback) {
+GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
 }
 
@@ -46,6 +46,18 @@ bool GuiButton::Input() {
 	}
 
 
+	return true;
+}
+
+bool GuiButton::Update(float dt) {
+	bool ret = true;
+	if (parent != nullptr)
+	{
+		screen_position.x = parent->screen_position.x + local_position.x;
+		screen_position.y = parent->screen_position.y + local_position.y;
+	}
+	rect.x = screen_position.x;
+	rect.y = screen_position.y;
 	return true;
 }
 

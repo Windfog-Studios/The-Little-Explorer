@@ -8,8 +8,8 @@ bool j1UI_Element::MouseHovering() {
 
 	App->input->GetMousePosition(mouse.x, mouse.y);
 
-	if ((mouse.x > rect.x) && (mouse.x < rect.x + rect.w)
-		&& (mouse.y > rect.y) && (mouse.y < rect.y + rect.h))
+	if ((mouse.x > rect.x) &&(mouse.x < rect.x + rect.w)
+		&&(mouse.y > rect.y)&&(mouse.y < rect.y + rect.h))
 	{
 		ret = true;
 	}

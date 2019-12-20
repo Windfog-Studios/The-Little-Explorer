@@ -10,12 +10,13 @@ public:
 	~GuiText();
 
 	void InitializeText(iPoint position, p2SString text);
+	bool Update(float dt);
 	bool Draw();
 
 private:
 	p2SString		text;
-	const char* font;
-	SDL_Texture* texture = nullptr;
+	const char*		font;
+	SDL_Texture*	texture = nullptr;
 };
 
 #endif // !_GUISTATICTEXT_H_

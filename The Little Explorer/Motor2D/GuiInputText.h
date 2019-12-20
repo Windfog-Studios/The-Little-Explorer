@@ -11,6 +11,7 @@ public:
 	~GuiInputText();
 
 	void InitializeInputText(iPoint position, p2SString text, SDL_Rect image_section);
+	bool Update(float dt);
 	bool Input();
 	bool Draw();
 
@@ -21,3 +22,4 @@ private:
 
 
 #endif // !_GUIINPUTTEXT_H_
+

@@ -22,6 +22,7 @@ public:
 	~j1UI_Element() {};
 
 	virtual bool Input() { return true; }
+	virtual bool Update(float dt) { return true; }
 	virtual bool Draw() { return true; }
 
 	SDL_Rect GetScreenRect() const;
@@ -31,13 +32,13 @@ public:
 	void SetLocalPos(iPoint new_position) { local_position = new_position; }
 	bool MouseHovering();
 
-public:
+public:		
 	iPoint			local_position;
 	iPoint			screen_position;
 	UI_Type			type;
-	j1UI_Element* parent = nullptr;
+	j1UI_Element*	parent = nullptr;
 	bool			draggable;
-	j1Module* callback;
+	j1Module*		callback;
 
 public:
 	SDL_Rect rect;
