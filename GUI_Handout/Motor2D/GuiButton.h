@@ -12,6 +12,7 @@ public:
 	~GuiButton() {}
 
 	void InitializeButton(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect, p2SString text);
+	bool Update(float dt);
 	bool Input();
 	bool Draw();
 

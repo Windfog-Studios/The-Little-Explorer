@@ -64,15 +64,6 @@ bool j1Gui::PreUpdate()
 			}
 			focusing_element = nullptr;
 		}
-
-		if (item->data->parent != nullptr)
-		{
-			item->data->screen_position.x = item->data->parent->screen_position.x + item->data->local_position.x;
-			item->data->screen_position.y = item->data->parent->screen_position.y + item->data->local_position.y;
-		}
-
-		item->data->rect.x = item->data->screen_position.x;
-		item->data->rect.y = item->data->screen_position.y;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
@@ -101,6 +92,15 @@ bool j1Gui::PreUpdate()
 	}
 
 	return true;
+}
+
+bool j1Gui::Update(float dt) {
+	bool ret = true;
+	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
+	{
+		item->data->Update(dt);
+	}
+	return ret;
 }
 
 // Called after all Updates
