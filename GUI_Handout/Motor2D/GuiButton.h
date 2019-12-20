@@ -10,7 +10,7 @@ class GuiButton : public j1UI_Element
 {
 public:
 	GuiButton(j1Module* callback);
-	~GuiButton() {}
+	~GuiButton();
 
 	void Init(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect, p2SString text);
 	bool Update(float dt);

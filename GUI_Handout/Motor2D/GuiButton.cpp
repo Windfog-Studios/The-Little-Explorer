@@ -5,12 +5,17 @@
 #include "j1Render.h"
 #include "GuiText.h"
 #include "p2SString.h"
+#include "j1Fonts.h"
 
 GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
 	text = new GuiText();
 	click_rect = {0,0,0,0};
 	tex = nullptr;
+}
+
+GuiButton::~GuiButton() {
+	delete text;
 }
 
 void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text) {
@@ -26,12 +31,16 @@ void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
 
-	iPoint text_position;
-	text_position.x = screen_position.x + rect.w * 0.5f; //text width has to be deducted
-	text_position.y = screen_position.y + rect.h * 0.5f; //text height has to be deducted
+	rect = normal_rect;
 
-	text->Init(text_position, g_text);
+	SDL_Rect text_rect;
+
+	App->font->CalcSize(g_text.GetString(), text_rect.w, text_rect.h);
+	text_rect.x = screen_position.x + rect.w * 0.5f - text_rect.w * 0.5f; 
+	text_rect.y = screen_position.y + rect.h * 0.5f - text_rect.h * 0.5f;
+
 	text->parent = this;
+	text->Init({text_rect.x, text_rect.y}, g_text);
 }
 
 bool GuiButton::Input() {
@@ -75,6 +84,6 @@ bool GuiButton::Update(float dt) {
 
 bool GuiButton::Draw() {
 	App->render->Blit(tex, screen_position.x, screen_position.y, current_rect);
-		text->Draw();
+	text->Draw();
 	return true;
 }
