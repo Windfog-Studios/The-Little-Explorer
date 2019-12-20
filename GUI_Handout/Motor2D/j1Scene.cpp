@@ -45,15 +45,6 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	//Handout 17
-	/*
-	banner = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE);
-	banner->InitializeImage({ 325,50 }, { 485, 829, 328, 103 });
-	
-	text = (GuiText*)App->gui->CreateUIElement(UI_Type::STATIC_TEXT);
-	text->InitializeText({ 450,15 }, "Hello World!");
-	*/
-
 	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	window->InitializeImage({ 325,50 }, { 0, 512, 483, 512 });
 

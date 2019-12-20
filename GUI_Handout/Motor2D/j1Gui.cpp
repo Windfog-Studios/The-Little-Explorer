@@ -55,10 +55,8 @@ bool j1Gui::PreUpdate()
 
 			if (item->data->MouseHovering())
 			{
-				item->data->screen_position += mouse_motion;
-				item->data->rect.x = item->data->screen_position.x;
-				item->data->rect.y = item->data->screen_position.y;
 				focusing_element = item->data;
+				item->data->screen_position += mouse_motion;
 				item->data->Input();
 				break;
 			}
