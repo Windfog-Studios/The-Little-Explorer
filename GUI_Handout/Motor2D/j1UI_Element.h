@@ -22,6 +22,7 @@ public:
 	~j1UI_Element() {};
 
 	virtual bool Input() { return true; }
+	virtual bool Update(float dt) { return true; }
 	virtual bool Draw() { return true; }
 
 	SDL_Rect GetScreenRect() const;

@@ -8,8 +8,8 @@ GuiImage::GuiImage(j1Module* g_callback) {
 	callback = g_callback;
 }
 
-void GuiImage::InitializeImage(iPoint g_position, SDL_Rect g_section) {
-	screen_position = g_position;
+void GuiImage::InitializeImage(iPoint position, SDL_Rect g_section) {
+	screen_position = position;
 	section = g_section;
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
@@ -23,7 +23,19 @@ void GuiImage::InitializeImage(iPoint g_position, SDL_Rect g_section) {
 	}
 }
 
+bool GuiImage::Update(float dt) {
+	bool ret = true;
+	if (parent != nullptr)
+	{
+		screen_position.x = parent->screen_position.x + local_position.x;
+		screen_position.y = parent->screen_position.y + local_position.y;
+	}
+	rect.x = screen_position.x;
+	rect.y = screen_position.y;
+	return ret;
+}
+
 bool GuiImage::Draw() {
-	App->render->Blit(tex, screen_position.x, screen_position.y, &section);
+	App->render->Blit(tex, rect.x, rect.y, &section);
 	return true;
 }

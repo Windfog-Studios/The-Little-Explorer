@@ -10,6 +10,7 @@ public:
 	~GuiText();
 
 	void InitializeText(iPoint position, p2SString text);
+	bool Update(float dt);
 	bool Draw();
 
 private:
