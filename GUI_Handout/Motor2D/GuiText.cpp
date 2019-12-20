@@ -46,6 +46,7 @@ bool GuiText::Update(float dt) {
 }
 
 bool GuiText::Draw() {
+	texture = App->font->Print(text.GetString());
 	App->render->Blit(texture, rect.x, rect.y);
 	return true;
 }

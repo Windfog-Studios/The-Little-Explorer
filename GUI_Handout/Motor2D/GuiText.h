@@ -14,7 +14,7 @@ public:
 	bool Update(float dt);
 	bool Draw();
 
-private:
+public:
 	p2SString		text;
 	const char*		font;
 	SDL_Texture*	texture = nullptr;

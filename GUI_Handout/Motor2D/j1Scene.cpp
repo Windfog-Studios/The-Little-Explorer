@@ -52,7 +52,7 @@ bool j1Scene::Start()
 	window_text->Init({ 520,105 }, "Window Title");
 
 	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false,true);
-	button->Init({ 450, 400 }, {642,169,229,69}, { 0,113,229,69 } ,{ 411,169,229,69 }, "Button");
+	button->Init({ 450, 400 }, {642,169,229,69}, {0,113,229,69} ,{ 411,169,229,69 }, "Button");
 
 	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false,true);
 	inputText->Init({ 400,250 }, "Editable Text", { 488, 569, 344, 61 });

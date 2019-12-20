@@ -42,11 +42,6 @@ bool j1Gui::PreUpdate()
 {
 	SDL_Event event;
 
-	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
-	{
-		item->data->Input();
-	}
-
 	for (p2List_item<j1UI_Element*>* item = ui_elements.end; item != nullptr; item = item->prev)
 	{
 		iPoint mouse_motion;
@@ -57,14 +52,13 @@ bool j1Gui::PreUpdate()
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 					if (item->data->draggable) {
 						item->data->screen_position += mouse_motion;
-						focusing_element = item->data;
+						focused_element = item->data;
 					}
 				}
 
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 					if (item->data->interactable) {
-						item->data->Input();
-						focusing_element = item->data;
+						focused_element = item->data;
 					}
 				}
 				break;
@@ -72,29 +66,32 @@ bool j1Gui::PreUpdate()
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 				if ((item == ui_elements.start) && (!item->data->MouseHovering()))
-					focusing_element = nullptr;
+					focused_element = nullptr;
 			}
 	}
 
+	if (focused_element != nullptr)
+		focused_element->Input();
+
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
-		if (focusing_element == nullptr)
+		if (focused_element == nullptr)
 		{
-			focusing_element = ui_elements.start->data;
+			focused_element = ui_elements.start->data;
 		}
 		else
 		{
-			int item = ui_elements.find(focusing_element);
+			int item = ui_elements.find(focused_element);
 			if (item == ui_elements.count() - 1)
 			{
 				item = -1;
 			}
-			focusing_element = ui_elements[item + 1];
+			focused_element = ui_elements[item + 1];
 		}
 	}
 
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		if (focusing_element == item->data)
+		if (focused_element == item->data)
 		{
 			item->data->callback->OnEvent(item->data);
 			break;
@@ -180,7 +177,7 @@ void j1Gui::DebugDraw() {
 
 	for(p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		if (focusing_element == item->data) {
+		if (focused_element == item->data) {
 			App->render->DrawQuad(item->data->rect, 0, 255, 0, 255, false);
 		}
 		else

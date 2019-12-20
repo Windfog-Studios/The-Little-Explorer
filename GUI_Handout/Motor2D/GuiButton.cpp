@@ -12,6 +12,7 @@ GuiButton::GuiButton(j1Module* g_callback){
 	text = new GuiText();
 	click_rect = {0,0,0,0};
 	tex = nullptr;
+	current_rect = &normal_rect;
 }
 
 GuiButton::~GuiButton() {
@@ -44,17 +45,16 @@ void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover
 }
 
 bool GuiButton::Input() {
-	if (current_rect != nullptr)
-	{
-		rect.w = current_rect->w;
-		rect.h = current_rect->h;
-	}
-	iPoint mouse_motion;
-	if (!MouseHovering())
-	{
-		current_rect = &normal_rect;
-	}
-	else
+	
+	current_rect = &click_rect;
+
+	return true;
+}
+
+bool GuiButton::Update(float dt) {
+	bool ret = true;
+
+	if (MouseHovering())
 	{
 		current_rect = &hover_rect;
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -62,12 +62,12 @@ bool GuiButton::Input() {
 			current_rect = &click_rect;
 		}
 	}
+	else
+	{
+		current_rect = &normal_rect;
+	}
+	
 
-	return true;
-}
-
-bool GuiButton::Update(float dt) {
-	bool ret = true;
 
 	if (parent != nullptr)
 	{
@@ -83,7 +83,7 @@ bool GuiButton::Update(float dt) {
 }
 
 bool GuiButton::Draw() {
-	App->render->Blit(tex, screen_position.x, screen_position.y, current_rect);
+	App->render->Blit(tex, rect.x, rect.y, current_rect);
 	text->Draw();
 	return true;
 }
