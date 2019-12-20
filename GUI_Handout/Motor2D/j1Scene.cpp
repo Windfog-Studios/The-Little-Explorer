@@ -45,16 +45,16 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,nullptr, true);
 	window->Init({ 325,50 }, { 0, 512, 483, 512 });
 
-	window_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, window, false);
+	window_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, window, false,false);
 	window_text->Init({ 520,105 }, "Window Title");
 
-	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false);
+	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false,true);
 	button->Init({ 450, 400 }, {642,169,229,69}, { 0,113,229,69 } ,{ 411,169,229,69 }, "Button");
 
-	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false);
+	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false,true);
 	inputText->Init({ 400,250 }, "Editable Text", { 488, 569, 344, 61 });
 
 	return true;

@@ -49,22 +49,31 @@ bool j1Gui::PreUpdate()
 
 	for (p2List_item<j1UI_Element*>* item = ui_elements.end; item != nullptr; item = item->prev)
 	{
-		if ((App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)&&(item->data->draggable))
-		{
-			iPoint mouse_motion;
-			App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-
+		iPoint mouse_motion;
+		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+			
 			if (item->data->MouseHovering())
 			{
-				focusing_element = item->data;
-				item->data->screen_position += mouse_motion;
-				if(item->data->interactable) 
-					item->data->Input();
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+					if (item->data->draggable) {
+						item->data->screen_position += mouse_motion;
+						focusing_element = item->data;
+					}
+				}
+
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+					if (item->data->interactable) {
+						item->data->Input();
+						focusing_element = item->data;
+					}
+				}
 				break;
 			}
 
-			focusing_element = nullptr;
-		}
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+				if ((item == ui_elements.start) && (!item->data->MouseHovering()))
+					focusing_element = nullptr;
+			}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
