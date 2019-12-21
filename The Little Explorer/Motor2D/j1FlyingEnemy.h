@@ -17,7 +17,8 @@ public:
 
 	bool Save(pugi::xml_node& data) const { return true; }
 	bool Load(pugi::xml_node& data) { return true; }
-
+private:
+	j1Player* player;
 };
 
 #endif // !_j1FLYING_ENEMY_H

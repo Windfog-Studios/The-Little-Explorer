@@ -22,7 +22,7 @@ public:
 
 private:
 	float attacking_range = 1;
-
+	j1Player* player;
 };
 
 #endif // !_j1WALKING_ENEMY_H

@@ -19,7 +19,7 @@ j1Trap::j1Trap() :j1Entity(EntityType::TRAP) {
 	collider = App->collision->AddCollider({ 16,119,34,8 }, COLLIDER_ENEMY, (j1Module*)this);
 	raycast = App->collision->AddCollider({ 16,34,20,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	lastPosition = position;
-	player = App->entities->player;
+	player_pointer = App->entities->player_pointer;
 	speed.x = 20;
 	health = 50;
 	//flip = SDL_FLIP_HORIZONTAL;

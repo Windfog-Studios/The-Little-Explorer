@@ -56,12 +56,13 @@ public:
 	p2List<j1Entity*> entities;
 	pugi::xml_node config_data;
 
-	j1Player* player;
+	j1Player* player_pointer;
 
 public:
 	int gravity = 0;
 	int max_falling_speed = 0;
 
+	j1Player* reference_player = nullptr;
 	j1WalkingEnemy* reference_walking_enemy = nullptr;
 	j1FlyingEnemy* reference_flying_enemy = nullptr;
 	j1WalkingEnemy2* reference_walking_enemy2 = nullptr;

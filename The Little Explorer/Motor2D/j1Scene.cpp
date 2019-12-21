@@ -129,7 +129,7 @@ bool j1Scene::Update(float dt)
 	BROFILER_CATEGORY("SceneUpdate", Profiler::Color::HotPink)
 
 	SDL_Rect*	camera = &App->render->camera;
-	iPoint*		player_position = &App->entities->player->position;
+	iPoint*		player_position = &App->entities->player_pointer->position;
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;
@@ -145,7 +145,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		App->fade_to_black->FadeToBlack(current_level, current_level);
-		App->entities->player->position = App->entities->player->initialPosition;
+		App->entities->player_pointer->position = App->entities->player_pointer->initialPosition;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -163,7 +163,7 @@ bool j1Scene::Update(float dt)
 				camera_frame.x -= floor(CAMERA_SPEED * dt);
 			}
 
-			if ((player_position->x + App->entities->player->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width - 10)) {
+			if ((player_position->x + App->entities->player_pointer->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width - 10)) {
 				App->render->camera.x -= floor(CAMERA_SPEED * dt);
 				camera_frame.x += floor(CAMERA_SPEED * dt);
 			}
@@ -173,7 +173,7 @@ bool j1Scene::Update(float dt)
 				camera_frame.y -= floor(CAMERA_SPEED * dt);
 			}
 
-			if (((player_position->y + App->entities->player->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height - camera_margin)) {
+			if (((player_position->y + App->entities->player_pointer->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height - camera_margin)) {
 				App->render->camera.y -= floor(CAMERA_SPEED * dt);
 				camera_frame.y += floor(CAMERA_SPEED * dt);
 			}
@@ -289,14 +289,14 @@ void j1Scene::ResetCamera(int kind_of_reset) {
 
 void j1Scene::ResetLevel() {
 
-	App->entities->player->flip = SDL_FLIP_NONE;
-	App->entities->player->isVisible = true;
-	App->entities->player->particles_created = false;
-	App->entities->player->state = IDLE;
+	App->entities->player_pointer->flip = SDL_FLIP_NONE;
+	App->entities->player_pointer->isVisible = true;
+	App->entities->player_pointer->particles_created = false;
+	App->entities->player_pointer->state = IDLE;
 
-	if (App->entities->player->last_checkpoint == nullptr) {
+	if (App->entities->player_pointer->last_checkpoint == nullptr) {
 		App->entities->RellocateEntities();
-		App->entities->player->collider->SetPos(App->entities->player->position.x, App->entities->player->position.y);
+		App->entities->player_pointer->collider->SetPos(App->entities->player_pointer->position.x, App->entities->player_pointer->position.y);
 		ResetCamera(0);
 	}
 	else
@@ -339,7 +339,7 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 		App->entities->RellocateEntities();
 	}
 
-	App->entities->player->position.y = App->entities->player->initialPosition.y - 30;
-	App->entities->player->state = IDLE;
+	App->entities->player_pointer->position.y = App->entities->player_pointer->initialPosition.y - 30;
+	App->entities->player_pointer->state = IDLE;
 
 }

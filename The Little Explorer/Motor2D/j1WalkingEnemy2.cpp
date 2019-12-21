@@ -18,7 +18,7 @@ j1WalkingEnemy2::j1WalkingEnemy2() :j1Entity(EntityType::WALKING_ENEMY2) {
 	name.create("walking_enemy2");
 
 	//variable declaration from EntityManager
-	player = App->entities->player;
+	player_pointer = App->entities->player_pointer;
 	gravity = App->entities->gravity;
 	max_falling_speed = App->entities->max_falling_speed;
 	type = EntityType::WALKING_ENEMY2;
@@ -97,7 +97,7 @@ bool j1WalkingEnemy2::Update(float dt) {
 	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
-	PathfindtoPlayer(detection_range, player);
+	PathfindtoPlayer(detection_range, player_pointer);
 
 	//movement
 	if ((path_to_player != nullptr) && (path_to_player->Count() != 0))
@@ -122,7 +122,7 @@ bool j1WalkingEnemy2::Update(float dt) {
 
 		if (current_map_position.x > tile_to_go.x) {
 			//LOG("Going left");
-			if ((current_map_position.DistanceManhattan(destination) < attacking_range + 1) && ((position.x - player->position.x) < 40))
+			if ((current_map_position.DistanceManhattan(destination) < attacking_range + 1) && ((position.x - player_pointer->position.x) < 40))
 				state = ATTACK;
 			else state = RUN_BACKWARD;
 		}

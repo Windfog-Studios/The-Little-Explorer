@@ -12,12 +12,9 @@
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
+
 	name.create("flying_enemy");
-
-	//variables from EntityManager
 	type = EntityType::FLYING_ENEMY;
-	player = App->entities->player;
-
 
 	//copy variables from reference_enemy
 	if (App->entities->reference_flying_enemy != nullptr)
@@ -37,15 +34,17 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		attack = idle;
 		run = idle;
 		current_animation = &idle;
+
+		player = App->entities->player_pointer;
+
+		//colliders
+		collider = App->collision->AddCollider({ 2000,200,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
+		raycast = App->collision->AddCollider({ 2000,200,20,2 }, COLLIDER_ENEMY, (j1Module*)this);
 	}
 
 	initialPosition = position;
 	lastPosition = position;
 	flip = SDL_FLIP_NONE;
-
-	//colliders
-	collider = App->collision->AddCollider({ 0,66,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,20,2},COLLIDER_ENEMY, (j1Module*)this);
 }
 
 j1FlyingEnemy::~j1FlyingEnemy() {
@@ -217,6 +216,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}*/
 		position = lastPosition;
 		break;
+
 	case COLLIDER_PLAYER:
 		if (!playing_fx)
 		{
@@ -236,6 +236,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		player->current_speed.y = player->enemy_bouncing;
 		player->can_double_jump = true;
 		break;
+
 	default:
 		break;
 	}

@@ -87,7 +87,7 @@ void j1EntityManager::DestroyAllEntities() {
 
 	for (item = entities.start; item != nullptr; item = item->next)
 	{
-		if (item->data != player) {
+		if (item->data != player_pointer) {
 			DestroyEntity(item->data);
 		}
 	}
@@ -102,9 +102,9 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	max_falling_speed = config.child("max_falling_speed").attribute("value").as_int();
 
 	//player creation
-	player = new j1Player();
-	player->Awake(config.child("player"));
-	entities.add(player);
+	reference_player = new j1Player();
+	player_pointer = (j1Player*)reference_player->Awake(config.child("player"));
+	//entities.add(player);
 
 	//reference walking enemy
 	reference_walking_enemy = new j1WalkingEnemy();
@@ -125,17 +125,24 @@ bool j1EntityManager::Start()
 {
 	bool ret = true;
 
-	player->Start();
+	//player->Start();
+	reference_player->texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
 	reference_walking_enemy->texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
 	reference_flying_enemy->texture = App->tex->Load("sprites/characters/Sprite_bat.png");
 	reference_walking_enemy2->texture = App->tex->Load("sprites/characters/Minotaur - Sprite Sheet.png");
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
+		if (entity->data->type == EntityType::PLAYER) {
+			entity->data->texture = reference_player->texture;
+			player_pointer = (j1Player*)entity->data;
+		}
 		if (entity->data->type == EntityType::WALKING_ENEMY){
-			entity->data->texture = reference_walking_enemy->texture;}
+			entity->data->texture = reference_walking_enemy->texture;
+		}
 		if (entity->data->type == EntityType::FLYING_ENEMY){
-			entity->data->texture = reference_flying_enemy->texture; }
+			entity->data->texture = reference_flying_enemy->texture; 
+		}
 		if (entity->data->type == EntityType::WALKING_ENEMY2) {
 			entity->data->texture = reference_walking_enemy2->texture;
 		}
@@ -150,6 +157,9 @@ bool j1EntityManager::CleanUp()
 
 	App->tex->UnLoad(trap_texture);
 	trap_texture = nullptr;
+
+	App->tex->UnLoad(reference_player->texture);
+	reference_player->texture = nullptr;
 
 	App->tex->UnLoad(reference_walking_enemy->texture);
 	reference_walking_enemy->texture = nullptr;
@@ -172,7 +182,7 @@ bool j1EntityManager::CleanUp()
 j1Entity* j1EntityManager::getPlayer() {
 	for (p2List_item<j1Entity*>* item = entities.start; item != nullptr; item = item->next)
 	{
-		if (item->data == player) return item->data;
+		if (item->data == player_pointer) return item->data;
 	}
 }
 
@@ -180,7 +190,7 @@ bool j1EntityManager::PreUpdate()
 {
 	BROFILER_CATEGORY("EntitiesPreUpdate", Profiler::Color::Bisque)
 	bool ret = true;
-	player->PreUpdate();
+	player_pointer->PreUpdate();
 	return ret;
 }
 
@@ -196,18 +206,7 @@ bool j1EntityManager::Update(float dt)
 		}
 	}
 	accumulated_time += dt;
-	//LOG("Accumulated time: %f", accumulated_time);
 
-	/*if (entity != nullptr)
-		{
-			if (entity->data == player) {
-				entity->data->Update(dt);
-			}
-			else if (accumulated_time > time_between_updates) {
-				entity->data->Update(dt);
-				accumulated_time = 0;
-			}
-	}*/
 	return ret;
 }
 
@@ -244,10 +243,8 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		int x_position = entity_node.attribute("position_x").as_int();
 		int y_position = entity_node.attribute("position_y").as_int();
 
-		if (entity_name == "player") {
-			player->position.x = x_position;
-			player->position.y = y_position;
-		}
+		if (entity_name == "player")
+			player_pointer = (j1Player*)CreateEntity(EntityType::PLAYER, x_position, y_position);
 
 		if (entity_name == "walking_enemy") 
 			CreateEntity(EntityType::WALKING_ENEMY, x_position, y_position);
@@ -296,7 +293,7 @@ bool j1EntityManager::CheckpointSave() {
 		for (entity = entities.start; entity != nullptr; entity = entity->next)
 		{
 			pugi::xml_node child = entities_node.append_child(entity->data->name.GetString());
-			if (entity->data == player)
+			if (entity->data == player_pointer)
 			{
 				child.append_attribute("position_x") = entity->data->position.x;
 				child.append_attribute("position_y") = entity->data->position.y;
@@ -345,9 +342,9 @@ bool j1EntityManager::CheckpointLoad()
 			int y_position = entity_node.attribute("position_y").as_int();
 
 			if (entity_name == "player") {
-				player->position.x = x_position;
-				player->position.y = y_position;
-				player->collider->SetPos(player->position.x, player->position.y);
+				player_pointer->position.x = x_position;
+				player_pointer->position.y = y_position;
+				player_pointer->collider->SetPos(player_pointer->position.x, player_pointer->position.y);
 			}
 
 			if (entity_name == "walking_enemy")

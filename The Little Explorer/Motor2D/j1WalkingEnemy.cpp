@@ -15,10 +15,10 @@
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
+	
 	name.create("walking_enemy");
 	
 	//variable declaration from EntityManager
-	player = App->entities->player;
 	gravity = App->entities->gravity;
 	max_falling_speed = App->entities->max_falling_speed;
 	type = EntityType::WALKING_ENEMY;
@@ -37,15 +37,17 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		idle = *animations.At(0)->data;
 		attack = *animations.At(1)->data;
 		run = *animations.At(2)->data;
+
+		player = App->entities->player_pointer;
+
+		collider = App->collision->AddCollider({ 1000,1000,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
+		raycast = App->collision->AddCollider({ 1000,1000,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
+
 	}
 
 	initialPosition = position;
 	lastPosition = position;
 	flip = SDL_FLIP_HORIZONTAL;
-
-	//colliders
-	collider = App->collision->AddCollider({ 16,34,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
 	
 	state = RUN_FORWARD;
 
@@ -329,27 +331,28 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		}
 		break;
 	case COLLIDER_PLAYER:
-		if (!playing_fx) {
-			App->audio->PlayFx(die_fx);
-			playing_fx = true;
-		}
-		if (!particles_created)
-		{
-			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
-			particles_created = true;
-		}
-		if (player->state != DIE)
-		{
-			App->entities->DestroyEntity(this);
-		}
-		if (attack_collider != nullptr)
-		{
-			attack_collider->to_delete = true;
-			attack_collider = nullptr;
-		}
-		player->current_speed.y = player->enemy_bouncing;
-		player->can_double_jump = true;
-		break;
+			if (!playing_fx) {
+				App->audio->PlayFx(die_fx);
+				playing_fx = true;
+			}
+			if (!particles_created)
+			{
+				App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
+				particles_created = true;
+			}
+			if (player->state != DIE)
+			{
+				App->entities->DestroyEntity(this);
+			}
+			if (attack_collider != nullptr)
+			{
+				attack_collider->to_delete = true;
+				attack_collider = nullptr;
+			}
+			player->current_speed.y = player->enemy_bouncing;
+			player->can_double_jump = true;
+			break;
+
 	default:
 		break;
 	}

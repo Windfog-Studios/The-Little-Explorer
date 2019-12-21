@@ -18,8 +18,38 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	name.create("player");
 	LoadAnimations("Animations_traveller.tmx");
+
+	App->entities->player_pointer = this;
+
 	crouch_down.loop = false;
 	crouch_down.loop = false;
+
+	gravity = App->entities->gravity;
+	max_falling_speed = App->entities->max_falling_speed;
+
+	type = EntityType::PLAYER;
+
+	if (App->entities->reference_player != nullptr)
+	{
+		max_running_speed = App->entities->reference_player->max_running_speed;
+		max_side_speed = App->entities->reference_player->max_side_speed;
+		acceleration = App->entities->reference_player->acceleration;
+		deceleration = App->entities->reference_player->deceleration;
+
+		jumpImpulse = App->entities->reference_player->jumpImpulse;
+		doubleJumpImpulse = App->entities->reference_player->doubleJumpImpulse;
+		enemy_bouncing = App->entities->reference_player->enemy_bouncing;
+
+		jump_fx = App->entities->reference_player->jump_fx;
+		double_Jump_fx = App->entities->reference_player->double_Jump_fx;
+		die_fx = App->entities->reference_player->die_fx;
+
+		position = App->entities->reference_player->initialPosition;
+
+		collider = App->collision->AddCollider(SDL_Rect{ -1000,-1000,32,64 }, COLLIDER_PLAYER, (j1Module*)this);
+		raycast = App->collision->AddCollider(SDL_Rect{ -1000,-1000,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)this);
+	}
+	current_animation = &idle;
 }
 
 j1Player::~j1Player(){ }
@@ -52,15 +82,13 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	double_Jump_fx_path = config.child("jump2FX").attribute("source").as_string();
 	
 	//colliders
-	collider = App->collision->AddCollider(SDL_Rect{0,0,32,64}, COLLIDER_PLAYER, (j1Module*)App->entities->player); //a collider to start
-	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player);
+	collider = App->collision->AddCollider(SDL_Rect{0,0,32,64}, COLLIDER_PLAYER, (j1Module*)App->entities->player_pointer); 
+	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player_pointer);
 
 	return ret;
 }
 
 bool j1Player::Start(){
-
-	texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
 
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
@@ -412,63 +440,7 @@ void j1Player::MovementControl(float dt) {
 		position.x += current_speed.x * dt;
 		position.y += current_speed.y * dt;
 	}
-
-	//LOG("Speed x: %.2f y: %.2f", current_speed.x, current_speed.y);
-	//LOG("Floor Speed x: %.2f y: %.2f", floor(current_speed.x), floor(current_speed.y));
-	//LOG("Grounded %i", grounded);
 }
-
-/*
-bool j1Player::LoadAnimations() {
-	pugi::xml_parse_result result = animation_doc.load_file("sprites/characters/animations.xml");
-	bool ret = true;
-	uint i = 0u;
-	uint j = 0;
-	
-	if (result == NULL)
-	{
-		LOG("Could not load animations xml file %s. pugi error: %s", "animations.xml", result.description());
-		ret = false;
-	}
-
-	animations.add(&idle);
-	animations.add(&run);
-	animations.add(&crouch_down);
-	animations.add(&crouch_up);
-	animations.add(&jump);
-	animations.add(&fall);
-
-	pugi::xml_node animation = animation_doc.child("animations").child("animation");
-	pugi::xml_node frame;
-	p2List_item<Animation*>* item = animations.start;
-	int x, y, w, h;
-	float anim_speed = 1;
-
-	LOG("Loading animations ---------");
-
-	for (animation ; animation; animation = animation.next_sibling("animation"))
-	{
-		item->data->loop = animation.attribute("loop").as_bool();
-
-		for (frame = animation.child("data").child("frame"); frame; frame = frame.next_sibling("frame"))
-		{
-			x = frame.attribute("x").as_int();
-			y = frame.attribute("y").as_int();
-			w = frame.attribute("w").as_int();
-			h = frame.attribute("h").as_int();
-			anim_speed = frame.attribute("speed").as_float();
-
-			item->data->PushBack({x,y,w,h}, anim_speed);
-		}
-		i++;
-		item = item->next;
-	}
-
-	LOG("%u animations loaded", i);
-
-	return ret;
-}
-*/
 
 bool j1Player::Save(pugi::xml_node& data) const {
 
