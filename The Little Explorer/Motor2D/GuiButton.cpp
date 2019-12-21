@@ -5,12 +5,21 @@
 #include "j1Render.h"
 #include "GuiText.h"
 #include "p2SString.h"
+#include "j1Fonts.h"
 
 GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
+	text = new GuiText();
+	click_rect = {0,0,0,0};
+	tex = nullptr;
+	current_rect = &normal_rect;
 }
 
-void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString text) {
+GuiButton::~GuiButton() {
+	delete text;
+}
+
+void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text) {
 	screen_position = g_position;
 	tex = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
@@ -23,34 +32,41 @@ void GuiButton::InitializeButton(iPoint g_position, SDL_Rect g_normal_rect, SDL_
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
 
+	rect = normal_rect;
 
+	SDL_Rect text_rect;
+
+	App->font->CalcSize(g_text.GetString(), text_rect.w, text_rect.h);
+	text_rect.x = screen_position.x + rect.w * 0.5f - text_rect.w * 0.5f; 
+	text_rect.y = screen_position.y + rect.h * 0.5f - text_rect.h * 0.5f;
+
+	text->parent = this;
+	text->Init({text_rect.x, text_rect.y}, g_text);
 }
 
 bool GuiButton::Input() {
-	if (current_rect != nullptr)
+	
+	current_rect = &click_rect;
+	callback->OnEvent(this, FocusEvent::CLICKED);
+	return true;
+}
+
+bool GuiButton::Update(float dt) {
+	bool ret = true;
+
+	if (OnHover())
 	{
-		rect.w = current_rect->w;
-		rect.h = current_rect->h;
-	}
-	iPoint mouse_motion;
-	if (!MouseHovering())
-	{
-		current_rect = &normal_rect;
-	}
-	else {
 		current_rect = &hover_rect;
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
 			current_rect = &click_rect;
 		}
 	}
-
-
-	return true;
-}
-
-bool GuiButton::Update(float dt) {
-	bool ret = true;
+	else
+	{
+		current_rect = &normal_rect;
+	}
+	
 	if (parent != nullptr)
 	{
 		screen_position.x = parent->screen_position.x + local_position.x;
@@ -58,10 +74,14 @@ bool GuiButton::Update(float dt) {
 	}
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
+
+	text->Update(dt);
+
 	return true;
 }
 
 bool GuiButton::Draw() {
-	App->render->Blit(tex, screen_position.x, screen_position.y, current_rect);
+	App->render->Blit(tex, rect.x, rect.y, current_rect);
+	text->Draw();
 	return true;
 }

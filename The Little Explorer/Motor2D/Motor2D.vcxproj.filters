@@ -52,9 +52,6 @@
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
     </ClCompile>
-    <ClCompile Include="j1UI.cpp">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Particles.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
@@ -173,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Desenvolupament  ========\Modules\Bases</Filter>
-    </ClInclude>
-    <ClInclude Include="j1UI.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Particles.h">
       <Filter>Desenvolupament  ========\Modules</Filter>

@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1Gui.h"
 #include "SDL/include/SDL.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
@@ -43,6 +44,7 @@ bool j1Input::Awake(pugi::xml_node& config)
 bool j1Input::Start()
 {
 	SDL_StopTextInput();
+
 	return true;
 }
 
@@ -119,6 +121,16 @@ bool j1Input::PreUpdate()
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
+			case SDL_TEXTINPUT:
+  				strcat_s(text, MAX_INPUT_CHARACTERS * 4 , event.text.text);
+				break;
+	
+			case SDL_TEXTEDITING:
+				composition = event.edit.text;
+				cursor = event.edit.start;
+				selection_len = event.edit.length;
+				break;
+
 			case SDL_MOUSEMOTION:
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
@@ -137,6 +149,7 @@ bool j1Input::PreUpdate()
 bool j1Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
+	SDL_StopTextInput();
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
@@ -157,4 +170,11 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+void j1Input::EnableTextInput(bool enable) {
+	if (enable == true)
+		SDL_StartTextInput();
+	if (enable == false)
+		SDL_StopTextInput();
 }

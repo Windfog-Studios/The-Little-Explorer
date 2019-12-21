@@ -98,7 +98,6 @@
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Particles.cpp" />
     <ClCompile Include="j1Timer.cpp" />
-    <ClCompile Include="j1UI.cpp" />
     <ClCompile Include="j1UI_Element.cpp" />
     <ClCompile Include="j1WalkingEnemy.cpp" />
     <ClCompile Include="j1WalkingEnemy2.cpp" />
@@ -129,7 +128,6 @@
     <ClInclude Include="j1Particles.h" />
     <ClInclude Include="j1Timer.h" />
     <ClInclude Include="j1Trap.h" />
-    <ClInclude Include="j1UI.h" />
     <ClInclude Include="j1UI_Element.h" />
     <ClInclude Include="j1WalkingEnemy.h" />
     <ClInclude Include="j1WalkingEnemy2.h" />

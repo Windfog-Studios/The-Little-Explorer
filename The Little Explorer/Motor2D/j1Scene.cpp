@@ -60,22 +60,19 @@ bool j1Scene::Start()
 
 	App->gui->Start();
 
-	/*
+	
 	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	window->InitializeImage({ 325,350 }, { 0, 512, 483, 512 });
+	window->Init({ 325,350 }, { 0, 512, 483, 512 });
 
 	window_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, window, false);
-	window_text->InitializeText({ 520,405 }, "Window Title");
+	window_text->Init({ 520,405 }, "Window Title");
 
 	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false);
-	button->InitializeButton({ 450, 700 }, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, "Button");
-
-	button_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, button, false);
-	button_text->InitializeText({ 540,722 }, "Button");
+	button->Init({ 450, 700 }, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, "Button");
 
 	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false);
-	inputText->InitializeInputText({ 400,550 }, "Editable Text", { 488, 569, 344, 61 });
-	*/
+	inputText->Init({ 400,550 }, "Editable Text", { 488, 569, 344, 61 });
+	
 	//*/
 
 	/*

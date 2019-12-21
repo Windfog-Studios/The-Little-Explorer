@@ -9,7 +9,6 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Audio.h"
-#include "j1UI.h"
 #include "j1Particles.h"
 #include "j1EntityManager.h"
 #include "j1FadeToBlack.h"

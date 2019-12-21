@@ -120,7 +120,7 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_TEXTINPUT:
-  				strcat_s(text, MAX_INPUT_CHARACTERS , event.text.text);
+  				strcat_s(text, MAX_INPUT_CHARACTERS * 4 , event.text.text);
 				break;
 	
 			case SDL_TEXTEDITING:

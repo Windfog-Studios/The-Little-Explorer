@@ -115,7 +115,7 @@ public:
 	bool operator== (const char* string) const
 	{
 		if(string != NULL)
-			return strcmp(string, str) == 0;
+		return strcmp(string, str) == 0;
 		return false;
 	}
 

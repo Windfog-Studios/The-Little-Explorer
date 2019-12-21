@@ -13,7 +13,6 @@ class j1Button;
 class j1StaticText;
 class j1Image;
 
-
 #define CURSOR_WIDTH 2
 
 // ---------------------------------------------------
@@ -38,8 +37,8 @@ public:
 
 	//Hover-Unnhover
 	
-	j1UI_Element* CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* parent = nullptr, bool draggable = true);
-	virtual void Initialize() {};
+	j1UI_Element* CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* parent = nullptr, bool draggable = false, bool interactable = false);
+	virtual void Init() {};
 
 	const SDL_Texture* GetAtlas() const;
 
@@ -52,7 +51,7 @@ private:
 
 public:
 	p2List<j1UI_Element*> ui_elements;
-	j1UI_Element* focusing_element = nullptr;
+	j1UI_Element* focused_element = nullptr;
 	bool debug = false;
 };
 

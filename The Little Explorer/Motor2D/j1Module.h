@@ -12,6 +12,7 @@
 class j1App;
 struct Collider;
 class j1UI_Element;
+enum class FocusEvent;
 
 class j1Module
 {
@@ -67,7 +68,7 @@ public:
 
 	virtual void OnCollision(Collider* c1, Collider* c2) {}
 
-	virtual void OnEvent(j1UI_Element* element){}
+	virtual void OnEvent(j1UI_Element*, FocusEvent) {}
 
 	public:
 

@@ -18,7 +18,6 @@
 #include "j1Trap.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
-#include "j1UI.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
@@ -42,7 +41,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entities = new j1EntityManager();
 	particles = new j1Particles();
 	collision = new j1Collision();
-	ui = new j1UI();
 	pathfinding = new j1PathFinding();
 	fade_to_black = new j1FadeToBlack();
 	font = new j1Fonts();
@@ -59,7 +57,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities);
 	AddModule(particles);
 	AddModule(collision);
-	AddModule(ui);
 	AddModule(pathfinding);
 	AddModule(fade_to_black);
 	AddModule(font);

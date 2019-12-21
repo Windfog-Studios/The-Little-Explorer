@@ -11,6 +11,7 @@
 j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
+	atlas = nullptr;
 }
 
 // Destructor
@@ -39,58 +40,68 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-	SDL_Event event;
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		debug = !debug;
 
-	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
-	{
-		item->data->Input();
-	}
-
 	for (p2List_item<j1UI_Element*>* item = ui_elements.end; item != nullptr; item = item->prev)
 	{
-		if ((App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)&&(item->data->draggable))
-		{
-			iPoint mouse_motion;
-			App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+		iPoint mouse_motion;
+		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
-			if (item->data->MouseHovering())
+			if (item->data->OnHover())
 			{
-				focusing_element = item->data;
-				item->data->screen_position += mouse_motion;
-				item->data->Input();
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+					if (item->data->draggable) {
+						item->data->screen_position += mouse_motion;
+						focused_element = item->data;
+					}
+				}
+
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+					if (item->data->interactable) {
+						focused_element = item->data;
+						focused_element->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
+						focused_element->Input();
+					}
+				}
 				break;
 			}
-			focusing_element = nullptr;
-		}
+
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+				if ((item == ui_elements.start) && (!item->data->OnHover())) {
+					focused_element->HandleFocusEvent(FocusEvent::FOCUS_LOST);
+					focused_element = nullptr;
+				}
+			}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
-		if (focusing_element == nullptr)
+		if (focused_element == nullptr)
 		{
-			focusing_element = ui_elements.start->data;
+			focused_element = ui_elements.start->data;
 		}
 		else
 		{
-			int item = ui_elements.find(focusing_element);
+			int item = ui_elements.find(focused_element);
 			if (item == ui_elements.count() - 1)
 			{
 				item = -1;
 			}
-			focusing_element = ui_elements[item + 1];
+			focused_element = ui_elements[item + 1];
 		}
 	}
 
+	/*
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		if (focusing_element == item->data)
+		if (focused_element == item->data)
 		{
-			item->data->callback->OnEvent(item->data);
+			item->data->callback->OnEvent(item->data, item->data.);
 			break;
 		}
 	}
+	*/
 
 	return true;
 }
@@ -105,16 +116,16 @@ bool j1Gui::Update(float dt) {
 }
 
 // Called after all Updates
-bool j1Gui::PostUpdate(){
+bool j1Gui::PostUpdate()
+{
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		item->data->Draw();
 	}
 
 	if (debug)
-	{
 		DebugDraw();
-	}
+
 	return true;
 }
 
@@ -134,8 +145,10 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* g_parent, bool draggable) {
+j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* parent, bool draggable, bool interactable) {
+
 	j1UI_Element* ui_element = nullptr;
+
 	switch (type)
 	{
 	case UI_Type::BUTTON:
@@ -155,9 +168,12 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 	default:
 		break;
 	}
-	ui_element->parent = g_parent;
-	ui_element->draggable = draggable;
+
 	ui_elements.add(ui_element);
+
+	ui_element->draggable = draggable;
+	ui_element->interactable = interactable;
+	ui_element->parent = parent;
 
 	return ui_element;
 }
@@ -166,7 +182,7 @@ void j1Gui::DebugDraw() {
 
 	for(p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		if (focusing_element == item->data) {
+		if (focused_element == item->data) {
 			App->render->DrawQuad(item->data->rect, 0, 255, 0, 255, false);
 		}
 		else
