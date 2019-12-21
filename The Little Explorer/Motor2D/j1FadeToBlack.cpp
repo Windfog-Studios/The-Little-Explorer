@@ -69,6 +69,7 @@ bool j1FadeToBlack::PostUpdate()
 				//App->entities->player->grounded = false;
 				App->entities->player_pointer->particles_created = false;
 				App->entities->player_pointer->isVisible = true;
+				App->entities->blocked_movement = false;
 			}
 		} break;
 	}

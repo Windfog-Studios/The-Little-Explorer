@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1App.h"
+#include "j1Timer.h"
 
 #define CAMERA_SPEED 200
 #define CAMERA_CENTER_MARGIN 30
@@ -62,29 +63,23 @@ public:
 	int camera_frame_x_margin;
 	int camera_frame_y_margin;
 
-	bool blocked_camera = false;
+	bool blocked_camera;
+
+	//UI Info
+	int score;
+	int time;
+	j1Timer timer;
+	GuiText* time_text;
 
 	//levels
 	Map current_level;
-	Map want_to_load = NO_MAP;
-
-	//player initial position
-	int	player_x_position;
-	int	player_y_position;
 
 	p2SString song;
 	p2SString folder;
 
-	int camera_margin = 5;
+	int camera_margin;
 	iPoint initial_camera_position;
 
-	GuiImage* banner;
-	GuiText* text;
-	GuiImage* window;
-	GuiText* window_text;
-	GuiButton* button;
-	GuiText* button_text;
-	GuiInputText* inputText;
 
 private:
 };

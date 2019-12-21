@@ -49,6 +49,11 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 		collider = App->collision->AddCollider(SDL_Rect{ -1000,-1000,32,64 }, COLLIDER_PLAYER, (j1Module*)this);
 		raycast = App->collision->AddCollider(SDL_Rect{ -1000,-1000,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)this);
+
+		isVisible = true;
+		grounded = false;
+
+		lives = 3;
 	}
 	current_animation = &idle;
 }
@@ -391,7 +396,9 @@ bool j1Player::Update(float dt){
 
 	if (flip == SDL_FLIP_NONE) collider->SetPos(position.x + 8, position.y);
 	else collider->SetPos(position.x + 16, position.y);
+
 	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
+
 	return true;
 }
 

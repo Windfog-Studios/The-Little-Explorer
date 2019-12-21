@@ -19,6 +19,12 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
+
+	blocked_camera = false;
+	score = 0;
+	time = 0;
+	camera_margin = 5;
+	initial_camera_position = { 0,0 };
 }
 
 // Destructor
@@ -52,24 +58,6 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
-	*
-
-	/*
-	App->gui->Start();
-
-	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	window->Init({ 325,350 }, { 0, 512, 483, 512 });
-
-	window_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, window, false);
-	window_text->Init({ 520,405 }, "Window Title");
-
-	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false);
-	button->Init({ 450, 700 }, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, "Button");
-
-	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false);
-	inputText->Init({ 400,550 }, "Editable Text", { 488, 569, 344, 61 });
-	
-	*/
 
 	/*
 	if (App->map->Load("Level2.tmx") == true)
@@ -82,6 +70,9 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
+
+	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+	
 
 	return true;
 }
@@ -199,6 +190,7 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 
 	// Debug pathfinding ------------------------------
+	/*
 	int x, y;
 	SDL_Rect Debug_rect = { 0,0,32,32 };
 	App->input->GetMousePosition(x, y);
@@ -223,6 +215,7 @@ bool j1Scene::Update(float dt)
 
 	//SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
 	//App->render->DrawQuad(test_rect, 255, 0, 0, 255);
+	*/
 
 	return true;
 }

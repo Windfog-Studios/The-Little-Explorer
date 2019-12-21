@@ -43,6 +43,7 @@ public:
 	float	deceleration;
 	float	max_side_speed;
 	int		enemy_bouncing;
+	int		lives;
 
 	bool	can_double_jump = true;
 	bool	can_go_right = true;
