@@ -91,6 +91,7 @@ void GuiInputText::HandleFocusEvent(FocusEvent event) {
 		}
 		App->input->EnableTextInput(true);
 		App->input->text = (char* )text->text.GetString();
+		focused = true;
 	}
 	
 	if (event == FocusEvent::FOCUS_LOST)

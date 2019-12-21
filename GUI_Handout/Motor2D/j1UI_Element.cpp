@@ -2,7 +2,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 
-bool j1UI_Element::MouseHovering() {
+bool j1UI_Element::OnHover() {
 	iPoint mouse;
 	bool ret = false;
 

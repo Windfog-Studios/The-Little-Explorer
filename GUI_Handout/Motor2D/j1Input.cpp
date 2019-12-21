@@ -43,6 +43,7 @@ bool j1Input::Awake(pugi::xml_node& config)
 bool j1Input::Start()
 {
 	SDL_StopTextInput();
+
 	return true;
 }
 
@@ -119,7 +120,7 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_TEXTINPUT:
-				strcat_s(text, sizeof text, event.text.text);
+  				strcat_s(text, MAX_INPUT_CHARACTERS , event.text.text);
 				break;
 		
 			/*
@@ -147,6 +148,7 @@ bool j1Input::PreUpdate()
 bool j1Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
+	SDL_StopTextInput();
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

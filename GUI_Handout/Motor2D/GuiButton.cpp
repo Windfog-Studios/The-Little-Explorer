@@ -54,7 +54,7 @@ bool GuiButton::Input() {
 bool GuiButton::Update(float dt) {
 	bool ret = true;
 
-	if (MouseHovering())
+	if (OnHover())
 	{
 		current_rect = &hover_rect;
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
@@ -67,8 +67,6 @@ bool GuiButton::Update(float dt) {
 		current_rect = &normal_rect;
 	}
 	
-
-
 	if (parent != nullptr)
 	{
 		screen_position.x = parent->screen_position.x + local_position.x;

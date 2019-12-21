@@ -45,7 +45,7 @@ bool j1Gui::PreUpdate()
 		iPoint mouse_motion;
 		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
-			if (item->data->MouseHovering())
+			if (item->data->OnHover())
 			{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 					if (item->data->draggable) {
@@ -65,7 +65,7 @@ bool j1Gui::PreUpdate()
 			}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-				if ((item == ui_elements.start) && (!item->data->MouseHovering())) {
+				if ((item == ui_elements.start) && (!item->data->OnHover())) {
 					focused_element->HandleFocusEvent(FocusEvent::FOCUS_LOST);
 					focused_element = nullptr;
 				}
