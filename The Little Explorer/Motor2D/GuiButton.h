@@ -10,6 +10,7 @@ enum class ButtonAction {
 	PLAY,
 	CONTINUE,
 	SETTINGS,
+	CREDITS,
 	QUIT,
 	NONE
 };

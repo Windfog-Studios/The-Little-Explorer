@@ -6,6 +6,7 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1Scene.h"
+#include "j1Textures.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -26,6 +27,11 @@ bool j1MainMenu::Start() {
 	App->render->DrawQuad({ 0,0,640,480 }, 100, 100, 100, 255);
 
 	App->gui->Start();
+
+	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	title->Init({ 160,120 }, { 0,0,700,200 });
+	title->tex = App->tex->Load("sprites/UI/title.png");
+
 
 	start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this,nullptr,false,true);
 	start_button->Init({ 725, 400 }, { 642,169,229,69 }, { 0,113,229,69 }, { 411,169,229,69 }, "Start", ButtonAction::PLAY);
@@ -80,7 +86,20 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyAllGui();
 			show_quad = false;
 			break;
-		case ButtonAction::QUIT :
+
+		case ButtonAction::CONTINUE:
+		//TODO
+		break;
+
+		case ButtonAction::SETTINGS:
+		//TODO
+		break;
+
+		case ButtonAction::CREDITS:
+		//TODO
+		break;
+
+		case ButtonAction::QUIT:
 		SDL_Quit();
 		break;
 

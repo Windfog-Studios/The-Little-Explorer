@@ -24,6 +24,7 @@ public:
 	void OnEvent(j1UI_Element* element, FocusEvent event);
 
 private:
+	GuiImage* title;
 	GuiButton* start_button;
 	GuiButton* continue_button;
 	GuiButton* settings_button;

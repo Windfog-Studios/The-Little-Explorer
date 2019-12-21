@@ -5,16 +5,16 @@
 	<textures />
 	<audio />
 	<scene>
-		<camera_frame x="300" y="603" />
+		<camera_frame x="300" y="616" />
 		<level number="1" />
 	</scene>
+	<main_menu />
 	<map />
 	<entities>
-		<player position_x="35" position_y="765" />
-		<walking_enemy position_x="1120" position_y="256" />
-		<walking_enemy position_x="800" position_y="576" />
-		<walking_enemy position_x="704" position_y="320" />
-		<flying_enemy position_x="896" position_y="288" />
+		<player position_x="128" position_y="765" />
+		<walking_enemy position_x="1290" position_y="192" />
+		<walking_enemy position_x="687" position_y="320" />
+		<flying_enemy position_x="896" position_y="384" />
 		<flying_enemy position_x="1504" position_y="192" />
 		<flying_enemy position_x="2496" position_y="352" />
 		<flying_enemy position_x="3709" position_y="544" />
@@ -23,22 +23,27 @@
 		<flying_enemy position_x="5373" position_y="352" />
 		<flying_enemy position_x="5856" position_y="672" />
 		<flying_enemy position_x="1536" position_y="896" />
-		<walking_enemy position_x="1632" position_y="1120" />
-		<walking_enemy position_x="2368" position_y="416" />
-		<walking_enemy position_x="1952" position_y="192" />
-		<walking_enemy position_x="1694" position_y="192" />
-		<walking_enemy position_x="4224" position_y="960" />
-		<walking_enemy position_x="4416" position_y="800" />
-		<walking_enemy position_x="4800" position_y="160" />
-		<walking_enemy position_x="5021" position_y="160" />
-		<walking_enemy position_x="6208" position_y="928" />
-		<flying_enemy position_x="122" position_y="799" />
+		<walking_enemy position_x="1569" position_y="1120" />
+		<walking_enemy position_x="2249" position_y="416" />
+		<walking_enemy position_x="1935" position_y="192" />
+		<walking_enemy position_x="1677" position_y="192" />
+		<walking_enemy position_x="4309" position_y="960" />
+		<walking_enemy position_x="4362" position_y="800" />
+		<walking_enemy position_x="5037" position_y="160" />
+		<walking_enemy position_x="4763" position_y="160" />
+		<walking_enemy position_x="6155" position_y="928" />
+		<flying_enemy position_x="480" position_y="768" />
+		<walking_enemy position_x="2163" position_y="416" />
+		<flying_enemy position_x="4256" position_y="224" />
+		<walking_enemy position_x="779" position_y="768" />
 	</entities>
 	<particles />
 	<collision />
-	<ui />
 	<pathfinding />
+	<:anonymous />
+	<fonts />
+	<gui />
 	<renderer>
-		<camera x="0" y="-428" />
+		<camera x="0" y="-441" />
 	</renderer>
 </game_state>

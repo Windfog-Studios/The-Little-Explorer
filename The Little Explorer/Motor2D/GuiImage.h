@@ -17,7 +17,7 @@ public:
 	bool CleanUp();
 	bool Draw();
 
-private:
+public:
 	SDL_Texture* tex;
 	SDL_Rect section;
 };
