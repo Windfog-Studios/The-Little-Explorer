@@ -31,6 +31,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	if (App->entities->reference_player != nullptr)
 	{
+		texture = App->entities->reference_player->texture;
 		max_running_speed = App->entities->reference_player->max_running_speed;
 		max_side_speed = App->entities->reference_player->max_side_speed;
 		acceleration = App->entities->reference_player->acceleration;

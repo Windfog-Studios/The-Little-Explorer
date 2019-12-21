@@ -23,6 +23,12 @@ void GuiImage::Init(iPoint position, SDL_Rect g_section) {
 	}
 }
 
+bool GuiImage::CleanUp() {
+	bool ret = true;
+	return ret;
+}
+
+
 void GuiImage::EmptyInit(SDL_Rect empty_rect) {
 	screen_position.x = rect.x = empty_rect.x;
 	screen_position.y = rect.y = empty_rect.y;

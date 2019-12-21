@@ -21,7 +21,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp() { return true; };
 
-	void OnEvent(j1UI_Element* element, FocusEvent event) {};
+	void OnEvent(j1UI_Element* element, FocusEvent event);
 
 private:
 	GuiButton* start_button;
@@ -29,6 +29,7 @@ private:
 	GuiButton* settings_button;
 	GuiButton* credits_button;
 	GuiButton* exit_button;
+	bool show_quad;
 };
 
 #endif // !_j1MAIN_MENU_H_

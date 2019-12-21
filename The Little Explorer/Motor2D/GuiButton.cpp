@@ -19,12 +19,13 @@ GuiButton::~GuiButton() {
 	delete text;
 }
 
-void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text) {
+void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text, ButtonAction g_action) {
 	screen_position = g_position;
 	tex = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
 	hover_rect = g_normal_rect;
 	click_rect = g_click_rect;
+	action = g_action;
 
 	if (parent != nullptr)
 	{
@@ -42,6 +43,12 @@ void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover
 
 	text->parent = this;
 	text->Init({text_rect.x, text_rect.y}, g_text);
+}
+
+bool GuiButton::CleanUp() {
+	bool ret = true;
+	
+	return ret;
 }
 
 bool GuiButton::Input() {
@@ -85,3 +92,4 @@ bool GuiButton::Draw() {
 	text->Draw();
 	return true;
 }
+
