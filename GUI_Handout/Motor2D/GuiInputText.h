@@ -25,6 +25,7 @@ private:
 	p2SString default_text;
 	GuiText* text;
 	SDL_Rect cursor;
+	bool focused;
 };
 
 

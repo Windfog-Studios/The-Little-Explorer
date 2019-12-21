@@ -47,7 +47,7 @@ void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover
 bool GuiButton::Input() {
 	
 	current_rect = &click_rect;
-
+	callback->OnEvent(this, FocusEvent::CLICKED);
 	return true;
 }
 

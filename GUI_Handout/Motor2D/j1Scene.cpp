@@ -45,6 +45,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
+	//UI Elements
 	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,nullptr, true);
 	window->Init({ 325,50 }, { 0, 512, 483, 512 });
 
@@ -52,11 +53,20 @@ bool j1Scene::Start()
 	window_text->Init({ 520,105 }, "Window Title");
 
 	button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, window, false,true);
-	button->Init({ 450, 400 }, {642,169,229,69}, {0,113,229,69} ,{ 411,169,229,69 }, "Button");
+	button->Init({ 450, 160 }, {642,169,229,69}, {0,113,229,69} ,{ 411,169,229,69 }, "Button");
 
 	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false,true);
 	inputText->Init({ 400,250 }, "Editable Text", { 488, 569, 344, 61 });
 
+	text_area = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, window);
+	text_area->EmptyInit({ 400,330, 300,150 });
+
+	scrollbar = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, window, false, false);
+	scrollbar->Init({ 725,330 }, { 976,788,5,153 });
+
+	scroll_thumb = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, window, true, true);
+	scroll_thumb->Init({ 720,330 }, { 1003,438,16,11 });
+	
 	return true;
 }
 
@@ -168,6 +178,9 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::OnEvent(j1UI_Element* element) {
-
+void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
+	if ((element->type == UI_Type::BUTTON)&&(event == FocusEvent::CLICKED))
+	{
+		App->render->DrawQuad({ 100,100,100,100 }, std::rand() % 255, std::rand() % 255, std::rand() % 255, std::rand() % 255);
+	}
 }

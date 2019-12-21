@@ -72,9 +72,6 @@ bool j1Gui::PreUpdate()
 			}
 	}
 
-	if (focused_element != nullptr)
-		focused_element->Input();
-
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
 		if (focused_element == nullptr)
 		{
@@ -91,14 +88,16 @@ bool j1Gui::PreUpdate()
 		}
 	}
 
+	/*
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		if (focused_element == item->data)
 		{
-			item->data->callback->OnEvent();
+			item->data->callback->OnEvent(item->data, item->data.);
 			break;
 		}
 	}
+	*/
 
 	return true;
 }

@@ -11,6 +11,7 @@
 
 class j1App;
 class j1UI_Element;
+enum class FocusEvent;
 
 class j1Module
 {
@@ -73,7 +74,7 @@ public:
 		return true;
 	}
 
-	virtual void OnEvent() {}
+	virtual void OnEvent(j1UI_Element*, FocusEvent) {}
 
 public:
 

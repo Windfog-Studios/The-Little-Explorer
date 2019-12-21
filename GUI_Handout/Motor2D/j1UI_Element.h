@@ -8,7 +8,9 @@ class j1Module;
 
 enum class FocusEvent {
 	FOCUS_GAINED,
-	FOCUS_LOST
+	FOCUS_LOST,
+	FOCUSED,
+	CLICKED
 };
 
 enum class UI_Type
@@ -46,7 +48,7 @@ public:
 
 	bool draggable;
 	bool interactable;
-	bool focused;
+	FocusEvent focus_event;
 
 	j1Module* callback = nullptr;
 	j1UI_Element* parent = nullptr;

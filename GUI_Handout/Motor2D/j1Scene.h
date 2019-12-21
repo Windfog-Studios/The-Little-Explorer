@@ -36,7 +36,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void OnEvent(j1UI_Element* element);
+	void OnEvent(j1UI_Element* element, FocusEvent event);
 
 private:
 	SDL_Texture*	debug_tex;
@@ -44,6 +44,9 @@ private:
 	GuiText*		window_text;
 	GuiButton*		button;
 	GuiInputText*	inputText;
+	GuiImage*		scrollbar;
+	GuiImage*		scroll_thumb;
+	GuiImage*		text_area;
 };
 
 #endif // __j1SCENE_H__

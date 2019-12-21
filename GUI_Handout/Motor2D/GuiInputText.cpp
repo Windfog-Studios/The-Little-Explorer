@@ -41,7 +41,10 @@ void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_sectio
 }
 
 bool GuiInputText::Input() {
-	focused = true;
+	if (SDL_SCANCODE_BACKSPACE)
+	{
+	
+	}
 	return true;
 }
 
@@ -64,7 +67,7 @@ bool GuiInputText::Update(float dt) {
 	if (text->text.GetCapacity() > 0)
 	{
 		App->font->CalcSize(text->text.GetString(), width, cursor.y);
-		cursor.x = background->GetScreenRect().x + width;
+		cursor.x = background->GetScreenRect().x + cursor.w + 10 + width;
 		cursor.y = background->GetScreenRect().y + background->GetLocalRect().h * 0.5f - cursor.h * 0.5f;
 	}
 

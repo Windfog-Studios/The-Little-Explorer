@@ -122,14 +122,13 @@ bool j1Input::PreUpdate()
 			case SDL_TEXTINPUT:
   				strcat_s(text, MAX_INPUT_CHARACTERS , event.text.text);
 				break;
-		
-			/*
+	
 			case SDL_TEXTEDITING:
 				composition = event.edit.text;
 				cursor = event.edit.start;
 				selection_len = event.edit.length;
 				break;
-			*/
+
 			case SDL_MOUSEMOTION:
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
@@ -171,16 +170,9 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	y = mouse_motion_y;
 }
 
-void j1Input::AddText(char* g_text) {
-	text = g_text;
-}
-
 void j1Input::EnableTextInput(bool enable) {
 	if (enable == true)
 		SDL_StartTextInput();
 	if (enable == false)
 		SDL_StopTextInput();
-}
-
-void j1Input::ReturnChangedText() const {
 }

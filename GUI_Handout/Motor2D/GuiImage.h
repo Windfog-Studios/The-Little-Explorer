@@ -12,6 +12,7 @@ public:
 	~GuiImage() {}
 
 	void Init(iPoint position, SDL_Rect section);
+	void EmptyInit(SDL_Rect dimensions);
 	bool Update(float dt);
 	bool Draw();
 
