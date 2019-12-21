@@ -181,6 +181,8 @@ private:
 
 	p2SString level_1_music;
 	p2SString level_2_music;
+	iPoint level_1_initial_camera_position;
+	iPoint level_2_initial_camera_position;
 
 };
 

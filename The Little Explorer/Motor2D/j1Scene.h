@@ -77,6 +77,7 @@ public:
 	p2SString folder;
 
 	int camera_margin = 5;
+	iPoint initial_camera_position;
 
 	GuiImage* banner;
 	GuiText* text;

@@ -42,11 +42,6 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
-	camera_frame.y = -App->render->initial_camera_y + camera_frame_y_margin;
-	//initial map
-	//App->map->Load("hello2.tmx");
-
 	///*
 	if (App->map->Load("Level1.tmx") == true)
 	{
@@ -58,9 +53,15 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
+	App->render->camera.x = initial_camera_position.x;
+	App->render->camera.y = initial_camera_position.y;
+
+	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
+	camera_frame.y = -initial_camera_position.y + camera_frame_y_margin;
+	//*/
+	/*
 	App->gui->Start();
 
-	
 	window = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	window->Init({ 325,350 }, { 0, 512, 483, 512 });
 
@@ -73,7 +74,7 @@ bool j1Scene::Start()
 	inputText = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, window, false);
 	inputText->Init({ 400,550 }, "Editable Text", { 488, 569, 344, 61 });
 	
-	//*/
+	*/
 
 	/*
 	if (App->map->Load("Level2.tmx") == true)
@@ -278,8 +279,8 @@ bool j1Scene::Load(pugi::xml_node& data)
 void j1Scene::ResetCamera(int kind_of_reset) {
 	if (kind_of_reset == 0)
 	{
-		App->render->camera.x = App->render->initial_camera_x;
-		App->render->camera.y = App->render->initial_camera_y;
+		//App->render->camera.x = App->render->initial_camera_x;
+		//App->render->camera.y = App->render->initial_camera_y;
 	}
 
 	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;

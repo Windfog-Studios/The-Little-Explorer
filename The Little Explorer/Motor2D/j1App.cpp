@@ -23,6 +23,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
 #include "j1Fonts.h"
+#include "j1MainMenu.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 // Constructor
@@ -37,6 +38,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
+	main_menu = new j1MainMenu();
 	map = new j1Map();
 	entities = new j1EntityManager();
 	particles = new j1Particles();
@@ -53,6 +55,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	AddModule(main_menu);
 	AddModule(map);
 	AddModule(entities);
 	AddModule(particles);

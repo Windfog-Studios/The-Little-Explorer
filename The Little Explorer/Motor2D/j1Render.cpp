@@ -50,8 +50,8 @@ bool j1Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = initial_camera_x = 0;
-		camera.y = initial_camera_y = -100;
+		camera.x  = App->scene->initial_camera_position.x;
+		camera.y  = App->scene->initial_camera_position.y;
 	}
 
 	return ret;
@@ -100,8 +100,8 @@ bool j1Render::CleanUp()
 // Load Game State
 bool j1Render::Load(pugi::xml_node& data)
 {
-	camera.x = initial_camera_x = data.child("camera").attribute("x").as_int();
-	camera.y = initial_camera_y = data.child("camera").attribute("y").as_int();
+	camera.x = data.child("camera").attribute("x").as_int();
+	camera.y = data.child("camera").attribute("y").as_int();
 	App->scene->ResetCamera(1);
 	return true;
 }

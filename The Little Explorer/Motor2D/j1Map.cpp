@@ -33,9 +33,13 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	//level 1 data
 	level_1_music = config.child("level1").child("music").attribute("song").as_string();
+	level_1_initial_camera_position.x = config.child("level1").child("initial_camera").attribute("x").as_int();
+	level_1_initial_camera_position.y = config.child("level1").child("initial_camera").attribute("y").as_int();
 
 	//level 2 data
 	level_2_music = config.child("level2").child("music").attribute("song").as_string();
+	level_2_initial_camera_position.x = config.child("level2").child("initial_camera").attribute("x").as_int();
+	level_2_initial_camera_position.y = config.child("level2").child("initial_camera").attribute("y").as_int();
 
 	return ret;
 }
@@ -198,10 +202,12 @@ bool j1Map::Load(const char* file_name)
 	if (file_name == "Level1.tmx") {
 		App->scene->current_level = LEVEL_1;
 		App->audio->PlayMusic(level_1_music.GetString());
+		App->scene->initial_camera_position = level_1_initial_camera_position;
 	}
 	if (file_name == "Level2.tmx") {
 		App->scene->current_level = LEVEL_2; 
 		App->audio->PlayMusic(level_2_music.GetString());
+		App->scene->initial_camera_position = level_2_initial_camera_position;
 	}
 
 	// Load general info ----------------------------------------------
