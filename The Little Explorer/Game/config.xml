@@ -18,7 +18,7 @@
   </audio>
 
   <gui>
-    <atlas file="sprites/UI/atlas.png"/>
+    <atlas file="sprites/UI/atlas2.png"/>
   </gui>
 
   <file_system>

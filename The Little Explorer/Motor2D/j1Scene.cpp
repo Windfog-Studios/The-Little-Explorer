@@ -25,6 +25,7 @@ j1Scene::j1Scene() : j1Module()
 	time = 0;
 	camera_margin = 5;
 	initial_camera_position = { 0,0 };
+	showing_menu = false;
 }
 
 // Destructor
@@ -70,9 +71,11 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
+	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	menu_background->Init({ 10,10 }, { 100,100,512,264 });
 
 	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
-	
+	time_text->Init({ 600,100 },"Time");
 
 	return true;
 }
@@ -106,6 +109,7 @@ bool j1Scene::PreUpdate()
 		}
 	}
 	*/
+
 	return true;
 }
 
@@ -139,6 +143,19 @@ bool j1Scene::Update(float dt)
 		
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		if (!showing_menu) {
+			CreatePauseMenu();
+			showing_menu = true;
+			App->entities->blocked_movement = true;
+		}
+		else {
+			App->gui->DestroyAllGui();
+			showing_menu = false;
+			App->entities->blocked_movement = false;
+		}
+	}
 
 	//camera window ------------------
 	if (!blocked_camera) {
@@ -226,9 +243,6 @@ bool j1Scene::PostUpdate()
 	BROFILER_CATEGORY("ScenePostUpdate", Profiler::Color::HotPink);
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	ret = false;
-
 	return ret;
 }
 
@@ -264,6 +278,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 	return true;
 }
 
+/*
 void j1Scene::ResetCamera(int kind_of_reset) {
 	if (kind_of_reset == 0)
 	{
@@ -295,6 +310,16 @@ void j1Scene::ResetLevel() {
 		ResetCamera(1);
 	}
 }
+*/
+
+void j1Scene::CreatePauseMenu() {
+	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	menu_background->Init({ 250 - App->render->camera.x,250-App->render->camera.y }, { 0,0,512,264 });
+
+	pause_text = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,menu_background);
+	pause_text->Init({ 298 - App->render->camera.x,155 - App->render->camera.y }, { 411,837,420,104 });
+}
+
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 
@@ -330,4 +355,11 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 	App->entities->player_pointer->position.y = App->entities->player_pointer->initialPosition.y - 30;
 	App->entities->player_pointer->state = IDLE;
 
+}
+
+void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
+	if ((element->type == UI_Type::BUTTON) && (event == FocusEvent::CLICKED))
+	{
+
+	}
 }

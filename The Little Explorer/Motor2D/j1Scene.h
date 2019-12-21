@@ -45,9 +45,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void ResetCamera(int kind_of_reset);
-	void ResetLevel();
+	//void ResetCamera(int kind_of_reset);
+	//void ResetLevel();
 	void LevelChange(Map unloading_map, Map loading_map);
+	void CreatePauseMenu();
+	void OnEvent(j1UI_Element*, FocusEvent);
 
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
@@ -64,6 +66,7 @@ public:
 	int camera_frame_y_margin;
 
 	bool blocked_camera;
+	bool showing_menu;
 
 	//UI Info
 	int score;
@@ -80,6 +83,9 @@ public:
 	int camera_margin;
 	iPoint initial_camera_position;
 
+	//pause menu
+	GuiImage* menu_background;
+	GuiImage* pause_text;
 
 private:
 };
