@@ -1,6 +1,7 @@
 #include "GuiInputText.h"
 #include "j1Render.h"
 #include "j1App.h"
+#include "j1Input.h"
 
 
 GuiInputText::GuiInputText(j1Module* g_callback){
@@ -40,21 +41,14 @@ void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_sectio
 }
 
 bool GuiInputText::Input() {
-	if (text->text == default_text)
-	{
-		text->text.Clear();
-	}
 	focused = true;
-	int width;
-	App->font->CalcSize(text->text.GetString(), width, cursor.y);
-	cursor.x = background->GetScreenRect().x + 12;
-	cursor.y = background->GetScreenRect().y + background->GetLocalRect().h * 0.5f - cursor.h * 0.5f;
 	return true;
 }
 
 bool GuiInputText::Update(float dt) {
 	bool ret = true;
-
+	int width;
+	
 	if (parent != nullptr)
 	{
 		screen_position.x = parent->screen_position.x + local_position.x;
@@ -67,6 +61,14 @@ bool GuiInputText::Update(float dt) {
 	background->Update(dt);
 	text->Update(dt);
 
+	if (text->text.GetCapacity() > 0)
+	{
+		App->font->CalcSize(text->text.GetString(), width, cursor.y);
+		cursor.x = background->GetScreenRect().x + width;
+		cursor.y = background->GetScreenRect().y + background->GetLocalRect().h * 0.5f - cursor.h * 0.5f;
+	}
+
+
 	return ret;
 }
 
@@ -78,6 +80,22 @@ bool GuiInputText::Draw() {
 	{
 		App->render->DrawQuad(cursor, 255, 255, 255, 255);
 	}
-	focused = false;
 	return true;
+}
+
+void GuiInputText::HandleFocusEvent(FocusEvent event) {
+	if (event == FocusEvent::FOCUS_GAINED) {
+		if (text->text == default_text)
+		{
+			text->text.Clear();
+		}
+		App->input->EnableTextInput(true);
+		App->input->text = (char* )text->text.GetString();
+	}
+	
+	if (event == FocusEvent::FOCUS_LOST)
+	{
+		focused = false;
+		App->input->EnableTextInput(false);
+	}
 }

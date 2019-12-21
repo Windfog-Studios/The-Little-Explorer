@@ -13,7 +13,6 @@ class j1Button;
 class j1StaticText;
 class j1Image;
 
-
 #define CURSOR_WIDTH 2
 
 // ---------------------------------------------------

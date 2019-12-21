@@ -118,11 +118,10 @@ bool j1Input::PreUpdate()
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
-			/*
 			case SDL_TEXTINPUT:
-				strcat(text, event.text.text);
+				strcat_s(text, sizeof text, event.text.text);
 				break;
-			*/
+		
 			/*
 			case SDL_TEXTEDITING:
 				composition = event.edit.text;
@@ -174,6 +173,12 @@ void j1Input::AddText(char* g_text) {
 	text = g_text;
 }
 
-char* j1Input::getInputText() {
-	return text;
+void j1Input::EnableTextInput(bool enable) {
+	if (enable == true)
+		SDL_StartTextInput();
+	if (enable == false)
+		SDL_StopTextInput();
+}
+
+void j1Input::ReturnChangedText() const {
 }

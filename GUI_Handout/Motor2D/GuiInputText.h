@@ -16,6 +16,7 @@ public:
 	bool Update(float dt);
 	bool Input();
 	bool Draw();
+	void HandleFocusEvent(FocusEvent event);
 
 private:
 	GuiImage* background;

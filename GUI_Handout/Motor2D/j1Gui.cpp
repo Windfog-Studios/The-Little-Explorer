@@ -40,13 +40,11 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
-	SDL_Event event;
-
 	for (p2List_item<j1UI_Element*>* item = ui_elements.end; item != nullptr; item = item->prev)
 	{
 		iPoint mouse_motion;
 		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-			
+
 			if (item->data->MouseHovering())
 			{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
@@ -59,14 +57,18 @@ bool j1Gui::PreUpdate()
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 					if (item->data->interactable) {
 						focused_element = item->data;
+						focused_element->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
+						focused_element->Input();
 					}
 				}
 				break;
 			}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-				if ((item == ui_elements.start) && (!item->data->MouseHovering()))
+				if ((item == ui_elements.start) && (!item->data->MouseHovering())) {
+					focused_element->HandleFocusEvent(FocusEvent::FOCUS_LOST);
 					focused_element = nullptr;
+				}
 			}
 	}
 
@@ -93,7 +95,7 @@ bool j1Gui::PreUpdate()
 	{
 		if (focused_element == item->data)
 		{
-			item->data->callback->OnEvent(item->data);
+			item->data->callback->OnEvent();
 			break;
 		}
 	}

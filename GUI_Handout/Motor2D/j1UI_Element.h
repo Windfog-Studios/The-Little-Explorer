@@ -6,6 +6,11 @@
 
 class j1Module;
 
+enum class FocusEvent {
+	FOCUS_GAINED,
+	FOCUS_LOST
+};
+
 enum class UI_Type
 {
 	BUTTON,
@@ -25,6 +30,7 @@ public:
 	virtual bool Input() { return true; }
 	virtual bool Update(float dt) { return true; }
 	virtual bool Draw() { return true; }
+	virtual void HandleFocusEvent(FocusEvent event) {}
 
 	SDL_Rect GetScreenRect() const;
 	SDL_Rect GetLocalRect() const;

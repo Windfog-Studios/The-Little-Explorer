@@ -73,7 +73,7 @@ public:
 		return true;
 	}
 
-	virtual void OnEvent(j1UI_Element* element) {}
+	virtual void OnEvent() {}
 
 public:
 
