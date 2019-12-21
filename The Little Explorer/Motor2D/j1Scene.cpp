@@ -52,13 +52,8 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 	}
+	*
 
-	App->render->camera.x = initial_camera_position.x;
-	App->render->camera.y = initial_camera_position.y;
-
-	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
-	camera_frame.y = -initial_camera_position.y + camera_frame_y_margin;
-	*/
 	/*
 	App->gui->Start();
 

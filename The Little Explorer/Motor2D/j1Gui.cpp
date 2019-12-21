@@ -178,6 +178,16 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 	return ui_element;
 }
 
+void j1Gui::DestroyAllGui() {
+	/*
+	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
+	{
+		RELEASE(item);
+	}
+	*/
+	ui_elements.clear();
+}
+
 void j1Gui::DebugDraw() {
 
 	for(p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)

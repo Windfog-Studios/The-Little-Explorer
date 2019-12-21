@@ -14,9 +14,10 @@ public:
 	void Init(iPoint position, SDL_Rect section);
 	void EmptyInit(SDL_Rect dimensions);
 	bool Update(float dt);
+	bool CleanUp();
 	bool Draw();
 
-private:
+public:
 	SDL_Texture* tex;
 	SDL_Rect section;
 };

@@ -31,6 +31,8 @@ public:
 	virtual void Init(){}
 	virtual bool Input() { return true; }
 	virtual bool Update(float dt) { return true; }
+	virtual bool CleanUp() { return true; };
+
 	virtual bool Draw() { return true; }
 	virtual void HandleFocusEvent(FocusEvent event) {}
 

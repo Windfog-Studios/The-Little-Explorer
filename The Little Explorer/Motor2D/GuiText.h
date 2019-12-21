@@ -12,6 +12,7 @@ public:
 
 	void Init(iPoint position, p2SString text);
 	bool Update(float dt);
+	bool CleanUp();
 	bool Draw();
 
 public:

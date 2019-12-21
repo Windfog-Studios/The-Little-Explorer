@@ -33,6 +33,11 @@ void GuiText::Init(iPoint g_position, p2SString g_text) {
 	}
 }
 
+bool GuiText::CleanUp() {
+	bool ret = true;
+	return ret;
+}
+
 bool GuiText::Update(float dt) {
 	bool ret = true;
 	if (parent != nullptr)
