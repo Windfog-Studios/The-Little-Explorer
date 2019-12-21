@@ -39,18 +39,16 @@ j1WalkingEnemy2::j1WalkingEnemy2() :j1Entity(EntityType::WALKING_ENEMY2) {
 		die_fx = App->entities->reference_walking_enemy2->die_fx;
 
 		current_animation = &idle;
+
+		//colliders
+		collider = App->collision->AddCollider({ 27,47,60,70 }, COLLIDER_ENEMY, (j1Module*)this);
+		raycast = App->collision->AddCollider({ 16,34,8,10 }, COLLIDER_ENEMY, (j1Module*)this);
 	}
 
 	//lastPosition = position;
 	//last_animation = &idle;
 	lastPosition = position;
 	flip = SDL_FLIP_HORIZONTAL;
-
-	//colliders
-	collider = App->collision->AddCollider({ 27,47,60,70 }, COLLIDER_ENEMY, (j1Module*)this);
-	raycast = App->collision->AddCollider({ 16,34,8,10 }, COLLIDER_ENEMY, (j1Module*)this);
-	//SDL_Rect attack_collider_rect{0,0,26,12};
-
 }
 
 j1WalkingEnemy2::~j1WalkingEnemy2() {

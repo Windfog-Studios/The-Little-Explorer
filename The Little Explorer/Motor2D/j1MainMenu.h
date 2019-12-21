@@ -2,6 +2,12 @@
 #define _j1MAIN_MENU_H
 #include "j1Module.h"
 
+struct SDL_Texture;
+class GuiImage;
+class GuiText;
+class GuiButton;
+class GuiInputText;
+
 class j1MainMenu : public j1Module
 {
 public:
@@ -18,7 +24,11 @@ public:
 	void OnEvent(j1UI_Element* element, FocusEvent event) {};
 
 private:
-
+	GuiButton* start_button;
+	GuiButton* continue_button;
+	GuiButton* settings_button;
+	GuiButton* credits_button;
+	GuiButton* exit_button;
 };
 
 #endif // !_j1MAIN_MENU_H_

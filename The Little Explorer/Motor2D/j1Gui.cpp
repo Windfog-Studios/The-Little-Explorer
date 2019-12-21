@@ -69,7 +69,7 @@ bool j1Gui::PreUpdate()
 			}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-				if ((item == ui_elements.start) && (!item->data->OnHover())) {
+				if ((focused_element != nullptr)&&(item == ui_elements.start) && (!item->data->OnHover())) {
 					focused_element->HandleFocusEvent(FocusEvent::FOCUS_LOST);
 					focused_element = nullptr;
 				}

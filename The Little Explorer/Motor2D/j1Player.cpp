@@ -80,10 +80,6 @@ bool j1Player::Awake(pugi::xml_node& config) {
 	die_fx_path = config.child("dieFX").attribute("source").as_string();
 	jump_fx_path = config.child("jumpFX").attribute("source").as_string();
 	double_Jump_fx_path = config.child("jump2FX").attribute("source").as_string();
-	
-	//colliders
-	collider = App->collision->AddCollider(SDL_Rect{0,0,32,64}, COLLIDER_PLAYER, (j1Module*)App->entities->player_pointer); 
-	raycast = App->collision->AddCollider(SDL_Rect{ 0,0,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)App->entities->player_pointer);
 
 	return ret;
 }

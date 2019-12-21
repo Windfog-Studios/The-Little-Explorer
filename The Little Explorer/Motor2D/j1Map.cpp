@@ -163,7 +163,8 @@ bool j1Map::CleanUp()
 		{
 			if (item3->data->object[i].type == ObjectType::COLLIDER)
 			{
-				if (item3->data->object[i].collider != nullptr) {
+				if (item3->data->object[i].collider != nullptr) 
+				{
 					item3->data->object[i].collider->to_delete = true;
 					item3->data->object[i].collider = nullptr;
 				}

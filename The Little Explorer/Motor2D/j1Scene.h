@@ -8,7 +8,6 @@
 #define CAMERA_CENTER_MARGIN 30
 
 struct SDL_Texture;
-struct SDL_Texture;
 class GuiImage;
 class GuiText;
 class GuiButton;

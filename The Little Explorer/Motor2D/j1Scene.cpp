@@ -42,7 +42,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	///*
+	/*
 	if (App->map->Load("Level1.tmx") == true)
 	{
 		int w, h;
@@ -58,7 +58,7 @@ bool j1Scene::Start()
 
 	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
 	camera_frame.y = -initial_camera_position.y + camera_frame_y_margin;
-	//*/
+	*/
 	/*
 	App->gui->Start();
 

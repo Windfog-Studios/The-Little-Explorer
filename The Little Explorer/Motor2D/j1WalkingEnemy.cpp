@@ -90,10 +90,6 @@ bool j1WalkingEnemy::Update(float dt) {
 	lastPosition = position;
 	last_animation = current_animation;
 
-	if (raycast == nullptr) {
-		raycast = App->collision->AddCollider({ 16,34,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
-	}
-
 	if (last_collider != nullptr)
 	{
 		if (!raycast->CheckCollision(last_collider->rect))

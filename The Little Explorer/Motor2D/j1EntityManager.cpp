@@ -103,7 +103,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 
 	//player creation
 	reference_player = new j1Player();
-	player_pointer = (j1Player*)reference_player->Awake(config.child("player"));
+	reference_player->Awake(config.child("player"));
 	//entities.add(player);
 
 	//reference walking enemy
@@ -190,7 +190,10 @@ bool j1EntityManager::PreUpdate()
 {
 	BROFILER_CATEGORY("EntitiesPreUpdate", Profiler::Color::Bisque)
 	bool ret = true;
-	player_pointer->PreUpdate();
+	if (player_pointer != nullptr)
+	{
+		player_pointer->PreUpdate();
+	}
 	return ret;
 }
 
