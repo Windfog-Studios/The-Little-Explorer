@@ -73,8 +73,6 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
-	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	menu_background->Init({ 10,10 }, { 100,100,512,264 });
 
 	return true;
 }
@@ -206,19 +204,19 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 
 	// Debug pathfinding ------------------------------
-	/*
+	
 	int x, y;
 	SDL_Rect Debug_rect = { 0,0,32,32 };
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
+	//p = App->map->WorldToMap(p.x, p.y);
+	//p = App->map->MapToWorld(p.x, p.y);
 
 	//App->render->Blit(debug_tex, p.x, p.y);
 	Debug_rect.x = p.x;
 	Debug_rect.y = p.y;
 	if (App->collision->debug) App->render->DrawQuad(Debug_rect, 0, 0, 255,80);
-
+	/*
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
 	for (uint i = 0; i < path->Count(); ++i)
@@ -342,7 +340,7 @@ void j1Scene::CreateSettingsScreen() {
 	menu_background->Init({ 250 - camera.x,250 - camera.y }, { 0,0,512,264 });
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	go_back_button->Init({ 180 - camera.x,210 - camera.y }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
+	go_back_button->Init({ 180 - camera.x,190 - camera.y }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
 
 }
 
@@ -389,7 +387,9 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
-			//TODO
+			App->entities->blocked_movement = false;
+			App->gui->DestroyAllGui();
+			showing_menu = false;
 			break;
 
 		case ButtonAction::SETTINGS:
@@ -410,6 +410,8 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::QUIT:
 			App->gui->DestroyAllGui();
+			App->render->camera.x = 0;
+			App->render->camera.y = 0;
 			App->main_menu->CreateMainScreen();
 			visible_menu = Menu::MAIN_MENU;
 			break;

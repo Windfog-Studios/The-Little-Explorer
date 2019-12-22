@@ -199,6 +199,9 @@ void j1Gui::DebugDraw() {
 		{
 			App->render->DrawQuad(item->data->rect, 255, 0, 0, 255, false);
 		}
+		if (item->data->OnHover()) {
+			App->render->DrawQuad(item->data->rect, 0, 0, 255, 255, false);
+		}
 	}
 }
 

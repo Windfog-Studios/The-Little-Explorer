@@ -66,7 +66,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 			App->gui->DestroyAllGui();
 			//SDL_Delay(50);
-			PERF_START(App->scene->timer);
+			//PERF_START(App->scene->timer);
 			show_quad = false;
 			break;
 
@@ -84,7 +84,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 		break;
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
-			SDL_Delay(50);
+			//SDL_Delay(50);
 			CreateMainScreen();
 		break;
 		case ButtonAction::QUIT:

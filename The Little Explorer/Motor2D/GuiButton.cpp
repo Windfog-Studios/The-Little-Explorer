@@ -91,7 +91,9 @@ bool GuiButton::Update(float dt) {
 }
 
 bool GuiButton::Draw() {
+
 	App->render->Blit(tex, rect.x, rect.y, current_rect);
+
 	if (text->text.Length() > 0)
 	{
 		text->Draw();
