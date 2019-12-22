@@ -15,6 +15,7 @@
 #include "j1EntityManager.h"
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -26,6 +27,7 @@ j1Scene::j1Scene() : j1Module()
 	camera_margin = 5;
 	initial_camera_position = { 0,0 };
 	showing_menu = false;
+	visible_menu = Menu::MAIN_MENU;
 }
 
 // Destructor
@@ -73,9 +75,6 @@ bool j1Scene::Start()
 	*/
 	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	menu_background->Init({ 10,10 }, { 100,100,512,264 });
-
-	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
-	time_text->Init({ 600,100 },"Time");
 
 	return true;
 }
@@ -313,13 +312,39 @@ void j1Scene::ResetLevel() {
 */
 
 void j1Scene::CreatePauseMenu() {
+	SDL_Rect camera;
+	camera = App->render->camera;
+
 	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	menu_background->Init({ 250 - App->render->camera.x,250-App->render->camera.y }, { 0,0,512,264 });
+	menu_background->Init({ 250 - camera.x,250 -camera.y }, { 0,0,512,264 });
 
 	pause_text = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,menu_background);
-	pause_text->Init({ 298 - App->render->camera.x,155 - App->render->camera.y }, { 411,837,420,104 });
+	pause_text->Init({ 298 - camera.x,155 - camera.y }, { 897,0,420,104 });
+
+	resume_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	resume_button->Init({ 445 - camera.x,325 - camera.y }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::CONTINUE);
+
+	home_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	home_button->Init({ 285 - camera.x,325 - camera.y }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 },"",ButtonAction::QUIT);
+
+	//restart_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	//restart_button->Init({ 445 - camera.x,325 - camera.y }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::RESTART);
+
+	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	settings_button->Init({ 605 - camera.x,325 - camera.y }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
 }
 
+void j1Scene::CreateSettingsScreen() {
+	SDL_Rect camera;
+	camera = App->render->camera;
+
+	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	menu_background->Init({ 250 - camera.x,250 - camera.y }, { 0,0,512,264 });
+
+	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	go_back_button->Init({ 180 - camera.x,210 - camera.y }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
+
+}
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 
@@ -360,6 +385,37 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 	if ((element->type == UI_Type::BUTTON) && (event == FocusEvent::CLICKED))
 	{
+		GuiButton* button = (GuiButton*)element;
+		switch (button->action)
+		{
+		case ButtonAction::CONTINUE:
+			//TODO
+			break;
 
+		case ButtonAction::SETTINGS:
+			App->gui->DestroyAllGui();
+			CreateSettingsScreen();
+			visible_menu = Menu::SETTINGS;
+			break;
+
+		case ButtonAction::CREDITS:
+			//TODO
+			break;
+
+		case ButtonAction::GO_BACK:
+			App->gui->DestroyAllGui();
+			CreatePauseMenu();
+			visible_menu = Menu::PAUSE;
+			break;
+
+		case ButtonAction::QUIT:
+			App->gui->DestroyAllGui();
+			App->main_menu->CreateMainScreen();
+			visible_menu = Menu::MAIN_MENU;
+			break;
+
+		default:
+			break;
+		}
 	}
 }

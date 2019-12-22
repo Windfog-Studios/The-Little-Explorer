@@ -82,14 +82,20 @@ bool GuiButton::Update(float dt) {
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
 
-	text->Update(dt);
+	if (text->text.Length() > 0)
+	{
+		text->Update(dt);
+	}
 
 	return true;
 }
 
 bool GuiButton::Draw() {
 	App->render->Blit(tex, rect.x, rect.y, current_rect);
-	text->Draw();
+	if (text->text.Length() > 0)
+	{
+		text->Draw();
+	}
 	return true;
 }
 

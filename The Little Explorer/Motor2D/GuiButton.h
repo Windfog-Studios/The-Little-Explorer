@@ -13,6 +13,7 @@ enum class ButtonAction {
 	CREDITS,
 	QUIT,
 	GO_BACK,
+	RESTART,
 	NONE
 };
 

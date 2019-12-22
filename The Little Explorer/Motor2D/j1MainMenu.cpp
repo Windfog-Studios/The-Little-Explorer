@@ -57,6 +57,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 					App->pathfinding->SetMap(w, h, data);
 				RELEASE_ARRAY(data);
 			}
+
 			App->render->camera.x = App->scene->initial_camera_position.x;
 			App->render->camera.y = App->scene->initial_camera_position.y;
 
@@ -64,7 +65,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->scene->camera_frame.y = -App->scene->initial_camera_position.y + App->scene->camera_frame_y_margin;
 
 			App->gui->DestroyAllGui();
-			SDL_Delay(50);
+			//SDL_Delay(50);
 			PERF_START(App->scene->timer);
 			show_quad = false;
 			break;

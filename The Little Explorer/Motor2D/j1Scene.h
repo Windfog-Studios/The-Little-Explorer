@@ -14,6 +14,12 @@ class GuiText;
 class GuiButton;
 class GuiInputText;
 
+enum class Menu {
+	MAIN_MENU,
+	SETTINGS,
+	PAUSE
+};
+
 enum Map
 {
 	NO_MAP = 0,
@@ -49,6 +55,7 @@ public:
 	//void ResetLevel();
 	void LevelChange(Map unloading_map, Map loading_map);
 	void CreatePauseMenu();
+	void CreateSettingsScreen();
 	void OnEvent(j1UI_Element*, FocusEvent);
 
 	bool Save(pugi::xml_node& data) const;
@@ -76,6 +83,7 @@ public:
 
 	//levels
 	Map current_level;
+	Menu visible_menu;
 
 	p2SString song;
 	p2SString folder;
@@ -86,6 +94,11 @@ public:
 	//pause menu
 	GuiImage* menu_background;
 	GuiImage* pause_text;
+	GuiButton* home_button;
+	GuiButton* settings_button;
+	GuiButton* restart_button;
+	GuiButton* resume_button;
+	GuiButton* go_back_button;
 
 private:
 };
