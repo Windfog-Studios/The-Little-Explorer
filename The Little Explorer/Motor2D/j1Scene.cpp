@@ -206,7 +206,7 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 
 	// Debug pathfinding ------------------------------
-	
+	/*
 	int x, y;
 	SDL_Rect Debug_rect = { 0,0,32,32 };
 	App->input->GetMousePosition(x, y);
@@ -218,7 +218,7 @@ bool j1Scene::Update(float dt)
 	Debug_rect.x = p.x;
 	Debug_rect.y = p.y;
 	if (App->collision->debug) App->render->DrawQuad(Debug_rect, 0, 0, 255,80);
-	/*
+	
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
 	for (uint i = 0; i < path->Count(); ++i)
@@ -273,6 +273,8 @@ bool j1Scene::Load(pugi::xml_node& data)
 
 	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(LEVEL_2, LEVEL_1);
 	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);
+	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(NO_MAP, LEVEL_1);
+	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(NO_MAP, LEVEL_2);
 
 	return true;
 }
@@ -361,6 +363,7 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 			RELEASE_ARRAY(data);
 			current_level = LEVEL_1;
 		}
+
 		if (loading_map == LEVEL_2) {
 			App->map->Load("Level2.tmx");
 			int w, h;

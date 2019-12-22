@@ -47,11 +47,12 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 		position = App->entities->reference_player->initialPosition;
 
-		collider = App->collision->AddCollider(SDL_Rect{ -1000,-1000,32,64 }, COLLIDER_PLAYER, (j1Module*)this);
-		raycast = App->collision->AddCollider(SDL_Rect{ -1000,-1000,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)this);
+		collider = App->collision->AddCollider(SDL_Rect{ initialPosition.x, initialPosition.y,32,64 }, COLLIDER_PLAYER, (j1Module*)this);
+		raycast = App->collision->AddCollider(SDL_Rect{ initialPosition.x, initialPosition.y,20,5 }, COLLIDER_PLAYER_ATTACK, (j1Module*)this);
 
 		isVisible = true;
 		grounded = false;
+		current_speed = { 0,0 };
 
 		lives = 3;
 	}
@@ -92,11 +93,11 @@ bool j1Player::Awake(pugi::xml_node& config) {
 
 bool j1Player::Start(){
 
+	current_speed = { 0,0 };
+
 	die_fx = App->audio->LoadFx(die_fx_path.GetString());
 	jump_fx = App->audio->LoadFx(jump_fx_path.GetString());
 	double_Jump_fx = App->audio->LoadFx(double_Jump_fx_path.GetString());
-
-	position = initialPosition;
 
 	return true;
 }

@@ -23,7 +23,7 @@ enum class Menu {
 
 enum Map
 {
-	NO_MAP = 0,
+	NO_MAP,
 	LEVEL_1,
 	LEVEL_2,
 };

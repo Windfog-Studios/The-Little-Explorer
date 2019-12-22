@@ -70,7 +70,10 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			break;
 
 		case ButtonAction::CONTINUE:
-		//TODO
+			App->LoadGame();
+			App->gui->DestroyAllGui();
+			show_quad = false;
+			App->scene->visible_menu = Menu::NO_MENU;
 		break;
 
 		case ButtonAction::SETTINGS:

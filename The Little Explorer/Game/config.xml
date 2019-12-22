@@ -81,7 +81,7 @@
     </level1>
     <level2>
 	<music song="Video_Game_Soldiers.ogg" />
-	<initial_camera x="0" y="-435" />
+	<initial_camera x="0" y="-508" />
     </level2>
   </map>
 

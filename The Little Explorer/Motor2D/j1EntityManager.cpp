@@ -78,6 +78,8 @@ void j1EntityManager::DestroyEntity(j1Entity* entity){
 			entity->raycast->to_delete = true;
 			entity->raycast = nullptr;
 		}
+		entity->texture = nullptr;
+
 		entities.del(item);;
 	}
 }

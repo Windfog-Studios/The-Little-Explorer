@@ -159,22 +159,19 @@ bool j1Map::CleanUp()
 	while (item3 != NULL)
 	{
 		LOG("Objectgroups releasing");
+		
 		for (uint i = 0; i < item3->data->size; i++)
 		{
 			if (item3->data->object[i].type == ObjectType::COLLIDER)
 			{
-				if (item3->data->object[i].collider != nullptr) 
-				{
-					item3->data->object[i].collider->to_delete = true;
-					item3->data->object[i].collider = nullptr;
-				}
+				item3->data->object[i].collider->to_delete = true;
+				item3->data->object[i].collider = nullptr;
 			}
 		}
 		App->entities->DestroyAllEntities();
 		//delete[] item3->data->collider;
 		RELEASE(item3->data);
 		item3 = item3->next;
-		
 	}
 	data.objectgroups.clear();
 
@@ -550,27 +547,27 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 
 				if (type == "Player") {
 					objectgroup->object->entity = App->entities->CreateEntity(EntityType::PLAYER, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENEMY;
+					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
 
 				if (type == "Knight") {
 					objectgroup->object->entity = App->entities->CreateEntity(EntityType::WALKING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENEMY;
+					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
 
 				if (type == "Bat") {
 					objectgroup->object->entity = App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENEMY;
+					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
 
 				if (type == "Trap") {
 					objectgroup->object->entity = App->entities->CreateEntity(EntityType::TRAP, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENEMY;
+					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
 
 				if (type == "Minotaur") {
 					objectgroup->object->entity = App->entities->CreateEntity(EntityType::WALKING_ENEMY2, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENEMY;
+					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
 				
 				object_node = object_node.next_sibling("object");

@@ -87,7 +87,7 @@ struct TileSet
 
 enum ObjectType {
 	COLLIDER,
-	ENEMY
+	ENTITY
 };
 
 struct Object {
