@@ -65,9 +65,8 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->scene->camera_frame.y = -App->scene->initial_camera_position.y + App->scene->camera_frame_y_margin;
 
 			App->gui->DestroyAllGui();
-			//SDL_Delay(50);
-			//PERF_START(App->scene->timer);
 			show_quad = false;
+			App->scene->visible_menu = Menu::NO_MENU;
 			break;
 
 		case ButtonAction::CONTINUE:
@@ -80,15 +79,18 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 		break;
 
 		case ButtonAction::CREDITS:
-		//TODO
+			App->gui->DestroyAllGui();
+			CreateCreditsScreen();
 		break;
+
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
 			//SDL_Delay(50);
 			CreateMainScreen();
 		break;
+
 		case ButtonAction::QUIT:
-		SDL_Quit();
+			App->quit = true;
 		break;
 
 		default:
@@ -107,13 +109,13 @@ void j1MainMenu::CreateMainScreen() {
 	start_button->Init({ 710, 392 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Start", ButtonAction::PLAY);
 
 	continue_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	continue_button->Init({ 750, 470 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Continue", ButtonAction::CONTINUE);
+	continue_button->Init({ 750, 470 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "Continue", ButtonAction::CONTINUE);
 
 	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	settings_button->Init({ 710, 546 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Settings", ButtonAction::SETTINGS);
 
 	exit_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	exit_button->Init({ 750, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Exit", ButtonAction::QUIT);
+	exit_button->Init({ 750, 626 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "Exit", ButtonAction::QUIT);
 
 	credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 60, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
@@ -122,6 +124,11 @@ void j1MainMenu::CreateMainScreen() {
 
 void j1MainMenu::CreateSettingsScreen() {
 	//TODO: create slider
-	go_back_from_settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	go_back_from_settings_button->Init({ 60, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Go Back", ButtonAction::GO_BACK);
+	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
+}
+
+void j1MainMenu::CreateCreditsScreen() {
+	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
 }

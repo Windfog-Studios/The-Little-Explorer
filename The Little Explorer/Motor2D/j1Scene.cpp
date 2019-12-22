@@ -142,15 +142,17 @@ bool j1Scene::Update(float dt)
 		App->LoadGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
-		if (!showing_menu) {
-			CreatePauseMenu();
-			showing_menu = true;
-			App->entities->blocked_movement = true;
-		}
-		else {
-			App->gui->DestroyAllGui();
-			showing_menu = false;
-			App->entities->blocked_movement = false;
+		if (visible_menu != Menu::MAIN_MENU) {
+			if (!showing_menu) {
+				CreatePauseMenu();
+				showing_menu = true;
+				App->entities->blocked_movement = true;
+			}
+			else {
+				App->gui->DestroyAllGui();
+				showing_menu = false;
+				App->entities->blocked_movement = false;
+			}
 		}
 	}
 
@@ -398,20 +400,19 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			visible_menu = Menu::SETTINGS;
 			break;
 
-		case ButtonAction::CREDITS:
-			//TODO
-			break;
-
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
 			CreatePauseMenu();
 			visible_menu = Menu::PAUSE;
 			break;
 
+		//go to main menu
 		case ButtonAction::QUIT:
 			App->gui->DestroyAllGui();
 			App->render->camera.x = 0;
 			App->render->camera.y = 0;
+			App->entities->DestroyAllEntities();
+			App->map->CleanUp();
 			App->main_menu->CreateMainScreen();
 			visible_menu = Menu::MAIN_MENU;
 			break;

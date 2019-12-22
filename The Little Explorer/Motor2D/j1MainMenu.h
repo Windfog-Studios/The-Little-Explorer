@@ -24,6 +24,7 @@ public:
 	void OnEvent(j1UI_Element* element, FocusEvent event);
 	void CreateMainScreen();
 	void CreateSettingsScreen();
+	void CreateCreditsScreen();
 
 private:
 	GuiImage* title;
@@ -32,7 +33,7 @@ private:
 	GuiButton* settings_button;
 	GuiButton* credits_button;
 	GuiButton* exit_button;
-	GuiButton* go_back_from_settings_button;
+	GuiButton* go_back_button;
 	bool show_quad;
 };
 

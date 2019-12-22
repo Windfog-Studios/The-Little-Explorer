@@ -87,9 +87,7 @@ void j1EntityManager::DestroyAllEntities() {
 
 	for (item = entities.start; item != nullptr; item = item->next)
 	{
-		if (item->data != player_pointer) {
-			DestroyEntity(item->data);
-		}
+		DestroyEntity(item->data);
 	}
 }
 

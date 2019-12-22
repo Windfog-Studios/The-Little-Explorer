@@ -106,6 +106,7 @@ public:
 	bool pause = false;
 	bool vsync = false;
 	bool cap_enabled = true;
+	bool quit;
 
 private:
 

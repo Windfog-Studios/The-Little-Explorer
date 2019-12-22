@@ -31,6 +31,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 	want_to_save = want_to_load = false;
+	quit = false;
 
 	input = new j1Input();
 	win = new j1Window();
@@ -172,6 +173,9 @@ bool j1App::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 		cap_enabled = !cap_enabled;
+	
+	if (quit)
+		ret = false;
 
 	FinishUpdate();
 	return ret;

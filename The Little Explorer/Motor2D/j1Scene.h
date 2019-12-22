@@ -17,7 +17,8 @@ class GuiInputText;
 enum class Menu {
 	MAIN_MENU,
 	SETTINGS,
-	PAUSE
+	PAUSE,
+	NO_MENU
 };
 
 enum Map
