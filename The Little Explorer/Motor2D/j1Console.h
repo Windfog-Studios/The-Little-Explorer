@@ -15,6 +15,7 @@ public:
 
 	bool Awake(pugi::xml_node& config);
 	bool PreUpdate();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 
