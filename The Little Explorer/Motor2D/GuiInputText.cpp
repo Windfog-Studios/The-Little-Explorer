@@ -11,6 +11,7 @@ GuiInputText::GuiInputText(j1Module* g_callback){
 	default_text = { "Input text" };
 	cursor = {0,0,2,30};
 	focused = false;
+	usingAtlas = true;
 }
 
 GuiInputText::~GuiInputText(){
@@ -18,7 +19,7 @@ GuiInputText::~GuiInputText(){
 	delete text;
 }
 
-void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_section){
+void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_section, bool useAtlas){
 	
 	screen_position = position;
 	rect = { position.x, position.y, image_section.w, image_section.h };
@@ -36,7 +37,11 @@ void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_sectio
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
 
-	background->Init(position, image_section);
+	if (useAtlas = false)
+		usingAtlas = false;
+
+	if (useAtlas) background->Init(position, image_section);
+
 	text->Init({position.x + 10,(int)(position.y + rect.h * 0.25f)}, g_text);
 }
 
@@ -61,7 +66,7 @@ bool GuiInputText::Update(float dt) {
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
 
-	background->Update(dt);
+	if (usingAtlas) background->Update(dt);
 	text->Update(dt);
 
 	if (text->text.GetCapacity() > 0)
@@ -77,12 +82,12 @@ bool GuiInputText::Update(float dt) {
 
 bool GuiInputText::Draw() {
 
-	background->Draw();
+	if (usingAtlas) background->Draw();
+
 	text->Draw();
-	if (focused)
-	{
-		App->render->DrawQuad(cursor, 255, 255, 255, 255);
-	}
+
+	if (focused)App->render->DrawQuad(cursor, 255, 255, 255, 255);
+
 	return true;
 }
 

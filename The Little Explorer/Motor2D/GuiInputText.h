@@ -14,7 +14,7 @@ public:
 	GuiInputText(j1Module* callback);
 	~GuiInputText();
 
-	void Init(iPoint position, p2SString text, SDL_Rect image_section);
+	void Init(iPoint position, p2SString text, SDL_Rect image_section, bool useAtlas = true);
 	bool Update(float dt);
 	bool Input();
 	bool Draw();
@@ -26,6 +26,7 @@ private:
 	GuiText* text;
 	SDL_Rect cursor;
 	bool focused;
+	bool usingAtlas;
 };
 
 

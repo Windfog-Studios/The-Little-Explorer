@@ -92,17 +92,6 @@ bool j1Gui::PreUpdate()
 		}
 	}
 
-	/*
-	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
-	{
-		if (focused_element == item->data)
-		{
-			item->data->callback->OnEvent(item->data, item->data.);
-			break;
-		}
-	}
-	*/
-
 	return true;
 }
 
@@ -176,6 +165,17 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 	ui_element->parent = parent;
 
 	return ui_element;
+}
+
+void j1Gui::DestroyUIElement(j1UI_Element* element) {
+
+	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
+	{
+		if (item->data == element) 
+			ui_elements.del(item);
+	}
+
+	element->CleanUp();
 }
 
 void j1Gui::DestroyAllGui() {
