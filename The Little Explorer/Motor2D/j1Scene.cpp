@@ -122,17 +122,20 @@ bool j1Scene::Update(float dt)
 	bool		camera_manual_control = false;
 
 	//player inputs ---------------
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-		App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
-	}
+	if (visible_menu == Menu::NO_MENU)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+			App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		App->fade_to_black->FadeToBlack(current_level, LEVEL_2);
-	}
+		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+			App->fade_to_black->FadeToBlack(current_level, LEVEL_2);
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		App->fade_to_black->FadeToBlack(current_level, current_level);
-		App->entities->player_pointer->position = App->entities->player_pointer->initialPosition;
+		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+			App->fade_to_black->FadeToBlack(current_level, current_level);
+			App->entities->player_pointer->position = App->entities->player_pointer->initialPosition;
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -143,14 +146,14 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		if (visible_menu != Menu::MAIN_MENU) {
-			if (!showing_menu) {
+			if (visible_menu == Menu::NO_MENU) {
 				CreatePauseMenu();
-				showing_menu = true;
+				visible_menu = Menu::PAUSE;
 				App->entities->blocked_movement = true;
 			}
 			else {
 				App->gui->DestroyAllGui();
-				showing_menu = false;
+				visible_menu = Menu::NO_MENU;
 				App->entities->blocked_movement = false;
 			}
 		}

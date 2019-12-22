@@ -45,9 +45,9 @@ public:
 	int		enemy_bouncing;
 	int		lives;
 
-	bool	can_double_jump = true;
-	bool	can_go_right = true;
-	bool	can_go_left = true;
+	bool	can_double_jump;
+	bool	can_go_right;
+	bool	can_go_left;
 
 	EntityState last_state;
 
@@ -62,9 +62,9 @@ public:
 	p2SString	jump_fx_path;
 	p2SString	double_Jump_fx_path;
 
-	bool god = false;
-	bool controls_blocked = false;
-	bool isVisible = true;
+	bool god;
+	bool controls_blocked;
+	bool isVisible;
 
 	Collider* last_checkpoint = nullptr;
 };

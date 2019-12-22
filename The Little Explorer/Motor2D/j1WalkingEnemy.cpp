@@ -43,6 +43,8 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 		collider = App->collision->AddCollider({ 1000,1000,30,30 }, COLLIDER_ENEMY, (j1Module*)this);
 		raycast = App->collision->AddCollider({ 1000,1000,4,5 }, COLLIDER_ENEMY, (j1Module*)this);
 
+		current_animation = &idle;
+
 	}
 
 	initialPosition = position;

@@ -65,6 +65,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->scene->camera_frame.y = -App->scene->initial_camera_position.y + App->scene->camera_frame_y_margin;
 
 			App->gui->DestroyAllGui();
+			//SDL_Delay(100);
 			show_quad = false;
 			App->scene->visible_menu = Menu::NO_MENU;
 			break;
@@ -88,7 +89,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
-			//SDL_Delay(50);
+			SDL_Delay(80);
 			CreateMainScreen();
 		break;
 
@@ -123,6 +124,7 @@ void j1MainMenu::CreateMainScreen() {
 	credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 60, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
 
+	show_quad = true;
 }
 
 void j1MainMenu::CreateSettingsScreen() {

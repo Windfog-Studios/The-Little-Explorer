@@ -18,16 +18,26 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 	name.create("player");
 	LoadAnimations("Animations_traveller.tmx");
+	current_animation = &idle;
+	crouch_down.loop = false;
+	crouch_down.loop = false;
 
 	App->entities->player_pointer = this;
-
-	crouch_down.loop = false;
-	crouch_down.loop = false;
 
 	gravity = App->entities->gravity;
 	max_falling_speed = App->entities->max_falling_speed;
 
 	type = EntityType::PLAYER;
+
+	particles_created = false;
+	controls_blocked = false;
+	isVisible = true;
+	god = false;
+
+	can_double_jump = true;
+	can_go_left = true;
+	can_go_right = true;
+	lives = 3;
 
 	if (App->entities->reference_player != nullptr)
 	{
@@ -53,10 +63,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 		isVisible = true;
 		grounded = false;
 		current_speed = { 0,0 };
-
-		lives = 3;
 	}
-	current_animation = &idle;
 }
 
 j1Player::~j1Player(){ }

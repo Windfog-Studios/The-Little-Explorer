@@ -76,10 +76,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="GuiButton.cpp" />
     <ClCompile Include="GuiImage.cpp" />
     <ClCompile Include="GuiInputText.cpp" />
     <ClCompile Include="GuiText.cpp" />
+    <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityManager.cpp" />
     <ClCompile Include="j1FadeToBlack.cpp" />
@@ -115,6 +117,8 @@
     <ClInclude Include="GuiImage.h" />
     <ClInclude Include="GuiInputText.h" />
     <ClInclude Include="GuiText.h" />
+    <ClInclude Include="j1Command.h" />
+    <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityManager.h" />
     <ClInclude Include="j1FadeToBlack.h" />
