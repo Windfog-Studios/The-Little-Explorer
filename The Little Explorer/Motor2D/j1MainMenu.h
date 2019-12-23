@@ -35,7 +35,6 @@ private:
 	GuiButton* credits_button;
 	GuiButton* exit_button;
 	GuiButton* go_back_button;
-	bool show_quad;
 };
 
 #endif // !_j1MAIN_MENU_H_

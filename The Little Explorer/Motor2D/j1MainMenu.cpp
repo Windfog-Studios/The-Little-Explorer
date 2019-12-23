@@ -8,11 +8,11 @@
 #include "j1Scene.h"
 #include "j1Textures.h"
 #include "j1Console.h"
+#include "j1Window.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
 	name.create("main_menu");
-	show_quad = true;
 }
 
 j1MainMenu::~j1MainMenu() {}
@@ -35,10 +35,6 @@ bool j1MainMenu::Start() {
 
 bool j1MainMenu::PostUpdate() {
 	bool ret = true;
-	if (show_quad)
-	{
-		App->render->DrawQuad({ 0,0,1024,768 }, 100, 200, 100, 200);
-	}
 	return ret;
 }
 
@@ -67,7 +63,6 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 			App->gui->DestroyAllGui();
 			//SDL_Delay(100);
-			show_quad = false;
 			App->scene->visible_menu = Menu::NO_MENU;
 			if (App->console->isVisible) App->console->DestroyInterface();
 			break;
@@ -75,7 +70,6 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 		case ButtonAction::CONTINUE:
 			App->LoadGame();
 			App->gui->DestroyAllGui();
-			show_quad = false;
 			App->scene->visible_menu = Menu::NO_MENU;
 		break;
 
@@ -108,7 +102,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 void j1MainMenu::CreateMainScreen() {
 	
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	background->Init({ 0,0 }, { 0,0,1024,768 });
+	background->Init({ 0,0 }, { 0,0,(int) App->win->width, (int)App->win->height });
 	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
 	
 	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
@@ -130,16 +124,23 @@ void j1MainMenu::CreateMainScreen() {
 	credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 60, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
 
-	show_quad = true;
 }
 
 void j1MainMenu::CreateSettingsScreen() {
 	//TODO: create slider
+	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
+	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
 }
 
 void j1MainMenu::CreateCreditsScreen() {
+	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
+	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
 }

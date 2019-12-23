@@ -58,6 +58,8 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+	void OnCommand(j1Command* command);
+
 private:
 
 	// Load config file

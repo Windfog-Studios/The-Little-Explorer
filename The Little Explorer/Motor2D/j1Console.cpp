@@ -87,7 +87,24 @@ bool j1Console::Update(float dt) {
 				}
 			}
 		}
-		//command_input->Input();
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+			if (input_commands.end != nullptr)
+			{
+				if (current_consulting_command == nullptr)
+				{
+					current_consulting_command = input_commands.end;
+					command_input->GetText()->text = current_consulting_command->data;
+				}
+				else
+				{
+					if (current_consulting_command->next != nullptr) {
+						current_consulting_command = current_consulting_command->next;
+						command_input->GetText()->text = current_consulting_command->data;
+					}
+				}
+			}
+		}
 	}
 	return ret;
 }
@@ -174,12 +191,24 @@ void j1Console::CheckCommand(p2SString command) {
 
 	p2SString final_command;
 	final_command = command.lowercased();
-
+	/*
 	if (final_command == "quit")
 	{
 		App->quit = true;
 	}
+	*/
 	
+	p2SString comparing_command;
+	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
+	{
+		comparing_command = item->data->text;
+		comparing_command.lowercased();
+		
+		if (final_command == comparing_command)
+		{
+			item->data->callback->OnCommand(item->data);
+		}
+	}
 }
 
 void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, uint min_args, uint max_args, const char* explanation) {

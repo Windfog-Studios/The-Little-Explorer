@@ -25,6 +25,7 @@
 #include "j1Fonts.h"
 #include "j1MainMenu.h"
 #include "j1Console.h"
+#include "j1Command.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 // Constructor
@@ -150,6 +151,9 @@ bool j1App::Start()
 
 	startup_time.Start();
 	PERF_PEEK(perf_timer);
+
+	App->console->CreateCommand("quit",(j1Module*) this, 0, 0, "Quit the game");
+
 	return ret;
 }
 
@@ -462,4 +466,11 @@ bool j1App::SavegameNow() const {
 	data.reset();
 	want_to_save = false;
 	return ret;
+}
+
+void j1App::OnCommand(j1Command* command) {
+	if (command->text.GetString() == "quit")
+	{
+		quit = true;
+	}
 }
