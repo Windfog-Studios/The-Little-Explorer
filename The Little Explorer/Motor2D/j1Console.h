@@ -37,6 +37,7 @@ public:
 	p2List<GuiText*> log_record;
 	p2List<p2SString> input_commands;
 	p2List<j1Command*> commands;
+	p2List_item<p2SString>* current_consulting_command;
 	int l;
 	bool isVisible;
 	SDL_Rect log_box;

@@ -175,7 +175,7 @@ void j1Gui::DestroyUIElement(j1UI_Element* element) {
 			ui_elements.del(item);
 	}
 
-	element->CleanUp();
+	//element->CleanUp();
 }
 
 void j1Gui::DestroyAllGui() {
