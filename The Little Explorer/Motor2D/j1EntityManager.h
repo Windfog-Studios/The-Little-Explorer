@@ -10,16 +10,16 @@ class j1Entity;
 struct SDL_Texture;
 class j1Player;
 class j1WalkingEnemy;
+class j1WalkingEnemy2;
 class j1FlyingEnemy;
+class j1Collectible;
 
 enum class EntityType
 {
 	PLAYER,
 	WALKING_ENEMY,
-	WALKING_ENEMY2,
 	FLYING_ENEMY,
-	TRAP,
-	PARTICLES,
+	COLLECTIBLE,
 	UNKNOWN
 };
 
@@ -65,16 +65,6 @@ public:
 	j1Player* reference_player = nullptr;
 	j1WalkingEnemy* reference_walking_enemy = nullptr;
 	j1FlyingEnemy* reference_flying_enemy = nullptr;
-	j1WalkingEnemy2* reference_walking_enemy2 = nullptr;
-
-	//health
-	int trap_health = 0;
-
-	//damage
-	int trap_damage = 0;
-
-	//textures
-	SDL_Texture* trap_texture = nullptr;
 
 	//sfx
 	uint walking_enemy_attack_fx;

@@ -559,16 +559,6 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 					objectgroup->object->entity = App->entities->CreateEntity(EntityType::FLYING_ENEMY, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
 					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
-
-				if (type == "Trap") {
-					objectgroup->object->entity = App->entities->CreateEntity(EntityType::TRAP, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENTITY;
-				}
-
-				if (type == "Minotaur") {
-					objectgroup->object->entity = App->entities->CreateEntity(EntityType::WALKING_ENEMY2, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
-					objectgroup->object[i].type = ObjectType::ENTITY;
-				}
 				
 				object_node = object_node.next_sibling("object");
 				i++;

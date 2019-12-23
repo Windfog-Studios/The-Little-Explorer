@@ -5,6 +5,7 @@
 #include "j1Window.h"
 #include "j1Gui.h"
 #include "j1Command.h"
+#include "p2Log.h"
 
 j1Console::j1Console() : j1Module() {
 	isVisible = false;
@@ -30,6 +31,9 @@ bool j1Console::Start() {
 	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
 	log_text->Init({ 20,0 }, " ");
 	log_record.add(log_text);
+
+	CreateCommand("help", (j1Module*)this, 0, 0, "List all console commands");
+
 	return ret;
 }
 
@@ -105,6 +109,8 @@ bool j1Console::Update(float dt) {
 				}
 			}
 		}
+
+		command_input->Input();
 	}
 	return ret;
 }
@@ -217,5 +223,11 @@ void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, uint 
 }
 
 void j1Console::OnCommand(j1Command* command) {
-
+	if (command->text.GetString() == "help")
+	{
+		for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
+		{
+			LOG("%s : %s \n", item->data->text, item->data->explanation);
+		}
+	}
 }
