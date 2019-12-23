@@ -73,7 +73,9 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
-	
+
+	CreateScreenUI();
+
 	return true;
 }
 
@@ -352,6 +354,24 @@ void j1Scene::CreateSettingsScreen() {
 
 }
 
+void j1Scene::CreateScreenUI()
+{
+	SDL_Rect camera;
+	camera = App->render->camera;
+
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 50 - camera.x, 50 - camera.y }, { 734,23,90,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
+
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 150 - camera.x, 50 - camera.y }, { 734,23,90,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
+
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 250 - camera.x, 50 - camera.y }, { 734,23,90,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
+}
+
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 
 	if (loading_map != unloading_map)
@@ -396,6 +416,7 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
+			CreateScreenUI();
 			App->entities->blocked_movement = false;
 			App->gui->DestroyAllGui();
 			showing_menu = false;
@@ -430,12 +451,3 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 	}
 }
 
-void j1Scene::CreateScreenUI()
-{
-	SDL_Rect camera;
-	camera = App->render->camera;
-
-	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	lives->Init({ 50 - camera.x, 50 - camera.y }, { 528,23,90,89 });
-	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-}

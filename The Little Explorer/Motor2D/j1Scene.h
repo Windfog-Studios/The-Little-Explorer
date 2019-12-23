@@ -78,10 +78,12 @@ public:
 	bool showing_menu;
 
 	//UI Info
+	
 	int score;
 	int time;
 	j1Timer timer;
 	GuiText* time_text;
+	GuiImage* lives;
 
 	//levels
 	Map current_level;
@@ -94,7 +96,6 @@ public:
 	iPoint initial_camera_position;
 
 	//pause menu
-	GuiImage* lives;
 	GuiImage* menu_background;
 	GuiImage* pause_text;
 	GuiButton* home_button;

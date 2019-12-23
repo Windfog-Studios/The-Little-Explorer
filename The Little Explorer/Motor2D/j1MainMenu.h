@@ -27,7 +27,9 @@ public:
 	void CreateCreditsScreen();
 
 private:
+	GuiImage* lives;
 	GuiImage* background;
+	GuiImage* menu_background;
 	GuiImage* title;
 	GuiButton* start_button;
 	GuiButton* continue_button;
