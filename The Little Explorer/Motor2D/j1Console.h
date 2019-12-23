@@ -1,10 +1,10 @@
 #ifndef _j1CONSOLE_H_
 #define _j1CONSOLE_H_
 #include "j1Module.h"
+#include "GuiText.h"
 #include "SDL_image/include/SDL_image.h"
 
 class GuiInputText;
-class GuiText;
 struct SDL_Rect;
 
 #define MAX_LOG_RECORD 100
@@ -28,7 +28,7 @@ public:
 
 public:
 	GuiInputText* command_input;
-	GuiText** log_text;
+	p2List<GuiText*> log_record;
 	int l;
 	bool isVisible;
 	SDL_Rect log_box;
