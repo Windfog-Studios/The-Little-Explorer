@@ -84,6 +84,7 @@ public:
 	j1Timer timer;
 	GuiText* time_text;
 	GuiImage* lives;
+	GuiImage* no_lives;
 
 	//levels
 	Map current_level;
