@@ -54,6 +54,7 @@ bool GuiText::Update(float dt) {
 }
 
 bool GuiText::Draw() {
+
 	if (text.Length() > 0)
 	{
 		texture = App->font->Print(text.GetString());

@@ -22,20 +22,27 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+	void OnCommand(j1Command*);
+
 	void AddLogText(p2SString new_text);
 
 	void CreateInterface();
 	void DestroyInterface();
-	void CheckCommand(j1Command* command);
+
+	void CreateCommand(const char* command, j1Module* callback, uint min_arg = 1, uint max_args = 1, const char* explanation = "No explanation given");
+	void CheckCommand(p2SString command);
 
 public:
 	GuiInputText* command_input;
 	p2List<GuiText*> log_record;
+	p2List<p2SString> input_commands;
 	p2List<j1Command*> commands;
+	p2List_item<p2SString>* current_consulting_command;
 	int l;
 	bool isVisible;
 	SDL_Rect log_box;
 	SDL_Rect command_background;
+	bool CleanUpStarted;
 };
 
 #endif // !_j1CONSOLE_H_
