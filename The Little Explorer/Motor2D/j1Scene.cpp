@@ -73,7 +73,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
-
+	
 	return true;
 }
 
@@ -120,7 +120,7 @@ bool j1Scene::Update(float dt)
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;
-
+	
 	//player inputs ---------------
 	if (visible_menu == Menu::NO_MENU)
 	{
@@ -136,6 +136,7 @@ bool j1Scene::Update(float dt)
 			App->fade_to_black->FadeToBlack(current_level, current_level);
 			App->entities->player_pointer->position = App->entities->player_pointer->initialPosition;
 		}
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -427,4 +428,14 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			break;
 		}
 	}
+}
+
+void j1Scene::CreateScreenUI()
+{
+	SDL_Rect camera;
+	camera = App->render->camera;
+
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 50 - camera.x, 50 - camera.y }, { 528,23,90,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 }

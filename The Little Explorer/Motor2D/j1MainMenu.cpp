@@ -104,7 +104,11 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 }
 
 void j1MainMenu::CreateMainScreen() {
-
+	
+	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	background->Init({ 0,0 }, { 0,0,1024,768 });
+	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	
 	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 160,120 }, { 0,0,700,200 });
 	title->tex = App->tex->Load("sprites/UI/title.png");

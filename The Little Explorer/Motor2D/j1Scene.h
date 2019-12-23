@@ -58,6 +58,7 @@ public:
 	void CreatePauseMenu();
 	void CreateSettingsScreen();
 	void OnEvent(j1UI_Element*, FocusEvent);
+	void CreateScreenUI();
 
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
@@ -93,6 +94,7 @@ public:
 	iPoint initial_camera_position;
 
 	//pause menu
+	GuiImage* lives;
 	GuiImage* menu_background;
 	GuiImage* pause_text;
 	GuiButton* home_button;
