@@ -10,12 +10,15 @@ class j1Module;
 class j1Command 
 {
 public:
-	j1Command(p2SString command_text, j1Module* callback);
+	j1Command(const char* g_command, j1Module* g_callback, uint min_arg, uint max_args, const char* explanation);
 	~j1Command();
 
 public:
 	p2SString text;
 	j1Module* callback;
+	uint max_args;
+	uint min_args;
+	const char* explanation;
 };
 
 #endif // !_j1COMMAND_H_	

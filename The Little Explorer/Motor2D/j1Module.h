@@ -13,6 +13,7 @@ class j1App;
 struct Collider;
 class j1UI_Element;
 enum class FocusEvent;
+class j1Command;
 
 class j1Module
 {
@@ -70,6 +71,7 @@ public:
 
 	virtual void OnEvent(j1UI_Element*, FocusEvent) {}
 
+	virtual void OnCommand(j1Command*) {};
 	public:
 
 	p2SString	name;
