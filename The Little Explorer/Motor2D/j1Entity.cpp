@@ -8,7 +8,7 @@
 #include "j1Map.h"
 #include "p2Log.h"
 
-j1Entity::j1Entity(EntityType type) : j1EntityManager() {}
+j1Entity::j1Entity(EntityType type) {}
 
 j1Entity::~j1Entity() {}
 

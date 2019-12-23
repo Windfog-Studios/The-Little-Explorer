@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Gui.h"
+#include "j1Console.h"
 #include "SDL/include/SDL.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
@@ -124,13 +125,13 @@ bool j1Input::PreUpdate()
 			case SDL_TEXTINPUT:
   				strcat_s(text, MAX_INPUT_CHARACTERS * 4 , event.text.text);
 				break;
-	
+			/*
 			case SDL_TEXTEDITING:
 				composition = event.edit.text;
 				cursor = event.edit.start;
 				selection_len = event.edit.length;
 				break;
-
+			*/
 			case SDL_MOUSEMOTION:
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;

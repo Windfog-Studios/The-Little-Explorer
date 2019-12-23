@@ -7,6 +7,7 @@
 #include "j1Pathfinding.h"
 #include "j1Scene.h"
 #include "j1Textures.h"
+#include "j1Console.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -68,6 +69,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			//SDL_Delay(100);
 			show_quad = false;
 			App->scene->visible_menu = Menu::NO_MENU;
+			if (App->console->isVisible) App->console->DestroyInterface();
 			break;
 
 		case ButtonAction::CONTINUE:
