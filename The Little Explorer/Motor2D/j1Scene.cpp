@@ -159,6 +159,7 @@ bool j1Scene::Update(float dt)
 				App->gui->DestroyAllGui();
 				visible_menu = Menu::NO_MENU;
 				App->entities->blocked_movement = false;
+				CreateScreenUI();
 			}
 		}
 	}
@@ -417,9 +418,9 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
+			App->gui->DestroyAllGui();
 			CreateScreenUI();
 			App->entities->blocked_movement = false;
-			App->gui->DestroyAllGui();
 			showing_menu = false;
 			break;
 

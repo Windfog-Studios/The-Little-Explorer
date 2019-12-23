@@ -65,12 +65,14 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			//SDL_Delay(100);
 			App->scene->visible_menu = Menu::NO_MENU;
 			if (App->console->isVisible) App->console->DestroyInterface();
+			App->scene->CreateScreenUI();
 			break;
 
 		case ButtonAction::CONTINUE:
 			App->LoadGame();
 			App->gui->DestroyAllGui();
 			App->scene->visible_menu = Menu::NO_MENU;
+			App->scene->CreateScreenUI();
 		break;
 
 		case ButtonAction::SETTINGS:
