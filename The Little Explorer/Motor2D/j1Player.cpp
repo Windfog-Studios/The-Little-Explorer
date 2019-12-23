@@ -147,153 +147,163 @@ bool j1Player::PreUpdate(){
 
 	if (!App->pause)
 	{
+
 		//speed.x = 0;
 		if(!controls_blocked){
-			if (state == IDLE)
-			{
-				can_double_jump = true;
-
-				if (player_input.pressing_D) state = RUN_FORWARD;
-
-				if (player_input.pressing_A) state = RUN_BACKWARD;
-		
-				if (player_input.pressing_S) state = CROUCH_DOWN;
-
-				if (player_input.pressing_F)
+			if (lives > 0) {
+				if (state == IDLE)
 				{
-					if (flip == SDL_FLIP_NONE)
-					{state = SLIDE_FORWARD;}
-					else
-					{state = SLIDE_BACKWARD;}
-				}
+					can_double_jump = true;
 
-				if ((player_input.pressing_space) && (!god))
-				{
-					App->audio->PlayFx(jump_fx);
-					state = JUMP;
-					current_speed.y = jumpImpulse;
-					grounded = false;
-				}
+					if (player_input.pressing_D) state = RUN_FORWARD;
 
-			}
+					if (player_input.pressing_A) state = RUN_BACKWARD;
 
-			if (state == RUN_FORWARD)
-			{
-				if (player_input.pressing_D)
-				{
-					if (current_speed.x < max_running_speed)
+					if (player_input.pressing_S) state = CROUCH_DOWN;
+
+					if (player_input.pressing_F)
 					{
-						current_speed.x += acceleration;
+						if (flip == SDL_FLIP_NONE)
+						{
+							state = SLIDE_FORWARD;
+						}
+						else
+						{
+							state = SLIDE_BACKWARD;
+						}
+					}
+
+					if ((player_input.pressing_space) && (!god))
+					{
+						App->audio->PlayFx(jump_fx);
+						state = JUMP;
+						current_speed.y = jumpImpulse;
+						grounded = false;
+					}
+
+				}
+
+				if (state == RUN_FORWARD)
+				{
+					if (player_input.pressing_D)
+					{
+						if (current_speed.x < max_running_speed)
+						{
+							current_speed.x += acceleration;
+						}
+					}
+
+					if (!player_input.pressing_D) state = IDLE;
+
+					if ((player_input.pressing_space) && (!god))
+					{
+						App->audio->PlayFx(jump_fx);
+						state = JUMP;
+						current_speed.y = jumpImpulse;
+						grounded = false;
+					}
+
+					if (player_input.pressing_F) state = SLIDE_FORWARD;
+				}
+
+				if (state == RUN_BACKWARD)
+				{
+					if (player_input.pressing_A)
+					{
+						if (current_speed.x > -max_running_speed)
+						{
+							current_speed.x -= acceleration;
+						}
+					}
+
+					if (!player_input.pressing_A) state = IDLE;
+
+					if ((player_input.pressing_space) && (!god))
+					{
+						App->audio->PlayFx(jump_fx);
+						state = JUMP;
+						current_speed.y = jumpImpulse;
+						grounded = false;
+					}
+
+					if (player_input.pressing_F) state = SLIDE_BACKWARD;
+				}
+
+
+				if (state == CROUCH_DOWN)
+				{
+					if (!player_input.pressing_S)
+					{
+						state = CROUCH_UP;
+						crouch_down.Reset();
 					}
 				}
 
-				if (!player_input.pressing_D) state = IDLE;
-
-				if ((player_input.pressing_space) && (!god))
+				if (state == CROUCH_UP)
 				{
-					App->audio->PlayFx(jump_fx);
-					state = JUMP;
-					current_speed.y = jumpImpulse;
-					grounded = false;
-				}
-
-				if (player_input.pressing_F) state = SLIDE_FORWARD;
-			}
-
-			if (state == RUN_BACKWARD)
-			{
-				if (player_input.pressing_A)
-				{
-					if (current_speed.x > -max_running_speed)
-					{
-						current_speed.x -= acceleration;
+					if (current_animation->Finished()) {
+						state = IDLE;
+						crouch_up.Reset();
 					}
 				}
 
-				if (!player_input.pressing_A) state = IDLE;
-
-				if ((player_input.pressing_space)&&(!god))
+				if (state == SLIDE_FORWARD)
 				{
-					App->audio->PlayFx(jump_fx);
-					state = JUMP;
-					current_speed.y = jumpImpulse;
-					grounded = false;
+					if (!player_input.pressing_F) state = IDLE;
 				}
 
-				if (player_input.pressing_F) state = SLIDE_BACKWARD;
-			}
-
-
-			if (state == CROUCH_DOWN)
-			{
-				if (!player_input.pressing_S)
+				if (state == SLIDE_BACKWARD)
 				{
-					state = CROUCH_UP;
-					crouch_down.Reset();
+					if (!player_input.pressing_F) state = IDLE;
 				}
-			}
 
-			if (state == CROUCH_UP)
-			{
-				if (current_animation->Finished()) {
-					state = IDLE;
-					crouch_up.Reset();
-				}
-			}
-
-			if (state == SLIDE_FORWARD)
-			{
-				if (!player_input.pressing_F) state = IDLE;
-			}
-
-			if (state == SLIDE_BACKWARD)
-			{
-				if (!player_input.pressing_F) state = IDLE;
-			}
-
-			if (state == JUMP)
-			{
-				if ((player_input.pressing_D)&&(current_speed.x < max_side_speed)) current_speed.x += acceleration;
-				if ((player_input.pressing_A)&&(current_speed.x > -max_side_speed)) current_speed.x -= acceleration;
-
-				//double jump
-				if ((player_input.pressing_space) && (can_double_jump == true) && (current_speed.y <= jumpImpulse * 0.5f))
+				if (state == JUMP)
 				{
-					App->audio->PlayFx(double_Jump_fx);
-					jump.Reset();
-					current_speed.y = doubleJumpImpulse;
-					can_double_jump = false;
-					App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
-				}
+					if ((player_input.pressing_D) && (current_speed.x < max_side_speed)) current_speed.x += acceleration;
+					if ((player_input.pressing_A) && (current_speed.x > -max_side_speed)) current_speed.x -= acceleration;
 
-				if (current_animation->Finished())
+					//double jump
+					if ((player_input.pressing_space) && (can_double_jump == true) && (current_speed.y <= jumpImpulse * 0.5f))
+					{
+						App->audio->PlayFx(double_Jump_fx);
+						jump.Reset();
+						current_speed.y = doubleJumpImpulse;
+						can_double_jump = false;
+						App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
+					}
+
+					if (current_animation->Finished())
+					{
+						state = FALL;
+						jump.Reset();
+					}
+
+				}
+				if (state == FALL)
 				{
-					state = FALL;
-					jump.Reset();
+					if ((player_input.pressing_D) && (can_go_right == true) && (current_speed.x < max_side_speed)) current_speed.x += acceleration;
+					if ((player_input.pressing_A) && (can_go_left == true) && (current_speed.x > max_side_speed)) current_speed.x -= acceleration;
+
+					if ((player_input.pressing_space) && (can_double_jump == true) & (current_speed.y <= jumpImpulse * 0.5f))
+					{
+						jump.Reset();
+						state = JUMP;
+						App->audio->PlayFx(double_Jump_fx);
+						current_speed.y = doubleJumpImpulse;
+						can_double_jump = false;
+						grounded = false;
+						App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
+					}
+
+					if (current_animation->Finished()) fall.Reset();
 				}
-
-			}
-			if (state == FALL)
-			{
-				if ((player_input.pressing_D) && (can_go_right == true)&&(current_speed.x < max_side_speed)) current_speed.x += acceleration;
-				if ((player_input.pressing_A) && (can_go_left == true)&&(current_speed.x > max_side_speed)) current_speed.x -= acceleration;
-
-				if ((player_input.pressing_space) && (can_double_jump == true) & (current_speed.y <= jumpImpulse * 0.5f))
+				if (state == DIE)
 				{
-					jump.Reset();
-					state = JUMP;
-					App->audio->PlayFx(double_Jump_fx);
-					current_speed.y = doubleJumpImpulse;
-					can_double_jump = false;
-					grounded = false;
-					App->particles->AddParticle(App->particles->dust, position.x, position.y + current_animation->GetCurrentFrame().h * 0.75f, COLLIDER_NONE, 0, flip);
+					//add die result
 				}
-
-				if (current_animation->Finished()) fall.Reset();
 			}
-			if (state == DIE)
-			{
-				//add die result
+			else {
+				App->quit = true;
 			}
 		}
 	}
@@ -319,89 +329,91 @@ bool j1Player::Update(float dt){
 	}
 
 	switch (state)
-	{
-	case IDLE:
-		current_animation = &idle;
-		/*collider->SetSize(32, 56);
-		if (flip == SDL_FLIP_NONE)
-			collider->SetPos(position.x, position.y + 8);
-		else
-			collider->SetPos(position.x + 32, position.y + 8);*/
-		break;
+		{
+		case IDLE:
+			current_animation = &idle;
+			/*collider->SetSize(32, 56);
+			if (flip == SDL_FLIP_NONE)
+				collider->SetPos(position.x, position.y + 8);
+			else
+				collider->SetPos(position.x + 32, position.y + 8);*/
+			break;
 
-	case RUN_FORWARD:
-		current_animation = &run;
-		flip = SDL_FLIP_NONE;
-		/*collider->SetSize(46, 54);
-			collider->SetPos(position.x, position.y + 10);*/
-		break;
+		case RUN_FORWARD:
+			current_animation = &run;
+			flip = SDL_FLIP_NONE;
+			/*collider->SetSize(46, 54);
+				collider->SetPos(position.x, position.y + 10);*/
+			break;
 
-	case RUN_BACKWARD:
-		current_animation = &run;
-		flip = SDL_FLIP_HORIZONTAL;
-		/*collider->SetSize(46, 54);
-		collider->SetPos(position.x +18, position.y + 10);*/
-		break;
+		case RUN_BACKWARD:
+			current_animation = &run;
+			flip = SDL_FLIP_HORIZONTAL;
+			/*collider->SetSize(46, 54);
+			collider->SetPos(position.x +18, position.y + 10);*/
+			break;
 
-	case CROUCH_DOWN:
-		current_animation = &crouch_down;
-		//collider->SetSize(32, 32);
-		break;
+		case CROUCH_DOWN:
+			current_animation = &crouch_down;
+			//collider->SetSize(32, 32);
+			break;
 
-	case CROUCH_UP:
-		current_animation = &crouch_up;
-		//collider->SetSize(32, 32);
-		break;
+		case CROUCH_UP:
+			current_animation = &crouch_up;
+			//collider->SetSize(32, 32);
+			break;
 
-	case SLIDE_FORWARD:
-		current_animation = &slide;
-		flip = SDL_FLIP_NONE;
-		/*collider->SetSize(52, 42);
-		collider->SetPos(position.x, position.y + 22);*/
-		break;
+		case SLIDE_FORWARD:
+			current_animation = &slide;
+			flip = SDL_FLIP_NONE;
+			/*collider->SetSize(52, 42);
+			collider->SetPos(position.x, position.y + 22);*/
+			break;
 
-	case SLIDE_BACKWARD:
-		current_animation = &slide;
-		flip = SDL_FLIP_HORIZONTAL;
-		/*collider->SetSize(52, 42);
-		collider->SetPos(position.x  + 12, position.y + 22);*/
-		break;
+		case SLIDE_BACKWARD:
+			current_animation = &slide;
+			flip = SDL_FLIP_HORIZONTAL;
+			/*collider->SetSize(52, 42);
+			collider->SetPos(position.x  + 12, position.y + 22);*/
+			break;
 
-	case JUMP:
-		current_animation = &jump;
+		case JUMP:
+			current_animation = &jump;
 
-		if (current_speed.y <= 0){
-			state = FALL;
-			jump.Reset();
-		}
-		if ((last_state = RUN_FORWARD)||(last_state == RUN_BACKWARD)){
-			current_speed.x *= 0.5f;
-		}
-		/*
-		collider->SetSize(32, 64);
-		if (flip == SDL_FLIP_NONE)
-			collider->SetPos(position.x, position.y);
-		else
-			collider->SetPos(position.x + 32, position.y);*/
-		break;
-	case FALL:
-		current_animation = &fall;
-		/*collider->SetSize(50, 64);
-		if (flip == SDL_FLIP_NONE)
-			collider->SetPos(position.x, position.y + 6);
-		else
-			collider->SetPos(position.x + 14, position.y + 6);*/
-		break;
-	case DIE:
-		if (!god) {
+			if (current_speed.y <= 0) {
+				state = FALL;
+				jump.Reset();
+			}
+			if ((last_state = RUN_FORWARD) || (last_state == RUN_BACKWARD)) {
+				current_speed.x *= 0.5f;
+			}
+			/*
+			collider->SetSize(32, 64);
+			if (flip == SDL_FLIP_NONE)
+				collider->SetPos(position.x, position.y);
+			else
+				collider->SetPos(position.x + 32, position.y);*/
+			break;
+		case FALL:
+			current_animation = &fall;
+			/*collider->SetSize(50, 64);
+			if (flip == SDL_FLIP_NONE)
+				collider->SetPos(position.x, position.y + 6);
+			else
+				collider->SetPos(position.x + 14, position.y + 6);*/
+			break;
+		case DIE:
+			if (!god) {
 
-		}
-		break;
-	default:
-		LOG("No state found");
-		break;
+			}
+			break;
+		default:
+			LOG("No state found");
+			break;
 	}
 
+
+	
 	if (flip == SDL_FLIP_NONE) collider->SetPos(position.x + 8, position.y);
 	else collider->SetPos(position.x + 16, position.y);
 
@@ -452,6 +464,8 @@ void j1Player::MovementControl(float dt) {
 		position.x += current_speed.x * dt;
 		position.y += current_speed.y * dt;
 	}
+	
+	
 }
 
 bool j1Player::Save(pugi::xml_node& data) const {
@@ -555,6 +569,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
 				particles_created = true;
 				position = initialPosition;
+				lives--;
 			}
 			break;
 
@@ -572,6 +587,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					App->fade_to_black->FadeToBlack(App->scene->current_level, App->scene->current_level);
 					particles_created = true;
 					position = initialPosition;
+					lives--;
 				}
 			}
 			break;
