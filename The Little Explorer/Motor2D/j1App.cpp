@@ -13,9 +13,7 @@
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1WalkingEnemy.h"
-#include "j1WalkingEnemy2.h"
 #include "j1FlyingEnemy.h"
-#include "j1Trap.h"
 #include "j1Particles.h"
 #include "j1Collision.h"
 #include "j1EntityManager.h"
@@ -47,9 +45,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	particles = new j1Particles();
 	collision = new j1Collision();
 	pathfinding = new j1PathFinding();
-	fade_to_black = new j1FadeToBlack();
 	font = new j1Fonts();
 	gui = new j1Gui();
+	fade_to_black = new j1FadeToBlack();
 	console = new j1Console();
 
 	// Ordered for awake / Start / Update
@@ -65,9 +63,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(particles);
 	AddModule(collision);
 	AddModule(pathfinding);
-	AddModule(fade_to_black);
 	AddModule(font);
 	AddModule(gui);
+	AddModule(fade_to_black);
 	AddModule(console);
 
 	// render last to swap buffer

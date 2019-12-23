@@ -75,8 +75,6 @@ bool j1Scene::Start()
 	}
 	*/
 
-	CreateScreenUI();
-
 	return true;
 }
 
