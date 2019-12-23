@@ -100,11 +100,25 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 }
 
 void j1MainMenu::CreateMainScreen() {
-	
+	SDL_Rect camera;
+	camera = App->render->camera;
+
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width, (int)App->win->height });
 	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
-	
+	/*
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 50 - camera.x, 50 - camera.y }, { 734,23,96,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
+
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 150 - camera.x, 50 - camera.y }, { 734,23,96,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
+
+	lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	lives->Init({ 250 - camera.x, 50 - camera.y }, { 734,23,96,89 });
+	lives->tex = App->tex->Load("sprites/UI/atlas2.png");
+	*/
 	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 160,120 }, { 0,0,700,200 });
 	title->tex = App->tex->Load("sprites/UI/title.png");
