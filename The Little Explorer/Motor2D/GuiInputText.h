@@ -19,6 +19,7 @@ public:
 	bool Input();
 	bool Draw();
 	void HandleFocusEvent(FocusEvent event);
+	GuiText* GetText() const;
 
 private:
 	GuiImage* background;
@@ -27,6 +28,8 @@ private:
 	SDL_Rect cursor;
 	bool focused;
 	bool usingAtlas;
+public:
+	int cursor_position;
 };
 
 

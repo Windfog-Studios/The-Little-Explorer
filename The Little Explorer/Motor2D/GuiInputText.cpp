@@ -12,6 +12,7 @@ GuiInputText::GuiInputText(j1Module* g_callback){
 	cursor = {0,0,2,30};
 	focused = false;
 	usingAtlas = true;
+	cursor_position = 0;
 }
 
 GuiInputText::~GuiInputText(){
@@ -46,9 +47,11 @@ void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_sectio
 }
 
 bool GuiInputText::Input() {
-	if (SDL_SCANCODE_BACKSPACE)
+	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
 	{
-	
+		int end;
+		end = text->text.Length();
+		text->text.Cut(end-2,end);
 	}
 	return true;
 }
@@ -107,4 +110,8 @@ void GuiInputText::HandleFocusEvent(FocusEvent event) {
 		focused = false;
 		App->input->EnableTextInput(false);
 	}
+}
+
+GuiText* GuiInputText::GetText() const{
+	return text;
 }

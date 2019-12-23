@@ -6,6 +6,7 @@
 
 class GuiInputText;
 struct SDL_Rect;
+class j1Command;
 
 #define MAX_LOG_RECORD 100
 
@@ -25,10 +26,12 @@ public:
 
 	void CreateInterface();
 	void DestroyInterface();
+	void CheckCommand(j1Command* command);
 
 public:
 	GuiInputText* command_input;
 	p2List<GuiText*> log_record;
+	p2List<j1Command*> commands;
 	int l;
 	bool isVisible;
 	SDL_Rect log_box;

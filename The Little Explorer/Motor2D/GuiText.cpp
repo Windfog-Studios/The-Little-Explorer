@@ -21,7 +21,10 @@ GuiText::~GuiText() {}
 void GuiText::Init(iPoint g_position, p2SString g_text) {
 	screen_position = g_position;
 	text = g_text;
-	texture = App->font->Print(text.GetString());
+	if (text.Length() > 0)
+	{
+		texture = App->font->Print(text.GetString());
+	}
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
 	App->font->CalcSize(text.GetString(), rect.w, rect.h);
