@@ -6,6 +6,8 @@
 #include "j1Gui.h"
 #include "j1Command.h"
 #include "p2Log.h"
+#include "j1EntityManager.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1Console::j1Console() : j1Module() {
 	isVisible = false;
@@ -32,7 +34,7 @@ bool j1Console::Start() {
 	log_text->Init({ 20,0 }, " ");
 	log_record.add(log_text);
 
-	CreateCommand("help", (j1Module*)this, 0, 0, "List all console commands");
+	CreateCommand("list", (j1Module*)this, 0, 0, "List all console commands");
 
 	return ret;
 }
@@ -43,6 +45,7 @@ bool j1Console::PreUpdate() {
 }
 
 bool j1Console::Update(float dt) {
+	BROFILER_CATEGORY("ConsoleUpdate", Profiler::Color::MediumPurple)
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)
@@ -116,6 +119,7 @@ bool j1Console::Update(float dt) {
 }
 
 bool j1Console::PostUpdate() {
+	BROFILER_CATEGORY("GuiPostUpdate", Profiler::Color::DarkViolet)
 	bool ret = true;
 
 	if (isVisible)
@@ -158,6 +162,7 @@ void j1Console::CreateInterface(){
 	}
 
 	isVisible = true;
+	App->entities->blocked_movement = true;
 }
 
 void j1Console::DestroyInterface(){
@@ -167,6 +172,7 @@ void j1Console::DestroyInterface(){
 		App->gui->DestroyUIElement(item->data);
 	}
 	isVisible = false;
+	App->entities->blocked_movement = false;
 }
 
 void j1Console::AddLogText(p2SString new_text) {
@@ -181,7 +187,7 @@ void j1Console::AddLogText(p2SString new_text) {
 
 		else {
 			log_text->parent = log_record.end->data;
-			log_text->Init({ 20,(int)(log_record.end->data->rect.y + log_record.end->data->rect.h) }, new_text);
+			log_text->Init({ (int)(20 - App->render->camera.x),(int)(log_record.end->data->rect.y + log_record.end->data->rect.h -App->render->camera.y) }, new_text);
 		}
 
 		log_record.add(log_text);
@@ -197,12 +203,6 @@ void j1Console::CheckCommand(p2SString command) {
 
 	p2SString final_command;
 	final_command = command.lowercased();
-	/*
-	if (final_command == "quit")
-	{
-		App->quit = true;
-	}
-	*/
 	
 	p2SString comparing_command;
 	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
@@ -223,11 +223,18 @@ void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, uint 
 }
 
 void j1Console::OnCommand(j1Command* command) {
-	if (command->text.GetString() == "help")
+	char* command_text = (char*)command->text.GetString();
+
+	if ( strcmp(command_text, "list") == 0)
 	{
 		for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 		{
-			LOG("%s : %s \n", item->data->text, item->data->explanation);
+			//LOG(("%s : %s \n", item->data->text.GetString(), item->data->explanation);
+			char string[200];
+			strcpy_s(string, item->data->text.GetString());
+			strcat_s(string, " : ");
+			strcat_s(string, item->data->explanation);
+			AddLogText(string);
 		}
 	}
 }

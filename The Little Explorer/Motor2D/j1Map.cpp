@@ -560,6 +560,12 @@ bool j1Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectgroup) {
 					objectgroup->object[i].type = ObjectType::ENTITY;
 				}
 				
+				if (type == "Collectible")
+				{
+					objectgroup->object->entity = App->entities->CreateEntity(EntityType::COLLECTIBLE, objectgroup->object[i].rect.x, objectgroup->object[i].rect.y);
+					objectgroup->object[i].type = ObjectType::ENTITY;
+				}
+
 				object_node = object_node.next_sibling("object");
 				i++;
 			}

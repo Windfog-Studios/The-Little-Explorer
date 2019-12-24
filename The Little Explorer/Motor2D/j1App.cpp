@@ -467,7 +467,9 @@ bool j1App::SavegameNow() const {
 }
 
 void j1App::OnCommand(j1Command* command) {
-	if (command->text.GetString() == "quit")
+	char* command_text = (char*)command->text.GetString();
+
+	if (strcmp(command_text, "quit") == 0)
 	{
 		quit = true;
 	}

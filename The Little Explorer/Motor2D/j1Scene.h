@@ -64,6 +64,8 @@ public:
 	bool Load(pugi::xml_node& data);
 	void UpdateScreenUI();
 
+	void GameOver() {};
+
 public:
 	//edges
 	SDL_Rect camera_frame;

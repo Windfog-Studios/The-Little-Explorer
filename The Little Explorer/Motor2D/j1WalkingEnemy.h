@@ -12,6 +12,7 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Update(float dt);
 	bool PostUpdate();
+	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
 
