@@ -19,16 +19,32 @@ GuiText::GuiText(j1Module* g_callback, bool g_isStatic) {
 
 GuiText::~GuiText() {}
 
-void GuiText::Init(iPoint g_position, p2SString g_text) {
+void GuiText::Init(iPoint g_position, p2SString g_text, char* g_font) {
 	screen_position = g_position;
 	text = g_text;
-	if (text.Length() > 0)
+	font = g_font;
+
+	if (font == DEFAULT_FONT)
 	{
 		texture = App->font->Print(text.GetString());
 	}
+	else
+	{
+		texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+	}
+
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
-	App->font->CalcSize(text.GetString(), rect.w, rect.h);
+	
+	if (g_font == DEFAULT_FONT)
+	{
+		App->font->CalcSize(text.GetString(), rect.w, rect.h);
+	}
+	else
+	{
+		App->font->CalcSize(text.GetString(), rect.w, rect.h,App->font->console_font);
+	}
+
 
 	if (parent != nullptr)
 	{
@@ -65,7 +81,15 @@ bool GuiText::Draw() {
 
 	if (text.Length() > 0)
 	{
-		texture = App->font->Print(text.GetString());
+		if (font == DEFAULT_FONT)
+		{
+			texture = App->font->Print(text.GetString());
+		}
+		else
+		{
+			texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+		}
+
 		App->render->Blit(texture, rect.x, rect.y);
 	}
 	return true;

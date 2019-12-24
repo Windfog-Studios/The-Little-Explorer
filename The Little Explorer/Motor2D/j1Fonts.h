@@ -6,7 +6,10 @@
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT "fonts/Some Time Later.otf"
-#define DEFAULT_FONT_SIZE 25
+#define CONSOLE_FONT  "fonts/source-code-pro/TTF/SourceCodePro-Medium.ttf"
+
+#define DEFAULT_FONT_SIZE 32
+#define CONSOLE_FONT_SIZE 14
 
 struct SDL_Texture;
 struct _TTF_Font;
@@ -38,6 +41,7 @@ public:
 
 	p2List<_TTF_Font*>	fonts;
 	_TTF_Font* default;
+	_TTF_Font* console_font;
 };
 
 

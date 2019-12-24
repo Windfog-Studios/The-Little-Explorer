@@ -21,7 +21,7 @@ GuiInputText::~GuiInputText(){
 	delete text;
 }
 
-void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_section, bool useAtlas){
+void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_section, bool useAtlas, char* g_font){
 	
 	screen_position = position;
 	rect = { position.x, position.y, image_section.w, image_section.h };
@@ -41,10 +41,10 @@ void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_sectio
 
 	if (useAtlas = false)
 		usingAtlas = false;
-
+	
 	if (useAtlas) background->Init(position, image_section);
 
-	text->Init({position.x + 10,(int)(position.y + rect.h * 0.25f)}, g_text);
+	text->Init({position.x + 10,(int)(position.y + rect.h * 0.25f)}, g_text,g_font);
 }
 
 bool GuiInputText::Input() {
@@ -75,7 +75,7 @@ bool GuiInputText::Update(float dt) {
 
 	if (text->text.GetCapacity() > 0)
 	{
-		App->font->CalcSize(text->text.GetString(), width, cursor.y);
+		App->font->CalcSize(text->text.GetString(), width, cursor.y, App->font->console_font);
 		cursor.x = background->GetScreenRect().x + cursor.w + 10 + width;
 		cursor.y = rect.y + rect.h * 0.5f - cursor.h * 0.5f;
 	}

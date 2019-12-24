@@ -14,7 +14,7 @@ public:
 	GuiInputText(j1Module* callback, bool isStatic);
 	~GuiInputText();
 
-	void Init(iPoint position, p2SString text, SDL_Rect image_section, bool useAtlas = true);
+	void Init(iPoint position, p2SString text, SDL_Rect image_section, bool useAtlas = true, char* font = DEFAULT_FONT);
 	bool Update(float dt);
 	bool Input();
 	bool Draw();
