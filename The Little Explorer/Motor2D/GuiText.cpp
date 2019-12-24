@@ -11,9 +11,10 @@ GuiText::GuiText() {
 	interactable = false;
 }
 
-GuiText::GuiText(j1Module* g_callback) {
+GuiText::GuiText(j1Module* g_callback, bool g_isStatic) {
 	callback = g_callback;
 	font = DEFAULT_FONT;
+	isStatic = g_isStatic;
 }
 
 GuiText::~GuiText() {}
@@ -58,7 +59,16 @@ bool GuiText::Draw() {
 	if (text.Length() > 0)
 	{
 		texture = App->font->Print(text.GetString());
-		App->render->Blit(texture, rect.x, rect.y);
+
+		if (isStatic)
+		{
+			App->render->Blit(texture, rect.x, rect.y, (const SDL_Rect*)0, SDL_FLIP_NONE, 0);
+		}
+		else
+		{
+			App->render->Blit(texture, rect.x, rect.y);
+		}
+
 	}
 	return true;
 }

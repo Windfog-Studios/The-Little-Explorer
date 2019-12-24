@@ -3,9 +3,10 @@
 #include "GuiImage.h"
 #include "j1Render.h"
 
-GuiImage::GuiImage(j1Module* g_callback) {
+GuiImage::GuiImage(j1Module* g_callback, bool g_isStatic) {
 	tex = (SDL_Texture*)App->gui->GetAtlas();
 	callback = g_callback;
+	isStatic = g_isStatic;
 }
 
 void GuiImage::Init(iPoint position, SDL_Rect g_section) {
@@ -55,6 +56,14 @@ bool GuiImage::Update(float dt) {
 }
 
 bool GuiImage::Draw() {
-	App->render->Blit(tex, rect.x, rect.y, &section);
+
+	if (isStatic) 
+	{
+		App->render->Blit(tex, rect.x, rect.y, &section, SDL_FLIP_NONE, 0);
+	}
+	else
+	{
+		App->render->Blit(tex, rect.x, rect.y, &section);
+	}
 	return true;
 }

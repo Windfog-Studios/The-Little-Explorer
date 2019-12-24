@@ -7,12 +7,13 @@
 #include "p2SString.h"
 #include "j1Fonts.h"
 
-GuiButton::GuiButton(j1Module* g_callback){
+GuiButton::GuiButton(j1Module* g_callback, bool g_isStatic){
 	callback = g_callback;
 	text = new GuiText();
 	click_rect = {0,0,0,0};
 	tex = nullptr;
 	current_rect = &normal_rect;
+	isStatic = g_isStatic;
 }
 
 GuiButton::~GuiButton() {
@@ -92,12 +93,17 @@ bool GuiButton::Update(float dt) {
 
 bool GuiButton::Draw() {
 
-	App->render->Blit(tex, rect.x, rect.y, current_rect);
-
-	if (text->text.Length() > 0)
+	if (isStatic)
 	{
-		text->Draw();
+		App->render->Blit(tex, rect.x, rect.y, current_rect, SDL_FLIP_NONE, 0);
 	}
+	else
+	{
+		App->render->Blit(tex, rect.x, rect.y, current_rect);
+	}
+
+	if (text->text.Length() > 0) { text->Draw(); }
+
 	return true;
 }
 

@@ -358,66 +358,79 @@ void j1Scene::CreateScreenUI()
 {
 	SDL_Rect camera;
 	camera = App->render->camera;
+	int livesXpos = 50;
+	int livesXDistance = 90;
 
+	lives = new GuiImage*[3];
+	for (int i = 0; i < App->entities->player_pointer->lives; i++)
+	{
+		lives[i] = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		lives[i]->Init({ livesXpos , 20 }, { 667,15,68,63 });
+		lives[i]->tex = App->tex->Load("sprites/UI/atlas2.png");
+		livesXpos += livesXDistance;
+	}
+
+	/*
 	if (App->entities->player_pointer->lives == 3) {
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		lives->Init({ 50 - camera.x, 20 - camera.y }, { 667,15,68,63 });
+		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,nullptr,false,false,true);
+		lives->Init({ 50 , 20 }, { 667,15,68,63 });
 		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		lives->Init({ 125 - camera.x, 20 - camera.y }, { 667,15,68,63 });
+		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		lives->Init({ 125, 20 }, { 667,15,68,63 });
 		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		lives->Init({ 200 - camera.x, 20 - camera.y }, { 667,15,68,63 });
+		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		lives->Init({ 200, 20 }, { 667,15,68,63 });
 		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 	}
+	
 	else if (App->entities->player_pointer->lives == 2) {
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		lives->Init({ 50 - camera.x, 20 - camera.y }, { 667,15,68,63 });
+		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		lives->Init({ 50, 20 }, { 667,15,68,63 });
 		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		lives->Init({ 125 - camera.x, 20 - camera.y }, { 667,15,68,63 });
+		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		lives->Init({ 125, 20 }, { 667,15,68,63 });
 		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		no_lives->Init({ 200 - camera.x, 20 - camera.y }, { 524,15,68,63 });
+		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		no_lives->Init({ 200, 20 }, { 524,15,68,63 });
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 	}
 	else if (App->entities->player_pointer->lives == 1) {
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		lives->Init({ 50 - camera.x, 20 - camera.y }, { 667,15,68,63 });
+		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		lives->Init({ 50 , 20 }, { 667,15,68,63 });
 		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		no_lives->Init({ 125 - camera.x, 20 - camera.y }, { 524,15,68,63 });
+		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		no_lives->Init({ 125, 20 }, { 524,15,68,63 });
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		no_lives->Init({ 200 - camera.x, 20 - camera.y }, { 524,15,68,63 });
+		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		no_lives->Init({ 200 , 20 }, { 524,15,68,63 });
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 	}
 	else {
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		no_lives->Init({ 50 - camera.x, 20 - camera.y }, { 524,15,68,63 });
+		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		no_lives->Init({ 50, 20 }, { 524,15,68,63 });
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		no_lives->Init({ 125 - camera.x, 20 - camera.y }, { 524,15,68,63 });
+		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		no_lives->Init({ 125, 20 }, { 524,15,68,63 });
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-		no_lives->Init({ 200 - camera.x, 20 - camera.y }, { 524,15,68,63 });
+		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		no_lives->Init({ 200 , 20 }, { 524,15,68,63 });
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 	}
-
-	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	coins->Init({ 700 - camera.x, 20 - camera.y }, { 9,865,294,69 });
+	*/
+	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+	coins->Init({ 700, 625 }, { 9,865,294,69 });
 	coins->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	timer_background->Init({ 335 - camera.x, 20 - camera.y }, { 9,942,294,69 });
+	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->tex = App->tex->Load("sprites/UI/atlas2.png");
 	
 

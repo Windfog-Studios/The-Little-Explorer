@@ -8,7 +8,7 @@ class GuiImage : public j1UI_Element
 {
 public:
 	GuiImage();
-	GuiImage(j1Module* callback);
+	GuiImage(j1Module* callback, bool isStatic);
 	~GuiImage() {}
 
 	void Init(iPoint position, SDL_Rect section);

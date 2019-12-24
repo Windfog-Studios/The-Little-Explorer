@@ -83,7 +83,7 @@ public:
 	int time;
 	j1Timer timer;
 	GuiText* time_text;
-	GuiImage* lives;
+	GuiImage** lives;
 	GuiImage* no_lives;
 	GuiImage* coins;
 	GuiImage* timer_background;

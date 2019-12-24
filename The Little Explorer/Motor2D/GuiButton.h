@@ -20,7 +20,7 @@ enum class ButtonAction {
 class GuiButton : public j1UI_Element
 {
 public:
-	GuiButton(j1Module* callback);
+	GuiButton(j1Module* callback, bool isStatic);
 	~GuiButton();
 
 	void Init(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect, p2SString text, ButtonAction action = ButtonAction::NONE);
