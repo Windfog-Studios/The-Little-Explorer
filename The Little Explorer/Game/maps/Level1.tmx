@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="299">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="200" height="40" tilewidth="32" tileheight="32" nextobjectid="318">
  <tileset firstgid="1" name="jungle_spacing" tilewidth="32" tileheight="32" tilecount="420" columns="28">
   <image source="Jungle_terrain.png" width="896" height="480"/>
  </tileset>
@@ -64152,9 +64152,9 @@
    <tile gid="28"/>
   </data>
  </layer>
- <objectgroup name="Enemies">
+ <objectgroup name="Entities">
   <object id="288" name="Player" type="Player" x="128" y="768" width="32" height="32"/>
-  <object id="262" name="Knight" type="Knight" x="1344" y="192" width="32" height="32"/>
+  <object id="262" name="Knight" type="Knight" x="1312" y="160" width="32" height="32"/>
   <object id="267" name="Knight" type="Knight" x="704" y="320" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="384" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="1504" y="192" width="32" height="32"/>
@@ -64178,5 +64178,22 @@
   <object id="296" name="Knight" type="Knight" x="2112" y="416" width="32" height="32"/>
   <object id="297" name="Bat" type="Bat" x="4256" y="224" width="32" height="32"/>
   <object id="298" name="Knight" type="Knight" x="608" y="768" width="32" height="32"/>
+  <object id="300" name="Collectible" type="Collectible" x="832" y="576" width="32" height="32"/>
+  <object id="302" name="Collectible" type="Collectible" x="2158" y="415" width="32" height="32"/>
+  <object id="303" name="Collectible" type="Collectible" x="2385" y="177" width="32" height="32"/>
+  <object id="304" name="Collectible" type="Collectible" x="3232" y="32" width="32" height="32"/>
+  <object id="305" name="Collectible" type="Collectible" x="3104" y="768" width="32" height="32"/>
+  <object id="306" name="Collectible" type="Collectible" x="2464" y="992" width="32" height="32"/>
+  <object id="307" name="Collectible" type="Collectible" x="2176" y="1120" width="32" height="32"/>
+  <object id="308" name="Collectible" type="Collectible" x="1408" y="1184" width="32" height="32"/>
+  <object id="309" name="Collectible" type="Collectible" x="1280" y="960" width="32" height="32"/>
+  <object id="310" name="Collectible" type="Collectible" x="1517" y="289" width="32" height="32"/>
+  <object id="311" name="Collectible" type="Collectible" x="3552" y="832" width="32" height="32"/>
+  <object id="312" name="Collectible" type="Collectible" x="3584" y="416" width="32" height="32"/>
+  <object id="313" name="Collectible" type="Collectible" x="3840" y="160" width="32" height="32"/>
+  <object id="314" name="Collectible" type="Collectible" x="4288" y="960" width="32" height="32"/>
+  <object id="315" name="Collectible" type="Collectible" x="4032" y="384" width="32" height="32"/>
+  <object id="316" name="Collectible" type="Collectible" x="4928" y="480" width="32" height="32"/>
+  <object id="317" name="Collectible" type="Collectible" x="5824" y="960" width="32" height="32"/>
  </objectgroup>
 </map>

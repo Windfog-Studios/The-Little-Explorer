@@ -8,6 +8,11 @@ public:
 	j1Collectible();
 	~j1Collectible();
 
+	bool Awake(pugi::xml_node& config);
+	bool PostUpdate();
+
+public:
+	int score;
 private:
 
 };

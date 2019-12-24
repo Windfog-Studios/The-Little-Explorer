@@ -71,6 +71,9 @@
       <flying_speed value="75"/>
       <detection_range value="300" />
     </flying_enemy>
+    <collectible>
+
+    </collectible>
   </entities>
 
   <map>

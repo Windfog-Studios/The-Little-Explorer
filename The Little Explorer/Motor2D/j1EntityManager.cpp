@@ -19,6 +19,16 @@
 
 j1EntityManager::j1EntityManager(){
 	name.create("entities");
+
+	reference_player = nullptr;
+	reference_walking_enemy = nullptr;
+	reference_flying_enemy = nullptr;
+	reference_collectible = nullptr;
+
+	blocked_movement = false;
+
+	time_between_updates = 0.01f;
+	accumulated_time = 0;
 }
 
 
@@ -61,6 +71,7 @@ void j1EntityManager::DestroyEntity(j1Entity* entity){
 	BROFILER_CATEGORY("EntityDestruction", Profiler::Color::Orange)
 	p2List_item<j1Entity*>* item;
 
+	//TODO: Improve entity destroy system
 	if (entity != nullptr) {
 		item = entities.At(entities.find(entity));
 		if (entity->collider != nullptr)
@@ -109,6 +120,10 @@ bool j1EntityManager::Awake(pugi::xml_node& config){
 	reference_flying_enemy = new j1FlyingEnemy();
 	reference_flying_enemy->Awake(config.child("flying_enemy"));
 
+	//reference collectible
+	reference_collectible = new j1Collectible();
+	reference_collectible->Awake(config.child("collectible"));
+
 	return ret;
 }
 
@@ -120,6 +135,7 @@ bool j1EntityManager::Start()
 	reference_player->texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
 	reference_walking_enemy->texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
 	reference_flying_enemy->texture = App->tex->Load("sprites/characters/Sprite_bat.png");
+	//collectible texture here
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
@@ -132,6 +148,9 @@ bool j1EntityManager::Start()
 		}
 		if (entity->data->type == EntityType::FLYING_ENEMY){
 			entity->data->texture = reference_flying_enemy->texture; 
+		}
+		if (entity->data->type == EntityType::COLLECTIBLE) {
+			entity->data->texture = reference_collectible->texture;
 		}
 	}
 
@@ -150,6 +169,9 @@ bool j1EntityManager::CleanUp()
 
 	App->tex->UnLoad(reference_flying_enemy->texture);
 	reference_flying_enemy->texture = nullptr;
+
+	App->tex->UnLoad(reference_collectible->texture);
+	reference_collectible->texture = nullptr;
 
 	//destroy all entities
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
@@ -189,7 +211,8 @@ bool j1EntityManager::Update(float dt)
 			entity->data->Update(dt);
 		}
 	}
-	accumulated_time += dt;
+
+	//accumulated_time += dt;
 
 	return ret;
 }
@@ -235,6 +258,9 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 
 		if (entity_name == "flying_enemy") 
 			CreateEntity(EntityType::FLYING_ENEMY, x_position, y_position);
+
+		if (entity_name == "collectible")
+			CreateEntity(EntityType::COLLECTIBLE, x_position, y_position);
 
 		entity_node = entity_node.next_sibling();
 	}

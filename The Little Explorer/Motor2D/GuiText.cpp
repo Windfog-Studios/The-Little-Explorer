@@ -51,12 +51,13 @@ bool GuiText::Update(float dt) {
 	}
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
-
+	/*
 	if (isStatic)
 	{
 		rect.x = screen_position.x - App->render->camera.x;
 		rect.y = screen_position.y - App->render->camera.y;
 	}
+	*/
 	return ret;
 }
 

@@ -223,11 +223,18 @@ void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, uint 
 }
 
 void j1Console::OnCommand(j1Command* command) {
-	if (command->text.GetString() == "help")
+	char* command_text = (char*)command->text.GetString();
+
+	if ( strcmp(command_text, "help") == 0)
 	{
 		for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 		{
-			LOG("%s : %s \n", item->data->text, item->data->explanation);
+			//LOG(("%s : %s \n", item->data->text.GetString(), item->data->explanation);
+			char string[200];
+			strcpy_s(string, item->data->text.GetString());
+			strcat_s(string, " : ");
+			strcat_s(string, item->data->explanation);
+			AddLogText(string);
 		}
 	}
 }

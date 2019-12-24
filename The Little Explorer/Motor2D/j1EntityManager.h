@@ -62,9 +62,10 @@ public:
 	int gravity = 0;
 	int max_falling_speed = 0;
 
-	j1Player* reference_player = nullptr;
-	j1WalkingEnemy* reference_walking_enemy = nullptr;
-	j1FlyingEnemy* reference_flying_enemy = nullptr;
+	j1Player* reference_player;
+	j1WalkingEnemy* reference_walking_enemy;
+	j1FlyingEnemy* reference_flying_enemy;
+	j1Collectible* reference_collectible;
 
 	//sfx
 	uint walking_enemy_attack_fx;
@@ -75,10 +76,10 @@ public:
 	uint flying_enemy_die_fx;
 	uint walking_enemy2_die_fx;
 
-	float time_between_updates = 0.01f;
-	float accumulated_time = 0;
+	float time_between_updates;
+	float accumulated_time;
 
-	bool blocked_movement = false;
+	bool blocked_movement;
 
 };
 

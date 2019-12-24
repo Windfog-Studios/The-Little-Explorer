@@ -45,6 +45,8 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 
 		current_animation = &idle;
 
+		current_speed = { 0,0 };
+
 	}
 
 	initialPosition = position;
@@ -81,6 +83,19 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	attack_fx = App->audio->LoadFx(attack_fx_path.GetString());
 
 	LoadAnimations("Animations_Enemy1.tmx");
+
+	return ret;
+}
+
+bool j1WalkingEnemy::CleanUp() {
+	bool ret = true;
+
+	texture = nullptr;
+	collider->to_delete = true;
+	collider = nullptr;
+	raycast->to_delete = true;
+	raycast = nullptr;
+	player = nullptr;
 
 	return ret;
 }
@@ -268,7 +283,6 @@ bool j1WalkingEnemy::PostUpdate() {
 	return ret;
 }
 
-
 void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c1 == raycast)
@@ -299,7 +313,6 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 			position.y = lastPosition.y;
 			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-				//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			}
 		}
 		break;
@@ -324,7 +337,6 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 			position.y = lastPosition.y;
 			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-				//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
 			}
 		}
 		break;
