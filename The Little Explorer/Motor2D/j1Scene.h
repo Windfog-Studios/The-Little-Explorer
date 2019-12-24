@@ -85,6 +85,8 @@ public:
 	GuiText* time_text;
 	GuiImage* lives;
 	GuiImage* no_lives;
+	GuiImage* coins;
+	GuiImage* timer_background;
 
 	//levels
 	Map current_level;
