@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -40,6 +41,7 @@ bool j1Gui::Start()
 // Update all guis
 bool j1Gui::PreUpdate()
 {
+	BROFILER_CATEGORY("GuiPreUpdate", Profiler::Color::Lime)
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 		debug = !debug;
@@ -96,6 +98,7 @@ bool j1Gui::PreUpdate()
 }
 
 bool j1Gui::Update(float dt) {
+	BROFILER_CATEGORY("GuiUpdate", Profiler::Color::BlueViolet)
 	bool ret = true;
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
@@ -107,6 +110,7 @@ bool j1Gui::Update(float dt) {
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
+	BROFILER_CATEGORY("GuiPostUpdate", Profiler::Color::DarkKhaki)
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		item->data->Draw();

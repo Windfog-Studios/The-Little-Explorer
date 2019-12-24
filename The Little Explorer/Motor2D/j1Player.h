@@ -33,6 +33,8 @@ public:
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
 
+	void OnCommand(j1Command* command);
+
 	//bool LoadAnimations();
 	
 public:

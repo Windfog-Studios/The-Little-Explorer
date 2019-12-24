@@ -12,6 +12,8 @@
 #include "j1Particles.h"
 #include "j1EntityManager.h"
 #include "j1FadeToBlack.h"
+#include "j1Console.h"
+#include "j1Command.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
 j1Player::j1Player():j1Entity (EntityType::PLAYER) {
@@ -63,6 +65,8 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 		isVisible = true;
 		grounded = false;
 		current_speed = { 0,0 };
+
+		App->console->CreateCommand("god_mode", this, 0, 0, "Toggles god mode ON/OFF");
 	}
 }
 
@@ -597,3 +601,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 }
 
+void j1Player::OnCommand(j1Command* command) {
+	char* command_text = (char*)command->text.GetString();
+
+	if (strcmp(command_text, "god_mode") == 0)
+	{
+		god = !god;
+	}
+}

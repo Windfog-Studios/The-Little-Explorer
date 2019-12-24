@@ -72,8 +72,8 @@ public:
 	virtual void OnEvent(j1UI_Element*, FocusEvent) {}
 
 	virtual void OnCommand(j1Command*) {};
-
-	public:
+	
+public:
 
 	p2SString	name;
 	bool		active;
