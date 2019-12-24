@@ -135,7 +135,7 @@ bool j1EntityManager::Start()
 	reference_player->texture = App->tex->Load("sprites/characters/spritesheet_traveler2.png");
 	reference_walking_enemy->texture = App->tex->Load("sprites/characters/sheet_hero_idle.png");
 	reference_flying_enemy->texture = App->tex->Load("sprites/characters/Sprite_bat.png");
-	//collectible texture here
+	reference_collectible->texture = App->tex->Load("sprites/characters/coin.png");
 
 	for (p2List_item<j1Entity*>* entity = entities.start; entity != nullptr; entity = entity->next)
 	{
@@ -362,6 +362,9 @@ bool j1EntityManager::CheckpointLoad()
 
 			if (entity_name == "flying_enemy")
 				CreateEntity(EntityType::FLYING_ENEMY, x_position, y_position);
+
+			if (entity_name == "collectible")
+				CreateEntity(EntityType::COLLECTIBLE, x_position, y_position);
 
 			entity_node = entity_node.next_sibling();
 		}

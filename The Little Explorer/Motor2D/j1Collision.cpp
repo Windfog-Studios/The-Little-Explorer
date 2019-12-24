@@ -187,6 +187,8 @@ void j1Collision::DebugDraw()
 		case COLLIDER_PLAYER_ATTACK:
 			App->render->DrawQuad(colliders[i]->rect, 100, 100, 0, alpha);
 			break;
+		case COLLIDER_COLLECTIBLE:
+			App->render->DrawQuad(colliders[i]->rect, 255, 192, 203, alpha);
 		}
 	}
 	App->render->DrawQuad(App->scene->camera_frame, 100, 100, 153, 70);
