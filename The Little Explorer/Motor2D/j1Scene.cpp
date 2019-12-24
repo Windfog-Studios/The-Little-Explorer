@@ -29,6 +29,7 @@ j1Scene::j1Scene() : j1Module()
 	initial_camera_position = { 0,0 };
 	showing_menu = false;
 	visible_menu = Menu::MAIN_MENU;
+	on_screen_lives = 0;
 }
 
 // Destructor
@@ -210,6 +211,8 @@ bool j1Scene::Update(float dt)
 		}
 	}
 	App->map->Draw();
+	
+	UpdateScreenUI();
 
 	// Debug pathfinding ------------------------------
 	/*
@@ -234,9 +237,6 @@ bool j1Scene::Update(float dt)
 		Debug_rect.y = pos.y;
 		if (App->collision->debug) App->render->DrawQuad(Debug_rect, 90, 850, 230, 80);
 	}
-
-	//SDL_Rect test_rect = { 1000, App->map->data.height * App->map->data.tile_height, 10,10 };
-	//App->render->DrawQuad(test_rect, 255, 0, 0, 255);
 	*/
 
 	return true;
@@ -361,13 +361,15 @@ void j1Scene::CreateScreenUI()
 	int livesXpos = 50;
 	int livesXDistance = 90;
 
-	lives = new GuiImage*[3];
 	for (int i = 0; i < App->entities->player_pointer->lives; i++)
 	{
-		lives[i] = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		lives[i]->Init({ livesXpos , 20 }, { 667,15,68,63 });
-		lives[i]->tex = App->tex->Load("sprites/UI/atlas2.png");
+		
+		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		life->Init({ livesXpos , 20 }, { 667,15,68,63 });
+		life->tex = App->tex->Load("sprites/UI/atlas2.png");
 		livesXpos += livesXDistance;
+		lives.add(life);
+		on_screen_lives++;
 	}
 
 	/*
@@ -425,8 +427,9 @@ void j1Scene::CreateScreenUI()
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 	}
 	*/
+
 	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-	coins->Init({ 700, 625 }, { 9,865,294,69 });
+	coins->Init({ 30, 625 }, { 9,865,294,69 });
 	coins->tex = App->tex->Load("sprites/UI/atlas2.png");
 
 	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
@@ -515,3 +518,11 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 	}
 }
 
+void j1Scene::UpdateScreenUI() {
+	if ((lives.start != nullptr) && (on_screen_lives > App->entities->player_pointer->lives))
+	{
+		App->gui->DestroyUIElement(lives.end->data);
+		lives.del(lives.end);
+		on_screen_lives--;
+	}
+}

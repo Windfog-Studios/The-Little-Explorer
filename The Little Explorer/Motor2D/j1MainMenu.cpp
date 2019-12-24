@@ -62,7 +62,6 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->scene->camera_frame.y = -App->scene->initial_camera_position.y + App->scene->camera_frame_y_margin;
 
 			App->gui->DestroyAllGui();
-			//SDL_Delay(100);
 			App->scene->visible_menu = Menu::NO_MENU;
 			if (App->console->isVisible) App->console->DestroyInterface();
 			App->scene->CreateScreenUI();
@@ -87,7 +86,6 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
-			SDL_Delay(80);
 			CreateMainScreen();
 		break;
 

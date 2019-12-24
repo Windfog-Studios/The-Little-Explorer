@@ -51,6 +51,12 @@ bool GuiText::Update(float dt) {
 	}
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
+
+	if (isStatic)
+	{
+		rect.x = screen_position.x - App->render->camera.x;
+		rect.y = screen_position.y - App->render->camera.y;
+	}
 	return ret;
 }
 
@@ -59,16 +65,7 @@ bool GuiText::Draw() {
 	if (text.Length() > 0)
 	{
 		texture = App->font->Print(text.GetString());
-
-		if (isStatic)
-		{
-			App->render->Blit(texture, rect.x, rect.y, (const SDL_Rect*)0, SDL_FLIP_NONE, 0);
-		}
-		else
-		{
-			App->render->Blit(texture, rect.x, rect.y);
-		}
-
+		App->render->Blit(texture, rect.x, rect.y);
 	}
 	return true;
 }

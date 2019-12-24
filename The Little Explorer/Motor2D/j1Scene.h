@@ -62,6 +62,7 @@ public:
 
 	bool Save(pugi::xml_node& data) const;
 	bool Load(pugi::xml_node& data);
+	void UpdateScreenUI();
 
 public:
 	//edges
@@ -83,7 +84,7 @@ public:
 	int time;
 	j1Timer timer;
 	GuiText* time_text;
-	GuiImage** lives;
+	p2List<GuiImage*> lives;
 	GuiImage* no_lives;
 	GuiImage* coins;
 	GuiImage* timer_background;
@@ -108,6 +109,7 @@ public:
 	GuiButton* go_back_button;
 
 private:
+	int on_screen_lives;
 };
 
 #endif // __j1SCENE_H__

@@ -83,6 +83,12 @@ bool GuiButton::Update(float dt) {
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
 
+	if (isStatic)
+	{
+		rect.x = screen_position.x - App->render->camera.x;
+		rect.y = screen_position.y - App->render->camera.y;
+	}
+
 	if (text->text.Length() > 0)
 	{
 		text->Update(dt);
@@ -93,15 +99,7 @@ bool GuiButton::Update(float dt) {
 
 bool GuiButton::Draw() {
 
-	if (isStatic)
-	{
-		App->render->Blit(tex, rect.x, rect.y, current_rect, SDL_FLIP_NONE, 0);
-	}
-	else
-	{
-		App->render->Blit(tex, rect.x, rect.y, current_rect);
-	}
-
+	App->render->Blit(tex, rect.x, rect.y, current_rect);
 	if (text->text.Length() > 0) { text->Draw(); }
 
 	return true;

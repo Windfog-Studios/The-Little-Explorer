@@ -52,18 +52,17 @@ bool GuiImage::Update(float dt) {
 	}
 	rect.x = screen_position.x;
 	rect.y = screen_position.y;
+
+	if (isStatic)
+	{
+		rect.x = screen_position.x - App->render->camera.x;
+		rect.y = screen_position.y - App->render->camera.y;
+	}
 	return ret;
 }
 
 bool GuiImage::Draw() {
 
-	if (isStatic) 
-	{
-		App->render->Blit(tex, rect.x, rect.y, &section, SDL_FLIP_NONE, 0);
-	}
-	else
-	{
-		App->render->Blit(tex, rect.x, rect.y, &section);
-	}
+	App->render->Blit(tex, rect.x, rect.y, &section);
 	return true;
 }
