@@ -435,8 +435,10 @@ void j1Scene::CreateScreenUI()
 	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->tex = App->tex->Load("sprites/UI/atlas2.png");
-	
 
+	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+	time_text->Init({ 730, 30 }, "Time left: ");
+	
 }
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {

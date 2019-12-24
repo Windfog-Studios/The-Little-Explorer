@@ -88,7 +88,7 @@ public:
 	GuiImage* no_lives;
 	GuiImage* coins;
 	GuiImage* timer_background;
-
+	
 	//levels
 	Map current_level;
 	Menu visible_menu;
