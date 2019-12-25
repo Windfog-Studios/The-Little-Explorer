@@ -150,8 +150,8 @@ bool j1App::Start()
 	startup_time.Start();
 	PERF_PEEK(perf_timer);
 
-	App->console->CreateCommand("quit",(j1Module*) this, "Quit the game");
-	App->console->CreateCommand("fps_", (j1Module*)this, "Change FPS cap");
+	//App->console->CreateCommand("quit",(j1Module*) this, "Quit the game");
+	//App->console->CreateCommand("fps_", (j1Module*)this, "Change FPS cap");
 
 	return ret;
 }
@@ -467,10 +467,9 @@ bool j1App::SavegameNow() const {
 	return ret;
 }
 
-void j1App::OnCommand(j1Command* command) {
-	char* command_text = (char*)command->text.GetString();
+void j1App::OnCommand(p2SString command) {
 
-	if (strcmp(command_text, "quit") == 0)
+	if (command == "quit")
 	{
 		quit = true;
 	}

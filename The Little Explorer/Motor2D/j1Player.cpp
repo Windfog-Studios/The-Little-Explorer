@@ -608,9 +608,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 }
 
 void j1Player::OnCommand(p2SString command) {
-	char* command_text = (char*)command.GetString();
 
-	if (strcmp(command_text, "god_mode") == 0)
+	if (command == "god_mode")
 	{
 		god = !god;
 
