@@ -407,14 +407,14 @@ void j1Scene::CreateScreenUI()
 	if (visible_menu == Menu::NO_MENU) {
 		time_left = max_time - timer.Read() * 0.001f;
 		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
-		time_text->Init({ 730, 465 }, "Time: ");
+		time_text->Init({ 730, 20 }, "Time: ");
 		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
 		p2SString temp("      %i", time_left);
-		time_text->Init({ 790, 465 }, temp);
+		time_text->Init({ 750, 20 }, temp);
 
 		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins, false, false, true);
-		p2SString coin("     %i", App->entities->player_pointer->score);
-		score->Init({ 120, 1072 }, coin);
+		p2SString coin("     %i coins", App->entities->player_pointer->score);
+		score->Init({ 100, 632 }, coin);
 	}
 
 }
