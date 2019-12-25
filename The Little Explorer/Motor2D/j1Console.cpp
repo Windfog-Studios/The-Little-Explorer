@@ -34,6 +34,8 @@ bool j1Console::Start() {
 	AddLogText("Console started");
 
 	CreateCommand("list", (j1Module*)this, "List all console commands");
+	App->console->CreateCommand("quit", (j1Module*)this, "Quit the game");
+	App->console->CreateCommand("fps_", (j1Module*)this, "Change FPS cap");
 
 	return ret;
 }
@@ -246,6 +248,8 @@ void j1Console::CheckCommand(p2SString command) {
 }
 
 void j1Console::OnCommand(p2SString command) {
+	char fps_string[8] = "fps_120";
+	char initial_three[5] = "0000";
 
 	if ( command == "list")
 	{
@@ -258,5 +262,38 @@ void j1Console::OnCommand(p2SString command) {
 			strcat_s(string, item->data->explanation);
 			AddLogText(string);
 		}
+		return;
+	}
+
+	if (command == "quit") {
+		App->quit = true;
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		initial_three[i] = command.lowercased().GetString()[i];
+	}
+	
+	if (strcmp(initial_three, "fps") == 0);
+	{
+		int fps = 0;
+		if (command.Length() == 7)
+		{
+			char fps_char[3];
+			fps_char[0] = command.GetString()[4];
+			fps_char[1] = command.GetString()[5];
+			fps_char[2] = command.GetString()[6];
+			fps = (int)fps_char;
+		}
+		if (command.Length() == 6)
+		{
+			char fps_char[2];
+			fps_char[0] = command.GetString()[4];
+			fps_char[1] = command.GetString()[5];
+			fps = (int)fps_char;
+		}
+
+		App->framerate_cap = fps;
+		LOG("Framerate cap changed to %i", fps);
 	}
 }
