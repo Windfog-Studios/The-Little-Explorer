@@ -67,7 +67,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 		grounded = false;
 		current_speed = { 0,0 };
 
-		App->console->CreateCommand("god_mode", this, 0, 0, "Toggles god mode ON/OFF");
+		App->console->CreateCommand("god_mode", this, "Toggles god mode ON/OFF");
 	}
 }
 
