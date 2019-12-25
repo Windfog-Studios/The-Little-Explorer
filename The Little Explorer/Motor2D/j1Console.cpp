@@ -17,9 +17,7 @@ j1Console::j1Console() : j1Module() {
 	current_consulting_command = nullptr;
 }
 
-j1Console::~j1Console() {
-
-}
+j1Console::~j1Console() {}
 
 bool j1Console::Awake(pugi::xml_node& config) {
 	bool ret = true;
@@ -30,8 +28,8 @@ bool j1Console::Awake(pugi::xml_node& config) {
 bool j1Console::Start() {
 	bool ret = true;
 	GuiText* log_text;
-	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
-	log_text->Init({ 20,0 }, " ");
+	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+	log_text->Init({ 20,0 }, " ",CONSOLE_FONT);
 	log_record.add(log_text);
 
 	CreateCommand("list", (j1Module*)this, 0, 0, "List all console commands");
@@ -151,7 +149,7 @@ bool j1Console::CleanUp() {
 
 void j1Console::CreateInterface(){
 	command_input = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, nullptr, false, true);
-	command_input->Init({ 0, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h});
+	command_input->Init({ 0, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
 
 	App->gui->focused_element = command_input;
 	command_input->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
@@ -180,21 +178,21 @@ void j1Console::AddLogText(p2SString new_text) {
 	{
 		GuiText* log_text;
 
-		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr,false,false,true);
 
 		if (log_record.end == nullptr) 
-			log_text->Init({ 20,20 }, new_text);
+			log_text->Init({ 20,20 }, new_text, CONSOLE_FONT);
 
 		else {
 			log_text->parent = log_record.end->data;
-			log_text->Init({ (int)(20 - App->render->camera.x),(int)(log_record.end->data->rect.y + log_record.end->data->rect.h -App->render->camera.y) }, new_text);
+			log_text->Init({ 20,(int)(log_record.end->data->rect.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
 		}
 
 		log_record.add(log_text);
 
-		if ((log_record.end->data->rect.y + log_record.end->data->rect.h) > log_box.h)
+		if ((log_record.end->data->rect.y + log_record.end->data->rect.h) > log_box.y)
 		{
-			log_record.start->data->screen_position.y -= log_record.end->data->rect.h;
+			log_record.start->data->screen_position.y -= log_record.end->data->rect.h + App->render->camera.y;
 		}
 	}
 }

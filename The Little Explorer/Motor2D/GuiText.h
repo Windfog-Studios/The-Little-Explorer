@@ -10,7 +10,7 @@ public:
 	GuiText(j1Module* callback, bool isStatic);
 	~GuiText();
 
-	void Init(iPoint position, p2SString text);
+	void Init(iPoint position, p2SString text, char* font = DEFAULT_FONT);
 	bool Update(float dt);
 	bool CleanUp();
 	bool Draw();

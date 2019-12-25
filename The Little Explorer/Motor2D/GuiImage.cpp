@@ -2,9 +2,10 @@
 #include "j1Gui.h"
 #include "GuiImage.h"
 #include "j1Render.h"
+#include "j1Textures.h"
 
 GuiImage::GuiImage(j1Module* g_callback, bool g_isStatic) {
-	tex = (SDL_Texture*)App->gui->GetAtlas();
+	texture = (SDL_Texture*)App->gui->GetAtlas();
 	callback = g_callback;
 	isStatic = g_isStatic;
 }
@@ -26,6 +27,8 @@ void GuiImage::Init(iPoint position, SDL_Rect g_section) {
 
 bool GuiImage::CleanUp() {
 	bool ret = true;
+	App->tex->UnLoad(texture);
+	texture = nullptr;
 	return ret;
 }
 
@@ -63,6 +66,6 @@ bool GuiImage::Update(float dt) {
 
 bool GuiImage::Draw() {
 
-	App->render->Blit(tex, rect.x, rect.y, &section);
+	App->render->Blit(texture, rect.x, rect.y, &section);
 	return true;
 }

@@ -9,6 +9,7 @@ public:
 	~j1Collectible();
 
 	bool Awake(pugi::xml_node& config);
+	bool Update(float dt);
 	bool PostUpdate();
 
 public:

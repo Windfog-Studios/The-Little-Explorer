@@ -366,7 +366,7 @@ void j1Scene::CreateScreenUI()
 		
 		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 		life->Init({ livesXpos , 20 }, { 667,15,68,63 });
-		life->tex = App->tex->Load("sprites/UI/atlas2.png");
+		life->texture = App->tex->Load("sprites/UI/atlas2.png");
 		livesXpos += livesXDistance;
 		lives.add(life);
 		on_screen_lives++;
@@ -430,11 +430,11 @@ void j1Scene::CreateScreenUI()
 
 	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	coins->Init({ 30, 625 }, { 9,865,294,69 });
-	coins->tex = App->tex->Load("sprites/UI/atlas2.png");
+	coins->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
-	timer_background->tex = App->tex->Load("sprites/UI/atlas2.png");
+	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
 	time_text->Init({ 730, 30 }, "Time left: ");

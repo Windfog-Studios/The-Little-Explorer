@@ -11,7 +11,7 @@ GuiButton::GuiButton(j1Module* g_callback, bool g_isStatic){
 	callback = g_callback;
 	text = new GuiText();
 	click_rect = {0,0,0,0};
-	tex = nullptr;
+	texture = nullptr;
 	current_rect = &normal_rect;
 	isStatic = g_isStatic;
 }
@@ -22,7 +22,7 @@ GuiButton::~GuiButton() {
 
 void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text, ButtonAction g_action) {
 	screen_position = g_position;
-	tex = (SDL_Texture*)App->gui->GetAtlas();
+	texture = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
 	hover_rect = g_normal_rect;
 	click_rect = g_click_rect;
@@ -48,7 +48,8 @@ void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover
 
 bool GuiButton::CleanUp() {
 	bool ret = true;
-	
+	text->CleanUp();
+	texture = nullptr;
 	return ret;
 }
 
@@ -99,7 +100,7 @@ bool GuiButton::Update(float dt) {
 
 bool GuiButton::Draw() {
 
-	App->render->Blit(tex, rect.x, rect.y, current_rect);
+	App->render->Blit(texture, rect.x, rect.y, current_rect);
 	if (text->text.Length() > 0) { text->Draw(); }
 
 	return true;

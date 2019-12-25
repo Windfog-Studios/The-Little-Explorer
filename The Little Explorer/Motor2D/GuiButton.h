@@ -30,7 +30,7 @@ public:
 	bool Draw();
 
 private:
-	SDL_Texture*	tex;
+	SDL_Texture*	texture;
 	SDL_Rect*		current_rect;
 	SDL_Rect		normal_rect;
 	SDL_Rect		hover_rect;
