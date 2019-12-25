@@ -83,7 +83,8 @@ public:
 	//UI Info
 	
 	int score;
-	float start_time;
+	int time_left;
+	int max_time;
 	int time_star1;
 	int time_star2;
 	int time_star3;
