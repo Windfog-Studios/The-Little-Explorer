@@ -79,7 +79,6 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 
 bool j1FlyingEnemy::CleanUp() {
 	bool ret = true;
-	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
 	collider = nullptr;

@@ -67,7 +67,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 		grounded = false;
 		current_speed = { 0,0 };
 
-		App->console->CreateCommand("god_mode", this, 0, 0, "Toggles god mode ON/OFF");
+		App->console->CreateCommand("god_mode", this, "Toggles god mode ON/OFF");
 	}
 }
 
@@ -115,7 +115,6 @@ bool j1Player::Start(){
 }
 
 bool j1Player::CleanUp() {
-	App->tex->UnLoad(texture);
 	texture = nullptr;
 	if (collider != nullptr)
 	{
@@ -608,8 +607,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 }
 
-void j1Player::OnCommand(j1Command* command) {
-	char* command_text = (char*)command->text.GetString();
+void j1Player::OnCommand(p2SString command) {
+	char* command_text = (char*)command.GetString();
 
 	if (strcmp(command_text, "god_mode") == 0)
 	{
@@ -617,6 +616,7 @@ void j1Player::OnCommand(j1Command* command) {
 
 		if (god)
 		 LOG("God mode activated"); 
+
 		if(!god)
 		 LOG("God mode deactivated"); 
 	}

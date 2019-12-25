@@ -57,7 +57,10 @@ public:
 	void LevelChange(Map unloading_map, Map loading_map);
 	void CreatePauseMenu();
 	void CreateSettingsScreen();
+
 	void OnEvent(j1UI_Element*, FocusEvent);
+	void OnCommand(p2SString command);
+
 	void CreateScreenUI();
 
 	bool Save(pugi::xml_node& data) const;

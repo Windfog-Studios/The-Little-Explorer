@@ -81,7 +81,6 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 
 bool j1WalkingEnemy::CleanUp() {
 	bool ret = true;
-	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
 	collider = nullptr;

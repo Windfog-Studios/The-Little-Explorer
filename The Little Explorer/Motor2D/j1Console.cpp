@@ -33,7 +33,7 @@ bool j1Console::Start() {
 	//log_text->Init({ 20,20 }, "Console Started", CONSOLE_FONT);
 	AddLogText("Console started");
 
-	CreateCommand("list", (j1Module*)this, 0, 0, "List all console commands");
+	CreateCommand("list", (j1Module*)this, "List all console commands");
 
 	return ret;
 }
@@ -212,32 +212,42 @@ void j1Console::AddLogText(p2SString new_text) {
 	}
 }
 
-void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, uint min_args, uint max_args, const char* explanation) {
-	j1Command* command = new j1Command(g_command, g_callback,min_args,max_args,explanation);
+void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, const char* explanation) {
+	j1Command* command = new j1Command(g_command, g_callback,explanation);
 	commands.add(command);
 }
 
 void j1Console::CheckCommand(p2SString command) {
-
-	char* final_command;
-	final_command = (char*) command.lowercased().GetString();
+	char given_initial_three[5] = "0000";
+	char listed_initial_three[5] = "0000";
+	char* given_command = (char* )command.GetString();
 	
-	char* comparing_command;
+
 	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 	{
-		comparing_command = (char*)item->data->text.lowercased().GetString();
-
-		if (strcmp(comparing_command, final_command) == 0)
+		if (item->data->text == command)
 		{
-			item->data->callback->OnCommand(item->data);
+			item->data->callback->OnCommand(command);
+			break;
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			given_initial_three[i] = command.GetString()[i];
+			listed_initial_three[i] = item->data->text.GetString()[i];
+		}
+
+		if (strcmp(given_initial_three, listed_initial_three) == 0)
+		{
+			item->data->callback->OnCommand(command);
+			break;
 		}
 	}
 }
 
-void j1Console::OnCommand(j1Command* command) {
-	char* command_text = (char*)command->text.GetString();
+void j1Console::OnCommand(p2SString command) {
 
-	if ( strcmp(command_text, "list") == 0)
+	if ( command == "list")
 	{
 		for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 		{

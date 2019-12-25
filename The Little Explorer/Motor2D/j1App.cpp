@@ -150,7 +150,8 @@ bool j1App::Start()
 	startup_time.Start();
 	PERF_PEEK(perf_timer);
 
-	App->console->CreateCommand("quit",(j1Module*) this, 0, 0, "Quit the game");
+	App->console->CreateCommand("quit",(j1Module*) this, "Quit the game");
+	App->console->CreateCommand("fps_", (j1Module*)this, "Change FPS cap");
 
 	return ret;
 }
