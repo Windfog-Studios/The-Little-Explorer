@@ -19,7 +19,7 @@ void log(const char file[], int line, const char* format, ...)
 	if (App != nullptr)
 	{
 		if (App->console->log_record.start != nullptr) {
-			p2SString converted_text(tmp_string2);
+			p2SString converted_text(tmp_string);
 			converted_text;
 			App->console->AddLogText(converted_text);
 		}

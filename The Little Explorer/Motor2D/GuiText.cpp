@@ -25,33 +25,28 @@ void GuiText::Init(iPoint g_position, p2SString g_text, char* g_font) {
 	text = g_text;
 	font = g_font;
 
-	if (font == DEFAULT_FONT)
+	if (text.Length() > 0)
 	{
-		texture = App->font->Print(text.GetString());
+		if (font == DEFAULT_FONT)
+		{
+			texture = App->font->Print(text.GetString());
+			App->font->CalcSize(text.GetString(), rect.w, rect.h);
+		}
+		else
+		{
+			texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+			App->font->CalcSize(text.GetString(), rect.w, rect.h, App->font->console_font);
+		}
 	}
-	else
-	{
-		texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
-	}
-
-	rect.x = screen_position.x;
-	rect.y = screen_position.y;
-	
-	if (g_font == DEFAULT_FONT)
-	{
-		App->font->CalcSize(text.GetString(), rect.w, rect.h);
-	}
-	else
-	{
-		App->font->CalcSize(text.GetString(), rect.w, rect.h,App->font->console_font);
-	}
-
 
 	if (parent != nullptr)
 	{
 		local_position.x = screen_position.x - parent->screen_position.x;
 		local_position.y = screen_position.y - parent->screen_position.y;
 	}
+
+	rect.x = screen_position.x;
+	rect.y = screen_position.y;
 }
 
 bool GuiText::CleanUp() {
@@ -86,5 +81,6 @@ bool GuiText::Draw() {
 	{
 		App->render->Blit(texture, rect.x, rect.y);
 	}
+
 	return true;
 }

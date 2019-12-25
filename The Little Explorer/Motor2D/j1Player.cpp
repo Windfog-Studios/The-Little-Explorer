@@ -614,5 +614,10 @@ void j1Player::OnCommand(j1Command* command) {
 	if (strcmp(command_text, "god_mode") == 0)
 	{
 		god = !god;
+
+		if (god)
+		 LOG("God mode activated"); 
+		if(!god)
+		 LOG("God mode deactivated"); 
 	}
 }

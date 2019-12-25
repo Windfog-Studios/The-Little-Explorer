@@ -27,10 +27,11 @@ bool j1Console::Awake(pugi::xml_node& config) {
 
 bool j1Console::Start() {
 	bool ret = true;
-	GuiText* log_text;
-	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
-	log_text->Init({ 20,0 }, "Console Started",CONSOLE_FONT);
-	log_record.add(log_text);
+	//ºGuiText* log_text;
+	//log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+	//log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this);
+	//log_text->Init({ 20,20 }, "Console Started", CONSOLE_FONT);
+	AddLogText("Console started");
 
 	CreateCommand("list", (j1Module*)this, 0, 0, "List all console commands");
 
@@ -132,7 +133,7 @@ bool j1Console::PostUpdate() {
 			item->data->Draw();
 		}
 
-		App->gui->DebugDraw();
+		//App->gui->DebugDraw();
 	}
 	return ret;
 }
@@ -161,12 +162,12 @@ void j1Console::CreateInterface(){
 	App->gui->focused_element = command_input;
 	command_input->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
 	
-	log_record.start->data->rect.x = log_box.x;
-	log_record.start->data->rect.y = log_box.y;
+	//log_record.start->data->rect.x = log_box.x;
+	//log_record.start->data->rect.y = log_box.y;
 
 	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
 	{
-		App->gui->ui_elements.add(item->data);
+		//App->gui->ui_elements.add(item->data);
 	}
 	
 	isVisible = true;
@@ -188,47 +189,49 @@ void j1Console::AddLogText(p2SString new_text) {
 	{
 		GuiText* log_text;
 
-		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr,false,false,false);
+		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this);
 
-		if (log_record.end == nullptr) 
-			log_text->Init({ 20,20 }, new_text, CONSOLE_FONT);
-
+		if (log_record.end == nullptr)
+		{
+			log_text->parent = command_input;
+			log_text->Init({ 20 - App->render->camera.x , 20 - App->render->camera.y }, new_text, CONSOLE_FONT);
+		}
 		else {
 			log_text->parent = log_record.end->data;
 			log_text->Init({ 20,(int)(log_record.end->data->rect.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
+
+			if ((log_record.end->data->rect.y + log_record.end->data->rect.h) > log_box.y + log_box.h)
+			{
+				log_record.start->data->screen_position.y -= log_record.end->data->rect.h;
+				//log_record.start->data->screen_position.y -= 4;
+			}
 		}
+
 
 		log_record.add(log_text);
-
-		if ((log_record.end->data->rect.y + log_record.end->data->rect.h -App->render->camera.y) > log_box.y + log_box.h)
-		{
-			//log_record.start->data->screen_position.y -= log_record.end->data->rect.h;
-			log_record.start->data->screen_position.y -= 4;
-		}
-	}
-}
-
-void j1Console::CheckCommand(p2SString command) {
-
-	p2SString final_command;
-	final_command = command.lowercased();
-	
-	p2SString comparing_command;
-	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
-	{
-		comparing_command = item->data->text;
-		comparing_command.lowercased();
-		
-		if (final_command == comparing_command)
-		{
-			item->data->callback->OnCommand(item->data);
-		}
 	}
 }
 
 void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, uint min_args, uint max_args, const char* explanation) {
 	j1Command* command = new j1Command(g_command, g_callback,min_args,max_args,explanation);
 	commands.add(command);
+}
+
+void j1Console::CheckCommand(p2SString command) {
+
+	char* final_command;
+	final_command = (char*) command.lowercased().GetString();
+	
+	char* comparing_command;
+	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
+	{
+		comparing_command = (char*)item->data->text.lowercased().GetString();
+
+		if (strcmp(comparing_command, final_command) == 0)
+		{
+			item->data->callback->OnCommand(item->data);
+		}
+	}
 }
 
 void j1Console::OnCommand(j1Command* command) {
