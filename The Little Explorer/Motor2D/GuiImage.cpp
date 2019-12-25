@@ -65,7 +65,6 @@ bool GuiImage::Update(float dt) {
 }
 
 bool GuiImage::Draw() {
-
 	App->render->Blit(texture, rect.x, rect.y, &section);
 	return true;
 }

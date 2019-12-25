@@ -6,7 +6,7 @@
 #include "SDL\include\SDL_pixels.h"
 
 #define DEFAULT_FONT "fonts/Some Time Later.otf"
-#define CONSOLE_FONT  "fonts/source-code-pro/TTF/SourceCodePro-Medium.ttf"
+#define CONSOLE_FONT  "fonts/open_sans/OpenSans-Regular.ttf"
 
 #define DEFAULT_FONT_SIZE 32
 #define CONSOLE_FONT_SIZE 14

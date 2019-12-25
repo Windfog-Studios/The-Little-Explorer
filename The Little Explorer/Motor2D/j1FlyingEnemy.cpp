@@ -75,13 +75,22 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 	return ret;
 }
 
+bool j1FlyingEnemy::CleanUp() {
+	bool ret = true;
+	App->tex->UnLoad(texture);
+	texture = nullptr;
+	collider->to_delete = true;
+	collider = nullptr;
+	raycast->to_delete = true;
+	raycast = nullptr;
+	player = nullptr;
+	return ret;
+}
+
 bool j1FlyingEnemy::Update(float dt) {
 	BROFILER_CATEGORY("FlyingEnemyUpdate", Profiler::Color::Tomato)
 	bool ret = true;
 	lastPosition = position;
-
-	//guard path
-	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
 	PathfindtoPlayer(detection_range, player);
@@ -190,30 +199,6 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 	switch (c2->type)
 	{
 	case COLLIDER_WALL:
-		/*
-		if (position.y + current_animation->GetCurrentFrame().h < c2->rect.y + COLLIDER_MARGIN)
-		{
-			grounded = true;
-			position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
-			current_speed.y = 0;
-			state = IDLE;
-		}
-
-		if (position.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-			position.x = lastPosition.x;
-		}
-		if (position.y > c2->rect.y + c2->rect.h - COLLIDER_MARGIN)
-		{
-			position.y = c2->rect.y + c2->rect.h;
-			current_speed.y = 0;
-		}
-		if ((position.y > c2->rect.y) && (position.x > c2->rect.x) && (position.x + current_animation->GetCurrentFrame().w < c2->rect.x + c2->rect.w) && (position.x < c2->rect.x + c2->rect.w))
-		{
-			position.y = lastPosition.y;
-			if (lastPosition.y + current_animation->GetCurrentFrame().h > c2->rect.y) {
-			//position.y = c2->rect.y - current_animation->GetCurrentFrame().h;
-			}
-		}*/
 		position = lastPosition;
 		break;
 

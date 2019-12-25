@@ -70,20 +70,9 @@ void j1EntityManager::DestroyEntity(j1Entity* entity){
 	BROFILER_CATEGORY("EntityDestruction", Profiler::Color::Orange)
 	p2List_item<j1Entity*>* item;
 
-	//TODO: Improve entity destroy system
 	if (entity != nullptr) {
 		item = entities.At(entities.find(entity));
-		if (entity->collider != nullptr)
-		{
-			entity->collider->to_delete = true;
-			entity->collider = nullptr;
-		}
-		if (entity->raycast != nullptr) {
-			entity->raycast->to_delete = true;
-			entity->raycast = nullptr;
-		}
-		entity->texture = nullptr;
-
+		entity->CleanUp();
 		entities.del(item);;
 	}
 }
@@ -348,11 +337,6 @@ bool j1EntityManager::CheckpointLoad()
 			int y_position = entity_node.attribute("position_y").as_int();
 
 			if (entity_name == "player") {
-				/*
-				player_pointer->position.x = x_position;
-				player_pointer->position.y = y_position;
-				player_pointer->collider->SetPos(player_pointer->position.x, player_pointer->position.y);
-				*/
 				CreateEntity(EntityType::PLAYER, x_position, y_position);
 			}
 

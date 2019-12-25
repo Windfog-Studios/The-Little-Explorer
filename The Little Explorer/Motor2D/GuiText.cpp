@@ -84,6 +84,7 @@ bool GuiText::Draw() {
 
 	if (text.Length() > 0)
 	{
+		/*
 		if (font == DEFAULT_FONT)
 		{
 			texture = App->font->Print(text.GetString());
@@ -92,7 +93,7 @@ bool GuiText::Draw() {
 		{
 			texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
 		}
-
+		*/
 		App->render->Blit(texture, rect.x, rect.y);
 	}
 	return true;

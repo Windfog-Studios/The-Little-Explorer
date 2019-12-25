@@ -57,16 +57,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 
 }
 
-j1WalkingEnemy::~j1WalkingEnemy() {
-	/*
-	App->tex->UnLoad(texture);
-	texture = nullptr;
-	collider->to_delete = true;
-	collider = nullptr;
-	raycast->to_delete = true;
-	raycast = nullptr;
-	*/
-}
+j1WalkingEnemy::~j1WalkingEnemy() {}
 
 bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	bool ret = true;
@@ -89,14 +80,13 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 
 bool j1WalkingEnemy::CleanUp() {
 	bool ret = true;
-
+	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
 	collider = nullptr;
 	raycast->to_delete = true;
 	raycast = nullptr;
 	player = nullptr;
-
 	return ret;
 }
 
@@ -135,9 +125,6 @@ bool j1WalkingEnemy::Update(float dt) {
 		attack_collider->to_delete = true;
 		attack_collider = nullptr;
 	}
-
-	//guard path
-	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
 	PathfindtoPlayer(detection_range, player);
@@ -198,7 +185,6 @@ bool j1WalkingEnemy::Update(float dt) {
 				collider->SetPos(position.x + 22, position.y + 30);
 				raycast->SetPos(position.x + 44, position.y + current_animation->GetCurrentFrame().h);
 			}
-			//if ((!going_after_player)&&(grounded)) state = RUN_FORWARD;
 		}
 		break;
 	case RUN_FORWARD:

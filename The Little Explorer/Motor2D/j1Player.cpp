@@ -114,12 +114,18 @@ bool j1Player::Start(){
 }
 
 bool j1Player::CleanUp() {
-	collider->to_delete = true;
-	collider = nullptr;
-	raycast->to_delete = true;
-	raycast = nullptr;
 	App->tex->UnLoad(texture);
 	texture = nullptr;
+	if (collider != nullptr)
+	{
+		collider->to_delete = true;
+		collider = nullptr;
+	}
+	if (raycast != nullptr)
+	{
+		raycast->to_delete = true;
+		raycast = nullptr;
+	}
 	return true;
 }
 

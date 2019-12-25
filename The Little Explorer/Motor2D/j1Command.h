@@ -12,6 +12,7 @@ class j1Command
 public:
 	j1Command(const char* g_command, j1Module* g_callback, uint min_arg, uint max_args, const char* explanation);
 	~j1Command();
+	bool CleanUp();
 
 public:
 	p2SString text;
