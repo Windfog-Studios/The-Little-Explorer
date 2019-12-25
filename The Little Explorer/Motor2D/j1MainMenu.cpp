@@ -106,11 +106,11 @@ void j1MainMenu::CreateMainScreen() {
 
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width, (int)App->win->height });
-	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 160,120 }, { 0,0,700,200 });
-	title->tex = App->tex->Load("sprites/UI/title.png");
+	title->texture = App->tex->Load("sprites/UI/title.png");
 
 	start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	start_button->Init({ 710, 392 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Start", ButtonAction::PLAY);
@@ -133,7 +133,7 @@ void j1MainMenu::CreateSettingsScreen() {
 	//TODO: create slider
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
-	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
@@ -142,7 +142,7 @@ void j1MainMenu::CreateSettingsScreen() {
 void j1MainMenu::CreateCreditsScreen() {
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
-	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);

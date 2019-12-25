@@ -16,9 +16,15 @@ GuiInputText::GuiInputText(j1Module* g_callback, bool g_isStatic){
 	isStatic = g_isStatic;
 }
 
-GuiInputText::~GuiInputText(){
-	delete background;
-	delete text;
+GuiInputText::~GuiInputText(){}
+
+bool GuiInputText::CleanUp() {
+	bool ret = true;
+	ret = background->CleanUp();
+	ret = text->CleanUp();
+	background = nullptr;
+	text = nullptr;
+	return ret;
 }
 
 void GuiInputText::Init(iPoint position, p2SString g_text, SDL_Rect image_section, bool useAtlas, char* g_font){

@@ -19,7 +19,6 @@
 
 j1EntityManager::j1EntityManager(){
 	name.create("entities");
-
 	reference_player = nullptr;
 	reference_walking_enemy = nullptr;
 	reference_flying_enemy = nullptr;

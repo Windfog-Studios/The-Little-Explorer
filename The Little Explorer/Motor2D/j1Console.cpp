@@ -28,7 +28,7 @@ bool j1Console::Awake(pugi::xml_node& config) {
 bool j1Console::Start() {
 	bool ret = true;
 	GuiText* log_text;
-	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
 	log_text->Init({ 20,0 }, " ",CONSOLE_FONT);
 	log_record.add(log_text);
 
@@ -178,21 +178,21 @@ void j1Console::AddLogText(p2SString new_text) {
 	{
 		GuiText* log_text;
 
-		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr,false,false,true);
 
 		if (log_record.end == nullptr) 
 			log_text->Init({ 20,20 }, new_text, CONSOLE_FONT);
 
 		else {
 			log_text->parent = log_record.end->data;
-			log_text->Init({ (int)(20 - App->render->camera.x),(int)(log_record.end->data->rect.y + log_record.end->data->rect.h -App->render->camera.y) }, new_text, CONSOLE_FONT);
+			log_text->Init({ 20,(int)(log_record.end->data->rect.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
 		}
 
 		log_record.add(log_text);
 
-		if ((log_record.end->data->rect.y + log_record.end->data->rect.h) > log_box.h)
+		if ((log_record.end->data->rect.y + log_record.end->data->rect.h) > log_box.y)
 		{
-			log_record.start->data->screen_position.y -= log_record.end->data->rect.h;
+			log_record.start->data->screen_position.y -= log_record.end->data->rect.h + App->render->camera.y;
 		}
 	}
 }

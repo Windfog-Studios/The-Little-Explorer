@@ -18,6 +18,7 @@ public:
 	bool Update(float dt);
 	bool Input();
 	bool Draw();
+	bool CleanUp();
 	void HandleFocusEvent(FocusEvent event);
 	GuiText* GetText() const;
 

@@ -1,6 +1,7 @@
 #include "GuiText.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Textures.h"
 
 GuiText::GuiText() {
 	callback = nullptr;
@@ -55,6 +56,8 @@ void GuiText::Init(iPoint g_position, p2SString g_text, char* g_font) {
 
 bool GuiText::CleanUp() {
 	bool ret = true;
+	App->tex->UnLoad(texture);
+	texture = nullptr;
 	return ret;
 }
 
