@@ -458,6 +458,19 @@ void j1Scene::CreateScreenUI()
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
 
+	if (visible_menu == Menu::NO_MENU) {
+		time_left = max_time - timer.Read() * 0.001f;
+		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+		time_text->Init({ 730, 465 }, "Time: ");
+		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+		p2SString temp("      %i", time_left);
+		time_text->Init({ 790, 465 }, temp);
+
+		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+		p2SString coin("     %i", App->entities->player_pointer->score);
+		score->Init({ 120, 1072 }, coin);
+	}
+
 }
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
@@ -552,15 +565,6 @@ void j1Scene::UpdateScreenUI() {
 		App->gui->DestroyUIElement(stars.end->data);
 		stars.del(stars.end);
 		on_screen_stars--;
-	}
-
-	if (visible_menu == Menu::NO_MENU) {
-		time_left = max_time - timer.Read() * 0.001f;
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
-		time_text->Init({ 730, 465 }, "Time: ");
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
-		p2SString temp("      %i", time_left);
-		time_text->Init({ 790, 465 }, temp);
 	}
 
 }

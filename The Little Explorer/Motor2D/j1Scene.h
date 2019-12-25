@@ -85,7 +85,7 @@ public:
 
 	//UI Info
 	
-	int score;
+	//int score;
 	int time_left;
 	int max_time;
 	int time_star1;
@@ -93,6 +93,7 @@ public:
 	int time_star3;
 	j1Timer timer;
 	GuiText* time_text;
+	GuiText* score;
 	p2List<GuiImage*> lives;
 	p2List<GuiImage*> stars;
 	GuiImage* no_lives;
