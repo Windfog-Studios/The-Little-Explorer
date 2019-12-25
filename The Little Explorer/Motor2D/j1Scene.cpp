@@ -395,61 +395,7 @@ void j1Scene::CreateScreenUI()
 		on_screen_stars++;
 	}
 
-	/*
-	if (App->entities->player_pointer->lives == 3) {
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,nullptr,false,false,true);
-		lives->Init({ 50 , 20 }, { 667,15,68,63 });
-		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		lives->Init({ 125, 20 }, { 667,15,68,63 });
-		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		lives->Init({ 200, 20 }, { 667,15,68,63 });
-		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-	}
-	
-	else if (App->entities->player_pointer->lives == 2) {
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		lives->Init({ 50, 20 }, { 667,15,68,63 });
-		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		lives->Init({ 125, 20 }, { 667,15,68,63 });
-		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		no_lives->Init({ 200, 20 }, { 524,15,68,63 });
-		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-	}
-	else if (App->entities->player_pointer->lives == 1) {
-		lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		lives->Init({ 50 , 20 }, { 667,15,68,63 });
-		lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		no_lives->Init({ 125, 20 }, { 524,15,68,63 });
-		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		no_lives->Init({ 200 , 20 }, { 524,15,68,63 });
-		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-	}
-	else {
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		no_lives->Init({ 50, 20 }, { 524,15,68,63 });
-		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		no_lives->Init({ 125, 20 }, { 524,15,68,63 });
-		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-
-		no_lives = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
-		no_lives->Init({ 200 , 20 }, { 524,15,68,63 });
-		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
-	}
-	*/
 	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	coins->Init({ 30, 625 }, { 9,865,294,69 });
 	coins->texture = App->tex->Load("sprites/UI/atlas2.png");
@@ -460,13 +406,13 @@ void j1Scene::CreateScreenUI()
 
 	if (visible_menu == Menu::NO_MENU) {
 		time_left = max_time - timer.Read() * 0.001f;
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
 		time_text->Init({ 730, 465 }, "Time: ");
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
 		p2SString temp("      %i", time_left);
 		time_text->Init({ 790, 465 }, temp);
 
-		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
+		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins, false, false, true);
 		p2SString coin("     %i", App->entities->player_pointer->score);
 		score->Init({ 120, 1072 }, coin);
 	}
@@ -566,7 +512,11 @@ void j1Scene::UpdateScreenUI() {
 		stars.del(stars.end);
 		on_screen_stars--;
 	}
-
+	if (time_text != nullptr)
+	{
+		time_text->UpdateText();
+		score->UpdateText();
+	}
 }
 
 void j1Scene::OnCommand(p2SString command) {

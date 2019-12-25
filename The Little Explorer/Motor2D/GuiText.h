@@ -14,6 +14,7 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 	bool Draw();
+	void UpdateText();
 
 public:
 	p2SString		text;

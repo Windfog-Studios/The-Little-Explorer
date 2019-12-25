@@ -84,3 +84,14 @@ bool GuiText::Draw() {
 
 	return true;
 }
+
+void GuiText::UpdateText() {
+	if (font == DEFAULT_FONT)
+	{
+		texture = App->font->Print(text.GetString());
+	}
+	else
+	{
+		texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+	}
+}
