@@ -22,7 +22,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
-	void OnCommand(j1Command*);
+	void OnCommand(p2SString command);
 
 	void AddLogText(p2SString new_text);
 

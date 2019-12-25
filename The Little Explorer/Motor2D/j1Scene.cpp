@@ -16,6 +16,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Gui.h"
 #include "j1MainMenu.h"
+#include "j1Command.h"
 #include "j1Console.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -78,6 +79,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
+	App->console->CreateCommand("map_", this, "Change map");
 
 	timer.Start();
 
@@ -552,5 +554,24 @@ void j1Scene::UpdateScreenUI() {
 		App->gui->DestroyUIElement(stars.end->data);
 		stars.del(stars.end);
 		on_screen_stars--;
+	}
+}
+
+void j1Scene::OnCommand(p2SString command) {
+	char* given_command = (char*)command.GetString();
+	char map1[11] = "map_level1";
+	char map2[11] = "map_level2";
+
+	if (strcmp(given_command, map1) == 0)
+	{
+		App->gui->DestroyAllGui();
+		LOG("Loading level 1");
+		LevelChange(current_level, LEVEL_1);
+	}
+	if (strcmp(given_command, map2) == 0)
+	{
+		App->gui->DestroyAllGui();
+		LOG("Loading level 2");
+		LevelChange(current_level, LEVEL_2);
 	}
 }

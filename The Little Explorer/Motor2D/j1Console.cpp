@@ -218,39 +218,36 @@ void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, const
 }
 
 void j1Console::CheckCommand(p2SString command) {
-	char* listed_command;
 	char given_initial_three[5] = "0000";
 	char listed_initial_three[5] = "0000";
 	char* given_command = (char* )command.GetString();
-	strcpy_s(given_command,40,(const char*)command.lowercased().GetString());
 	
 
 	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 	{
-		listed_command = (char*)item->data->text.lowercased().GetString();
+		if (item->data->text == command)
+		{
+			item->data->callback->OnCommand(command);
+			break;
+		}
 
 		for (int i = 0; i < 4; i++)
 		{
-			given_initial_three[i] = given_command[i];
-			listed_initial_three[i] = listed_command[i];
+			given_initial_three[i] = command.GetString()[i];
+			listed_initial_three[i] = item->data->text.GetString()[i];
 		}
 
 		if (strcmp(given_initial_three, listed_initial_three) == 0)
 		{
-			item->data->callback->OnCommand(item->data);
-		}
-
-		if (strcmp(listed_command, given_command) == 0)
-		{
-			item->data->callback->OnCommand(item->data);
+			item->data->callback->OnCommand(command);
+			break;
 		}
 	}
 }
 
-void j1Console::OnCommand(j1Command* command) {
-	char* command_text = (char*)command->text.GetString();
+void j1Console::OnCommand(p2SString command) {
 
-	if ( strcmp(command_text, "list") == 0)
+	if ( command == "list")
 	{
 		for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 		{
