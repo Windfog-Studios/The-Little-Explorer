@@ -20,6 +20,7 @@ public:
 	bool Draw();
 	bool CleanUp();
 	void HandleFocusEvent(FocusEvent event);
+	void UpdateText();
 	GuiText* GetText() const;
 
 private:

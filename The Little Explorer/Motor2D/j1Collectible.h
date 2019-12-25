@@ -11,11 +11,11 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Update(float dt);
 	bool PostUpdate();
+	bool CleanUp();
+	void OnCollision(Collider* c1, Collider* c2);
 
-public:
-	int score;
 private:
-
+	j1Player* player;
 };
 
 #endif // !_j1COLLECTIBLE_H_

@@ -106,16 +106,17 @@ void j1MainMenu::CreateMainScreen() {
 
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width, (int)App->win->height });
-	background->tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	/*
 	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 160,120 }, { 0,0,700,200 });
 	title->tex = App->tex->Load("sprites/UI/title.png");
 	*/
+
 	title2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title2->Init({ 250,180 }, { 165,2,378, 198 });
-	title2->tex = App->tex->Load("sprites/UI/title2.png");
+	title2->texture = App->tex->Load("sprites/UI/title2.png");
 	
 	start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	start_button->Init({ 710, 392 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Start", ButtonAction::PLAY);

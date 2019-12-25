@@ -155,12 +155,13 @@ void j1Console::CreateInterface(){
 	command_background = { -App->render->camera.x,(int)(log_box.h - App->render->camera.y), (int)App->win->width, 40 };
 
 	command_input = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, nullptr, false, true);
-	command_input->Init({ 0, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
+	command_input->Init({ -App->render->camera.x, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
 	command_input->rect = command_background;
 
 	App->gui->focused_element = command_input;
 	command_input->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
 	
+	log_record.start->data->rect.x = log_box.x;
 	log_record.start->data->rect.y = log_box.y;
 
 	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)

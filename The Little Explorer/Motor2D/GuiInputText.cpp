@@ -59,6 +59,7 @@ bool GuiInputText::Input() {
 		int end;
 		end = text->text.Length();
 		text->text.Cut(end-2,end);
+		UpdateText();
 	}
 	return true;
 }
@@ -121,4 +122,15 @@ void GuiInputText::HandleFocusEvent(FocusEvent event) {
 
 GuiText* GuiInputText::GetText() const{
 	return text;
+}
+
+void GuiInputText::UpdateText() {
+	if (text->font == DEFAULT_FONT)
+	{
+		text->texture = App->font->Print(text->text.GetString());
+	}
+	else
+	{
+		text->texture = App->font->Print(text->text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+	}
 }

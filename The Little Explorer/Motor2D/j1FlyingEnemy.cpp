@@ -40,6 +40,8 @@ j1FlyingEnemy::j1FlyingEnemy() :j1Entity(EntityType::FLYING_ENEMY) {
 		//colliders
 		collider = App->collision->AddCollider({ 2000,200,45,26 }, COLLIDER_ENEMY, (j1Module*)this);
 		raycast = App->collision->AddCollider({ 2000,200,20,2 }, COLLIDER_ENEMY, (j1Module*)this);
+
+		score = 15;
 	}
 
 	initialPosition = position;
@@ -213,13 +215,16 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
 			particles_created = true;
+			player->score += score;
 		}
+
+  		player->current_speed.y = player->enemy_bouncing;
+		player->can_double_jump = true;
+
 		if (player->state != DIE)
 		{
 			App->entities->DestroyEntity(this);
 		}
-		player->current_speed.y = player->enemy_bouncing;
-		player->can_double_jump = true;
 		break;
 
 	default:

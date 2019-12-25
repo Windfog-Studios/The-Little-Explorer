@@ -1,6 +1,8 @@
 #include "j1Collectible.h"
 #include "j1Render.h"
 #include "j1Collision.h"
+#include "j1Player.h"
+#include "j1Textures.h"
 
 j1Collectible::j1Collectible() : j1Entity(EntityType::COLLECTIBLE) {
 	
@@ -12,6 +14,8 @@ j1Collectible::j1Collectible() : j1Entity(EntityType::COLLECTIBLE) {
 	{
 		texture = App->entities->reference_collectible->texture;
 		collider = App->collision->AddCollider({ position.x, position.y, 32,32 }, COLLIDER_COLLECTIBLE, this);
+		player = App->entities->player_pointer;
+		score = 20;
 	}
 	current_animation = &idle;
 }
@@ -33,4 +37,27 @@ bool j1Collectible::PostUpdate() {
 	bool ret = true;
 	ret = App->render->Blit(texture, position.x, position.y,&current_animation->GetCurrentFrame());
 	return ret;
+}
+
+bool j1Collectible::CleanUp() {
+	bool ret = true;
+	ret = App->tex->UnLoad(texture);
+	texture = nullptr;
+	collider->to_delete = true;
+	collider = nullptr;
+	return ret;
+}
+
+void j1Collectible::OnCollision(Collider* c1, Collider* c2) {
+
+	switch (c2->type)
+	{
+	case COLLIDER_PLAYER:
+		player->score += score;
+		App->entities->DestroyEntity(this);
+	break;
+
+	default:
+		break;
+	}
 }

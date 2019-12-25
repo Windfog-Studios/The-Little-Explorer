@@ -47,6 +47,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 
 		current_speed = { 0,0 };
 
+		score = 10;
 	}
 
 	initialPosition = position;
@@ -86,6 +87,11 @@ bool j1WalkingEnemy::CleanUp() {
 	collider = nullptr;
 	raycast->to_delete = true;
 	raycast = nullptr;
+	if (attack_collider != nullptr)
+	{
+		attack_collider->to_delete = true;
+		attack_collider = nullptr;
+	}
 	player = nullptr;
 	return ret;
 }
@@ -335,18 +341,14 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			{
 				App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
 				particles_created = true;
+				player->score += score;
 			}
+ 			player->current_speed.y = player->enemy_bouncing;
+			player->can_double_jump = true;
 			if (player->state != DIE)
 			{
 				App->entities->DestroyEntity(this);
 			}
-			if (attack_collider != nullptr)
-			{
-				attack_collider->to_delete = true;
-				attack_collider = nullptr;
-			}
-			player->current_speed.y = player->enemy_bouncing;
-			player->can_double_jump = true;
 			break;
 
 	default:

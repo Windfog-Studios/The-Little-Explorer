@@ -40,6 +40,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 	can_go_left = true;
 	can_go_right = true;
 	lives = 3;
+	score = 0;
 
 	if (App->entities->reference_player != nullptr)
 	{
