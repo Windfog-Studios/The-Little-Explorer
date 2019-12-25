@@ -283,17 +283,38 @@ void j1Console::OnCommand(p2SString command) {
 			fps_char[0] = command.GetString()[4];
 			fps_char[1] = command.GetString()[5];
 			fps_char[2] = command.GetString()[6];
-			fps = (int)fps_char;
+
+			int units = (int)fps_char[2] - 48;
+			int dozens = (int)fps_char[1] - 48;
+			int hundreds = (int)fps_char[0] - 48;
+			fps = units + dozens * 10 + hundreds * 100;
 		}
-		if (command.Length() == 6)
+		else if (command.Length() == 6)
 		{
 			char fps_char[2];
 			fps_char[0] = command.GetString()[4];
 			fps_char[1] = command.GetString()[5];
-			fps = (int)fps_char;
+			int units = (int)fps_char[1] - 48;
+			int dozens = (int)fps_char[0] - 48;
+			fps = units + dozens * 10;
+		}
+		else
+		{
+			LOG("Invalid framerate cap number");
+			return;
 		}
 
-		App->framerate_cap = fps;
-		LOG("Framerate cap changed to %i", fps);
+		if (fps < 30) {
+			LOG("Too low framerate cap");
+		}
+		else if(fps > 120)
+		{
+			LOG("Too high framerate cap");
+		}
+		else
+		{
+			App->framerate_cap = fps;
+			LOG("Framerate cap changed to %i", fps);
+		}
 	}
 }
