@@ -40,6 +40,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 	can_go_left = true;
 	can_go_right = true;
 	lives = 3;
+	score = 0;
 
 	if (App->entities->reference_player != nullptr)
 	{
@@ -114,12 +115,18 @@ bool j1Player::Start(){
 }
 
 bool j1Player::CleanUp() {
-	collider->to_delete = true;
-	collider = nullptr;
-	raycast->to_delete = true;
-	raycast = nullptr;
 	App->tex->UnLoad(texture);
 	texture = nullptr;
+	if (collider != nullptr)
+	{
+		collider->to_delete = true;
+		collider = nullptr;
+	}
+	if (raycast != nullptr)
+	{
+		raycast->to_delete = true;
+		raycast = nullptr;
+	}
 	return true;
 }
 

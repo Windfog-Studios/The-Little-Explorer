@@ -215,6 +215,7 @@ bool j1Scene::Update(float dt)
 			camera_manual_control = true;
 		}
 	}
+
 	App->map->Draw();
 	
 	UpdateScreenUI();

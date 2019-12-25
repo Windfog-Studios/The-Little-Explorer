@@ -5,6 +5,8 @@
 
 #include "j1Module.h"
 
+class j1Entity;
+
 enum COLLIDER_TYPE
 {
 	COLLIDER_NONE = -1,
@@ -25,6 +27,7 @@ struct Collider
 	bool to_delete = false;
 	COLLIDER_TYPE type;
 	j1Module* callback = nullptr;
+	j1Entity* entity_callback = nullptr;
 	bool level_change = false;
 	bool checkpoint_tiggered = false;
 	bool isCheckpoint = false;

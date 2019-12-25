@@ -56,8 +56,6 @@ public:
 	p2SString	 folder;
 	Player_Input player_input;
 
-	pugi::xml_document animation_doc;
-
 	//fx
 	uint		jump_fx;
 	uint		double_Jump_fx = 4;

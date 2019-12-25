@@ -29,7 +29,7 @@ bool j1Console::Start() {
 	bool ret = true;
 	GuiText* log_text;
 	log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
-	log_text->Init({ 20,0 }, " ",CONSOLE_FONT);
+	log_text->Init({ 20,0 }, "Console Started",CONSOLE_FONT);
 	log_record.add(log_text);
 
 	CreateCommand("list", (j1Module*)this, 0, 0, "List all console commands");
@@ -122,10 +122,6 @@ bool j1Console::PostUpdate() {
 
 	if (isVisible)
 	{
-		log_box = {(int) -App->render->camera.x,(int) -App->render->camera.y, (int) App->win->width, 350 };
-		command_background = { -App->render->camera.x,(int)(log_box.h - App->render->camera.y), (int) App->win->width, 40 };
-		command_input->rect = command_background;
-
 		//Draw console
 		App->render->DrawQuad(log_box, 0, 0, 0, 255);
 		App->render->DrawQuad(command_background, 0, 0, 255, 255);
@@ -144,21 +140,35 @@ bool j1Console::PostUpdate() {
 bool j1Console::CleanUp() {
 	bool ret = true;
 	CleanUpStarted = true;
+
+	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
+	{
+		App->gui->DestroyUIElement(item->data);
+		log_record.del(item);
+	}
+
 	return ret;
 }
 
 void j1Console::CreateInterface(){
+	log_box = { (int)-App->render->camera.x,(int)-App->render->camera.y, (int)App->win->width, 350 };
+	command_background = { -App->render->camera.x,(int)(log_box.h - App->render->camera.y), (int)App->win->width, 40 };
+
 	command_input = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, nullptr, false, true);
-	command_input->Init({ 0, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
+	command_input->Init({ -App->render->camera.x, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
+	command_input->rect = command_background;
 
 	App->gui->focused_element = command_input;
 	command_input->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
 	
+	log_record.start->data->rect.x = log_box.x;
+	log_record.start->data->rect.y = log_box.y;
+
 	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
 	{
 		App->gui->ui_elements.add(item->data);
 	}
-
+	
 	isVisible = true;
 	App->entities->blocked_movement = true;
 }
@@ -178,7 +188,7 @@ void j1Console::AddLogText(p2SString new_text) {
 	{
 		GuiText* log_text;
 
-		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr,false,false,true);
+		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr,false,false,false);
 
 		if (log_record.end == nullptr) 
 			log_text->Init({ 20,20 }, new_text, CONSOLE_FONT);
@@ -190,9 +200,10 @@ void j1Console::AddLogText(p2SString new_text) {
 
 		log_record.add(log_text);
 
-		if ((log_record.end->data->rect.y + log_record.end->data->rect.h) > log_box.y)
+		if ((log_record.end->data->rect.y + log_record.end->data->rect.h -App->render->camera.y) > log_box.y + log_box.h)
 		{
-			log_record.start->data->screen_position.y -= log_record.end->data->rect.h + App->render->camera.y;
+			//log_record.start->data->screen_position.y -= log_record.end->data->rect.h;
+			log_record.start->data->screen_position.y -= 4;
 		}
 	}
 }

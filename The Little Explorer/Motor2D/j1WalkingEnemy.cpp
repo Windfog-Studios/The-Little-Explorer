@@ -47,6 +47,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 
 		current_speed = { 0,0 };
 
+		score = 10;
 	}
 
 	initialPosition = position;
@@ -57,16 +58,7 @@ j1WalkingEnemy::j1WalkingEnemy() :j1Entity(EntityType::WALKING_ENEMY) {
 
 }
 
-j1WalkingEnemy::~j1WalkingEnemy() {
-	/*
-	App->tex->UnLoad(texture);
-	texture = nullptr;
-	collider->to_delete = true;
-	collider = nullptr;
-	raycast->to_delete = true;
-	raycast = nullptr;
-	*/
-}
+j1WalkingEnemy::~j1WalkingEnemy() {}
 
 bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 	bool ret = true;
@@ -89,14 +81,18 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 
 bool j1WalkingEnemy::CleanUp() {
 	bool ret = true;
-
+	App->tex->UnLoad(texture);
 	texture = nullptr;
 	collider->to_delete = true;
 	collider = nullptr;
 	raycast->to_delete = true;
 	raycast = nullptr;
+	if (attack_collider != nullptr)
+	{
+		attack_collider->to_delete = true;
+		attack_collider = nullptr;
+	}
 	player = nullptr;
-
 	return ret;
 }
 
@@ -135,9 +131,6 @@ bool j1WalkingEnemy::Update(float dt) {
 		attack_collider->to_delete = true;
 		attack_collider = nullptr;
 	}
-
-	//guard path
-	//if ((position.x < path_minimum)||(position.x > path_maximum)) current_speed.x -= current_speed.x;
 
 	//pathfind
 	PathfindtoPlayer(detection_range, player);
@@ -198,7 +191,6 @@ bool j1WalkingEnemy::Update(float dt) {
 				collider->SetPos(position.x + 22, position.y + 30);
 				raycast->SetPos(position.x + 44, position.y + current_animation->GetCurrentFrame().h);
 			}
-			//if ((!going_after_player)&&(grounded)) state = RUN_FORWARD;
 		}
 		break;
 	case RUN_FORWARD:
@@ -349,18 +341,14 @@ void j1WalkingEnemy::OnCollision(Collider* c1, Collider* c2) {
 			{
 				App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
 				particles_created = true;
+				player->score += score;
 			}
+ 			player->current_speed.y = player->enemy_bouncing;
+			player->can_double_jump = true;
 			if (player->state != DIE)
 			{
 				App->entities->DestroyEntity(this);
 			}
-			if (attack_collider != nullptr)
-			{
-				attack_collider->to_delete = true;
-				attack_collider = nullptr;
-			}
-			player->current_speed.y = player->enemy_bouncing;
-			player->can_double_jump = true;
 			break;
 
 	default:

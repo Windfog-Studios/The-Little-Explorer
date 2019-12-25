@@ -113,6 +113,7 @@ void j1MainMenu::CreateMainScreen() {
 	title->Init({ 160,120 }, { 0,0,700,200 });
 	title->tex = App->tex->Load("sprites/UI/title.png");
 	*/
+
 	title2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title2->Init({ 250,180 }, { 165,2,378, 198 });
 	title2->texture = App->tex->Load("sprites/UI/title2.png");
