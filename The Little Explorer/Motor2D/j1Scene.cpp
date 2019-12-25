@@ -24,7 +24,10 @@ j1Scene::j1Scene() : j1Module()
 
 	blocked_camera = false;
 	score = 0;
-	time = 0;
+	start_time = 0.0f;
+	time_star1 = 45;
+	time_star2 = 90;
+	time_star3 = 135;
 	camera_margin = 5;
 	initial_camera_position = { 0,0 };
 	showing_menu = false;
@@ -75,6 +78,8 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 	*/
+
+	timer.Start();
 
 	return true;
 }
@@ -361,6 +366,11 @@ void j1Scene::CreateScreenUI()
 	int livesXpos = 50;
 	int livesXDistance = 90;
 
+	int starsXpos = 400;
+	int starsXDistance = 50;
+
+	int timeXpos = 700;
+
 	for (int i = 0; i < App->entities->player_pointer->lives; i++)
 	{
 		
@@ -370,6 +380,16 @@ void j1Scene::CreateScreenUI()
 		livesXpos += livesXDistance;
 		lives.add(life);
 		on_screen_lives++;
+	}
+	
+	for (int i = 0; i < 3; i++)
+	{
+		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		star->Init({ starsXpos , 20 }, { 589,124, 76, 69});
+		star->texture = App->tex->Load("sprites/UI/atlas2.png");
+		starsXpos += starsXDistance;
+		stars.add(star);
+		on_screen_stars++;
 	}
 
 	/*
@@ -427,7 +447,6 @@ void j1Scene::CreateScreenUI()
 		no_lives->tex = App->tex->Load("sprites/UI/atlas2.png");
 	}
 	*/
-
 	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	coins->Init({ 30, 625 }, { 9,865,294,69 });
 	coins->texture = App->tex->Load("sprites/UI/atlas2.png");
@@ -435,10 +454,10 @@ void j1Scene::CreateScreenUI()
 	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
-
+	/*
 	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
-	time_text->Init({ 730, 30 }, "Time left: ");
-	
+	time_text->Init({ 700, 20 }, timer);
+	*/
 }
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
@@ -526,5 +545,11 @@ void j1Scene::UpdateScreenUI() {
 		App->gui->DestroyUIElement(lives.end->data);
 		lives.del(lives.end);
 		on_screen_lives--;
+	}
+
+	if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
+		App->gui->DestroyUIElement(stars.end->data);
+		stars.del(stars.end);
+		on_screen_stars--;
 	}
 }

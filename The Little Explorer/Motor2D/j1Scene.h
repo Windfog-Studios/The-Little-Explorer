@@ -83,10 +83,14 @@ public:
 	//UI Info
 	
 	int score;
-	int time;
+	float start_time;
+	int time_star1;
+	int time_star2;
+	int time_star3;
 	j1Timer timer;
 	GuiText* time_text;
 	p2List<GuiImage*> lives;
+	p2List<GuiImage*> stars;
 	GuiImage* no_lives;
 	GuiImage* coins;
 	GuiImage* timer_background;
@@ -112,6 +116,7 @@ public:
 
 private:
 	int on_screen_lives;
+	int on_screen_stars;
 };
 
 #endif // __j1SCENE_H__
