@@ -32,6 +32,7 @@ private:
 	GuiImage* background;
 	GuiImage* menu_background;
 	GuiImage* title;
+	GuiImage* title2;
 	GuiButton* start_button;
 	GuiButton* continue_button;
 	GuiButton* settings_button;

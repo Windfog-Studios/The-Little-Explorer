@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <Checkpoint>
 	<render>
-		<camera x="-660" y="-1" />
+		<camera x="-3360" y="-315" />
 	</render>
 	<entities>
-		<player position_x="1116" position_y="256" />
-		<walking_enemy position_x="1344" position_y="192" />
+		<player position_x="3777" position_y="713" />
+		<walking_enemy position_x="1312" position_y="160" />
+		<walking_enemy position_x="704" position_y="320" />
 		<flying_enemy position_x="896" position_y="384" />
 		<flying_enemy position_x="1504" position_y="192" />
 		<flying_enemy position_x="2496" position_y="352" />
 		<flying_enemy position_x="3709" position_y="544" />
-		<flying_enemy position_x="3457" position_y="129" />
 		<flying_enemy position_x="4705" position_y="544" />
 		<flying_enemy position_x="5373" position_y="352" />
 		<flying_enemy position_x="5856" position_y="672" />
@@ -26,5 +26,23 @@
 		<walking_enemy position_x="6208" position_y="928" />
 		<walking_enemy position_x="2112" position_y="416" />
 		<flying_enemy position_x="4256" position_y="224" />
+		<walking_enemy position_x="608" position_y="768" />
+		<collectible position_x="832" position_y="576" />
+		<collectible position_x="2158" position_y="415" />
+		<collectible position_x="2385" position_y="177" />
+		<collectible position_x="3232" position_y="32" />
+		<collectible position_x="3104" position_y="768" />
+		<collectible position_x="2464" position_y="992" />
+		<collectible position_x="2176" position_y="1120" />
+		<collectible position_x="1408" position_y="1184" />
+		<collectible position_x="1280" position_y="960" />
+		<collectible position_x="1517" position_y="289" />
+		<collectible position_x="3552" position_y="832" />
+		<collectible position_x="3584" position_y="416" />
+		<collectible position_x="3840" position_y="160" />
+		<collectible position_x="4288" position_y="960" />
+		<collectible position_x="4032" position_y="384" />
+		<collectible position_x="4928" position_y="480" />
+		<collectible position_x="5824" position_y="960" />
 	</entities>
 </Checkpoint>
