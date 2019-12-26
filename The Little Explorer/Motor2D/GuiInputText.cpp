@@ -73,8 +73,8 @@ bool GuiInputText::Update(float dt) {
 		screen_position.y = parent->screen_position.y + local_position.y;
 	}
 
-	rect.x = screen_position.x;
-	rect.y = screen_position.y;
+	rect.x = screen_position.x -App->render->camera.x;
+	rect.y = screen_position.y -App->render->camera.y;
 
 	if (usingAtlas) background->Update(dt);
 	text->Update(dt);

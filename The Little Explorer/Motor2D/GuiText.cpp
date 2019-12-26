@@ -56,7 +56,9 @@ bool GuiText::CleanUp() {
 }
 
 bool GuiText::Update(float dt) {
+
 	bool ret = true;
+
 	if (parent != nullptr)
 	{
 		screen_position.x = parent->screen_position.x + local_position.x;

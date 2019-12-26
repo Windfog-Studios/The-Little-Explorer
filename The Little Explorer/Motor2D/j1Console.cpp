@@ -154,11 +154,12 @@ bool j1Console::CleanUp() {
 }
 
 void j1Console::CreateInterface(){
-	log_box = { 0, 0, (int)App->win->width, 350 };
-	command_background = { 0, log_box.h, (int)App->win->width, 40 };
+	iPoint camera = { App->render->camera.x, App->render->camera.y };
+	log_box = { -camera.x, -camera.y, (int)App->win->width, 350 };
+	command_background = { -camera.x, log_box.h - camera.y, (int)App->win->width, 40 };
 
 	command_input = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, nullptr, false, true);
-	command_input->Init({ 0, log_box.h }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
+	command_input->Init({ 10, log_box.h}, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
 	command_input->rect = command_background;
 
 	App->gui->focused_element = command_input;
@@ -166,28 +167,6 @@ void j1Console::CreateInterface(){
 
 	isVisible = true;
 	App->entities->blocked_movement = true;
-
-	log_record.start->data->rect.x = 20;
-	log_record.start->data->rect.y = 10;
-
-	if (log_record.start->next != nullptr)
-	{
-		for (p2List_item<GuiText*>* item = log_record.start->next; item != nullptr; item = item->next)
-		{
-			item->data->rect.x = log_record.start->data->rect.x;
-			item->data->rect.y = item->prev->data->rect.y + item->prev->data->rect.h;
-		}
-	}
-
-	if (log_record.end->data->rect.y + log_record.end->data->rect.h > log_box.y + log_box.h)
-	{
-		log_record.start->data->rect.y -= log_record.end->data->rect.y - command_input->rect.y + log_record.end->data->rect.h;
-		for (p2List_item<GuiText*>* item = log_record.start->next; item != nullptr; item = item->next)
-		{
-			item->data->rect.x = log_record.start->data->rect.x;
-			item->data->rect.y = item->prev->data->rect.y + item->prev->data->rect.h;
-		}
-	}
 }
 
 void j1Console::DestroyInterface(){
@@ -215,20 +194,14 @@ void j1Console::AddLogText(p2SString new_text) {
 			log_text->Init({ 20, 20 }, new_text, CONSOLE_FONT);
 		}
 		else {
-			log_text->parent = log_record.start->data;
+			log_text->parent = log_record.end->data;
 			log_text->Init({ 20,(int)(log_record.end->data->rect.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
-
-			if ((command_input != nullptr)&&(log_record.end->data->rect.y + log_record.end->data->rect.h > log_box.y + log_box.h))
-			{
-				log_record.start->data->rect.y -= log_record.end->data->rect.h;
-				for (p2List_item<GuiText*>* item = log_record.start->next; item != nullptr; item = item->next)
-				{
-					item->data->rect.x = log_record.start->data->rect.x;
-					item->data->rect.y = item->prev->data->rect.y + item->prev->data->rect.h;
-				}
-			}
 		}
 
+		if ((log_record.end != nullptr) && (log_record.end->data->rect.y + log_record.end->data->rect.h > log_box.y + log_box.h))
+		{
+			log_record.start->data->rect.y -= log_record.end->data->rect.h;
+		}
 		log_record.add(log_text);
 	}
 }
