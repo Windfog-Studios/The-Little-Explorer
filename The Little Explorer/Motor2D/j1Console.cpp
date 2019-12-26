@@ -113,8 +113,6 @@ bool j1Console::Update(float dt) {
 		for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
 		{
 			item->data->Update(dt);
-			//item->data->rect.x = item->data->screen_position.x + App->render->camera.x;
-			//item->data->rect.y = item->data->screen_position.y + App->render->camera.y;
 		}
 
 		command_input->Input();
@@ -197,7 +195,7 @@ void j1Console::AddLogText(p2SString new_text) {
 		}
 		else 
 		{
-			log_text->parent = log_record.end->data;
+			//log_text->parent = log_record.end->data;
 			log_text->Init({ 20,(int)(log_record.end->data->screen_position.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
 		}
 		log_record.add(log_text);
@@ -207,6 +205,10 @@ void j1Console::AddLogText(p2SString new_text) {
 			App->gui->DestroyUIElement(log_record.start->data);
 			log_record.del(log_record.start);
 			log_record.start->data->parent = nullptr;
+			for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
+			{
+				item->data->screen_position.y -= item->data->rect.h;
+			}
 		}
 	}
 }

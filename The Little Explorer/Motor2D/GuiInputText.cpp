@@ -124,12 +124,15 @@ GuiText* GuiInputText::GetText() const{
 }
 
 void GuiInputText::UpdateText() {
-	if (text->font == DEFAULT_FONT)
+	if (text != nullptr)
 	{
-		text->texture = App->font->Print(text->text.GetString());
-	}
-	else
-	{
-		text->texture = App->font->Print(text->text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+		if (text->font == DEFAULT_FONT)
+		{
+			text->texture = App->font->Print(text->text.GetString());
+		}
+		else
+		{
+			text->texture = App->font->Print(text->text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+		}
 	}
 }
