@@ -157,8 +157,6 @@ bool j1Player::PreUpdate(){
 
 	if (!App->pause)
 	{
-
-		//speed.x = 0;
 		if(!controls_blocked){
 			if (lives > 0) {
 				if (state == IDLE)
@@ -307,13 +305,9 @@ bool j1Player::PreUpdate(){
 
 					if (current_animation->Finished()) fall.Reset();
 				}
-				if (state == DIE)
-				{
-					//add die result
-				}
 			}
 			else {
-				App->quit = true;
+			App->scene->GameOver();
 			}
 		}
 	}

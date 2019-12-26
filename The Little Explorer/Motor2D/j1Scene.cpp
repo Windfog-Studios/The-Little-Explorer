@@ -34,6 +34,7 @@ j1Scene::j1Scene() : j1Module()
 	showing_menu = false;
 	visible_menu = Menu::MAIN_MENU;
 	on_screen_lives = 0;
+	on_screen_score = 0;
 }
 
 // Destructor
@@ -160,10 +161,10 @@ bool j1Scene::Update(float dt)
 				App->entities->blocked_movement = true;
 			}
 			else {
-				App->gui->DestroyAllGui();
+				//App->gui->DestroyAllGui();
 				visible_menu = Menu::NO_MENU;
 				App->entities->blocked_movement = false;
-				CreateScreenUI();
+				//CreateScreenUI();
 			}
 		}
 	}
@@ -461,10 +462,15 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
-			App->gui->DestroyAllGui();
+			App->gui->DestroyUIElement(pause_text);
+			App->gui->DestroyUIElement(resume_button);
+			App->gui->DestroyUIElement(settings_button);
+			App->gui->DestroyUIElement(home_button);
+			App->gui->DestroyUIElement(menu_background);
 			CreateScreenUI();
 			App->entities->blocked_movement = false;
 			showing_menu = false;
+			visible_menu = Menu::NO_MENU;
 			break;
 
 		case ButtonAction::SETTINGS:
@@ -539,4 +545,11 @@ void j1Scene::OnCommand(p2SString command) {
 		LevelChange(current_level, LEVEL_2);
 	}
 
+}
+
+void j1Scene::GameOver() {
+	App->gui->DestroyAllGui();
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
+	App->main_menu->CreateMainScreen();
 }

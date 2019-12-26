@@ -67,7 +67,7 @@ public:
 	bool Load(pugi::xml_node& data);
 	void UpdateScreenUI();
 
-	void GameOver() {};
+	void GameOver();
 
 public:
 	//edges
@@ -123,6 +123,7 @@ public:
 private:
 	int on_screen_lives;
 	int on_screen_stars;
+	int on_screen_score;
 };
 
 #endif // __j1SCENE_H__
