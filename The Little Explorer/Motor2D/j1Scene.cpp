@@ -26,15 +26,16 @@ j1Scene::j1Scene() : j1Module()
 	blocked_camera = false;
 	score = 0;
 	max_time = 200;
-	time_star1 = 45;
-	time_star2 = 90;
-	time_star3 = 135;
+	time_star1 = 100;
+	time_star2 = 150;
+	time_star3 = 190;
 	camera_margin = 5;
 	initial_camera_position = { 0,0 };
 	showing_menu = false;
 	visible_menu = Menu::MAIN_MENU;
 	on_screen_lives = 0;
 	on_screen_score = 0;
+	on_screen_stars = 0;
 }
 
 // Destructor
@@ -371,6 +372,9 @@ void j1Scene::CreateScreenUI()
 	int starsXpos = 400;
 	int starsXDistance = 50;
 
+	int nostarsXpos = 400;
+	int nostarsXDistance = 50;
+
 	int timeXpos = 700;
 
 	for (int i = 0; i < App->entities->player_pointer->lives; i++)
@@ -383,7 +387,7 @@ void j1Scene::CreateScreenUI()
 		lives.add(life);
 		on_screen_lives++;
 	}
-	
+
 	for (int i = 0; i < 3; i++)
 	{
 		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
@@ -391,9 +395,7 @@ void j1Scene::CreateScreenUI()
 		star->texture = App->tex->Load("sprites/UI/atlas2.png");
 		starsXpos += starsXDistance;
 		stars.add(star);
-		on_screen_stars++;
 	}
-
 
 	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
 	coins->Init({ 30, 625 }, { 9,865,294,69 });
@@ -510,13 +512,25 @@ void j1Scene::UpdateScreenUI() {
 		lives.del(lives.end);
 		on_screen_lives--;
 	}
-
+	
 	if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
+		
 		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.end);
-		on_screen_stars--;
+		stars.del(stars.At(3));
 	}
 
+	if ((stars.start != nullptr) && (timer.Read() > time_star2 * 1000)) {
+		
+		App->gui->DestroyUIElement(stars.end->data);
+		stars.del(stars.At(2));
+	}
+
+	if ((stars.start != nullptr) && (timer.Read() > time_star3 * 1000)) {
+
+		App->gui->DestroyUIElement(stars.end->data);
+		stars.del(stars.At(1));
+	}
+	
 	if (time_text != nullptr)
 	{
 		time_text->UpdateText();
