@@ -4,7 +4,7 @@
 		<camera x="-654" y="-3" />
 	</render>
 	<entities>
-		<player position_x="1117" position_y="256" />
+		<player position_x="1116" position_y="256" />
 		<walking_enemy position_x="1312" position_y="160" />
 		<walking_enemy position_x="704" position_y="320" />
 		<flying_enemy position_x="1504" position_y="192" />
@@ -26,7 +26,6 @@
 		<walking_enemy position_x="6208" position_y="928" />
 		<walking_enemy position_x="2112" position_y="416" />
 		<flying_enemy position_x="4256" position_y="224" />
-		<walking_enemy position_x="608" position_y="768" />
 		<collectible position_x="2158" position_y="415" />
 		<collectible position_x="2385" position_y="177" />
 		<collectible position_x="3232" position_y="32" />

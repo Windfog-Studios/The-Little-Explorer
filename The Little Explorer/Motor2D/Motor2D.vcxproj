@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GuiSlider.cpp" />
     <ClCompile Include="j1Collectible.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="GuiButton.cpp" />
@@ -112,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="GuiSlider.h" />
     <ClInclude Include="j1Collectible.h" />
     <ClInclude Include="GuiButton.h" />
     <ClInclude Include="GuiImage.h" />

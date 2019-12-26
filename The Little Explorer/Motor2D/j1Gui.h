@@ -8,10 +8,12 @@
 #include "GuiImage.h"
 #include "GuiText.h"
 #include "GuiInputText.h"
+#include "GuiSlider.h"
 
 class j1Button;
 class j1StaticText;
 class j1Image;
+class j1Slider;
 
 #define CURSOR_WIDTH 2
 

@@ -93,6 +93,7 @@ public:
 	int time_star3;
 	j1Timer timer;
 	GuiText* time_text;
+	GuiText* time_count;
 	GuiText* score;
 	p2List<GuiImage*> lives;
 	p2List<GuiImage*> stars;

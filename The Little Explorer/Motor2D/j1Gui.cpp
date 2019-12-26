@@ -157,6 +157,8 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 	case UI_Type::INPUT_TEXT:
 		ui_element = new GuiInputText(callback, isStatic);
 		break;
+	case UI_Type::SLIDER:
+		ui_element = new GuiSlider(callback, isStatic);
 	case UI_Type::MAX_UI_ELEMENTS:
 		break;
 	default:

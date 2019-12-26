@@ -19,6 +19,7 @@ enum class UI_Type
 	IMAGE,
 	TEXT,
 	INPUT_TEXT,
+	SLIDER,
 	MAX_UI_ELEMENTS
 };
 

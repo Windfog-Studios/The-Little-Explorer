@@ -81,8 +81,6 @@ bool j1Scene::Start()
 	*/
 	App->console->CreateCommand("map_", this, "Change map");
 
-	timer.Start();
-
 	return true;
 }
 
@@ -408,9 +406,9 @@ void j1Scene::CreateScreenUI()
 		time_left = max_time - timer.Read() * 0.001f;
 		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
 		time_text->Init({ 730, 20 }, "Time: ");
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
+		time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
 		p2SString temp("      %i", time_left);
-		time_text->Init({ 750, 20 }, temp);
+		time_count->Init({ 750, 20 }, temp);
 
 		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins, false, false, true);
 		p2SString coin("     %i coins", App->entities->player_pointer->score);
@@ -512,9 +510,11 @@ void j1Scene::UpdateScreenUI() {
 		stars.del(stars.end);
 		on_screen_stars--;
 	}
+
 	if (time_text != nullptr)
 	{
 		time_text->UpdateText();
+		time_count->UpdateText();
 		score->UpdateText();
 	}
 }
