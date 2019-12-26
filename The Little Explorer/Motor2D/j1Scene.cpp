@@ -328,44 +328,38 @@ void j1Scene::ResetLevel() {
 */
 
 void j1Scene::CreatePauseMenu() {
-	SDL_Rect camera;
-	camera = App->render->camera;
 
 	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	menu_background->Init({ 250 - camera.x,250 -camera.y }, { 0,0,512,264 });
+	menu_background->Init({ 250, 250 }, { 0,0,512,264 });
 
 	pause_text = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,menu_background);
-	pause_text->Init({ 298 - camera.x,155 - camera.y }, { 897,0,420,104 });
+	pause_text->Init({ 298, 155 }, { 897,0,420,104 });
 
 	resume_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	resume_button->Init({ 445 - camera.x,325 - camera.y }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::CONTINUE);
+	resume_button->Init({ 445, 325 }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::CONTINUE);
 
 	home_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	home_button->Init({ 285 - camera.x,325 - camera.y }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 },"",ButtonAction::QUIT);
+	home_button->Init({ 285, 325 }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 },"",ButtonAction::QUIT);
 
 	//restart_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	//restart_button->Init({ 445 - camera.x,325 - camera.y }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::RESTART);
 
 	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	settings_button->Init({ 605 - camera.x,325 - camera.y }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
+	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
 }
 
 void j1Scene::CreateSettingsScreen() {
-	SDL_Rect camera;
-	camera = App->render->camera;
 
 	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	menu_background->Init({ 250 - camera.x,250 - camera.y }, { 0,0,512,264 });
+	menu_background->Init({ 250,250 }, { 0,0,512,264 });
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	go_back_button->Init({ 180 - camera.x,190 - camera.y }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
+	go_back_button->Init({ 180, 190 }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
 
 }
 
 void j1Scene::CreateScreenUI()
 {
-	SDL_Rect camera;
-	camera = App->render->camera;
 	int livesXpos = 50;
 	int livesXDistance = 90;
 
@@ -380,7 +374,7 @@ void j1Scene::CreateScreenUI()
 	for (int i = 0; i < App->entities->player_pointer->lives; i++)
 	{
 		
-		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		life->Init({ livesXpos , 20 }, { 667,15,68,63 });
 		life->texture = App->tex->Load("sprites/UI/atlas2.png");
 		livesXpos += livesXDistance;
@@ -390,30 +384,30 @@ void j1Scene::CreateScreenUI()
 
 	for (int i = 0; i < 3; i++)
 	{
-		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star->Init({ starsXpos , 20 }, { 589,124, 76, 69});
 		star->texture = App->tex->Load("sprites/UI/atlas2.png");
 		starsXpos += starsXDistance;
 		stars.add(star);
 	}
 
-	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 	coins->Init({ 30, 625 }, { 9,865,294,69 });
 	coins->texture = App->tex->Load("sprites/UI/atlas2.png");
 
-	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr, false, false, true);
+	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 	if (visible_menu == Menu::NO_MENU) {
 		time_left = max_time - timer.Read() * 0.001f;
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
+		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 		time_text->Init({ 730, 20 }, "Time: ");
-		time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background, false, false, true);
+		time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 		p2SString temp("      %i", time_left);
 		time_count->Init({ 750, 20 }, temp);
 
-		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins, false, false, true);
+		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
 		p2SString coin("     %i coins", App->entities->player_pointer->score);
 		score->Init({ 100, 632 }, coin);
 	}

@@ -7,7 +7,7 @@ class GuiText : public j1UI_Element
 {
 public:
 	GuiText();
-	GuiText(j1Module* callback, bool isStatic);
+	GuiText(j1Module* callback);
 	~GuiText();
 
 	void Init(iPoint position, p2SString text, char* font = DEFAULT_FONT);

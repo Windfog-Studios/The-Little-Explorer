@@ -51,7 +51,6 @@ public:
 
 	bool draggable;
 	bool interactable;
-	bool isStatic;
 	FocusEvent focus_event;
 
 	j1Module* callback = nullptr;

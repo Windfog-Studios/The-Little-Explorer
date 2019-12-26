@@ -7,13 +7,12 @@
 #include "p2SString.h"
 #include "j1Fonts.h"
 
-GuiButton::GuiButton(j1Module* g_callback, bool g_isStatic){
+GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
 	text = new GuiText();
 	click_rect = {0,0,0,0};
 	texture = nullptr;
 	current_rect = &normal_rect;
-	isStatic = g_isStatic;
 }
 
 GuiButton::~GuiButton() {
@@ -81,14 +80,9 @@ bool GuiButton::Update(float dt) {
 		screen_position.x = parent->screen_position.x + local_position.x;
 		screen_position.y = parent->screen_position.y + local_position.y;
 	}
-	rect.x = screen_position.x;
-	rect.y = screen_position.y;
 
-	if (isStatic)
-	{
-		rect.x = screen_position.x - App->render->camera.x;
-		rect.y = screen_position.y - App->render->camera.y;
-	}
+	rect.x = screen_position.x -App->render->camera.x;
+	rect.y = screen_position.y -App->render->camera.y;
 
 	if (text->text.Length() > 0)
 	{

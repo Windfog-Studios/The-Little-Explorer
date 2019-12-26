@@ -154,11 +154,11 @@ bool j1Console::CleanUp() {
 }
 
 void j1Console::CreateInterface(){
-	log_box = { (int)-App->render->camera.x,(int)-App->render->camera.y, (int)App->win->width, 350 };
-	command_background = { -App->render->camera.x,(int)(log_box.h - App->render->camera.y), (int)App->win->width, 40 };
+	log_box = { 0, 0, (int)App->win->width, 350 };
+	command_background = { 0, log_box.h, (int)App->win->width, 40 };
 
 	command_input = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, nullptr, false, true);
-	command_input->Init({ -App->render->camera.x, (int)(log_box.h - App->render->camera.y) }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
+	command_input->Init({ 0, log_box.h }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
 	command_input->rect = command_background;
 
 	App->gui->focused_element = command_input;
@@ -167,8 +167,8 @@ void j1Console::CreateInterface(){
 	isVisible = true;
 	App->entities->blocked_movement = true;
 
-	log_record.start->data->rect.x = -App->render->camera.x + 20;
-	log_record.start->data->rect.y = -App->render->camera.y + 10;
+	log_record.start->data->rect.x = 20;
+	log_record.start->data->rect.y = 10;
 
 	if (log_record.start->next != nullptr)
 	{
@@ -212,7 +212,7 @@ void j1Console::AddLogText(p2SString new_text) {
 		if (log_record.end == nullptr)
 		{
 			log_text->parent = command_input;
-			log_text->Init({ 20 - App->render->camera.x , 20 - App->render->camera.y }, new_text, CONSOLE_FONT);
+			log_text->Init({ 20, 20 }, new_text, CONSOLE_FONT);
 		}
 		else {
 			log_text->parent = log_record.start->data;

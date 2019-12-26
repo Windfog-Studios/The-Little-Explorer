@@ -4,16 +4,15 @@
 #include "j1Input.h"
 
 
-GuiInputText::GuiInputText(j1Module* g_callback, bool g_isStatic){
-	background = new GuiImage(g_callback, g_isStatic);
-	text = new GuiText(g_callback, g_isStatic);
+GuiInputText::GuiInputText(j1Module* g_callback){
+	background = new GuiImage(g_callback);
+	text = new GuiText(g_callback);
 	callback = g_callback;
 	default_text = { "Input text" };
 	cursor = {0,0,2,30};
 	focused = false;
 	usingAtlas = true;
 	cursor_position = 0;
-	isStatic = g_isStatic;
 }
 
 GuiInputText::~GuiInputText(){}

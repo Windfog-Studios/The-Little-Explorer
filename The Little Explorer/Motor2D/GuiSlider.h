@@ -8,7 +8,7 @@ class GuiSlider : public j1UI_Element
 {
 public:
 
-	GuiSlider(j1Module* callback, bool isStatic);
+	GuiSlider(j1Module* callback);
 	~GuiSlider();
 
 	void Init();

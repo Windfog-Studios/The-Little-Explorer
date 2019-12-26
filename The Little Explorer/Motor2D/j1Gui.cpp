@@ -139,38 +139,38 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* parent, bool draggable, bool interactable, bool isStatic) {
+j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Element* parent, bool draggable, bool interactable) {
 
 	j1UI_Element* ui_element = nullptr;
 
 	switch (type)
 	{
 	case UI_Type::BUTTON:
-		ui_element = new GuiButton(callback, isStatic);
+		ui_element = new GuiButton(callback);
 		break;
 	case UI_Type::IMAGE:
-		ui_element = new GuiImage(callback, isStatic);
+		ui_element = new GuiImage(callback);
 		break;
 	case UI_Type::TEXT:
-		ui_element = new GuiText(callback, isStatic);
+		ui_element = new GuiText(callback);
 		break;
 	case UI_Type::INPUT_TEXT:
-		ui_element = new GuiInputText(callback, isStatic);
+		ui_element = new GuiInputText(callback);
 		break;
 	case UI_Type::SLIDER:
-		ui_element = new GuiSlider(callback, isStatic);
+		ui_element = new GuiSlider(callback);
 	case UI_Type::MAX_UI_ELEMENTS:
 		break;
 	default:
 		break;
 	}
 
-	ui_elements.add(ui_element);
-
 	ui_element->draggable = draggable;
 	ui_element->interactable = interactable;
 	ui_element->parent = parent;
 	ui_element->type = type;
+
+	ui_elements.add(ui_element);
 
 	return ui_element;
 }

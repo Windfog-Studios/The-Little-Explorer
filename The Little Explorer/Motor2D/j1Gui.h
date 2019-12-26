@@ -39,7 +39,7 @@ public:
 
 	//Hover-Unnhover
 	
-	j1UI_Element* CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* parent = nullptr, bool draggable = false, bool interactable = false, bool isStatic = false);
+	j1UI_Element* CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* parent = nullptr, bool draggable = false, bool interactable = false);
 	void DestroyUIElement(j1UI_Element* element);
 	void DestroyAllGui();
 

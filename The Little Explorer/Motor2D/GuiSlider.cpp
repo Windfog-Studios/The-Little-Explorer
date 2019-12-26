@@ -7,7 +7,7 @@
 #include "p2SString.h"
 #include "j1Fonts.h"
 
-GuiSlider::GuiSlider(j1Module* g_callback, bool g_isStatic) {
+GuiSlider::GuiSlider(j1Module* g_callback) {
 
 }
 

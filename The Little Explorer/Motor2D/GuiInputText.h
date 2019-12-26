@@ -11,7 +11,7 @@ class p2SString;
 class GuiInputText : public j1UI_Element
 {
 public:
-	GuiInputText(j1Module* callback, bool isStatic);
+	GuiInputText(j1Module* callback);
 	~GuiInputText();
 
 	void Init(iPoint position, p2SString text, SDL_Rect image_section, bool useAtlas = true, char* font = DEFAULT_FONT);
