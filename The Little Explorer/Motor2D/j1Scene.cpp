@@ -26,7 +26,7 @@ j1Scene::j1Scene() : j1Module()
 	blocked_camera = false;
 	score = 0;
 	max_time = 200;
-	time_star1 = 100;
+	time_star1 = 10;
 	time_star2 = 150;
 	time_star3 = 190;
 	camera_margin = 5;
@@ -346,6 +346,18 @@ void j1Scene::CreatePauseMenu() {
 
 	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
+	
+
+	int starsXpos = 420;
+	int starsXDistance = 50;
+	for (int i = 0; i < 3; i++)
+	{
+		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star->Init({ starsXpos , 225 }, { 589,124, 76, 69 });
+		star->texture = App->tex->Load("sprites/UI/atlas2.png");
+		starsXpos += starsXDistance;
+		stars.add(star);
+	}
 }
 
 void j1Scene::CreateSettingsScreen() {
@@ -399,18 +411,17 @@ void j1Scene::CreateScreenUI()
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
 
-	if (visible_menu == Menu::NO_MENU) {
-		time_left = max_time - timer.Read() * 0.001f;
-		time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
-		time_text->Init({ 730, 20 }, "Time: ");
-		time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
-		p2SString temp("      %i", time_left);
-		time_count->Init({ 750, 20 }, temp);
-
-		score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
-		p2SString coin("     %i coins", App->entities->player_pointer->score);
-		score->Init({ 100, 632 }, coin);
-	}
+	time_left = max_time - timer.Read() * 0.001f;
+	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
+	time_text->Init({ 730, 20 }, "Time: ");
+	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
+	p2SString temp("      %i", time_left);
+	time_count->Init({ 750, 20 }, temp);
+	
+	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
+	p2SString coin("     %i coins", App->entities->player_pointer->score);
+	score->Init({ 100, 632 }, coin);
+	
 
 }
 
@@ -458,11 +469,13 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
+			
 			App->gui->DestroyUIElement(pause_text);
 			App->gui->DestroyUIElement(resume_button);
 			App->gui->DestroyUIElement(settings_button);
 			App->gui->DestroyUIElement(home_button);
 			App->gui->DestroyUIElement(menu_background);
+			
 			CreateScreenUI();
 			App->entities->blocked_movement = false;
 			showing_menu = false;
