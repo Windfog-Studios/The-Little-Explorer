@@ -77,7 +77,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::SETTINGS:
 			App->gui->DestroyAllGui();
-			ShellExecuteA(NULL, "open", "http://myurl.com", NULL, NULL, SW_SHOWNORMAL);
+			//ShellExecuteA(NULL, "open", "http://myurl.com", NULL, NULL, SW_SHOWNORMAL);
 			CreateSettingsScreen();
 		break;
 
