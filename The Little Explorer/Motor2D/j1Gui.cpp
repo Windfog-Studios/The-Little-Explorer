@@ -187,12 +187,12 @@ void j1Gui::DestroyUIElement(j1UI_Element* element) {
 }
 
 void j1Gui::DestroyAllGui() {
-	/*
+	
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		RELEASE(item);
+		item->data->CleanUp();
 	}
-	*/
+	
 	ui_elements.clear();
 }
 

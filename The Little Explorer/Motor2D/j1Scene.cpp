@@ -371,7 +371,7 @@ void j1Scene::CreateScreenUI()
 
 	int timeXpos = 700;
 
-	for (int i = 0; i < App->entities->player_pointer->lives; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		
 		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);

@@ -77,6 +77,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::SETTINGS:
 			App->gui->DestroyAllGui();
+			ShellExecuteA(NULL, "open", "http://myurl.com", NULL, NULL, SW_SHOWNORMAL);
 			CreateSettingsScreen();
 		break;
 
@@ -109,14 +110,8 @@ void j1MainMenu::CreateMainScreen() {
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width, (int)App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
-	/*
-	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	title->Init({ 160,120 }, { 0,0,700,200 });
-	title->tex = App->tex->Load("sprites/UI/title.png");
-	*/
-
 	title2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	title2->Init({ 250,180 }, { 165,2,378, 198 });
+	title2->Init({ 260,130 }, { 165,2,378, 198 });
 	title2->texture = App->tex->Load("sprites/UI/title2.png");
 	
 	start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
@@ -134,6 +129,9 @@ void j1MainMenu::CreateMainScreen() {
 	credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 60, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
 
+	GuiImage* traveler = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	traveler->Init({ 20,100 }, { 0,0,199,273 });
+	traveler->texture = App->tex->Load("sprites/UI/opp_promo_traveler.png");
 }
 
 void j1MainMenu::CreateSettingsScreen() {
@@ -147,10 +145,20 @@ void j1MainMenu::CreateSettingsScreen() {
 }
 
 void j1MainMenu::CreateCreditsScreen() {
+	
 	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
+
+	GuiText* title = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+	title->Init({ 380,50 }, "The Litlle Explorer");
+
+	GuiText* by = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+	by->Init({ 490,110 }, "by");
+
+	GuiText* studio = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
+	studio->Init({ 400,170 }, "Windfog Studios");
 }

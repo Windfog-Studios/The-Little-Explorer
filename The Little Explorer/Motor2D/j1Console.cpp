@@ -27,10 +27,6 @@ bool j1Console::Awake(pugi::xml_node& config) {
 
 bool j1Console::Start() {
 	bool ret = true;
-	//ºGuiText* log_text;
-	//log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, false, true);
-	//log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this);
-	//log_text->Init({ 20,20 }, "Console Started", CONSOLE_FONT);
 	AddLogText("Console started");
 
 	CreateCommand("list", (j1Module*)this, "List all console commands");
@@ -200,7 +196,11 @@ void j1Console::AddLogText(p2SString new_text) {
 
 		if ((log_record.end != nullptr) && (log_record.end->data->rect.y + log_record.end->data->rect.h > log_box.y + log_box.h))
 		{
-			log_record.start->data->rect.y -= log_record.end->data->rect.h;
+			for (p2List_item<GuiText*>* item = log_record.start->next; item != nullptr; item = item->next)
+			{
+				item->data->rect.x = log_record.start->data->rect.x;
+				item->data->rect.y = item->prev->data->rect.y + item->prev->data->rect.h;
+			}
 		}
 		log_record.add(log_text);
 	}

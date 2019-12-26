@@ -75,19 +75,25 @@ bool GuiText::Draw() {
 
 	if (text.Length() > 0)
 	{
-		App->render->Blit(texture, rect.x, rect.y);
+		if (texture != nullptr)
+		{
+			App->render->Blit(texture, rect.x, rect.y);
+		}
 	}
 
 	return true;
 }
 
 void GuiText::UpdateText() {
+
 	if (font == DEFAULT_FONT)
 	{
+		App->tex->UnLoad(texture);
 		texture = App->font->Print(text.GetString());
 	}
 	else
 	{
+		App->tex->UnLoad(texture);
 		texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
 	}
 }
