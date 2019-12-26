@@ -170,6 +170,7 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 	ui_element->draggable = draggable;
 	ui_element->interactable = interactable;
 	ui_element->parent = parent;
+	ui_element->type = type;
 
 	return ui_element;
 }

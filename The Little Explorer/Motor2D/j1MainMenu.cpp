@@ -9,6 +9,7 @@
 #include "j1Textures.h"
 #include "j1Console.h"
 #include "j1Window.h"
+#include "j1Audio.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -29,7 +30,7 @@ bool j1MainMenu::Start() {
 	App->gui->Start();
 
 	CreateMainScreen();
-
+	App->audio->PlayMusic("path_to_follow.ogg");
 	return ret;
 }
 

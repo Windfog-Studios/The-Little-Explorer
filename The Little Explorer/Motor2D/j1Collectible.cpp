@@ -41,10 +41,11 @@ bool j1Collectible::PostUpdate() {
 
 bool j1Collectible::CleanUp() {
 	bool ret = true;
-	ret = App->tex->UnLoad(texture);
 	texture = nullptr;
-	collider->to_delete = true;
-	collider = nullptr;
+	if (collider != nullptr) {
+		collider->to_delete = true;
+		collider = nullptr;
+	}
 	return ret;
 }
 

@@ -527,12 +527,14 @@ void j1Scene::OnCommand(p2SString command) {
 	if (strcmp(given_command, map1) == 0)
 	{
 		App->gui->DestroyAllGui();
+		App->console->DestroyInterface();
 		LOG("Loading level 1");
 		LevelChange(current_level, LEVEL_1);
 	}
 	if (strcmp(given_command, map2) == 0)
 	{
 		App->gui->DestroyAllGui();
+		App->console->DestroyInterface();
 		LOG("Loading level 2");
 		LevelChange(current_level, LEVEL_2);
 	}

@@ -80,11 +80,13 @@ bool j1FlyingEnemy::Awake(pugi::xml_node& config) {
 bool j1FlyingEnemy::CleanUp() {
 	bool ret = true;
 	texture = nullptr;
-	collider->to_delete = true;
-	collider = nullptr;
-	raycast->to_delete = true;
-	raycast = nullptr;
-	player = nullptr;
+	if (collider != nullptr)
+	{
+		collider->to_delete = true;
+		collider = nullptr;
+		raycast->to_delete = true;
+		raycast = nullptr;
+	}
 	return ret;
 }
 

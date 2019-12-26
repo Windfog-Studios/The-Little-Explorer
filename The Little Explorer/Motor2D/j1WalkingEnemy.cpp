@@ -82,16 +82,18 @@ bool j1WalkingEnemy::Awake(pugi::xml_node& config) {
 bool j1WalkingEnemy::CleanUp() {
 	bool ret = true;
 	texture = nullptr;
-	collider->to_delete = true;
-	collider = nullptr;
-	raycast->to_delete = true;
-	raycast = nullptr;
+	if (collider != nullptr)
+	{
+		collider->to_delete = true;
+		collider = nullptr;
+		raycast->to_delete = true;
+		raycast = nullptr;
+	}
 	if (attack_collider != nullptr)
 	{
 		attack_collider->to_delete = true;
 		attack_collider = nullptr;
 	}
-	player = nullptr;
 	return ret;
 }
 
