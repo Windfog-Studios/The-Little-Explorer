@@ -36,6 +36,7 @@ j1Scene::j1Scene() : j1Module()
 	on_screen_lives = 0;
 	on_screen_score = 0;
 	on_screen_stars = 0;
+	time_discount = 0;
 }
 
 // Destructor
@@ -296,6 +297,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(NO_MAP, LEVEL_2);
 
 	time_left = data.child("time_left").attribute("value").as_int();
+	time_discount = max_time - time_left;
 	timer.Start();
 
 	return true;
@@ -440,7 +442,7 @@ void j1Scene::CreateScreenUI()
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
 	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
 
-	time_left = max_time - timer.Read() * 0.001f;
+	time_left = time_left - timer.ReadSec() * 0.001f;
 	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 	time_text->Init({ 730, 20 }, "Time: ");
 	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
@@ -517,7 +519,15 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			break;
 
 		case ButtonAction::SETTINGS:
-			App->gui->DestroyAllGui();
+			//App->gui->DestroyAllGui();
+			App->gui->DestroyUIElement(pause_text);
+			App->gui->DestroyUIElement(resume_button);
+			App->gui->DestroyUIElement(settings_button);
+			App->gui->DestroyUIElement(home_button);
+			App->gui->DestroyUIElement(menu_background);
+			App->gui->DestroyUIElement(star1);
+			App->gui->DestroyUIElement(star2);
+			App->gui->DestroyUIElement(star3);
 			CreateSettingsScreen();
 			visible_menu = Menu::SETTINGS;
 			break;
@@ -574,7 +584,8 @@ void j1Scene::UpdateScreenUI() {
 	
 	if (time_text != nullptr)
 	{
-		time_left = time_left - timer.Read() * 0.001f;
+		time_left = max_time + time_discount - timer.ReadSec();
+		time_discount = 0;
 		p2SString temp("%i", time_left);
 		time_count->text = temp;
 		time_count->UpdateText();

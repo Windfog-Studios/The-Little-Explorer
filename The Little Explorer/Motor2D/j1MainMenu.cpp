@@ -201,6 +201,9 @@ void j1MainMenu::CreateCreditsScreen() {
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
+	GuiImage* panel = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	panel->Init({ 140,160 }, { 0,1062,726,522 });
+
 	GuiButton* go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 20, 20 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
 
@@ -219,10 +222,10 @@ void j1MainMenu::CreateCreditsScreen() {
 	//traveler->texture = App->tex->Load("sprites/UI/opp_promo_traveler.png");
 
 	GuiButton* main_webpage = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	main_webpage->Init({420,520}, {1038,619,138,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
+	main_webpage->Init({420,520}, {1036,618,137,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
 
 	GuiButton* silvino_medina = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	silvino_medina->Init({ 150,390 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
+	silvino_medina->Init({ 180,390 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
 
 	GuiButton* marc_pages = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	marc_pages->Init({ 625,390 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Marc Pagès Francesch", ButtonAction::CONTEXTUAL_2);

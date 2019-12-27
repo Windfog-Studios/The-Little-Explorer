@@ -196,6 +196,14 @@ void j1Gui::DestroyAllGui() {
 	ui_elements.clear();
 }
 
+void j1Gui::DestroyUIlist(p2List<j1UI_Element*> list) {
+	for (p2List_item<j1UI_Element*>* item = list.start; item != nullptr; item = item->next)
+	{
+		item->data->CleanUp();
+	}
+	list.clear();
+}
+
 void j1Gui::DebugDraw() {
 
 	for(p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)

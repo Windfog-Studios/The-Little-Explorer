@@ -42,6 +42,7 @@ public:
 	j1UI_Element* CreateUIElement(UI_Type type, j1Module* callback, j1UI_Element* parent = nullptr, bool draggable = false, bool interactable = false);
 	void DestroyUIElement(j1UI_Element* element);
 	void DestroyAllGui();
+	void DestroyUIlist(p2List<j1UI_Element*> list);
 
 	SDL_Texture* GetAtlas() const;
 
