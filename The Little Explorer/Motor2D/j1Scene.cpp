@@ -270,14 +270,17 @@ bool j1Scene::CleanUp()
 
 bool j1Scene::Save(pugi::xml_node& data) const {
 
-	pugi::xml_node cam_frame = data.append_child("camera_frame");
+	//pugi::xml_node cam_frame = data.append_child("camera_frame");
 	pugi::xml_node level = data.append_child("level");
+	pugi::xml_node time = data.append_child("time_left");
 
 	//cam_frame.append_attribute("x") = camera_frame.x;
 	//cam_frame.append_attribute("y") = camera_frame.y;
 
 	if (current_level == LEVEL_1) level.append_attribute("number") = 1;
 	if (current_level == LEVEL_2) level.append_attribute("number") = 2;
+
+	time.append_attribute("value") = time_left;
 
 	return true;
 }
@@ -291,6 +294,9 @@ bool j1Scene::Load(pugi::xml_node& data)
 	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);
 	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(NO_MAP, LEVEL_1);
 	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(NO_MAP, LEVEL_2);
+
+	time_left = data.child("time_left").attribute("value").as_int();
+	timer.Start();
 
 	return true;
 }
@@ -568,7 +574,7 @@ void j1Scene::UpdateScreenUI() {
 	
 	if (time_text != nullptr)
 	{
-		time_left = max_time - timer.Read() * 0.001f;
+		time_left = time_left - timer.Read() * 0.001f;
 		p2SString temp("%i", time_left);
 		time_count->text = temp;
 		time_count->UpdateText();

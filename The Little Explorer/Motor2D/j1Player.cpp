@@ -66,6 +66,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 		isVisible = true;
 		grounded = false;
 		current_speed = { 0,0 };
+		last_score = 0;
 
 		App->console->CreateCommand("god_mode", this, "Toggles god mode ON/OFF");
 	}
@@ -478,6 +479,7 @@ bool j1Player::Save(pugi::xml_node& data) const {
 
 	p_position.append_attribute("x") = position.x;
 	p_position.append_attribute("y") = position.y;
+	
 	return true;
 }
 
@@ -574,6 +576,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				particles_created = true;
 				position = initialPosition;
 				lives--;
+				score = last_score;
 			}
 			break;
 
@@ -592,6 +595,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 					particles_created = true;
 					position = initialPosition;
 					lives--;
+					score = last_score;
 				}
 			}
 			break;

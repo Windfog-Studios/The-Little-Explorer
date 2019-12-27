@@ -238,8 +238,10 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		int x_position = entity_node.attribute("position_x").as_int();
 		int y_position = entity_node.attribute("position_y").as_int();
 
-		if (entity_name == "player")
+		if (entity_name == "player") {
 			player_pointer = (j1Player*)CreateEntity(EntityType::PLAYER, x_position, y_position);
+			player_pointer->score = entity_node.attribute("score").as_int();
+		}
 
 		if (entity_name == "walking_enemy") 
 			CreateEntity(EntityType::WALKING_ENEMY, x_position, y_position);
@@ -266,6 +268,10 @@ bool j1EntityManager::Save(pugi::xml_node& data) const
 		pugi::xml_node child = data.append_child(item->data->name.GetString());
 		child.append_attribute("position_x") = item->data->position.x;
 		child.append_attribute("position_y") = item->data->position.y;
+		if (item->data->type == EntityType::PLAYER)
+		{
+			child.append_attribute("score") = player_pointer->score;
+		}
 	}
 	
 	return ret;
@@ -292,6 +298,7 @@ bool j1EntityManager::CheckpointSave() {
 			{
 				child.append_attribute("position_x") = entity->data->position.x;
 				child.append_attribute("position_y") = entity->data->position.y;
+				child.append_attribute("score") = player_pointer->score;
 			}
 			else
 			{
@@ -338,6 +345,7 @@ bool j1EntityManager::CheckpointLoad()
 
 			if (entity_name == "player") {
 				CreateEntity(EntityType::PLAYER, x_position, y_position);
+				player_pointer->score = entity_node.attribute("score").as_int();
 			}
 
 			if (entity_name == "walking_enemy")

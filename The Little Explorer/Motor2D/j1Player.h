@@ -46,7 +46,7 @@ public:
 	float	max_side_speed;
 	int		enemy_bouncing;
 	int		lives;
-
+	int		last_score;
 	bool	can_double_jump;
 	bool	can_go_right;
 	bool	can_go_left;
