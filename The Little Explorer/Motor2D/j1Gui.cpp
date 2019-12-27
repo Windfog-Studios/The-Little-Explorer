@@ -179,8 +179,9 @@ void j1Gui::DestroyUIElement(j1UI_Element* element) {
 
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		if (item->data == element) 
+		if (item->data == element) {
 			ui_elements.del(item);
+		}
 	}
 
 	//element->CleanUp();

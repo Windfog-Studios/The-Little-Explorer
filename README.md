@@ -29,6 +29,8 @@ We are both students of video game development in the CITM in Terrassa and this 
 
 You can check our repository using this link: https://github.com/Windfog-Studios/The-Little-Explorer
 
+and our website https://windfog-studios.github.io/The-Little-Explorer/
+
 ## Controls 
 
 ### Movement 
@@ -107,6 +109,7 @@ Page: https://sfx.productioncrate.com/search.html#query=sword&ss=tab&_ga=2.16427
 - Colliders are made of objectgroups instead of tiles.
 - Checkpoints added
 - Game can be paused
+- Hitting the arrow keys transitions to previous commands.
 
 ## License 
 

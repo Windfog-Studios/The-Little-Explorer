@@ -155,6 +155,7 @@ bool j1Console::CleanUp() {
 }
 
 void j1Console::CreateInterface(){
+	App->input->EnableTextInput(true);
 	iPoint camera = { App->render->camera.x, App->render->camera.y };
 	log_box = { -camera.x, -camera.y, (int)App->win->width, 350 };
 	command_background = { -camera.x, log_box.h - camera.y, (int)App->win->width, 40 };
@@ -180,6 +181,7 @@ void j1Console::DestroyInterface(){
 
 	isVisible = false;
 	App->entities->blocked_movement = false;
+	App->input->EnableTextInput(false);
 }
 
 void j1Console::AddLogText(p2SString new_text) {

@@ -477,6 +477,7 @@ void j1Scene::CreateScreenUI()
 	slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this, nullptr, true, true);
 	slider->Init();
 	*/
+	visible_menu = Menu::SCREEN_UI;
 }
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
@@ -636,6 +637,7 @@ void j1Scene::OnCommand(p2SString command) {
 		App->console->DestroyInterface();
 		LOG("Loading level 1");
 		LevelChange(current_level, LEVEL_1);
+		CreateScreenUI();
 	}
 	if (strcmp(given_command, map2) == 0)
 	{
@@ -643,12 +645,14 @@ void j1Scene::OnCommand(p2SString command) {
 		App->console->DestroyInterface();
 		LOG("Loading level 2");
 		LevelChange(current_level, LEVEL_2);
+		CreateScreenUI();
 	}
 
 }
 
 void j1Scene::GameOver() {
 	App->gui->DestroyAllGui();
+	App->entities->DestroyAllEntities();
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	App->main_menu->CreateMainScreen();

@@ -19,6 +19,7 @@ enum class Menu {
 	SETTINGS,
 	PAUSE,
 	CREDITS,
+	SCREEN_UI,	
 	NO_MENU
 };
 
