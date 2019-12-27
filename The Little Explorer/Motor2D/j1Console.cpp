@@ -1,4 +1,5 @@
 #include "j1Console.h"
+#include "j1Console.h"
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -115,7 +116,7 @@ bool j1Console::Update(float dt) {
 			item->data->Update(dt);
 		}
 
-		command_input->Input();
+		if(command_input != nullptr)command_input->Input();
 	}
 	return ret;
 }
@@ -172,7 +173,7 @@ void j1Console::CreateInterface(){
 }
 
 void j1Console::DestroyInterface(){
-	App->gui->DestroyUIElement(command_input);
+	if (command_input != nullptr) App->gui->DestroyUIElement(command_input);
 
 	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
 	{
@@ -197,7 +198,6 @@ void j1Console::AddLogText(p2SString new_text) {
 		}
 		else 
 		{
-			//log_text->parent = log_record.end->data;
 			log_text->Init({ 20,(int)(log_record.end->data->screen_position.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
 		}
 		log_record.add(log_text);

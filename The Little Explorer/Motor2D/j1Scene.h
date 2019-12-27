@@ -60,6 +60,7 @@ public:
 	void CreatePauseMenu();
 	void DeletePauseMenu();
 	void CreateSettingsScreen();
+	void DestroySpecificMenu(Menu menu);
 
 	void OnEvent(j1UI_Element*, FocusEvent);
 	void OnCommand(p2SString command);
@@ -124,7 +125,8 @@ public:
 	//pause menu
 	p2List<j1UI_Element*> pause_menu;
 	p2List<j1UI_Element*> settings_screen;
-	p2List<j1UI_Element*> on_screen;
+	p2List<j1UI_Element*> on_screen_ui;
+
 	GuiImage* menu_background;
 	GuiImage* pause_text;
 	GuiButton* home_button;

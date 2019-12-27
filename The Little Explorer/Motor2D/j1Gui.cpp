@@ -126,6 +126,7 @@ bool j1Gui::PostUpdate()
 bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
+	DestroyAllGui();
 	App->tex->UnLoad(atlas);
 	atlas = nullptr;
 	return true;
@@ -180,18 +181,20 @@ void j1Gui::DestroyUIElement(j1UI_Element* element) {
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		if (item->data == element) {
+			item->data->CleanUp();
+			delete item->data;
+			//delete item;
+			item->data = nullptr;
 			ui_elements.del(item);
 		}
 	}
-
-	//element->CleanUp();
 }
 
 void j1Gui::DestroyAllGui() {
 	
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		item->data->CleanUp();
+		DestroyUIElement(item->data);
 	}
 	
 	ui_elements.clear();

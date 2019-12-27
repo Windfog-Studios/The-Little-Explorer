@@ -20,8 +20,10 @@ GuiInputText::~GuiInputText(){}
 bool GuiInputText::CleanUp() {
 	bool ret = true;
 	ret = background->CleanUp();
-	ret = text->CleanUp();
+	delete background;
 	background = nullptr;
+	ret = text->CleanUp();
+	delete text;
 	text = nullptr;
 	return ret;
 }
