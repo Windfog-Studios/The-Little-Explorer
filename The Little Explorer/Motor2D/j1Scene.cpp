@@ -445,7 +445,7 @@ void j1Scene::CreateScreenUI()
 	coins->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
+	timer_background->Init({ 700, 10 }, { 240,978, 289,78 });
 	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 	time_left = time_left - timer.ReadSec() * 0.001f;
