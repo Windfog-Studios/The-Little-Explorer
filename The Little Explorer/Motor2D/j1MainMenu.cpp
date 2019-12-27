@@ -110,7 +110,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			else if (visible_menu == Menu::SETTINGS) {
 				if (!fullscreen)
 				{
-					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);	
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
 					fullscreen = true;
 				}
 				else

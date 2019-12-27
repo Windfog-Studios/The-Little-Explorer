@@ -36,6 +36,7 @@ j1Scene::j1Scene() : j1Module()
 	on_screen_lives = 0;
 	on_screen_score = 0;
 	on_screen_stars = 0;
+	fullscreen = false;
 }
 
 // Destructor
@@ -397,6 +398,12 @@ void j1Scene::CreateSettingsScreen() {
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	go_back_button->Init({ 180, 190 }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
 
+	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	fullscreen_button->Init({ 300,410 }, { 206, 697, 49,53 }, { 206, 697, 49,53 }, { 262,697,49,53 }, "", ButtonAction::CONTEXTUAL_1, true);
+
+	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	fullscreen_text->Init({ 380,406 }, "Fullscreen");
+
 }
 
 void j1Scene::CreateScreenUI()
@@ -520,7 +527,23 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyAllGui();
 			CreateSettingsScreen();
 			visible_menu = Menu::SETTINGS;
+			
 			break;
+		case ButtonAction::CONTEXTUAL_1:
+			if (visible_menu == Menu::SETTINGS) {
+				if (!fullscreen)
+				{
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+					fullscreen = true;
+				}
+				else
+				{
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_RESIZABLE);
+					fullscreen = false;
+				}
+				//window_height = App->win->width;
+				//window_height = App->win->height;
+			}
 
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
