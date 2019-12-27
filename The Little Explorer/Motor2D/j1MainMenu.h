@@ -7,6 +7,7 @@ class GuiImage;
 class GuiText;
 class GuiButton;
 class GuiInputText;
+enum class Menu;
 
 class j1MainMenu : public j1Module
 {
@@ -38,6 +39,7 @@ private:
 	GuiButton* credits_button;
 	GuiButton* exit_button;
 	GuiButton* go_back_button;
+	Menu visible_menu;
 };
 
 #endif // !_j1MAIN_MENU_H_

@@ -26,7 +26,7 @@ void GuiSlider::Init() {
 	//scrollButton = App->gui->AddGuiElement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 432, 36, 14 , 16 }, nullptr, this->listener, true, false);
 	
 	scrollButton->local_position.y = local_position.y - scrollButton->rect.h / 2 + this->rect.h / 2;
-	value = 0;
+	int value = 0;
 
 	texture = App->gui->GetAtlas();
 	

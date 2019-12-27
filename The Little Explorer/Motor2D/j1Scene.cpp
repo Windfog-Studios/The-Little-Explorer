@@ -129,6 +129,8 @@ bool j1Scene::Update(float dt)
 	float		camera_frame_x_center = ceil(camera_frame.x + camera_frame.w * 0.5f);
 	float		camera_frame_y_center = ceil(camera_frame.y + camera_frame.h * 0.5f);
 	bool		camera_manual_control = false;
+	camera_frame.x = -camera->x + camera_frame_x_margin;
+	camera_frame.y = -camera->y + camera_frame_y_margin;
 	
 	//player inputs ---------------
 	if (visible_menu == Menu::NO_MENU)
@@ -176,22 +178,22 @@ bool j1Scene::Update(float dt)
 		{
 			if (((player_position->x < camera_frame_x_center)) && (-camera->x > camera_margin)) {
 				App->render->camera.x += floor(CAMERA_SPEED * dt);
-				camera_frame.x -= floor(CAMERA_SPEED * dt);
+				//camera_frame.x -= floor(CAMERA_SPEED * dt);
 			}
 
 			if ((player_position->x + App->entities->player_pointer->current_animation->GetCurrentFrame().w > camera_frame_x_center) && (-camera->x + camera->w < App->map->data.width * App->map->data.tile_width - 10)) {
 				App->render->camera.x -= floor(CAMERA_SPEED * dt);
-				camera_frame.x += floor(CAMERA_SPEED * dt);
+				//camera_frame.x += floor(CAMERA_SPEED * dt);
 			}
 
 			if (((player_position->y < camera_frame_y_center)) && (camera_frame.y - camera_frame_y_margin > camera_margin)) {
 				App->render->camera.y += floor(CAMERA_SPEED * dt);
-				camera_frame.y -= floor(CAMERA_SPEED * dt);
+				//camera_frame.y -= floor(CAMERA_SPEED * dt);
 			}
 
 			if (((player_position->y + App->entities->player_pointer->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height - camera_margin)) {
 				App->render->camera.y -= floor(CAMERA_SPEED * dt);
-				camera_frame.y += floor(CAMERA_SPEED * dt);
+				//camera_frame.y += floor(CAMERA_SPEED * dt);
 			}
 		}
 	}
@@ -271,8 +273,8 @@ bool j1Scene::Save(pugi::xml_node& data) const {
 	pugi::xml_node cam_frame = data.append_child("camera_frame");
 	pugi::xml_node level = data.append_child("level");
 
-	cam_frame.append_attribute("x") = camera_frame.x;
-	cam_frame.append_attribute("y") = camera_frame.y;
+	//cam_frame.append_attribute("x") = camera_frame.x;
+	//cam_frame.append_attribute("y") = camera_frame.y;
 
 	if (current_level == LEVEL_1) level.append_attribute("number") = 1;
 	if (current_level == LEVEL_2) level.append_attribute("number") = 2;
@@ -282,8 +284,8 @@ bool j1Scene::Save(pugi::xml_node& data) const {
 
 bool j1Scene::Load(pugi::xml_node& data)
 {
-	camera_frame.x = data.child("position").attribute("x").as_int();
-	camera_frame.y = data.child("position").attribute("y").as_int();
+	//camera_frame.x = data.child("position").attribute("x").as_int();
+	//camera_frame.y = data.child("position").attribute("y").as_int();
 
 	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(LEVEL_2, LEVEL_1);
 	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);

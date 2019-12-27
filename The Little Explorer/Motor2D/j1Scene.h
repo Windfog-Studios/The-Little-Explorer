@@ -18,6 +18,7 @@ enum class Menu {
 	MAIN_MENU,
 	SETTINGS,
 	PAUSE,
+	CREDITS,
 	NO_MENU
 };
 

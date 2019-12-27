@@ -210,6 +210,11 @@ void j1Console::AddLogText(p2SString new_text) {
 				item->data->screen_position.y -= item->data->rect.h;
 			}
 		}
+
+		if (!isVisible)
+		{
+			App->gui->DestroyUIElement(log_text);
+		}
 	}
 }
 

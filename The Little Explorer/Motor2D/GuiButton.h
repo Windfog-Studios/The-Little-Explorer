@@ -14,6 +14,9 @@ enum class ButtonAction {
 	QUIT,
 	GO_BACK,
 	RESTART,
+	CONTEXTUAL_1,
+	CONTEXTUAL_2,
+	CONTEXTUAL_3,
 	NONE
 };
 

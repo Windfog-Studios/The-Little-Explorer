@@ -10,6 +10,7 @@
 #include "j1Console.h"
 #include "j1Window.h"
 #include "j1Audio.h"
+#include <Windows.h>
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -31,6 +32,7 @@ bool j1MainMenu::Start() {
 
 	CreateMainScreen();
 	App->audio->PlayMusic("path_to_follow.ogg");
+	visible_menu = Menu::MAIN_MENU;
 	return ret;
 }
 
@@ -69,27 +71,45 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			break;
 
 		case ButtonAction::CONTINUE:
-			App->LoadGame();
 			App->gui->DestroyAllGui();
+			App->LoadGame(); 
 			App->scene->visible_menu = Menu::NO_MENU;
 			App->scene->CreateScreenUI();
 		break;
 
 		case ButtonAction::SETTINGS:
 			App->gui->DestroyAllGui();
-			//ShellExecuteA(NULL, "open", "http://myurl.com", NULL, NULL, SW_SHOWNORMAL);
+			
 			CreateSettingsScreen();
 		break;
 
 		case ButtonAction::CREDITS:
-			App->gui->DestroyAllGui();
-			CreateCreditsScreen();
+			if (visible_menu == Menu::MAIN_MENU) {
+				App->gui->DestroyAllGui();
+				CreateCreditsScreen();
+				visible_menu = Menu::CREDITS;
+			}
+			else {
+				ShellExecuteA(NULL, "open", "https://windfog-studios.github.io/The-Little-Explorer/", NULL, NULL, SW_SHOWNORMAL);
+			}
 		break;
 
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
 			CreateMainScreen();
 		break;
+
+		case ButtonAction::CONTEXTUAL_1:
+			ShellExecuteA(NULL, "open", "https://github.com/silvino00", NULL, NULL, SW_SHOWNORMAL);
+			break;
+
+		case ButtonAction::CONTEXTUAL_2:
+			ShellExecuteA(NULL, "open", "https://github.com/marcpages2020", NULL, NULL, SW_SHOWNORMAL);
+			break;
+
+		case ButtonAction::CONTEXTUAL_3:
+			ShellExecuteA(NULL, "open", "https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/License.txt", NULL, NULL, SW_SHOWNORMAL);
+			break;
 
 		case ButtonAction::QUIT:
 			App->quit = true;
@@ -129,6 +149,7 @@ void j1MainMenu::CreateMainScreen() {
 	credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 780, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
 
+	visible_menu = Menu::MAIN_MENU;
 }
 
 void j1MainMenu::CreateSettingsScreen() {
@@ -138,7 +159,9 @@ void j1MainMenu::CreateSettingsScreen() {
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
+	go_back_button->Init({ 20, 20 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
+
+	visible_menu = Menu::SETTINGS;
 }
 
 void j1MainMenu::CreateCreditsScreen() {
@@ -148,19 +171,33 @@ void j1MainMenu::CreateCreditsScreen() {
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	go_back_button->Init({ 70, 606 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
+	go_back_button->Init({ 20, 20 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
 
 	GuiImage* title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	title->Init({ 190, 40 }, { 0,0,600, 180 });
+	title->Init({ 190, 80 }, { 0,0,600, 180 });
 	title->texture = App->tex->Load("sprites/UI/title.png");
 
 	GuiText* by = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
-	by->Init({ 470,160 }, "by");
+	by->Init({ 470, 200 }, "by");
 
 	GuiText* studio = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
-	studio->Init({ 380,210 }, "Windfog Studios");
+	studio->Init({ 380,250 }, "Windfog Studios");
 
-	GuiImage* traveler = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	traveler->Init({ 780,440 }, { 0,0,199,273 });
-	traveler->texture = App->tex->Load("sprites/UI/opp_promo_traveler.png");
+	//GuiImage* traveler = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	//traveler->Init({ 800,440 }, { 0,0,199,273 });
+	//traveler->texture = App->tex->Load("sprites/UI/opp_promo_traveler.png");
+
+	GuiButton* main_webpage = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	main_webpage->Init({420,520}, {1038,619,138,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
+
+	GuiButton* silvino_medina = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	silvino_medina->Init({ 150,390 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
+
+	GuiButton* marc_pages = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	marc_pages->Init({ 625,390 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Marc Pagès Francesch", ButtonAction::CONTEXTUAL_2);
+
+	GuiButton* license = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	license->Init({ 780,25 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "License", ButtonAction::CONTEXTUAL_3);
+
+	visible_menu = Menu::CREDITS;
 }

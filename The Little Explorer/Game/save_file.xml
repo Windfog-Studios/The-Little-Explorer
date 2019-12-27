@@ -5,16 +5,15 @@
 	<textures />
 	<audio />
 	<scene>
-		<camera_frame x="469" y="619" />
+		<camera_frame x="596" y="465" />
 		<level number="1" />
 	</scene>
 	<main_menu />
 	<map />
 	<entities>
-		<player position_x="613" position_y="768" />
-		<walking_enemy position_x="1324" position_y="192" />
-		<walking_enemy position_x="641" position_y="320" />
-		<flying_enemy position_x="803" position_y="291" />
+		<player position_x="737" position_y="576" />
+		<walking_enemy position_x="1148" position_y="160" />
+		<walking_enemy position_x="693" position_y="320" />
 		<flying_enemy position_x="1504" position_y="192" />
 		<flying_enemy position_x="2496" position_y="352" />
 		<flying_enemy position_x="3709" position_y="544" />
@@ -23,26 +22,40 @@
 		<flying_enemy position_x="5373" position_y="352" />
 		<flying_enemy position_x="5856" position_y="672" />
 		<flying_enemy position_x="1536" position_y="896" />
-		<walking_enemy position_x="1570" position_y="1120" />
-		<walking_enemy position_x="2250" position_y="416" />
-		<walking_enemy position_x="1972" position_y="192" />
-		<walking_enemy position_x="1719" position_y="192" />
-		<walking_enemy position_x="4307" position_y="960" />
-		<walking_enemy position_x="4396" position_y="800" />
-		<walking_enemy position_x="4827" position_y="160" />
-		<walking_enemy position_x="4802" position_y="160" />
-		<walking_enemy position_x="6155" position_y="928" />
-		<walking_enemy position_x="2163" position_y="416" />
+		<walking_enemy position_x="1815" position_y="5895" />
+		<walking_enemy position_x="2551" position_y="5191" />
+		<walking_enemy position_x="1919" position_y="192" />
+		<walking_enemy position_x="1676" position_y="192" />
+		<walking_enemy position_x="4309" position_y="960" />
+		<walking_enemy position_x="4501" position_y="6351" />
+		<walking_enemy position_x="4900" position_y="160" />
+		<walking_enemy position_x="5021" position_y="216" />
+		<walking_enemy position_x="6421" position_y="5496" />
+		<walking_enemy position_x="2063" position_y="416" />
 		<flying_enemy position_x="4256" position_y="224" />
-		<walking_enemy position_x="784" position_y="768" />
+		<collectible position_x="2158" position_y="415" />
+		<collectible position_x="2385" position_y="177" />
+		<collectible position_x="3232" position_y="32" />
+		<collectible position_x="3104" position_y="768" />
+		<collectible position_x="2464" position_y="992" />
+		<collectible position_x="2176" position_y="1120" />
+		<collectible position_x="1517" position_y="289" />
+		<collectible position_x="3552" position_y="832" />
+		<collectible position_x="3584" position_y="416" />
+		<collectible position_x="3840" position_y="160" />
+		<collectible position_x="4288" position_y="960" />
+		<collectible position_x="4032" position_y="384" />
+		<collectible position_x="4928" position_y="480" />
+		<collectible position_x="5824" position_y="960" />
 	</entities>
 	<particles />
 	<collision />
 	<pathfinding />
-	<:anonymous />
 	<fonts />
 	<gui />
+	<:anonymous />
+	<:anonymous />
 	<renderer>
-		<camera x="-256" y="-385" />
+		<camera x="-296" y="-290" />
 	</renderer>
 </game_state>
