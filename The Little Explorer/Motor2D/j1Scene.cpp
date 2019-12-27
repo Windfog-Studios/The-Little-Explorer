@@ -438,8 +438,8 @@ void j1Scene::CreateScreenUI()
 	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 	time_text->Init({ 730, 20 }, "Time: ");
 	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
-	p2SString temp("      %i", time_left);
-	time_count->Init({ 750, 20 }, temp);
+	p2SString temp("%i", time_left);
+	time_count->Init({ 810, 20 }, temp);
 	
 	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
 	p2SString coin("     %i points", App->entities->player_pointer->score);
@@ -568,9 +568,17 @@ void j1Scene::UpdateScreenUI() {
 	
 	if (time_text != nullptr)
 	{
-		time_text->UpdateText();
+		time_left = max_time - timer.Read() * 0.001f;
+		p2SString temp("%i", time_left);
+		time_count->text = temp;
 		time_count->UpdateText();
-		score->UpdateText();
+
+		if (on_screen_score != App->entities->player_pointer->score) {
+			p2SString coin("     %i points", App->entities->player_pointer->score);
+			score->text = coin;
+			score->UpdateText();
+			on_screen_score = App->entities->player_pointer->score;
+		}
 	}
 }
 
