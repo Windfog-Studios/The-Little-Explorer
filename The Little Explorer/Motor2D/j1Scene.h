@@ -84,6 +84,9 @@ public:
 
 	bool blocked_camera;
 	bool showing_menu;
+	bool fullscreen;
+	int window_width;
+	int window_height;
 
 	//UI Info
 	

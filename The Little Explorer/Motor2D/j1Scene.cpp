@@ -36,7 +36,7 @@ j1Scene::j1Scene() : j1Module()
 	on_screen_lives = 0;
 	on_screen_score = 0;
 	on_screen_stars = 0;
-	time_discount = 0;
+	fullscreen = false;
 }
 
 // Destructor
@@ -105,7 +105,7 @@ bool j1Scene::PreUpdate()
 	{
 		if (origin_selected == true)
 		{
-			
+
 			App->pathfinding->CreatePath(origin, p);
 			origin_selected = false;
 		}
@@ -116,7 +116,7 @@ bool j1Scene::PreUpdate()
 		}
 	}
 	*/
-	
+
 	return true;
 }
 
@@ -132,7 +132,7 @@ bool j1Scene::Update(float dt)
 	bool		camera_manual_control = false;
 	camera_frame.x = -camera->x + camera_frame_x_margin;
 	camera_frame.y = -camera->y + camera_frame_y_margin;
-	
+
 	//player inputs ---------------
 	if (visible_menu == Menu::NO_MENU)
 	{
@@ -153,7 +153,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
-		
+
 	if(App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
@@ -222,7 +222,7 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->map->Draw();
-	
+
 	UpdateScreenUI();
 
 	// Debug pathfinding ------------------------------
@@ -238,7 +238,7 @@ bool j1Scene::Update(float dt)
 	Debug_rect.x = p.x;
 	Debug_rect.y = p.y;
 	if (App->collision->debug) App->render->DrawQuad(Debug_rect, 0, 0, 255,80);
-	
+
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
 	for (uint i = 0; i < path->Count(); ++i)
@@ -356,7 +356,7 @@ void j1Scene::CreatePauseMenu() {
 
 	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
-	
+
 	if ((stars.start != nullptr) && (timer.Read() < time_star1 * 1000)) {
 
 		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
@@ -387,7 +387,7 @@ void j1Scene::CreatePauseMenu() {
 		star3->Init({  420 , 225 }, { 589,124, 76, 69 });
 		star3->texture = App->tex->Load("sprites/UI/atlas2.png");
 	}
-	
+
 
 }
 
@@ -398,6 +398,12 @@ void j1Scene::CreateSettingsScreen() {
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	go_back_button->Init({ 180, 190 }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
+
+	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	fullscreen_button->Init({ 300,410 }, { 206, 697, 49,53 }, { 206, 697, 49,53 }, { 262,697,49,53 }, "", ButtonAction::CONTEXTUAL_1, true);
+
+	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	fullscreen_text->Init({ 380,406 }, "Fullscreen");
 
 }
 
@@ -416,7 +422,7 @@ void j1Scene::CreateScreenUI()
 
 	for (int i = 0; i < 3; i++)
 	{
-		
+
 		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		life->Init({ livesXpos , 20 }, { 667,15,68,63 });
 		life->texture = App->tex->Load("sprites/UI/atlas2.png");
@@ -448,7 +454,7 @@ void j1Scene::CreateScreenUI()
 	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 	p2SString temp("%i", time_left);
 	time_count->Init({ 810, 20 }, temp);
-	
+
 	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
 	p2SString coin("     %i points", App->entities->player_pointer->score);
 	score->Init({ 100, 632 }, coin);
@@ -502,7 +508,7 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
-			
+
 			App->gui->DestroyUIElement(pause_text);
 			App->gui->DestroyUIElement(resume_button);
 			App->gui->DestroyUIElement(settings_button);
@@ -511,7 +517,7 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyUIElement(star1);
 			App->gui->DestroyUIElement(star2);
 			App->gui->DestroyUIElement(star3);
-			
+
 			CreateScreenUI();
 			App->entities->blocked_movement = false;
 			showing_menu = false;
@@ -530,7 +536,23 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyUIElement(star3);
 			CreateSettingsScreen();
 			visible_menu = Menu::SETTINGS;
+
 			break;
+		case ButtonAction::CONTEXTUAL_1:
+			if (visible_menu == Menu::SETTINGS) {
+				if (!fullscreen)
+				{
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN);
+					fullscreen = true;
+				}
+				else
+				{
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_RESIZABLE);
+					fullscreen = false;
+				}
+				//window_height = App->win->width;
+				//window_height = App->win->height;
+			}
 
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
@@ -556,22 +578,22 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 }
 
 void j1Scene::UpdateScreenUI() {
-	
+
 	if ((lives.start != nullptr) && (on_screen_lives > App->entities->player_pointer->lives))
 	{
 		App->gui->DestroyUIElement(lives.end->data);
 		lives.del(lives.end);
 		on_screen_lives--;
 	}
-	
+
 	if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
-		
+
 		App->gui->DestroyUIElement(stars.end->data);
 		stars.del(stars.At(3));
 	}
 
 	if ((stars.start != nullptr) && (timer.Read() > time_star2 * 1000)) {
-		
+
 		App->gui->DestroyUIElement(stars.end->data);
 		stars.del(stars.At(2));
 	}
@@ -581,7 +603,7 @@ void j1Scene::UpdateScreenUI() {
 		App->gui->DestroyUIElement(stars.end->data);
 		stars.del(stars.At(1));
 	}
-	
+
 	if (time_text != nullptr)
 	{
 		time_left = max_time + time_discount - timer.ReadSec();
