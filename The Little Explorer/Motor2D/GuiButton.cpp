@@ -13,19 +13,21 @@ GuiButton::GuiButton(j1Module* g_callback){
 	click_rect = {0,0,0,0};
 	texture = nullptr;
 	current_rect = &normal_rect;
+	stay_clicked = false;
 }
 
 GuiButton::~GuiButton() {
 	delete text;
 }
 
-void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text, ButtonAction g_action) {
+void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover_rect, SDL_Rect g_click_rect, p2SString g_text, ButtonAction g_action, bool g_stay_clicked) {
 	screen_position = g_position;
 	texture = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
 	hover_rect = g_normal_rect;
 	click_rect = g_click_rect;
 	action = g_action;
+	stay_clicked = g_stay_clicked;
 
 	if (parent != nullptr)
 	{
@@ -53,28 +55,43 @@ bool GuiButton::CleanUp() {
 }
 
 bool GuiButton::Input() {
-	
-	current_rect = &click_rect;
-	callback->OnEvent(this, FocusEvent::CLICKED);
-	return true;
-}
 
-bool GuiButton::Update(float dt) {
-	bool ret = true;
-
-	if (OnHover())
-	{
-		current_rect = &hover_rect;
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (stay_clicked) {
+		if (current_rect == &click_rect)
+		{
+			current_rect = &normal_rect;
+		}
+		else
 		{
 			current_rect = &click_rect;
 		}
 	}
 	else
 	{
-		current_rect = &normal_rect;
+		current_rect = &click_rect;
 	}
-	
+
+	callback->OnEvent(this, FocusEvent::CLICKED);
+	return true;
+}
+
+bool GuiButton::Update(float dt) {
+	bool ret = true;
+	if (!stay_clicked){
+		if (OnHover())
+		{
+			current_rect = &hover_rect;
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				current_rect = &click_rect;
+			}
+		}
+		else
+		{
+			current_rect = &normal_rect;
+		}
+	}
+
 	if (parent != nullptr)
 	{
 		screen_position.x = parent->screen_position.x + local_position.x;

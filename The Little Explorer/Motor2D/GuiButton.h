@@ -26,7 +26,7 @@ public:
 	GuiButton(j1Module* callback);
 	~GuiButton();
 
-	void Init(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect, p2SString text, ButtonAction action = ButtonAction::NONE);
+	void Init(iPoint position, SDL_Rect normal_rect, SDL_Rect hover_rect, SDL_Rect click_rect, p2SString text, ButtonAction action = ButtonAction::NONE, bool stay_clicked = false);
 	bool Update(float dt);
 	bool CleanUp();
 	bool Input();
@@ -41,6 +41,7 @@ private:
 	GuiText*		text;
 public:
 	ButtonAction	action;
+	bool stay_clicked;
 };
 
 #endif // !_GUIBUTTON_H_

@@ -11,10 +11,12 @@
 #include "j1Window.h"
 #include "j1Audio.h"
 #include <Windows.h>
+#include "SDL/include/SDL.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
 	name.create("main_menu");
+	fullscreen = false;
 }
 
 j1MainMenu::~j1MainMenu() {}
@@ -29,6 +31,9 @@ bool j1MainMenu::Start() {
 	bool ret = true;
 	
 	App->gui->Start();
+
+	window_width = App->win->width;
+	window_width = App->win->height;
 
 	CreateMainScreen();
 	App->audio->PlayMusic("path_to_follow.ogg");
@@ -100,15 +105,32 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 		break;
 
 		case ButtonAction::CONTEXTUAL_1:
-			ShellExecuteA(NULL, "open", "https://github.com/silvino00", NULL, NULL, SW_SHOWNORMAL);
+			if (visible_menu == Menu::CREDITS) { 
+				ShellExecuteA(NULL, "open", "https://github.com/silvino00", NULL, NULL, SW_SHOWNORMAL);}
+			else if (visible_menu == Menu::SETTINGS) {
+				if (!fullscreen)
+				{
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);	
+					fullscreen = true;
+				}
+				else
+				{
+					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_RESIZABLE);
+					fullscreen = false;
+				}
+				window_width = App->win->width;
+				window_width = App->win->height;
+			}
 			break;
 
 		case ButtonAction::CONTEXTUAL_2:
-			ShellExecuteA(NULL, "open", "https://github.com/marcpages2020", NULL, NULL, SW_SHOWNORMAL);
+			if (visible_menu == Menu::CREDITS) { 
+				ShellExecuteA(NULL, "open", "https://github.com/marcpages2020", NULL, NULL, SW_SHOWNORMAL);}
 			break;
 
 		case ButtonAction::CONTEXTUAL_3:
-			ShellExecuteA(NULL, "open", "https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/License.txt", NULL, NULL, SW_SHOWNORMAL);
+			if (visible_menu == Menu::CREDITS) { 
+				ShellExecuteA(NULL, "open", "https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/License.txt", NULL, NULL, SW_SHOWNORMAL);}
 			break;
 
 		case ButtonAction::QUIT:
@@ -126,27 +148,27 @@ void j1MainMenu::CreateMainScreen() {
 	camera = App->render->camera;
 	_TTF_Font* principal_font = App->font->Load("fonts/Some Time Later.otf", 50);
 
-	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int)App->win->width, (int)App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
-	title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	GuiImage* title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 200,100 }, { 0,0,600, 180 });
 	title->texture = App->tex->Load("sprites/UI/title.png");
 	
-	start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiButton* start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	start_button->Init({ 400, 330 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Start", ButtonAction::PLAY);
 	
-	continue_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiButton* continue_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	continue_button->Init({ 400, 440 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "Continue", ButtonAction::CONTINUE);
 
-	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiButton* settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	settings_button->Init({ 400, 540 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Settings", ButtonAction::SETTINGS);
 
-	exit_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiButton* exit_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	exit_button->Init({ 50, 626 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "Exit", ButtonAction::QUIT);
 
-	credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiButton* credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 780, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
 
 	visible_menu = Menu::MAIN_MENU;
@@ -154,23 +176,32 @@ void j1MainMenu::CreateMainScreen() {
 
 void j1MainMenu::CreateSettingsScreen() {
 	//TODO: create slider
-	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
+	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	background->Init({ 0,0 }, { 0,0,(int)App->win->width,(int)App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
-	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiImage* menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	menu_background->Init({ 250, 250 }, { 0,0,512,264 });
+
+	GuiButton* go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 20, 20 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
+
+	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	fullscreen_button->Init({ 300,410 }, { 206, 697, 49,53 }, { 206, 697, 49,53 }, { 262,697,49,53 }, "", ButtonAction::CONTEXTUAL_1,true);
+
+	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	fullscreen_text->Init({ 380,406 }, "Fullscreen");
 
 	visible_menu = Menu::SETTINGS;
 }
 
 void j1MainMenu::CreateCreditsScreen() {
 	
-	background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
 
-	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	GuiButton* go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	go_back_button->Init({ 20, 20 }, { 897,618,114,94 }, { 897,618,114,94 }, { 897,618,114,94 }, "", ButtonAction::GO_BACK);
 
 	GuiImage* title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);

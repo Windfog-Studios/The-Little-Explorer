@@ -28,18 +28,10 @@ public:
 	void CreateCreditsScreen();
 
 private:
-
-	GuiImage* lives;
-	GuiImage* background;
-	GuiImage* menu_background;
-	GuiImage* title;
-	GuiButton* start_button;
-	GuiButton* continue_button;
-	GuiButton* settings_button;
-	GuiButton* credits_button;
-	GuiButton* exit_button;
-	GuiButton* go_back_button;
 	Menu visible_menu;
+	int window_width;
+	int window_height;
+	bool fullscreen;
 };
 
 #endif // !_j1MAIN_MENU_H_
