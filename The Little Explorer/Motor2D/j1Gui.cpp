@@ -201,7 +201,6 @@ void j1Gui::DestroyUIlist(p2List<j1UI_Element*> list) {
 	{
 		item->data->CleanUp();
 	}
-	list.clear();
 }
 
 void j1Gui::DebugDraw() {

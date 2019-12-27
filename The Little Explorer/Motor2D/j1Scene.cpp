@@ -341,69 +341,78 @@ void j1Scene::CreatePauseMenu() {
 
 	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	menu_background->Init({ 250, 250 }, { 0,0,512,264 });
+	//pause_menu.add(menu_background);
 
 	pause_text = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,menu_background);
 	pause_text->Init({ 298, 155 }, { 897,0,420,104 });
+	//pause_menu.add(pause_text);
 
 	resume_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	resume_button->Init({ 445, 325 }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::CONTINUE);
+	//pause_menu.add(resume_button);
 
 	home_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	home_button->Init({ 285, 325 }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 },"",ButtonAction::QUIT);
-
-	//restart_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	//restart_button->Init({ 445 - camera.x,325 - camera.y }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::RESTART);
+	//pause_menu.add(home_button);
 
 	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
+	//pause_menu.add(settings_button);
 
 	if ((stars.start != nullptr) && (timer.Read() < time_star1 * 1000)) {
 
 		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
-		star1->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
-		star2->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star3->Init({ 520 , 225 }, { 589,124, 76, 69 });
-		star3->texture = App->tex->Load("sprites/UI/atlas2.png");
+
+		//pause_menu.add(star1);
+		//pause_menu.add(star2);
+		//pause_menu.add(star3);
 	}
 
 	if ((stars.start != nullptr) && (timer.Read() < time_star2 * 1000) && (timer.Read() > time_star1 * 1000)) {
 		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
-		star1->texture = App->tex->Load("sprites/UI/atlas2.png");
 
 		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
-		star2->texture = App->tex->Load("sprites/UI/atlas2.png");
+
+		//pause_menu.add(star1);
+		//pause_menu.add(star2);
 	}
 
 	if ((stars.start != nullptr) && (timer.Read() < time_star3 * 1000) && (timer.Read() > time_star2 * 1000)) {
 		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star3->Init({  420 , 225 }, { 589,124, 76, 69 });
-		star3->texture = App->tex->Load("sprites/UI/atlas2.png");
+
+		//pause_menu.add(star1);
 	}
 
-
+	
 }
 
 void j1Scene::CreateSettingsScreen() {
 
 	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	menu_background->Init({ 250,250 }, { 0,0,512,264 });
+	//settings_screen.add(menu_background);
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	go_back_button->Init({ 180, 190 }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
+	//settings_screen.add(go_back_button);
 
 	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	fullscreen_button->Init({ 300,410 }, { 206, 697, 49,53 }, { 206, 697, 49,53 }, { 262,697,49,53 }, "", ButtonAction::CONTEXTUAL_1, true);
+	//settings_screen.add(fullscreen_button);
 
 	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
 	fullscreen_text->Init({ 380,406 }, "Fullscreen");
+	//settings_screen.add(fullscreen_text);
 
 }
 
@@ -429,35 +438,40 @@ void j1Scene::CreateScreenUI()
 		livesXpos += livesXDistance;
 		lives.add(life);
 		on_screen_lives++;
+		//on_screen.add(life);
 	}
 
 	for (int i = 0; i < 3; i++)
 	{
 		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 		star->Init({ starsXpos , 20 }, { 589,124, 76, 69});
-		star->texture = App->tex->Load("sprites/UI/atlas2.png");
 		starsXpos += starsXDistance;
 		stars.add(star);
+		//on_screen.add(star);
 	}
 
 	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 	coins->Init({ 30, 625 }, { 9,865,294,69 });
-	coins->texture = App->tex->Load("sprites/UI/atlas2.png");
+	//on_screen.add(coins);
 
 	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
 	timer_background->Init({ 700, 20 }, { 9,942,294,69 });
-	timer_background->texture = App->tex->Load("sprites/UI/atlas2.png");
+	//on_screen.add(timer_background);
 
 	time_left = time_left - timer.ReadSec() * 0.001f;
 	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 	time_text->Init({ 730, 20 }, "Time: ");
+	//on_screen.add(time_text);
+
 	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
 	p2SString temp("%i", time_left);
 	time_count->Init({ 810, 20 }, temp);
+	//on_screen.add(time_count);
 
 	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
 	p2SString coin("     %i points", App->entities->player_pointer->score);
 	score->Init({ 100, 632 }, coin);
+	//on_screen.add(score);
 	/*
 	slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this, nullptr, true, true);
 	slider->Init();
@@ -508,32 +522,19 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::CONTINUE:
-
-			App->gui->DestroyUIElement(pause_text);
-			App->gui->DestroyUIElement(resume_button);
-			App->gui->DestroyUIElement(settings_button);
-			App->gui->DestroyUIElement(home_button);
-			App->gui->DestroyUIElement(menu_background);
-			App->gui->DestroyUIElement(star1);
-			App->gui->DestroyUIElement(star2);
-			App->gui->DestroyUIElement(star3);
-
+			App->gui->DestroyAllGui();
 			CreateScreenUI();
+			//App->gui->DestroyUIlist(pause_menu);
+			//pause_menu.clear();
 			App->entities->blocked_movement = false;
 			showing_menu = false;
 			visible_menu = Menu::NO_MENU;
 			break;
 
 		case ButtonAction::SETTINGS:
-			//App->gui->DestroyAllGui();
-			App->gui->DestroyUIElement(pause_text);
-			App->gui->DestroyUIElement(resume_button);
-			App->gui->DestroyUIElement(settings_button);
-			App->gui->DestroyUIElement(home_button);
-			App->gui->DestroyUIElement(menu_background);
-			App->gui->DestroyUIElement(star1);
-			App->gui->DestroyUIElement(star2);
-			App->gui->DestroyUIElement(star3);
+			App->gui->DestroyAllGui();
+			//App->gui->DestroyUIlist(pause_menu);
+			pause_menu.clear();
 			CreateSettingsScreen();
 			visible_menu = Menu::SETTINGS;
 
@@ -556,6 +557,8 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::GO_BACK:
 			App->gui->DestroyAllGui();
+			//App->gui->DestroyUIlist(settings_screen);
+			//settings_screen.clear();
 			CreatePauseMenu();
 			visible_menu = Menu::PAUSE;
 			break;
