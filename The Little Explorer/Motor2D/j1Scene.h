@@ -121,6 +121,9 @@ public:
 	iPoint initial_camera_position;
 
 	//pause menu
+	p2List<j1UI_Element*> pause_menu;
+	p2List<j1UI_Element*> settings_screen;
+	p2List<j1UI_Element*> on_screen;
 	GuiImage* menu_background;
 	GuiImage* pause_text;
 	GuiButton* home_button;
