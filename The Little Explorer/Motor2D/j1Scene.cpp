@@ -440,7 +440,7 @@ void j1Scene::CreateScreenUI()
 	time_count->Init({ 750, 20 }, temp);
 	
 	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
-	p2SString coin("     %i coins", App->entities->player_pointer->score);
+	p2SString coin("     %i points", App->entities->player_pointer->score);
 	score->Init({ 100, 632 }, coin);
 	/*
 	slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this, nullptr, true, true);

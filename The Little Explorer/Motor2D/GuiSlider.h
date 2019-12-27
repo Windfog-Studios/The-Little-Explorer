@@ -19,7 +19,6 @@ public:
 	bool Draw();
 
 	GuiButton* scrollButton;
-	float value;
 
 private:
 	SDL_Texture* texture;
