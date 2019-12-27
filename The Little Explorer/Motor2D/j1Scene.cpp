@@ -26,7 +26,7 @@ j1Scene::j1Scene() : j1Module()
 	blocked_camera = false;
 	score = 0;
 	max_time = 200;
-	time_star1 = 10;
+	time_star1 = 100;
 	time_star2 = 150;
 	time_star3 = 190;
 	camera_margin = 5;
@@ -442,8 +442,10 @@ void j1Scene::CreateScreenUI()
 	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
 	p2SString coin("     %i coins", App->entities->player_pointer->score);
 	score->Init({ 100, 632 }, coin);
-	
-
+	/*
+	slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this, nullptr, true, true);
+	slider->Init();
+	*/
 }
 
 void j1Scene::LevelChange(Map unloading_map, Map loading_map) {

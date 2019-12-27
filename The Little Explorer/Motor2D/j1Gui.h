@@ -43,7 +43,7 @@ public:
 	void DestroyUIElement(j1UI_Element* element);
 	void DestroyAllGui();
 
-	const SDL_Texture* GetAtlas() const;
+	SDL_Texture* GetAtlas() const;
 
 	void DebugDraw();
 

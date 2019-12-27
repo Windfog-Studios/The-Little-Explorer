@@ -96,6 +96,7 @@ public:
 	GuiText* time_text;
 	GuiText* time_count;
 	GuiText* score;
+	//GuiSlider* slider;
 	p2List<GuiImage*> lives;
 	p2List<GuiImage*> stars;
 	GuiImage* star1;

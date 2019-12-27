@@ -51,6 +51,8 @@ public:
 
 	bool draggable;
 	bool interactable;
+	bool enabled = false;
+	bool hover = false;
 	FocusEvent focus_event;
 
 	j1Module* callback = nullptr;
@@ -58,6 +60,7 @@ public:
 
 public:
 	SDL_Rect rect;
+	SDL_Texture* texture = nullptr;
 };
 
 #endif // !j1UIELEMENT_H
