@@ -56,6 +56,7 @@ public:
 	//void ResetLevel();
 	void LevelChange(Map unloading_map, Map loading_map);
 	void CreatePauseMenu();
+	void DeletePauseMenu();
 	void CreateSettingsScreen();
 
 	void OnEvent(j1UI_Element*, FocusEvent);
@@ -97,7 +98,9 @@ public:
 	GuiText* score;
 	p2List<GuiImage*> lives;
 	p2List<GuiImage*> stars;
-	GuiImage* no_lives;
+	GuiImage* star1;
+	GuiImage* star2;
+	GuiImage* star3;
 	GuiImage* coins;
 	GuiImage* timer_background;
 	

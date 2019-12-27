@@ -347,17 +347,38 @@ void j1Scene::CreatePauseMenu() {
 	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
 	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
 	
+	if ((stars.start != nullptr) && (timer.Read() < time_star1 * 1000)) {
 
-	int starsXpos = 420;
-	int starsXDistance = 50;
-	for (int i = 0; i < 3; i++)
-	{
-		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star->Init({ starsXpos , 225 }, { 589,124, 76, 69 });
-		star->texture = App->tex->Load("sprites/UI/atlas2.png");
-		starsXpos += starsXDistance;
-		stars.add(star);
+		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
+		star1->texture = App->tex->Load("sprites/UI/atlas2.png");
+
+		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
+		star2->texture = App->tex->Load("sprites/UI/atlas2.png");
+
+		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star3->Init({ 520 , 225 }, { 589,124, 76, 69 });
+		star3->texture = App->tex->Load("sprites/UI/atlas2.png");
 	}
+
+	if ((stars.start != nullptr) && (timer.Read() < time_star2 * 1000) && (timer.Read() > time_star1 * 1000)) {
+		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
+		star1->texture = App->tex->Load("sprites/UI/atlas2.png");
+
+		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
+		star2->texture = App->tex->Load("sprites/UI/atlas2.png");
+	}
+
+	if ((stars.start != nullptr) && (timer.Read() < time_star3 * 1000) && (timer.Read() > time_star2 * 1000)) {
+		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star3->Init({  420 , 225 }, { 589,124, 76, 69 });
+		star3->texture = App->tex->Load("sprites/UI/atlas2.png");
+	}
+	
+
 }
 
 void j1Scene::CreateSettingsScreen() {
@@ -475,6 +496,9 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyUIElement(settings_button);
 			App->gui->DestroyUIElement(home_button);
 			App->gui->DestroyUIElement(menu_background);
+			App->gui->DestroyUIElement(star1);
+			App->gui->DestroyUIElement(star2);
+			App->gui->DestroyUIElement(star3);
 			
 			CreateScreenUI();
 			App->entities->blocked_movement = false;
