@@ -13,6 +13,7 @@ j1Collectible::j1Collectible() : j1Entity(EntityType::COLLECTIBLE) {
 	if (App->entities->reference_collectible != nullptr)
 	{
 		texture = App->entities->reference_collectible->texture;
+		die_fx = App->entities->reference_collectible->die_fx;
 		collider = App->collision->AddCollider({ position.x, position.y, 32,32 }, COLLIDER_COLLECTIBLE, this);
 		player = App->entities->player_pointer;
 		score = 20;
@@ -24,6 +25,10 @@ j1Collectible::~j1Collectible(){}
 
 bool j1Collectible::Awake(pugi::xml_node& config) {
 	bool ret = true;
+
+	die_fx_path = config.child("coin_sound").attribute("source").as_string();
+	die_fx = App->audio->LoadFx(die_fx_path.GetString());
+
 	return true;
 }
 
@@ -56,6 +61,7 @@ void j1Collectible::OnCollision(Collider* c1, Collider* c2) {
 	case COLLIDER_PLAYER:
 		player->score += score;
 		App->entities->DestroyEntity(this);
+		App->audio->PlayFx(die_fx);
 	break;
 
 	default:

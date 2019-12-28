@@ -72,7 +72,8 @@
       <detection_range value="300" />
     </flying_enemy>
     <collectible>
-
+      <folder>audio/fx</folder>
+      <coin_sound source="Coin.wav"/>
     </collectible>
   </entities>
 
