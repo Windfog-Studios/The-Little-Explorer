@@ -175,7 +175,6 @@ void j1MainMenu::CreateMainScreen() {
 }
 
 void j1MainMenu::CreateSettingsScreen() {
-	//TODO: create slider
 	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int)App->win->width,(int)App->win->height });
 	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");

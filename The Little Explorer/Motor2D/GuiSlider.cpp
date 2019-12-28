@@ -32,6 +32,8 @@ void GuiSlider::Init(iPoint position, SDL_Rect scrollbar_section, SDL_Rect scrol
 }
 
 bool GuiSlider::CleanUp() {
+	App->gui->DestroyUIElement(scroll_thumb);
+	App->gui->DestroyUIElement(scrollbar);
 	return true;
 }
 

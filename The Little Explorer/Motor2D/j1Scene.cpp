@@ -414,6 +414,9 @@ void j1Scene::CreateSettingsScreen() {
 	fullscreen_text->Init({ 380,406 }, "Fullscreen");
 	settings_screen.add(fullscreen_text);
 
+	GuiSlider* volume_slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
+	volume_slider->Init({ 100, 330 }, { 0,280,802,33 }, { 56,750,68,46 });
+	settings_screen.add(volume_slider);
 }
 
 void j1Scene::CreateScreenUI()
@@ -573,6 +576,10 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 		default:
 			break;
 		}
+	}
+
+	if (element->type == UI_Type::SLIDER) {
+		App->audio->ChangeVolume(element->output_value);
 	}
 }
 
