@@ -56,8 +56,10 @@ bool GuiButton::CleanUp() {
 	bool ret = true;
 	text->CleanUp();
 	delete text;
+	parent = nullptr;
 	text = nullptr;
 	texture = nullptr;
+	callback = nullptr;
 	return ret;
 }
 
