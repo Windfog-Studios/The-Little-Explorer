@@ -192,7 +192,10 @@ void j1MainMenu::CreateSettingsScreen() {
 	fullscreen_text->Init({ 380,406 }, "Fullscreen");
 
 	GuiSlider* slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
-	slider->Init({ 100, 300 }, { 0,280,802,33 }, { 56,750,68,46 });
+	slider->Init({ 285, 350 }, { 7,281,438,37 }, { 56,750,69,52 });
+
+	GuiText* music_volume = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	music_volume->Init({ 290,280 }, "Music Volume");
 
 	visible_menu = Menu::SETTINGS;
 }
