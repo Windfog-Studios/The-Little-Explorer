@@ -36,11 +36,12 @@ bool j1MainMenu::Start() {
 	window_width = App->win->width;
 	window_width = App->win->height;
 
-	CreateMainScreen();
 	App->audio->PlayMusic("path_to_follow.ogg");
 	main_menu_background_tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
 	main_title_tex = App->tex->Load("sprites/UI/title.png");
-	visible_menu = Menu::MAIN_MENU;
+
+	CreateMainScreen();
+
 	return ret;
 }
 

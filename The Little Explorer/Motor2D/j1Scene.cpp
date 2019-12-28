@@ -25,7 +25,7 @@ j1Scene::j1Scene() : j1Module()
 
 	blocked_camera = false;
 	score = 0;
-	max_time = 200;
+	max_time = relative_max_time =200;
 	time_star1 = 100;
 	time_star2 = 150;
 	time_star3 = 190;
@@ -300,8 +300,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 			LevelChange(NO_MAP, LEVEL_2);
 	}
 
-	time_left = data.child("time_left").attribute("value").as_int();
-	time_discount = max_time - time_left;
+	relative_max_time = data.child("time_left").attribute("value").as_int();
 	timer.Start();
 
 	return true;
@@ -362,6 +361,7 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			visible_menu = Menu::MAIN_MENU;
 			on_screen_lives = 0;
 			on_screen_score = 0;
+			relative_max_time = max_time;
 			break;
 
 		default:
@@ -403,7 +403,7 @@ void j1Scene::UpdateScreenUI() {
 
 	if (time_text != nullptr)
 	{
-		time_left = max_time - timer.ReadSec();
+		time_left = relative_max_time - timer.ReadSec();
 		p2SString temp("%i", time_left);
 		time_count->text = temp;
 		time_count->UpdateText();
@@ -504,8 +504,6 @@ void j1Scene::CreatePauseMenu() {
 
 		pause_menu.add(star1);
 	}
-
-	
 }
 
 void j1Scene::CreateSettingsScreen() {

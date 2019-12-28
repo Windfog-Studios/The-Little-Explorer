@@ -142,8 +142,8 @@ bool j1Console::CleanUp() {
 	for (p2List_item<GuiText*>* item = on_screen_log.start; item != nullptr; item = item->next)
 	{
 		App->gui->DestroyUIElement(item->data);
-		on_screen_log.del(item);
 	}
+	on_screen_log.clear();
 
 	return ret;
 }
@@ -167,7 +167,7 @@ void j1Console::CreateInterface() {
 		GuiText* log_text = new GuiText(this);
 		if (item->prev == nullptr)
 		{
-			log_text->Init({ 20,10-App->render->camera.y }, item->data, CONSOLE_FONT);
+			log_text->Init({ 20 -App->render->camera.x, 10-App->render->camera.y }, item->data, CONSOLE_FONT);
 		}
 		else
 		{

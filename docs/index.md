@@ -1,6 +1,12 @@
-﻿## Introduction
+﻿# The Little Explorer
+
+## Introduction
 The Little Explorer is a platformer game developed by Marc Pagès and Silvino Medina. We both are students in CITM, a university located in Terrassa, Catalonia, Spain. 
 This project is made for the Game Development class in which students learn the basics for programming a video game from almost scratch.
+
+## The Game
+
+In this platformer game you will guide the Little explorer Tilo through two different levels in which you will be able to collect coins while defeating enemies jumping on them. 
 
 ## Team 
 
@@ -14,6 +20,7 @@ This project is made for the Game Development class in which students learn the 
 - Character Movement
 - AI Programming
 - GUI basics
+- Pause menu
 - Main Menu
 - Console
 - Collider and particles implementation

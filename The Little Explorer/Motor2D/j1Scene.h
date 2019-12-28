@@ -95,6 +95,7 @@ public:
 	//int score;
 	int time_left;
 	int max_time;
+	int relative_max_time;
 	int time_star1;
 	int time_star2;
 	int time_star3;
