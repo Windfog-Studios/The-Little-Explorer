@@ -82,7 +82,7 @@ bool GuiInputText::Update(float dt) {
 	if (usingAtlas) background->Update(dt);
 	text->Update(dt);
 
-	if (text->text.GetCapacity() > 0)
+	if (text->text.Length() > 0)
 	{
 		App->font->CalcSize(text->text.GetString(), width, cursor.y, App->font->console_font);
 		cursor.x = background->GetScreenRect().x + cursor.w + 20 + width;
@@ -99,7 +99,7 @@ bool GuiInputText::Draw() {
 
 	text->Draw();
 
-	if (focused)App->render->DrawQuad(cursor, 255, 255, 255, 255);
+	if (focused) App->render->DrawQuad(cursor, 255, 255, 255, 255);
 
 	return true;
 }

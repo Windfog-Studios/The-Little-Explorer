@@ -229,18 +229,14 @@ void j1MainMenu::CreateCreditsScreen() {
 	GuiText* studio = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
 	studio->Init({ 380,250 }, "Windfog Studios");
 
-	//GuiImage* traveler = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	//traveler->Init({ 800,440 }, { 0,0,199,273 });
-	//traveler->texture = App->tex->Load("sprites/UI/opp_promo_traveler.png");
-
 	GuiButton* main_webpage = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	main_webpage->Init({420,510}, {1036,618,137,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
+	main_webpage->Init({420,502}, {1036,618,137,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
 
 	GuiButton* silvino_medina = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	silvino_medina->Init({ 80,365 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
+	silvino_medina->Init({ 80,360 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
 
 	GuiButton* marc_pages = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	marc_pages->Init({ 525,365 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Marc Pagès Francesch", ButtonAction::CONTEXTUAL_2);
+	marc_pages->Init({ 525,360 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Marc Pagès Francesch", ButtonAction::CONTEXTUAL_2);
 
 	GuiButton* license = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	license->Init({ 780,25 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "License", ButtonAction::CONTEXTUAL_3);

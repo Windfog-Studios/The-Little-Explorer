@@ -64,7 +64,3 @@ bool GuiSlider::Update(float dt) {
 	return ret;
 }
 
-bool GuiSlider::Draw() {
-
-	return true;
-}

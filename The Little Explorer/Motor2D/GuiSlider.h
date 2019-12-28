@@ -17,7 +17,6 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 	bool Input();
-	bool Draw();
 
 private:
 	GuiImage*		scrollbar;

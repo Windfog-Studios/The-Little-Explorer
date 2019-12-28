@@ -54,10 +54,8 @@ bool j1Gui::PreUpdate()
 		}
 		else
 		{
-
 			iPoint mouse_motion;
 			App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 				if ((item->data->draggable) && (focused_element == item->data)) {
@@ -136,8 +134,7 @@ bool j1Gui::PostUpdate()
 		item->data->Draw();
 	}
 
-	if (debug)
-		DebugDraw();
+	if (debug) DebugDraw();
 
 	return true;
 }

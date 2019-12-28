@@ -11,7 +11,6 @@
 GuiButton::GuiButton(j1Module* g_callback){
 	callback = g_callback;
 	text = new GuiText();
-	click_rect = {0,0,0,0};
 	texture = nullptr;
 	current_rect = &normal_rect;
 	stay_clicked = false;
@@ -57,8 +56,8 @@ bool GuiButton::CleanUp() {
 	bool ret = true;
 	text->CleanUp();
 	delete text;
-	parent = nullptr;
 	text = nullptr;
+	parent = nullptr;
 	texture = nullptr;
 	callback = nullptr;
 	return ret;

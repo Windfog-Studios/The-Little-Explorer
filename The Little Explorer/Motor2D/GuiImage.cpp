@@ -31,21 +31,6 @@ bool GuiImage::CleanUp() {
 	return ret;
 }
 
-
-void GuiImage::EmptyInit(SDL_Rect empty_rect) {
-	screen_position.x = rect.x = empty_rect.x;
-	screen_position.y = rect.y = empty_rect.y;
-	rect.w = empty_rect.w;
-	rect.h = empty_rect.h;
-
-	if (parent != nullptr)
-	{
-		local_position.x = screen_position.x - parent->screen_position.x;
-		local_position.y = screen_position.y - parent->screen_position.y;
-	}
-}
-
-
 bool GuiImage::Update(float dt) {
 	bool ret = true;
 	if ((parent != nullptr)&&(parent->draggable))

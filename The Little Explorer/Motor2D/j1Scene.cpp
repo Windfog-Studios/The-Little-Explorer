@@ -25,10 +25,12 @@ j1Scene::j1Scene() : j1Module()
 
 	blocked_camera = false;
 	score = 0;
+	
 	max_time = relative_max_time =200;
 	time_star1 = 100;
 	time_star2 = 150;
 	time_star3 = 190;
+
 	camera_margin = 5;
 	initial_camera_position = { 0,0 };
 	showing_menu = false;
@@ -266,7 +268,7 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	GameOver();
 	return true;
 }
 
@@ -344,8 +346,6 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 					SDL_SetWindowFullscreen(App->win->window, SDL_WINDOW_RESIZABLE);
 					fullscreen = false;
 				}
-				//window_height = App->win->width;
-				//window_height = App->win->height;
 			}
 
 		case ButtonAction::GO_BACK:
@@ -402,7 +402,7 @@ void j1Scene::UpdateScreenUI() {
 		time_left = relative_max_time - timer.ReadSec();
 		p2SString temp("%i", time_left);
 		time_count->text.Clear();
-		if(temp.GetCapacity() > 0) time_count->text = temp;
+		if(temp.Length() > 0) time_count->text = temp;
 		time_count->UpdateText();
 
 		if (on_screen_score != App->entities->player_pointer->score) {
