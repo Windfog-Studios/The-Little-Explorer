@@ -161,7 +161,6 @@ void j1Console::CreateInterface() {
 	App->gui->focused_element = command_input;
 	command_input->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
 
-	iPoint position = { 10,10 };
 	for (p2List_item<p2SString>* item = log_record.start; item != nullptr; item = item->next)
 	{
 		GuiText* log_text = new GuiText(this);
@@ -171,7 +170,7 @@ void j1Console::CreateInterface() {
 		}
 		else
 		{
-			log_text->Init({ 20, (int)(on_screen_log.end->data->screen_position.y + on_screen_log.end->data->rect.h)}, item->data, CONSOLE_FONT);
+			log_text->Init({ 20 - App->render->camera.x, (int)(on_screen_log.end->data->screen_position.y + on_screen_log.end->data->rect.h)}, item->data, CONSOLE_FONT);
 		}
 		on_screen_log.add(log_text);
 	}

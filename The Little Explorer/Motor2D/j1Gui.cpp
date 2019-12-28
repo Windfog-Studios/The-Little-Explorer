@@ -208,6 +208,7 @@ void j1Gui::DestroyAllGui() {
 	}
 	
 	ui_elements.clear();
+	focused_element = nullptr;
 }
 
 void j1Gui::DestroyUIlist(p2List<j1UI_Element*> list) {

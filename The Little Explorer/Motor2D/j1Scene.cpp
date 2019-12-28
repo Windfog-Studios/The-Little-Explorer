@@ -354,16 +354,7 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 			//go to main menu
 		case ButtonAction::QUIT:
-			App->gui->DestroyAllGui();
-			App->render->camera.x = 0;
-			App->render->camera.y = 0;
-			App->entities->DestroyAllEntities();
-			App->map->CleanUp();
-			App->main_menu->CreateMainScreen();
-			visible_menu = Menu::MAIN_MENU;
-			on_screen_lives = 0;
-			on_screen_score = 0;
-			relative_max_time = max_time;
+			GameOver();
 			break;
 
 		default:
@@ -407,11 +398,13 @@ void j1Scene::UpdateScreenUI() {
 	{
 		time_left = relative_max_time - timer.ReadSec();
 		p2SString temp("%i", time_left);
-		time_count->text = temp;
+		time_count->text.Clear();
+		if(temp.GetCapacity() > 0) time_count->text = temp;
 		time_count->UpdateText();
 
 		if (on_screen_score != App->entities->player_pointer->score) {
 			p2SString coin("     %i points", App->entities->player_pointer->score);
+			score->text.Clear();
 			score->text = coin;
 			score->UpdateText();
 			on_screen_score = App->entities->player_pointer->score;
@@ -445,9 +438,22 @@ void j1Scene::OnCommand(p2SString command) {
 
 void j1Scene::GameOver() {
 	App->gui->DestroyAllGui();
+	on_screen_ui.clear();
+	settings_screen.clear();
+	pause_menu.clear();
+	App->map->CleanUp();
 	App->entities->DestroyAllEntities();
+	on_screen_lives = 0;
+	on_screen_score = 0;
+	relative_max_time = max_time;
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
+	//delete score;
+	score = nullptr;
+	//delete time_text;
+	time_text = nullptr;
+	//delete time_count;
+	time_count = nullptr;
 	App->main_menu->CreateMainScreen();
 }
 

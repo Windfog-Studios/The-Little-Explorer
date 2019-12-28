@@ -158,7 +158,6 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 void j1MainMenu::CreateMainScreen() {
 	SDL_Rect camera;
 	camera = App->render->camera;
-	//_TTF_Font* principal_font = App->font->Load("fonts/Some Time Later.otf", 50);
 
 	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int)App->win->width, (int)App->win->height });
