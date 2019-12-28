@@ -403,7 +403,7 @@ void j1Scene::CreateSettingsScreen() {
 	settings_screen.add(menu_background);
 
 	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	go_back_button->Init({ 180, 190 }, { 897,477,138,142 }, { 897,477,138,142 }, { 1038,476,138,142 }, "", ButtonAction::GO_BACK);
+	go_back_button->Init({ 200, 200 }, { 895,474,96,99 }, { 895,474,96,99 }, { 993,474,96,99 }, "", ButtonAction::GO_BACK);
 	settings_screen.add(go_back_button);
 
 	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
@@ -415,8 +415,11 @@ void j1Scene::CreateSettingsScreen() {
 	settings_screen.add(fullscreen_text);
 
 	GuiSlider* volume_slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
-	volume_slider->Init({ 100, 330 }, { 0,280,802,33 }, { 56,750,68,46 });
+	volume_slider->Init({ 285, 350 }, { 7,281,438,37 }, { 56,750,69,52 });
 	settings_screen.add(volume_slider);
+
+	GuiText* music_volume = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	music_volume->Init({ 290,280 }, "Music Volume");
 }
 
 void j1Scene::CreateScreenUI()
@@ -474,10 +477,7 @@ void j1Scene::CreateScreenUI()
 	p2SString coin("     %i points", App->entities->player_pointer->score);
 	score->Init({ 100, 632 }, coin);
 	on_screen_ui.add(score);
-	/*
-	slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this, nullptr, true, true);
-	slider->Init();
-	*/
+
 	visible_menu = Menu::SCREEN_UI;
 }
 
