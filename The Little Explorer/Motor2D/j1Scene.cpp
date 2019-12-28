@@ -135,7 +135,7 @@ bool j1Scene::Update(float dt)
 	camera_frame.y = -camera->y + camera_frame_y_margin;
 
 	//player inputs ---------------
-	if (visible_menu == Menu::NO_MENU)
+	if (visible_menu == Menu::SCREEN_UI)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 			App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
@@ -149,7 +149,6 @@ bool j1Scene::Update(float dt)
 			App->fade_to_black->FadeToBlack(current_level, current_level);
 			App->entities->player_pointer->position = App->entities->player_pointer->initialPosition;
 		}
-
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -404,8 +403,7 @@ void j1Scene::UpdateScreenUI() {
 
 	if (time_text != nullptr)
 	{
-		time_left = max_time + time_discount - timer.ReadSec();
-		time_discount = 0;
+		time_left = max_time - timer.ReadSec();
 		p2SString temp("%i", time_left);
 		time_count->text = temp;
 		time_count->UpdateText();

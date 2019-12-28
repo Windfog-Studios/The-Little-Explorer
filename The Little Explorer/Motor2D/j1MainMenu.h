@@ -32,6 +32,8 @@ private:
 	int window_width;
 	int window_height;
 	bool fullscreen;
+	SDL_Texture* main_menu_background_tex;
+	SDL_Texture* main_title_tex;
 };
 
 #endif // !_j1MAIN_MENU_H_
