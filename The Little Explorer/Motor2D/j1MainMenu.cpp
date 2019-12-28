@@ -77,9 +77,12 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 				RELEASE_ARRAY(data);
 			}
 
-			if (App->console->isVisible) App->console->DestroyInterface();
+			if (App->console->isVisible) 
+				App->console->DestroyInterface();
 			App->scene->CreateScreenUI();
 			App->entities->player_pointer->lives = 3;
+			App->scene->relative_max_time = App->scene->max_time;
+			App->entities->blocked_movement = false;
 			App->scene->visible_menu = Menu::SCREEN_UI;
 			break;
 

@@ -59,6 +59,7 @@ public:
 	j1Module* callback = nullptr;
 	j1UI_Element* parent = nullptr;
 
+	bool to_delete;
 public:
 	SDL_Rect rect;
 	SDL_Texture* texture = nullptr;

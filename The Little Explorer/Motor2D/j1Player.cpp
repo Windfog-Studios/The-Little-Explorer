@@ -112,7 +112,7 @@ bool j1Player::Awake(pugi::xml_node& config) {
 bool j1Player::Start(){
 
 	current_speed = { 0,0 };
-
+	score = 0;
 	return true;
 }
 

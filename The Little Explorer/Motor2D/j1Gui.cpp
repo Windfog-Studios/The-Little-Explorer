@@ -48,38 +48,47 @@ bool j1Gui::PreUpdate()
 
 	for (p2List_item<j1UI_Element*>* item = ui_elements.end; item != nullptr; item = item->prev)
 	{
-		iPoint mouse_motion;
-		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+		if (item->data->to_delete)
+		{
+			DestroyUIElement(item->data);
+		}
+		else
+		{
+
+			iPoint mouse_motion;
+			App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
 
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
-					if ((item->data->draggable)&&(focused_element == item->data)) {
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+				if ((item->data->draggable) && (focused_element == item->data)) {
 
-						item->data->screen_position.x += mouse_motion.x;
-						
-						if (item->data->parent->type != UI_Type::SLIDER)
-						{
-							item->data->screen_position.y += mouse_motion.y;
-						}
-						else
-						{
-							item->data->parent->Input();
-						}
-						focused_element = item->data;
+					item->data->screen_position.x += mouse_motion.x;
+
+					if (item->data->parent->type != UI_Type::SLIDER)
+					{
+						item->data->screen_position.y += mouse_motion.y;
 					}
+					else
+					{
+						item->data->parent->Input();
+					}
+					focused_element = item->data;
 				}
+			}
 
-				if (item->data->OnHover())
-				{
+			if (item->data->OnHover())
+			{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 					if (item->data->interactable) {
 						focused_element = item->data;
 						focused_element->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
-						focused_element->Input();
+						if (!item->data->to_delete) {
+							focused_element->Input();
+						}
 					}
 				}
 				break;
-				}
+			}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 				if ((focused_element != nullptr) && (!item->data->OnHover())) {
@@ -87,24 +96,24 @@ bool j1Gui::PreUpdate()
 					focused_element = nullptr;
 				}
 			}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
-		if (focused_element == nullptr)
-		{
-			focused_element = ui_elements.start->data;
-		}
-		else
-		{
-			int item = ui_elements.find(focused_element);
-			if (item == ui_elements.count() - 1)
-			{
-				item = -1;
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				if (focused_element == nullptr)
+				{
+					focused_element = ui_elements.start->data;
+				}
+				else
+				{
+					int item = ui_elements.find(focused_element);
+					if (item == ui_elements.count() - 1)
+					{
+						item = -1;
+					}
+					focused_element = ui_elements[item + 1];
+				}
 			}
-			focused_element = ui_elements[item + 1];
 		}
 	}
-
 	return true;
 }
 
@@ -189,22 +198,25 @@ j1UI_Element* j1Gui::CreateUIElement(UI_Type type, j1Module* callback ,j1UI_Elem
 
 void j1Gui::DestroyUIElement(j1UI_Element* element) {
 
+	
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
 		if (item->data == element) {
-			item->data->CleanUp();
-			delete item->data;
-			item->data = nullptr;
 			ui_elements.del(item);
 		}
 	}
+
+	element->CleanUp();
+	RELEASE(element);
+	delete element;
+	element = nullptr;
 }
 
 void j1Gui::DestroyAllGui() {
 	
 	for (p2List_item<j1UI_Element*>* item = ui_elements.start; item != nullptr; item = item->next)
 	{
-		DestroyUIElement(item->data);
+		item->data->to_delete = true;
 	}
 	
 	ui_elements.clear();

@@ -14,7 +14,7 @@ j1Collectible::j1Collectible() : j1Entity(EntityType::COLLECTIBLE) {
 	{
 		texture = App->entities->reference_collectible->texture;
 		die_fx = App->entities->reference_collectible->die_fx;
-		collider = App->collision->AddCollider({ position.x, position.y, 32,32 }, COLLIDER_COLLECTIBLE, this);
+		collider = App->collision->AddCollider({ 1000, 1000, 32,32 }, COLLIDER_COLLECTIBLE, this);
 		player = App->entities->player_pointer;
 		score = 20;
 	}

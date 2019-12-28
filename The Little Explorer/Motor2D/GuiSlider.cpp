@@ -9,9 +9,8 @@
 
 GuiSlider::GuiSlider(j1Module* g_callback) {
 	callback = g_callback;
-	//click_rect = { 0,0,0,0 };
 	texture = nullptr;
-	//current_rect = &normal_rect;
+	to_delete = false;
 }
 
 GuiSlider::~GuiSlider() {}

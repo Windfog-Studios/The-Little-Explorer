@@ -221,7 +221,10 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-	UpdateScreenUI();
+	if (on_screen_ui.count() != 0)
+	{
+		UpdateScreenUI();
+	}
 
 	// Debug pathfinding ------------------------------
 	/*
@@ -445,6 +448,7 @@ void j1Scene::GameOver() {
 	App->entities->DestroyAllEntities();
 	on_screen_lives = 0;
 	on_screen_score = 0;
+	App->entities->player_pointer->score = 0;
 	relative_max_time = max_time;
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

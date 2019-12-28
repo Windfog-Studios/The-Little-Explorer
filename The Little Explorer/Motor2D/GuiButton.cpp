@@ -15,6 +15,7 @@ GuiButton::GuiButton(j1Module* g_callback){
 	texture = nullptr;
 	current_rect = &normal_rect;
 	stay_clicked = false;
+	to_delete = false;
 }
 
 GuiButton::~GuiButton() {
