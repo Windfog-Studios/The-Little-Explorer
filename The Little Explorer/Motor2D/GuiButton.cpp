@@ -29,7 +29,7 @@ void GuiButton::Init(iPoint g_position, SDL_Rect g_normal_rect, SDL_Rect g_hover
 	screen_position = g_position;
 	texture = (SDL_Texture*)App->gui->GetAtlas();
 	normal_rect = g_normal_rect;
-	hover_rect = g_normal_rect;
+	hover_rect = g_hover_rect;
 	click_rect = g_click_rect;
 	action = g_action;
 	stay_clicked = g_stay_clicked;
@@ -88,11 +88,11 @@ bool GuiButton::Update(float dt) {
 	if (!stay_clicked){
 		if (OnHover())
 		{
-			current_rect = &hover_rect;
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				current_rect = &click_rect;
 			}
+			current_rect = &hover_rect;
 		}
 		else
 		{

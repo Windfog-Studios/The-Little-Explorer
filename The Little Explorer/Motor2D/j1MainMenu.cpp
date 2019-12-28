@@ -38,6 +38,8 @@ bool j1MainMenu::Start() {
 
 	CreateMainScreen();
 	App->audio->PlayMusic("path_to_follow.ogg");
+	main_menu_background_tex = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	main_title_tex = App->tex->Load("sprites/UI/title.png");
 	visible_menu = Menu::MAIN_MENU;
 	return ret;
 }
@@ -147,15 +149,15 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 void j1MainMenu::CreateMainScreen() {
 	SDL_Rect camera;
 	camera = App->render->camera;
-	_TTF_Font* principal_font = App->font->Load("fonts/Some Time Later.otf", 50);
+	//_TTF_Font* principal_font = App->font->Load("fonts/Some Time Later.otf", 50);
 
 	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int)App->win->width, (int)App->win->height });
-	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = main_menu_background_tex;
 
 	GuiImage* title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 200,100 }, { 0,0,600, 180 });
-	title->texture = App->tex->Load("sprites/UI/title.png");
+	title->texture = main_title_tex;
 
 	GuiButton* start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	start_button->Init({ 400, 330 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Start", ButtonAction::PLAY);
@@ -178,7 +180,7 @@ void j1MainMenu::CreateMainScreen() {
 void j1MainMenu::CreateSettingsScreen() {
 	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int)App->win->width,(int)App->win->height });
-	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = main_menu_background_tex;
 
 	GuiImage* menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	menu_background->Init({ 250, 250 }, { 0,0,512,264 });
@@ -205,7 +207,7 @@ void j1MainMenu::CreateCreditsScreen() {
 	
 	GuiImage* background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	background->Init({ 0,0 }, { 0,0,(int) App->win->width,(int) App->win->height });
-	background->texture = App->tex->Load("sprites/UI/MainMenuBackground.png");
+	background->texture = main_menu_background_tex;
 
 	GuiImage* panel = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	panel->Init({ 140,160 }, { 0,1062,726,522 });
@@ -215,7 +217,7 @@ void j1MainMenu::CreateCreditsScreen() {
 
 	GuiImage* title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 190, 80 }, { 0,0,600, 180 });
-	title->texture = App->tex->Load("sprites/UI/title.png");
+	title->texture = main_title_tex;
 
 	GuiText* by = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr);
 	by->Init({ 470, 200 }, "by");
