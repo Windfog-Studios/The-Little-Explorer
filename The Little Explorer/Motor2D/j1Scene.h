@@ -100,10 +100,13 @@ public:
 	int time_star2;
 	int time_star3;
 	int time_discount;
+
+	//time and score
 	j1Timer timer;
 	GuiText* time_text;
 	GuiText* time_count;
 	GuiText* score;
+
 	//GuiSlider* slider;
 	p2List<GuiImage*> lives;
 	p2List<GuiImage*> stars;

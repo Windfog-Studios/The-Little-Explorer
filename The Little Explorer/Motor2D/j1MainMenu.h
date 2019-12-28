@@ -20,7 +20,7 @@ public:
 	bool PreUpdate() { return true; };
 	bool Update(float dt) { return true; };
 	bool PostUpdate();
-	bool CleanUp() { return true; };
+	bool CleanUp();
 
 	void OnEvent(j1UI_Element* element, FocusEvent event);
 	void CreateMainScreen();

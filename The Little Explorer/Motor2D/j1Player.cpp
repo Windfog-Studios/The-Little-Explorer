@@ -423,6 +423,11 @@ bool j1Player::Update(float dt){
 	if (flip == SDL_FLIP_NONE) collider->SetPos(position.x + 8, position.y);
 	else collider->SetPos(position.x + 16, position.y);
 
+	if (position.y > 1200)
+	{
+		App->LoadGame();
+	}
+
 	raycast->SetPos(floor(collider->rect.x + collider->rect.w * 0.5f - raycast->rect.w * 0.5f), collider->rect.y + collider->rect.h);
 
 	return true;

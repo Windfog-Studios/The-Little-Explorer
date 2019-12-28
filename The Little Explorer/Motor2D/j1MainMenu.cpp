@@ -45,6 +45,14 @@ bool j1MainMenu::Start() {
 	return ret;
 }
 
+bool j1MainMenu::CleanUp() {
+	bool ret = true;
+	App->gui->DestroyAllGui();
+	App->tex->UnLoad(main_menu_background_tex);
+	App->tex->UnLoad(main_title_tex);
+	return ret;
+}
+
 bool j1MainMenu::PostUpdate() {
 	bool ret = true;
 	return ret;

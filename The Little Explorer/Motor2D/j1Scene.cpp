@@ -289,8 +289,10 @@ bool j1Scene::Load(pugi::xml_node& data)
 	//camera_frame.x = data.child("position").attribute("x").as_int();
 	//camera_frame.y = data.child("position").attribute("y").as_int();
 
-	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(LEVEL_2, LEVEL_1);
-	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);
+	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) 
+		LevelChange(LEVEL_2, LEVEL_1);
+	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) 
+		LevelChange(LEVEL_1, LEVEL_2);
 
 	if (current_level == NO_MAP) {
 		if (data.child("level").attribute("number").as_int() == 1)
