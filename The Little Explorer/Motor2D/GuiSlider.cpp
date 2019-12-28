@@ -9,27 +9,27 @@
 
 GuiSlider::GuiSlider(j1Module* g_callback) {
 	callback = g_callback;
-	text = new GuiText();
-	click_rect = { 0,0,0,0 };
+	//click_rect = { 0,0,0,0 };
 	texture = nullptr;
-	current_rect = &normal_rect;
+	//current_rect = &normal_rect;
 }
 
 GuiSlider::~GuiSlider() {
 	
 }
 
-void GuiSlider::Init() {
-	
-	scrollButton=(GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, callback, this, true, true);
-	scrollButton->Init({ 285, 325 }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 }, "");
-	//scrollButton = App->gui->AddGuiElement(GUItype::GUI_BUTTON, this, globalPosition, localPosition, true, true, { 432, 36, 14 , 16 }, nullptr, this->listener, true, false);
-	
-	scrollButton->local_position.y = local_position.y - scrollButton->rect.h / 2 + this->rect.h / 2;
-	int value = 0;
-
+void GuiSlider::Init(iPoint position, SDL_Rect scrollbar_section, SDL_Rect scroll_thumb_section) {
+	iPoint scroll_thumb_position;
 	texture = App->gui->GetAtlas();
-	
+
+	scrollbar = (GuiImage*) App->gui->CreateUIElement(UI_Type::IMAGE, nullptr);
+	scrollbar->Init(position, scrollbar_section);
+
+	scroll_thumb = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, callback, nullptr, true, true);
+	scroll_thumb_position.x = position.x + scrollbar_section.w * 0.5f - scroll_thumb_section.w * 0.5f;
+	scroll_thumb_position.y = position.y - scroll_thumb_section.h * 0.5f + scrollbar_section.h * 0.5f ;
+	scroll_thumb->Init(scroll_thumb_position, scroll_thumb_section);
+	scroll_thumb->parentIsSlider = true;
 }
 
 bool GuiSlider::CleanUp() {
@@ -37,11 +37,6 @@ bool GuiSlider::CleanUp() {
 }
 
 bool GuiSlider::Input() {
-
-	/*
-	current_rect = &click_rect;
-	callback->OnEvent(this, FocusEvent::CLICKED);
-	*/
 	return true;
 }
 
@@ -49,18 +44,6 @@ bool GuiSlider::Input() {
 bool GuiSlider::Update(float dt) {
 
 	int ret = true;
-	if (OnHover())
-	{
-		current_rect = &hover_rect;
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			current_rect = &click_rect;
-		}
-	}
-	else
-	{
-		current_rect = &normal_rect;
-	}
 
 	if (parent != nullptr)
 	{
@@ -68,20 +51,21 @@ bool GuiSlider::Update(float dt) {
 		screen_position.y = parent->screen_position.y + local_position.y;
 	}
 
+	if (scroll_thumb->rect.x + scroll_thumb->rect.w * 0.5f < scrollbar->rect.x)
+		scroll_thumb->screen_position.x = scrollbar->screen_position.x - scroll_thumb->rect.w * 0.5f;
+
+	if (scroll_thumb->rect.x + scroll_thumb->rect.w * 0.5f > scrollbar->rect.x + scrollbar->rect.w)
+		scroll_thumb->screen_position.x = scrollbar->rect.x + scrollbar->rect.w - scroll_thumb->rect.w * 0.5f;
+
 	rect.x = screen_position.x - App->render->camera.x;
 	rect.y = screen_position.y - App->render->camera.y;
 
-	if (text->text.Length() > 0)
-	{
-		text->Update(dt);
-	}
+	output_value = (scroll_thumb->screen_position.x + scroll_thumb->rect.w * 0.5f - scrollbar->screen_position.x);
+	output_value /= scrollbar->rect.w;
 	return ret;
 }
 
 bool GuiSlider::Draw() {
-	
-	App->render->Blit(texture, rect.x, rect.y, current_rect);
-	if (text->text.Length() > 0) { text->Draw(); }
-	
+
 	return true;
 }

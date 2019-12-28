@@ -51,15 +51,24 @@ bool j1Gui::PreUpdate()
 		iPoint mouse_motion;
 		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
-			if (item->data->OnHover())
-			{
+
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
-					if (item->data->draggable) {
-						item->data->screen_position += mouse_motion;
+					if ((item->data->draggable)&&(focused_element == item->data)) {
+						item->data->screen_position.x += mouse_motion.x;
+						if (!item->data->parentIsSlider)
+						{
+							item->data->screen_position.y += mouse_motion.y;
+						}
+						else
+						{
+							item->data->Input();
+						}
 						focused_element = item->data;
 					}
 				}
 
+				if (item->data->OnHover())
+				{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 					if (item->data->interactable) {
 						focused_element = item->data;
@@ -68,10 +77,10 @@ bool j1Gui::PreUpdate()
 					}
 				}
 				break;
-			}
+				}
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-				if ((focused_element != nullptr)&&(item == ui_elements.start) && (!item->data->OnHover())) {
+				if ((focused_element != nullptr) && (!item->data->OnHover())) {
 					focused_element->HandleFocusEvent(FocusEvent::FOCUS_LOST);
 					focused_element = nullptr;
 				}

@@ -151,10 +151,10 @@ void j1MainMenu::CreateMainScreen() {
 	GuiImage* title = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
 	title->Init({ 200,100 }, { 0,0,600, 180 });
 	title->texture = App->tex->Load("sprites/UI/title.png");
-	
+
 	GuiButton* start_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	start_button->Init({ 400, 330 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Start", ButtonAction::PLAY);
-	
+
 	GuiButton* continue_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	continue_button->Init({ 400, 440 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "Continue", ButtonAction::CONTINUE);
 
@@ -166,6 +166,9 @@ void j1MainMenu::CreateMainScreen() {
 
 	GuiButton* credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 780, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
+
+	GuiSlider* slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
+	slider->Init({ 100, 300 }, { 0,280,802,33 }, { 56,750,68,46 });
 
 	visible_menu = Menu::MAIN_MENU;
 }
@@ -218,13 +221,13 @@ void j1MainMenu::CreateCreditsScreen() {
 	//traveler->texture = App->tex->Load("sprites/UI/opp_promo_traveler.png");
 
 	GuiButton* main_webpage = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	main_webpage->Init({420,520}, {1036,618,137,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
+	main_webpage->Init({420,510}, {1036,618,137,140}, { 1038,619,138,140 }, { 1038,619,138,140 }, "", ButtonAction::CREDITS);
 
 	GuiButton* silvino_medina = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	silvino_medina->Init({ 80,390 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
+	silvino_medina->Init({ 80,365 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Silvino Medina Cardona", ButtonAction::CONTEXTUAL_1);
 
 	GuiButton* marc_pages = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	marc_pages->Init({ 525,390 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Marc Pagès Francesch", ButtonAction::CONTEXTUAL_2);
+	marc_pages->Init({ 525,365 }, { 0,1619,381,110 }, { 0,1742,381,110 }, { 0,1760,381,138 }, "Marc Pagès Francesch", ButtonAction::CONTEXTUAL_2);
 
 	GuiButton* license = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	license->Init({ 780,25 }, { 8,622,196,71 }, { 206,622,196,71 }, { 206,622,200,72 }, "License", ButtonAction::CONTEXTUAL_3);
