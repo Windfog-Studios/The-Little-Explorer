@@ -15,11 +15,7 @@ public:
 	j1MainMenu();
 	~j1MainMenu();
 
-	bool Awake(pugi::xml_node& config);
 	bool Start();
-	bool PreUpdate() { return true; };
-	bool Update(float dt) { return true; };
-	bool PostUpdate();
 	bool CleanUp();
 
 	void OnEvent(j1UI_Element* element, FocusEvent event);

@@ -13,6 +13,7 @@
 #include <Windows.h>
 #include "j1Player.h"
 #include "SDL/include/SDL.h"
+#include "brofiler/Brofiler/Brofiler.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -21,12 +22,6 @@ j1MainMenu::j1MainMenu() : j1Module()
 }
 
 j1MainMenu::~j1MainMenu() {}
-
-bool j1MainMenu::Awake(pugi::xml_node& config) {
-	bool ret = true;
-
-	return ret;
-}
 
 bool j1MainMenu::Start() {
 	bool ret = true;
@@ -53,13 +48,9 @@ bool j1MainMenu::CleanUp() {
 	return ret;
 }
 
-bool j1MainMenu::PostUpdate() {
-	bool ret = true;
-	return ret;
-}
 
 void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
-
+	BROFILER_CATEGORY("Main Menu Events", Profiler::Color::CadetBlue)
 	if ((element->type == UI_Type::BUTTON) && (event == FocusEvent::CLICKED))
 	{
 		GuiButton* button = (GuiButton*) element;
@@ -90,7 +81,9 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyAllGui();
 			if (App->console->isVisible) App->console->DestroyInterface();
 			App->LoadGame();
+			App->scene->LevelChange(NO_MAP, LEVEL_1);
 			App->scene->CreateScreenUI();
+			App->entities->blocked_movement = false;
 			App->scene->visible_menu = Menu::SCREEN_UI;
 		break;
 

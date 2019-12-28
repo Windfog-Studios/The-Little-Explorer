@@ -452,12 +452,11 @@ void j1Scene::GameOver() {
 	relative_max_time = max_time;
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
-	//delete score;
 	score = nullptr;
-	//delete time_text;
 	time_text = nullptr;
-	//delete time_count;
 	time_count = nullptr;
+	visible_menu = Menu::MAIN_MENU;
+	current_level = Map::NO_MAP;
 	App->main_menu->CreateMainScreen();
 }
 

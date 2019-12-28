@@ -216,7 +216,7 @@ void j1FlyingEnemy::OnCollision(Collider* c1, Collider* c2) {
 		{
 			App->particles->AddParticle(App->particles->dust, collider->rect.x, collider->rect.y);
 			particles_created = true;
-			player->score += score;
+ 			player->score += score;
 		}
 
   		player->current_speed.y = player->enemy_bouncing;
