@@ -63,9 +63,6 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 				RELEASE_ARRAY(data);
 			}
 
-			App->render->camera.x = App->scene->initial_camera_position.x;
-			App->render->camera.y = App->scene->initial_camera_position.y;
-
 			App->gui->DestroyAllGui();
 			if (App->console->isVisible) App->console->DestroyInterface();
 			App->scene->CreateScreenUI();
@@ -73,14 +70,13 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 		case ButtonAction::CONTINUE:
 			App->gui->DestroyAllGui();
-			App->LoadGame(); 
-			App->scene->visible_menu = Menu::NO_MENU;
+			App->LoadGame();
 			App->scene->CreateScreenUI();
+			App->scene->visible_menu = Menu::SCREEN_UI;
 		break;
 
 		case ButtonAction::SETTINGS:
 			App->gui->DestroyAllGui();
-			
 			CreateSettingsScreen();
 		break;
 

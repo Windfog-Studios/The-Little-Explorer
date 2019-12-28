@@ -34,7 +34,8 @@ public:
 
 public:
 	GuiInputText* command_input;
-	p2List<GuiText*> log_record;
+	p2List<p2SString> log_record;
+	p2List<GuiText*> on_screen_log;
 	p2List<p2SString> input_commands;
 	p2List<j1Command*> commands;
 	p2List_item<p2SString>* current_consulting_command;

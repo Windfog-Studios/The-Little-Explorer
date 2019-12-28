@@ -44,7 +44,7 @@ bool j1Console::PreUpdate() {
 
 bool j1Console::Update(float dt) {
 	BROFILER_CATEGORY("ConsoleUpdate", Profiler::Color::MediumPurple)
-	bool ret = true;
+		bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)
 	{
@@ -59,7 +59,7 @@ bool j1Console::Update(float dt) {
 	}
 
 	if (isVisible) {
-		if ((App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)) 
+		if ((App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 		{
 			DestroyInterface();
 		}
@@ -111,19 +111,14 @@ bool j1Console::Update(float dt) {
 			}
 		}
 
-		for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
-		{
-			item->data->Update(dt);
-		}
-
-		if(command_input != nullptr)command_input->Input();
+		if (command_input != nullptr)command_input->Input();
 	}
 	return ret;
 }
 
 bool j1Console::PostUpdate() {
 	BROFILER_CATEGORY("GuiPostUpdate", Profiler::Color::DarkViolet)
-	bool ret = true;
+		bool ret = true;
 
 	if (isVisible)
 	{
@@ -132,12 +127,10 @@ bool j1Console::PostUpdate() {
 		App->render->DrawQuad(command_background, 0, 0, 255, 255);
 		command_input->Draw();
 
-		for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
+		for (p2List_item<GuiText*>* item = on_screen_log.start; item != nullptr; item = item->next)
 		{
 			item->data->Draw();
 		}
-
-		//App->gui->DebugDraw();
 	}
 	return ret;
 }
@@ -146,36 +139,51 @@ bool j1Console::CleanUp() {
 	bool ret = true;
 	CleanUpStarted = true;
 
-	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
+	for (p2List_item<GuiText*>* item = on_screen_log.start; item != nullptr; item = item->next)
 	{
 		App->gui->DestroyUIElement(item->data);
-		log_record.del(item);
+		on_screen_log.del(item);
 	}
 
 	return ret;
 }
 
-void j1Console::CreateInterface(){
+void j1Console::CreateInterface() {
 	App->input->EnableTextInput(true);
 	iPoint camera = { App->render->camera.x, App->render->camera.y };
 	log_box = { -camera.x, -camera.y, (int)App->win->width, 350 };
 	command_background = { -camera.x, log_box.h - camera.y, (int)App->win->width, 40 };
 
 	command_input = (GuiInputText*)App->gui->CreateUIElement(UI_Type::INPUT_TEXT, this, nullptr, false, true);
-	command_input->Init({ 10, log_box.h}, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h}, false,CONSOLE_FONT);
+	command_input->Init({ 10, log_box.h }, "Write Command", { 0,(int)(log_box.y + log_box.h),(int)App->win->width, command_background.h }, false, CONSOLE_FONT);
 	command_input->rect = command_background;
 
 	App->gui->focused_element = command_input;
 	command_input->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
 
+	iPoint position = { 10,10 };
+	for (p2List_item<p2SString>* item = log_record.start; item != nullptr; item = item->next)
+	{
+		GuiText* log_text = new GuiText(this);
+		if (item->prev == nullptr)
+		{
+			log_text->Init({ 20,10-App->render->camera.y }, item->data, CONSOLE_FONT);
+		}
+		else
+		{
+			log_text->Init({ 20, (int)(on_screen_log.end->data->screen_position.y + on_screen_log.end->data->rect.h)}, item->data, CONSOLE_FONT);
+		}
+		on_screen_log.add(log_text);
+	}
+
 	isVisible = true;
 	App->entities->blocked_movement = true;
 }
 
-void j1Console::DestroyInterface(){
+void j1Console::DestroyInterface() {
 	if (command_input != nullptr) App->gui->DestroyUIElement(command_input);
 
-	for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
+	for (p2List_item<GuiText*>* item = on_screen_log.start; item != nullptr; item = item->next)
 	{
 		App->gui->DestroyUIElement(item->data);
 	}
@@ -188,48 +196,44 @@ void j1Console::DestroyInterface(){
 void j1Console::AddLogText(p2SString new_text) {
 	if (!CleanUpStarted)
 	{
-		GuiText* log_text;
-
-		log_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT,this);
-
-		if (log_record.end == nullptr)
-		{
-			log_text->Init({ 20, 20 }, new_text, CONSOLE_FONT);
-		}
-		else 
-		{
-			log_text->Init({ 20,(int)(log_record.end->data->screen_position.y + log_record.end->data->rect.h) }, new_text, CONSOLE_FONT);
-		}
-		log_record.add(log_text);
-
 		if (log_record.count() > 16)
 		{
-			App->gui->DestroyUIElement(log_record.start->data);
 			log_record.del(log_record.start);
-			log_record.start->data->parent = nullptr;
-			for (p2List_item<GuiText*>* item = log_record.start; item != nullptr; item = item->next)
+		}
+
+		if (isVisible)
+		{
+			p2List_item<GuiText*>* item = on_screen_log.start;
+			for (p2List_item<p2SString>* log_text = log_record.start; log_text != nullptr; log_text = log_text->next)
 			{
-				item->data->screen_position.y -= item->data->rect.h;
+				if (item == nullptr)
+				{
+					GuiText* new_log = new GuiText(this);
+					new_log->Init({ 20, (int)(on_screen_log.end->data->screen_position.y + on_screen_log.end->data->rect.h) }, log_text->data, CONSOLE_FONT);
+					on_screen_log.add(new_log);
+					item = on_screen_log.end;
+				}
+				else {
+					item->data->text = log_text->data;
+					item = item->next;
+				}
 			}
 		}
 
-		if (!isVisible)
-		{
-			App->gui->DestroyUIElement(log_text);
-		}
+		log_record.add(new_text);
 	}
 }
 
 void j1Console::CreateCommand(const char* g_command, j1Module* g_callback, const char* explanation) {
-	j1Command* command = new j1Command(g_command, g_callback,explanation);
+	j1Command* command = new j1Command(g_command, g_callback, explanation);
 	commands.add(command);
 }
 
 void j1Console::CheckCommand(p2SString command) {
 	char given_initial_three[5] = "0000";
 	char listed_initial_three[5] = "0000";
-	char* given_command = (char* )command.GetString();
-	
+	char* given_command = (char*)command.GetString();
+
 
 	for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 	{
@@ -259,7 +263,7 @@ void j1Console::OnCommand(p2SString command) {
 	char fps_string[8] = "fps_120";
 	char initial_three[5] = "0000";
 
-	if ( command == "list")
+	if (command == "list")
 	{
 		for (p2List_item<j1Command*>* item = commands.start; item != nullptr; item = item->next)
 		{
@@ -282,7 +286,7 @@ void j1Console::OnCommand(p2SString command) {
 	{
 		initial_three[i] = command.lowercased().GetString()[i];
 	}
-	
+
 	if (strcmp(initial_three, "fps") == 0);
 	{
 		int fps = 0;
@@ -316,7 +320,7 @@ void j1Console::OnCommand(p2SString command) {
 		if (fps < 30) {
 			LOG("Too low framerate cap");
 		}
-		else if(fps > 120)
+		else if (fps > 120)
 		{
 			LOG("Too high framerate cap");
 		}
