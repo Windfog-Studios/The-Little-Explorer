@@ -41,9 +41,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	main_menu = new j1MainMenu();
 	map = new j1Map();
+	collision = new j1Collision();
 	entities = new j1EntityManager();
 	particles = new j1Particles();
-	collision = new j1Collision();
 	pathfinding = new j1PathFinding();
 	font = new j1Fonts();
 	gui = new j1Gui();

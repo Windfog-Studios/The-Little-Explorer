@@ -6,14 +6,14 @@
 	<audio />
 	<scene>
 		<level number="1" />
-		<time_left value="187" />
+		<time_left value="192" />
 	</scene>
 	<main_menu />
 	<map />
 	<entities>
-		<player position_x="128" position_y="765" score="0" />
-		<walking_enemy position_x="1312" position_y="24077" />
-		<walking_enemy position_x="974" position_y="3121" />
+		<player position_x="734" position_y="576" score="15" />
+		<walking_enemy position_x="1312" position_y="26951" />
+		<walking_enemy position_x="974" position_y="5995" />
 		<flying_enemy position_x="896" position_y="384" />
 		<flying_enemy position_x="1504" position_y="192" />
 		<flying_enemy position_x="2496" position_y="352" />
@@ -23,19 +23,18 @@
 		<flying_enemy position_x="5373" position_y="352" />
 		<flying_enemy position_x="5856" position_y="672" />
 		<flying_enemy position_x="1536" position_y="896" />
-		<walking_enemy position_x="1902" position_y="3921" />
-		<walking_enemy position_x="2744" position_y="2507" />
-		<walking_enemy position_x="2096" position_y="192" />
-		<walking_enemy position_x="1971" position_y="192" />
+		<walking_enemy position_x="1902" position_y="6795" />
+		<walking_enemy position_x="2744" position_y="5381" />
+		<walking_enemy position_x="2228" position_y="192" />
+		<walking_enemy position_x="1961" position_y="192" />
 		<walking_enemy position_x="4463" position_y="960" />
-		<walking_enemy position_x="4686" position_y="3601" />
-		<walking_enemy position_x="4905" position_y="160" />
+		<walking_enemy position_x="4686" position_y="6475" />
+		<walking_enemy position_x="4748" position_y="160" />
 		<walking_enemy position_x="5291" position_y="544" />
-		<walking_enemy position_x="6478" position_y="3729" />
-		<flying_enemy position_x="480" position_y="768" />
+		<walking_enemy position_x="6478" position_y="6603" />
 		<walking_enemy position_x="2252" position_y="416" />
 		<flying_enemy position_x="4256" position_y="224" />
-		<walking_enemy position_x="877" position_y="768" />
+		<walking_enemy position_x="868" position_y="768" />
 		<collectible position_x="832" position_y="576" />
 		<collectible position_x="2158" position_y="415" />
 		<collectible position_x="2385" position_y="177" />
@@ -62,6 +61,6 @@
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="-490" />
+		<camera x="-296" y="-298" />
 	</renderer>
 </game_state>

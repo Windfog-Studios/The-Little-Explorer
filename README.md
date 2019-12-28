@@ -64,6 +64,10 @@ You can check their official page here: https://www.openpixelproject.com/
 All the music we used was taken from the audio library of youtube. The song of the first level is called Island Coconuts and the song of the second level is called Videogame Soldiers.
 You can check their pages here and artists here:
 
+### Main Menu
+Path to Follow by Jingle Punks
+Page: https://www.youtube.com/audiolibrary/music?nv=1
+
 ### Level 1
 Island Coconuts:
 Page: https://www.youtube.com/audiolibrary/music?nv=1
@@ -99,6 +103,10 @@ Artist: https://freesound.org/people/Breviceps/
 - Enemy attack sfx:
 Page: https://sfx.productioncrate.com/search.html#query=sword&ss=tab&_ga=2.164274815.1107425616.1575164446-1342997657.1575164446
  
+### Fonts 
+- Menus font: Some Time Later by Fredrick Brennan
+You can check his GitHub page here: https://github.com/ctrlcctrlv/some-time-later
+- Console Font: Open Sans by Ascender Fonts
 
 ## Innovation
 
