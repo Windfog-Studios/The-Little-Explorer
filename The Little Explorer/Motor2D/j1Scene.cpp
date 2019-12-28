@@ -534,6 +534,7 @@ void j1Scene::CreateSettingsScreen() {
 
 	GuiText* music_volume = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
 	music_volume->Init({ 290,280 }, "Music Volume");
+	settings_screen.add(music_volume);
 }
 
 void j1Scene::CreateScreenUI()
