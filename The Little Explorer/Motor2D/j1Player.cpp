@@ -65,6 +65,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 
 		isVisible = true;
 		grounded = false;
+
 		current_speed = { 0,0 };
 		last_score = 0;
 

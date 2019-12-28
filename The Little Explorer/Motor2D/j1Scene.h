@@ -127,14 +127,6 @@ public:
 	p2List<j1UI_Element*> settings_screen;
 	p2List<j1UI_Element*> on_screen_ui;
 
-	GuiImage* menu_background;
-	GuiImage* pause_text;
-	GuiButton* home_button;
-	GuiButton* settings_button;
-	GuiButton* restart_button;
-	GuiButton* resume_button;
-	GuiButton* go_back_button;
-
 private:
 	int on_screen_lives;
 	int on_screen_stars;

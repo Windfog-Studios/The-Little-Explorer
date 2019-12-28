@@ -54,6 +54,7 @@ bool j1Gui::PreUpdate()
 
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 					if ((item->data->draggable)&&(focused_element == item->data)) {
+
 						item->data->screen_position.x += mouse_motion.x;
 						
 						if (item->data->parent->type != UI_Type::SLIDER)
@@ -193,7 +194,6 @@ void j1Gui::DestroyUIElement(j1UI_Element* element) {
 		if (item->data == element) {
 			item->data->CleanUp();
 			delete item->data;
-			//delete item;
 			item->data = nullptr;
 			ui_elements.del(item);
 		}

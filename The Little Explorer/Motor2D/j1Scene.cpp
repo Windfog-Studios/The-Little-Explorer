@@ -33,6 +33,7 @@ j1Scene::j1Scene() : j1Module()
 	initial_camera_position = { 0,0 };
 	showing_menu = false;
 	visible_menu = Menu::MAIN_MENU;
+	current_level = Map::NO_MAP;
 	on_screen_lives = 0;
 	on_screen_score = 0;
 	on_screen_stars = 0;
@@ -189,12 +190,10 @@ bool j1Scene::Update(float dt)
 
 			if (((player_position->y < camera_frame_y_center)) && (camera_frame.y - camera_frame_y_margin > camera_margin)) {
 				App->render->camera.y += floor(CAMERA_SPEED * dt);
-				//camera_frame.y -= floor(CAMERA_SPEED * dt);
 			}
 
 			if (((player_position->y + App->entities->player_pointer->current_animation->GetCurrentFrame().h > camera_frame_y_center)) && (-camera->y + camera->h < App->map->data.height * App->map->data.tile_height - camera_margin)) {
 				App->render->camera.y -= floor(CAMERA_SPEED * dt);
-				//camera_frame.y += floor(CAMERA_SPEED * dt);
 			}
 		}
 	}
@@ -293,229 +292,20 @@ bool j1Scene::Load(pugi::xml_node& data)
 
 	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(LEVEL_2, LEVEL_1);
 	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(LEVEL_1, LEVEL_2);
-	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 1)) LevelChange(NO_MAP, LEVEL_1);
-	if ((current_level == NO_MAP) && (data.child("level").attribute("number").as_int() == 2)) LevelChange(NO_MAP, LEVEL_2);
+
+	if (current_level == NO_MAP) {
+		if (data.child("level").attribute("number").as_int() == 1)
+			LevelChange(NO_MAP, LEVEL_1);
+
+		if (data.child("level").attribute("number").as_int() == 2)
+			LevelChange(NO_MAP, LEVEL_2);
+	}
 
 	time_left = data.child("time_left").attribute("value").as_int();
 	time_discount = max_time - time_left;
 	timer.Start();
 
 	return true;
-}
-
-/*
-void j1Scene::ResetCamera(int kind_of_reset) {
-	if (kind_of_reset == 0)
-	{
-		//App->render->camera.x = App->render->initial_camera_x;
-		//App->render->camera.y = App->render->initial_camera_y;
-	}
-
-	camera_frame.x = -App->render->camera.x + camera_frame_x_margin;
-	camera_frame.y = -App->render->camera.y + camera_frame_y_margin;
-}
-
-void j1Scene::ResetLevel() {
-
-	App->entities->player_pointer->flip = SDL_FLIP_NONE;
-	App->entities->player_pointer->isVisible = true;
-	App->entities->player_pointer->particles_created = false;
-	App->entities->player_pointer->state = IDLE;
-
-	if (App->entities->player_pointer->last_checkpoint == nullptr) {
-		App->entities->RellocateEntities();
-		App->entities->player_pointer->collider->SetPos(App->entities->player_pointer->position.x, App->entities->player_pointer->position.y);
-		ResetCamera(0);
-	}
-	else
-	{
-		//LOG("camera previous position: %i", App->render->camera.x);
-		App->entities->CheckpointLoad();
-		//LOG("camera teleport");
-		ResetCamera(1);
-	}
-}
-*/
-
-void j1Scene::CreatePauseMenu() {
-
-	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	menu_background->Init({ 250, 250 }, { 0,0,512,264 });
-	pause_menu.add(menu_background);
-
-	pause_text = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,menu_background);
-	pause_text->Init({ 298, 155 }, { 897,0,420,104 });
-	pause_menu.add(pause_text);
-
-	resume_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	resume_button->Init({ 445, 325 }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::CONTINUE);
-	pause_menu.add(resume_button);
-
-	home_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	home_button->Init({ 285, 325 }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 },"",ButtonAction::QUIT);
-	pause_menu.add(home_button);
-
-	settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
-	pause_menu.add(settings_button);
-
-	if ((stars.start != nullptr) && (timer.Read() < time_star1 * 1000)) {
-
-		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
-
-		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
-
-		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star3->Init({ 520 , 225 }, { 589,124, 76, 69 });
-
-		pause_menu.add(star1);
-		pause_menu.add(star2);
-		pause_menu.add(star3);
-	}
-
-	if ((stars.start != nullptr) && (timer.Read() < time_star2 * 1000) && (timer.Read() > time_star1 * 1000)) {
-		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
-
-		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
-
-		pause_menu.add(star1);
-		pause_menu.add(star2);
-	}
-
-	if ((stars.start != nullptr) && (timer.Read() < time_star3 * 1000) && (timer.Read() > time_star2 * 1000)) {
-		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star3->Init({  420 , 225 }, { 589,124, 76, 69 });
-
-		pause_menu.add(star1);
-	}
-
-	
-}
-
-void j1Scene::CreateSettingsScreen() {
-
-	menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
-	menu_background->Init({ 250,250 }, { 0,0,512,264 });
-	settings_screen.add(menu_background);
-
-	go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
-	go_back_button->Init({ 200, 200 }, { 895,474,96,99 }, { 895,474,96,99 }, { 993,474,96,99 }, "", ButtonAction::GO_BACK);
-	settings_screen.add(go_back_button);
-
-	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
-	fullscreen_button->Init({ 300,410 }, { 206, 697, 49,53 }, { 206, 697, 49,53 }, { 262,697,49,53 }, "", ButtonAction::CONTEXTUAL_1, true);
-	settings_screen.add(fullscreen_button);
-
-	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
-	fullscreen_text->Init({ 380,406 }, "Fullscreen");
-	settings_screen.add(fullscreen_text);
-
-	GuiSlider* volume_slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
-	volume_slider->Init({ 285, 350 }, { 7,281,438,37 }, { 56,750,69,52 });
-	settings_screen.add(volume_slider);
-
-	GuiText* music_volume = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
-	music_volume->Init({ 290,280 }, "Music Volume");
-}
-
-void j1Scene::CreateScreenUI()
-{
-	int livesXpos = 50;
-	int livesXDistance = 90;
-
-	int starsXpos = 400;
-	int starsXDistance = 50;
-
-	int nostarsXpos = 400;
-	int nostarsXDistance = 50;
-
-	int timeXpos = 700;
-
-	for (int i = 0; i < 3; i++)
-	{
-
-		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		life->Init({ livesXpos , 20 }, { 667,15,68,63 });
-		livesXpos += livesXDistance;
-		lives.add(life);
-		on_screen_lives++;
-		on_screen_ui.add(life);
-	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-		star->Init({ starsXpos , 20 }, { 589,124, 76, 69});
-		starsXpos += starsXDistance;
-		stars.add(star);
-		on_screen_ui.add(star);
-	}
-
-	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-	coins->Init({ 30, 625 }, { 9,865,294,69 });
-	on_screen_ui.add(coins);
-
-	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
-	timer_background->Init({ 700, 10 }, { 240,978, 289,78 });
-	on_screen_ui.add(timer_background);
-
-	time_left = time_left - timer.ReadSec() * 0.001f;
-	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
-	time_text->Init({ 730, 20 }, "Time: ");
-	on_screen_ui.add(time_text);
-
-	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
-	p2SString temp("%i", time_left);
-	time_count->Init({ 810, 20 }, temp);
-	on_screen_ui.add(time_count);
-
-	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
-	p2SString coin("     %i points", App->entities->player_pointer->score);
-	score->Init({ 100, 632 }, coin);
-	on_screen_ui.add(score);
-
-	visible_menu = Menu::SCREEN_UI;
-}
-
-void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
-
-	if (loading_map != unloading_map)
-	{
-		App->map->CleanUp();
-		if (loading_map == LEVEL_1) {
-			App->map->Load("Level1.tmx");
-			int w, h;
-			uchar* data = NULL;
-			if (App->map->CreateWalkabilityMap(w, h, &data))
-				App->pathfinding->SetMap(w, h, data);
-
-			RELEASE_ARRAY(data);
-			current_level = LEVEL_1;
-		}
-
-		if (loading_map == LEVEL_2) {
-			App->map->Load("Level2.tmx");
-			int w, h;
-			uchar* data = NULL;
-			if (App->map->CreateWalkabilityMap(w, h, &data))
-				App->pathfinding->SetMap(w, h, data);
-
-			RELEASE_ARRAY(data);
-			current_level = LEVEL_2;
-		}
-	}
-	else
-	{
-		App->entities->RellocateEntities();
-	}
-
-	App->entities->player_pointer->position.y = App->entities->player_pointer->initialPosition.y - 30;
-	App->entities->player_pointer->state = IDLE;
-
 }
 
 void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
@@ -562,7 +352,7 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			visible_menu = Menu::PAUSE;
 			break;
 
-		//go to main menu
+			//go to main menu
 		case ButtonAction::QUIT:
 			App->gui->DestroyAllGui();
 			App->render->camera.x = 0;
@@ -571,6 +361,8 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->map->CleanUp();
 			App->main_menu->CreateMainScreen();
 			visible_menu = Menu::MAIN_MENU;
+			on_screen_lives = 0;
+			on_screen_score = 0;
 			break;
 
 		default:
@@ -657,6 +449,189 @@ void j1Scene::GameOver() {
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	App->main_menu->CreateMainScreen();
+}
+
+void j1Scene::CreatePauseMenu() {
+
+	GuiImage* menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	menu_background->Init({ 250, 250 }, { 0,0,512,264 });
+	pause_menu.add(menu_background);
+
+	GuiImage* pause_text = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this,menu_background);
+	pause_text->Init({ 298, 155 }, { 897,0,420,104 });
+	pause_menu.add(pause_text);
+
+	GuiButton* resume_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	resume_button->Init({ 445, 325 }, { 658,837,117,120 }, { 658,837,117,120 }, { 775,837,117,120 }, "", ButtonAction::CONTINUE);
+	pause_menu.add(resume_button);
+
+	GuiButton* home_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	home_button->Init({ 285, 325 }, { 416,837,117,120 }, { 416,837,117,120 }, { 534,837,117,120 },"",ButtonAction::QUIT);
+	pause_menu.add(home_button);
+
+	GuiButton* settings_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	settings_button->Init({ 605,325 }, { 658,596,117,120 }, { 658,596,117,120 }, { 777,596,117,120 }, "", ButtonAction::SETTINGS);
+	pause_menu.add(settings_button);
+
+	if ((stars.start != nullptr) && (timer.Read() < time_star1 * 1000)) {
+
+		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
+
+		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
+
+		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star3->Init({ 520 , 225 }, { 589,124, 76, 69 });
+
+		pause_menu.add(star1);
+		pause_menu.add(star2);
+		pause_menu.add(star3);
+	}
+
+	if ((stars.start != nullptr) && (timer.Read() < time_star2 * 1000) && (timer.Read() > time_star1 * 1000)) {
+		star1 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star1->Init({ 420 , 225 }, { 589,124, 76, 69 });
+
+		star2 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star2->Init({ 470 , 225 }, { 589,124, 76, 69 });
+
+		pause_menu.add(star1);
+		pause_menu.add(star2);
+	}
+
+	if ((stars.start != nullptr) && (timer.Read() < time_star3 * 1000) && (timer.Read() > time_star2 * 1000)) {
+		star3 = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star3->Init({  420 , 225 }, { 589,124, 76, 69 });
+
+		pause_menu.add(star1);
+	}
+
+	
+}
+
+void j1Scene::CreateSettingsScreen() {
+
+	GuiImage* menu_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this);
+	menu_background->Init({ 250,250 }, { 0,0,512,264 });
+	settings_screen.add(menu_background);
+
+	GuiButton* go_back_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, menu_background, false, true);
+	go_back_button->Init({ 200, 200 }, { 895,474,96,99 }, { 895,474,96,99 }, { 993,474,96,99 }, "", ButtonAction::GO_BACK);
+	settings_screen.add(go_back_button);
+
+	GuiButton* fullscreen_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
+	fullscreen_button->Init({ 300,410 }, { 206, 697, 49,53 }, { 206, 697, 49,53 }, { 262,697,49,53 }, "", ButtonAction::CONTEXTUAL_1, true);
+	settings_screen.add(fullscreen_button);
+
+	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	fullscreen_text->Init({ 380,406 }, "Fullscreen");
+	settings_screen.add(fullscreen_text);
+
+	GuiSlider* volume_slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
+	volume_slider->Init({ 285, 350 }, { 7,281,438,37 }, { 56,750,69,52 });
+	settings_screen.add(volume_slider);
+
+	GuiText* music_volume = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
+	music_volume->Init({ 290,280 }, "Music Volume");
+}
+
+void j1Scene::CreateScreenUI()
+{
+	int livesXpos = 50;
+	int livesXDistance = 90;
+
+	int starsXpos = 400;
+	int starsXDistance = 50;
+
+	int nostarsXpos = 400;
+	int nostarsXDistance = 50;
+
+	int timeXpos = 700;
+
+	for (int i = 0; i < App->entities->player_pointer->lives; i++)
+	{
+
+		GuiImage* life = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		life->Init({ livesXpos , 20 }, { 667,15,68,63 });
+		livesXpos += livesXDistance;
+		lives.add(life);
+		on_screen_lives++;
+		on_screen_ui.add(life);
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		GuiImage* star = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+		star->Init({ starsXpos , 20 }, { 589,124, 76, 69});
+		starsXpos += starsXDistance;
+		stars.add(star);
+		on_screen_ui.add(star);
+	}
+
+	coins = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+	coins->Init({ 30, 625 }, { 9,865,294,69 });
+	on_screen_ui.add(coins);
+
+	timer_background = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, this, nullptr);
+	timer_background->Init({ 700, 10 }, { 240,978, 289,78 });
+	on_screen_ui.add(timer_background);
+
+	time_left = time_left - timer.ReadSec() * 0.001f;
+	time_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
+	time_text->Init({ 730, 20 }, "Time: ");
+	on_screen_ui.add(time_text);
+
+	time_count = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, timer_background);
+	p2SString temp("%i", time_left);
+	time_count->Init({ 810, 20 }, temp);
+	on_screen_ui.add(time_count);
+
+	score = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, coins);
+	p2SString coin("     %i points", App->entities->player_pointer->score);
+	score->Init({ 100, 632 }, coin);
+	on_screen_ui.add(score);
+
+	visible_menu = Menu::SCREEN_UI;
+}
+
+void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
+
+	if (loading_map != unloading_map)
+	{
+		if(unloading_map != Map::NO_MAP)
+			App->map->CleanUp();
+
+		if (loading_map == LEVEL_1) {
+			if (App->map->Load("Level1.tmx") == true)
+			{
+				int w, h;
+				uchar* data = NULL;
+				if (App->map->CreateWalkabilityMap(w, h, &data))
+					App->pathfinding->SetMap(w, h, data);
+				RELEASE_ARRAY(data);
+			}
+
+			current_level = LEVEL_1;
+		}
+
+		if (loading_map == LEVEL_2) {
+			if (App->map->Load("Level2.tmx") == true)
+			{
+				int w, h;
+				uchar* data = NULL;
+				if (App->map->CreateWalkabilityMap(w, h, &data))
+					App->pathfinding->SetMap(w, h, data);
+				RELEASE_ARRAY(data);
+			}
+
+			current_level = LEVEL_2;
+		}
+	}
+	else
+	{
+		App->entities->RellocateEntities();
+	}
 }
 
 void j1Scene::DestroySpecificMenu(Menu menu) {

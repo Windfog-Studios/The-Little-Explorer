@@ -14,13 +14,10 @@ GuiSlider::GuiSlider(j1Module* g_callback) {
 	//current_rect = &normal_rect;
 }
 
-GuiSlider::~GuiSlider() {
-	
-}
+GuiSlider::~GuiSlider() {}
 
 void GuiSlider::Init(iPoint position, SDL_Rect scrollbar_section, SDL_Rect scroll_thumb_section) {
 	iPoint scroll_thumb_position;
-	texture = App->gui->GetAtlas();
 
 	scrollbar = (GuiImage*) App->gui->CreateUIElement(UI_Type::IMAGE, nullptr);
 	scrollbar->Init(position, scrollbar_section);
@@ -32,8 +29,8 @@ void GuiSlider::Init(iPoint position, SDL_Rect scrollbar_section, SDL_Rect scrol
 }
 
 bool GuiSlider::CleanUp() {
-	App->gui->DestroyUIElement(scroll_thumb);
 	App->gui->DestroyUIElement(scrollbar);
+	App->gui->DestroyUIElement(scroll_thumb);
 	return true;
 }
 

@@ -11,6 +11,7 @@
 #include "j1Window.h"
 #include "j1Audio.h"
 #include <Windows.h>
+#include "j1Player.h"
 #include "SDL/include/SDL.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
@@ -54,6 +55,8 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 		switch (button->action)
 		{
 		case ButtonAction::PLAY:
+			App->gui->DestroyAllGui();
+
 			if (App->map->Load("Level1.tmx") == true)
 			{
 				int w, h;
@@ -63,24 +66,22 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 				RELEASE_ARRAY(data);
 			}
 
-			App->render->camera.x = App->scene->initial_camera_position.x;
-			App->render->camera.y = App->scene->initial_camera_position.y;
-
-			App->gui->DestroyAllGui();
 			if (App->console->isVisible) App->console->DestroyInterface();
 			App->scene->CreateScreenUI();
+			App->entities->player_pointer->lives = 3;
+			App->scene->visible_menu = Menu::SCREEN_UI;
 			break;
 
 		case ButtonAction::CONTINUE:
 			App->gui->DestroyAllGui();
-			App->LoadGame(); 
-			App->scene->visible_menu = Menu::NO_MENU;
+			if (App->console->isVisible) App->console->DestroyInterface();
+			App->LoadGame();
 			App->scene->CreateScreenUI();
+			App->scene->visible_menu = Menu::SCREEN_UI;
 		break;
 
 		case ButtonAction::SETTINGS:
 			App->gui->DestroyAllGui();
-			
 			CreateSettingsScreen();
 		break;
 
