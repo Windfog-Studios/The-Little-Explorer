@@ -22,14 +22,8 @@ public:
 private:
 	GuiImage*		scrollbar;
 	GuiImage*		scroll_thumb;
-	float			output_value;
-	//SDL_Rect*		current_rect;
-	//SDL_Rect		normal_rect;
-	//SDL_Rect		hover_rect;
-	//SDL_Rect		click_rect;
+	float			last_output;
 public:
-	//ButtonAction	action;
 };
-
 
 #endif // !_GUISLIDER_H_

@@ -47,7 +47,7 @@ void GuiImage::EmptyInit(SDL_Rect empty_rect) {
 
 bool GuiImage::Update(float dt) {
 	bool ret = true;
-	if (parent != nullptr)
+	if ((parent != nullptr)&&(parent->draggable))
 	{
 		screen_position.x = parent->screen_position.x + local_position.x;
 		screen_position.y = parent->screen_position.y + local_position.y;

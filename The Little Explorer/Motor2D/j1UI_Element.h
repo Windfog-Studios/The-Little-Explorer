@@ -53,7 +53,7 @@ public:
 	bool interactable;
 	bool enabled = false;
 	bool hover = false;
-	bool parentIsSlider = false;
+	float output_value;
 	FocusEvent focus_event;
 
 	j1Module* callback = nullptr;

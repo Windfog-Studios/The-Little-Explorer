@@ -137,6 +137,10 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			break;
 		}
 	}
+
+	if (element->type == UI_Type::SLIDER) {
+		App->audio->ChangeVolume(element->output_value);
+	}
 }
 
 void j1MainMenu::CreateMainScreen() {
@@ -167,9 +171,6 @@ void j1MainMenu::CreateMainScreen() {
 	GuiButton* credits_button = (GuiButton*)App->gui->CreateUIElement(UI_Type::BUTTON, this, nullptr, false, true);
 	credits_button->Init({ 780, 626 }, { 6,547,200,72 }, { 206,547,200,72 }, { 206,547,200,72 }, "Credits", ButtonAction::CREDITS);
 
-	GuiSlider* slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
-	slider->Init({ 100, 300 }, { 0,280,802,33 }, { 56,750,68,46 });
-
 	visible_menu = Menu::MAIN_MENU;
 }
 
@@ -190,6 +191,9 @@ void j1MainMenu::CreateSettingsScreen() {
 
 	GuiText* fullscreen_text = (GuiText*)App->gui->CreateUIElement(UI_Type::TEXT, this, nullptr, false, true);
 	fullscreen_text->Init({ 380,406 }, "Fullscreen");
+
+	GuiSlider* slider = (GuiSlider*)App->gui->CreateUIElement(UI_Type::SLIDER, this);
+	slider->Init({ 100, 300 }, { 0,280,802,33 }, { 56,750,68,46 });
 
 	visible_menu = Menu::SETTINGS;
 }

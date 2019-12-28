@@ -55,13 +55,14 @@ bool j1Gui::PreUpdate()
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 					if ((item->data->draggable)&&(focused_element == item->data)) {
 						item->data->screen_position.x += mouse_motion.x;
-						if (!item->data->parentIsSlider)
+						
+						if (item->data->parent->type != UI_Type::SLIDER)
 						{
 							item->data->screen_position.y += mouse_motion.y;
 						}
 						else
 						{
-							item->data->Input();
+							item->data->parent->Input();
 						}
 						focused_element = item->data;
 					}

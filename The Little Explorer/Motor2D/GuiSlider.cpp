@@ -25,11 +25,10 @@ void GuiSlider::Init(iPoint position, SDL_Rect scrollbar_section, SDL_Rect scrol
 	scrollbar = (GuiImage*) App->gui->CreateUIElement(UI_Type::IMAGE, nullptr);
 	scrollbar->Init(position, scrollbar_section);
 
-	scroll_thumb = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, callback, nullptr, true, true);
+	scroll_thumb = (GuiImage*)App->gui->CreateUIElement(UI_Type::IMAGE, callback, this, true, true);
 	scroll_thumb_position.x = position.x + scrollbar_section.w * 0.5f - scroll_thumb_section.w * 0.5f;
 	scroll_thumb_position.y = position.y - scroll_thumb_section.h * 0.5f + scrollbar_section.h * 0.5f ;
 	scroll_thumb->Init(scroll_thumb_position, scroll_thumb_section);
-	scroll_thumb->parentIsSlider = true;
 }
 
 bool GuiSlider::CleanUp() {
@@ -37,6 +36,10 @@ bool GuiSlider::CleanUp() {
 }
 
 bool GuiSlider::Input() {
+	output_value = (scroll_thumb->screen_position.x + scroll_thumb->rect.w * 0.5f - scrollbar->screen_position.x);
+	output_value /= scrollbar->rect.w;
+
+	callback->OnEvent(this, FocusEvent::CLICKED);
 	return true;
 }
 
@@ -60,8 +63,6 @@ bool GuiSlider::Update(float dt) {
 	rect.x = screen_position.x - App->render->camera.x;
 	rect.y = screen_position.y - App->render->camera.y;
 
-	output_value = (scroll_thumb->screen_position.x + scroll_thumb->rect.w * 0.5f - scrollbar->screen_position.x);
-	output_value /= scrollbar->rect.w;
 	return ret;
 }
 

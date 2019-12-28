@@ -177,3 +177,8 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+void j1Audio::ChangeVolume(float volume_percentage) {
+	float new_volume = MIX_MAX_VOLUME * volume_percentage;
+	Mix_VolumeMusic(new_volume);
+}
