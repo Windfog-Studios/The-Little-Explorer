@@ -14,6 +14,9 @@ j1Gui::j1Gui() : j1Module()
 {
 	name.create("gui");
 	atlas = nullptr;
+	focused_element = nullptr;
+	debug = false;
+	focused = false;
 }
 
 // Destructor

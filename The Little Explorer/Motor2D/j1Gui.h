@@ -51,12 +51,12 @@ public:
 private:
 	SDL_Texture* atlas;
 	p2SString atlas_file_name;
-	bool focused = false;
+	bool focused;
 
 public:
 	p2List<j1UI_Element*> ui_elements;
-	j1UI_Element* focused_element = nullptr;
-	bool debug = false;
+	j1UI_Element* focused_element;
+	bool debug;
 	uint	clickFX;
 	p2SString	clickFX_path;
 };
