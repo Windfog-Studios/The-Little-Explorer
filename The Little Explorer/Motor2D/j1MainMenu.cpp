@@ -45,6 +45,8 @@ bool j1MainMenu::CleanUp() {
 	App->gui->DestroyAllGui();
 	App->tex->UnLoad(main_menu_background_tex);
 	App->tex->UnLoad(main_title_tex);
+	main_menu_background_tex = nullptr;
+	main_title_tex = nullptr;
 	return ret;
 }
 

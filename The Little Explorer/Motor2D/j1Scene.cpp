@@ -24,9 +24,9 @@ j1Scene::j1Scene() : j1Module()
 	name.create("scene");
 
 	blocked_camera = false;
-	score = 0;
 	
-	max_time = relative_max_time =200;
+	max_time = relative_max_time = time_left =200;
+	
 	time_star1 = 100;
 	time_star2 = 150;
 	time_star3 = 190;
@@ -40,6 +40,11 @@ j1Scene::j1Scene() : j1Module()
 	on_screen_score = 0;
 	on_screen_stars = 0;
 	fullscreen = false;
+
+	//time and score
+	time_count = nullptr;
+	time_text = nullptr;
+	score = nullptr;
 }
 
 // Destructor
@@ -74,7 +79,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	/*
+	/*time_left
 	if (App->map->Load("Level2.tmx") == true)
 	{
 		int w, h;
