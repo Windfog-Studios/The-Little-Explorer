@@ -18,6 +18,8 @@ In this platformer game you will guide the Little explorer Tilo through two diff
 - Level Design
 - Audio
 - Spritesheet design
+- Animation
+- Secondary entities
 - In game GUI implementation
 
 ![](https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/docs/marcpages2020.jpg?raw=true)
