@@ -309,6 +309,7 @@ bool j1Scene::Load(pugi::xml_node& data)
 
 	relative_max_time = data.child("time_left").attribute("value").as_int();
 	timer.Start();
+	performance_timer.Start();
 
 	return true;
 }
@@ -382,28 +383,33 @@ void j1Scene::UpdateScreenUI() {
 	if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
 
 		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.At(3));
+		stars.del(stars.end);
 	}
 
 	if ((stars.start != nullptr) && (timer.Read() > time_star2 * 1000)) {
 
 		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.At(2));
+		stars.del(stars.end);
 	}
 
 	if ((stars.start != nullptr) && (timer.Read() > time_star3 * 1000)) {
 
 		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.At(1));
+		stars.del(stars.end);
 	}
 
 	if (time_text != nullptr)
 	{
-		time_left = relative_max_time - timer.ReadSec();
-		p2SString temp("%i", time_left);
-		time_count->text.Clear();
-		if(temp.Length() > 0) time_count->text = temp;
-		time_count->UpdateText();
+		if (performance_timer.Read() > 1000)
+		{
+			time_left = relative_max_time - timer.ReadSec();
+			p2SString temp("%i", time_left);
+			time_count->text.Clear();
+			if (temp.Length() > 0) time_count->text = temp;
+			time_count->UpdateText();
+			performance_timer.Start();
+		}
+
 
 		if (on_screen_score != App->entities->player_pointer->score) {
 			p2SString coin("     %i points", App->entities->player_pointer->score);
@@ -546,6 +552,7 @@ void j1Scene::CreateSettingsScreen() {
 
 void j1Scene::CreateScreenUI()
 {
+	timer.Start();
 	int livesXpos = 50;
 	int livesXDistance = 90;
 

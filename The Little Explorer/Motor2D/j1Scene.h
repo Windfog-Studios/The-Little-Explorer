@@ -103,6 +103,7 @@ public:
 
 	//time and score
 	j1Timer timer;
+	j1Timer performance_timer;
 	GuiText* time_text;
 	GuiText* time_count;
 	GuiText* score;
