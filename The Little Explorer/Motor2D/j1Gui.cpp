@@ -153,6 +153,7 @@ bool j1Gui::CleanUp()
 	DestroyAllGui();
 	App->tex->UnLoad(atlas);
 	atlas = nullptr;
+	focused_element = nullptr;
 	return true;
 }
 

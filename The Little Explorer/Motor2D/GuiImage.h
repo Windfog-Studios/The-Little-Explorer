@@ -17,7 +17,7 @@ public:
 	bool Draw();
 
 public:
-	SDL_Texture* texture;
+	SDL_Texture* texture = nullptr;
 	SDL_Rect section;
 };
 
