@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
+#include "j1Audio.h"
 #include "j1Gui.h"
 #include "brofiler/Brofiler/Brofiler.h"
 
@@ -26,6 +27,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	clickFX_path = conf.child("clickFX").attribute("source").as_string();
+	clickFX = App->audio->LoadFx(clickFX_path.GetString());
 
 	return ret;
 }
@@ -34,7 +37,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-
+	
 	return true;
 }
 
@@ -78,6 +81,7 @@ bool j1Gui::PreUpdate()
 			{
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 					if (item->data->interactable) {
+						App->audio->PlayFx(clickFX);
 						focused_element = item->data;
 						focused_element->HandleFocusEvent(FocusEvent::FOCUS_GAINED);
 						if (!item->data->to_delete) {

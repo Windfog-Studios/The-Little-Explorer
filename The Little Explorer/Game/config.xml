@@ -19,6 +19,7 @@
 
   <gui>
     <atlas file="sprites/UI/atlas2.png"/>
+    <clickFX source="Click.wav"/>
   </gui>
 
   <file_system>
