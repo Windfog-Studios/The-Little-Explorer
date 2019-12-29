@@ -60,6 +60,11 @@ F11 - Enable/Disable FPS cap
 All the art used was made by various artists contributing to Open Pixel Project. We sincerely thank the fact of being able to use their art to make our project.
 You can check their official page here: https://www.openpixelproject.com/
 
+### UI Elements
+All the UI art that we used was made by one sigle artist. We leave his personal link page bellow.
+Page: https://opengameart.org/content/free-ui-asset-pack-1
+Artist: http://ctatz.com/#
+
 ### Music
 All the music we used was taken from the audio library of youtube. The song of the first level is called Island Coconuts and the song of the second level is called Videogame Soldiers.
 You can check their pages here and artists here:
