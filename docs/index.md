@@ -54,12 +54,12 @@ In order to press the option to continue from the main menu, it is first necessa
 
 ### Console Commands
 
-list: show all commands available
-quit: quit the game
-god_mode: toggle god mode on and off
-map_level1: load level 1
-map_level2: load level 2
-fps_(number): change framerate cap (limited to values between 30 and 120)
+- list: show all commands available
+- quit: quit the game
+- god_mode: toggle god mode on and off
+- map_level1: load level 1
+- map_level2: load level 2
+- fps_(number): change framerate cap (limited to values between 30 and 120)
 
 ## Debug
 
