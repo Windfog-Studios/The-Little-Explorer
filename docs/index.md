@@ -18,7 +18,7 @@ In this platformer game you will guide the Little explorer Tilo through two diff
 - Spritesheet design
 - In game GUI implementation
 
-<img src="https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/docs/marcpages2020.jpg"width="400"/>
+![](https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/docs/marcpages2020.jpg?raw=true)
 
 [Marc Pagès](https://github.com/marcpages2020)
 - Character Movement
