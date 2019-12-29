@@ -49,6 +49,7 @@ Or download our latest [release](https://github.com/Windfog-Studios/The-Little-E
 - º: Toggle console ON/OFF
 
 If SPACE is pressed while jumping a double jump will be performed.
+In order to press the option to continue from the main menu, it is first necessary to save the game with F5.
 
 ## Debug
 
