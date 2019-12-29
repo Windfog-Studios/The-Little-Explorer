@@ -39,6 +39,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
+	BROFILER_CATEGORY("GuiStart", Profiler::Color::Pink)
 	atlas = App->tex->Load(atlas_file_name.GetString());
 	
 	return true;
@@ -149,6 +150,7 @@ bool j1Gui::PostUpdate()
 // Called before quitting
 bool j1Gui::CleanUp()
 {
+	BROFILER_CATEGORY("GuiCleanUp", Profiler::Color::Black)
 	LOG("Freeing GUI");
 	DestroyAllGui();
 	App->tex->UnLoad(atlas);
