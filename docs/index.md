@@ -33,6 +33,8 @@ In this platformer game you will guide the Little explorer Tilo through two diff
 
 Check our [repository](https://github.com/Windfog-Studios/The-Little-Explorer) to take a more detailed look to our work!
 
+Or download our latest [release](https://github.com/Windfog-Studios/The-Little-Explorer/releases/tag/1.0)
+
 <iframe width="720" height="480" src="https://www.youtube.com/embed/l1QD2Q4vmXU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Controls
