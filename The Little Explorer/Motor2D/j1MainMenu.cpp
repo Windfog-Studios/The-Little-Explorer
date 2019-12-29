@@ -19,6 +19,9 @@ j1MainMenu::j1MainMenu() : j1Module()
 {
 	name.create("main_menu");
 	fullscreen = false;
+	
+	main_menu_background_tex = nullptr;
+	main_title_tex = nullptr;
 }
 
 j1MainMenu::~j1MainMenu() {}
@@ -42,9 +45,11 @@ bool j1MainMenu::Start() {
 
 bool j1MainMenu::CleanUp() {
 	bool ret = true;
+
 	App->gui->DestroyAllGui();
 	App->tex->UnLoad(main_menu_background_tex);
 	App->tex->UnLoad(main_title_tex);
+
 	main_menu_background_tex = nullptr;
 	main_title_tex = nullptr;
 	return ret;

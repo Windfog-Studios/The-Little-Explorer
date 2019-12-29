@@ -4,8 +4,9 @@
 #include "j1Textures.h"
 
 GuiText::GuiText() {
-	callback = nullptr;
 	font = DEFAULT_FONT;
+	text = { "No text" };
+	callback = nullptr;
 	parent = nullptr;
 	texture = nullptr;
 	draggable = false;
@@ -15,6 +16,9 @@ GuiText::GuiText() {
 GuiText::GuiText(j1Module* g_callback) {
 	callback = g_callback;
 	font = DEFAULT_FONT;
+	texture = nullptr;
+	parent = nullptr;
+	to_delete = false;
 }
 
 GuiText::~GuiText() {}
@@ -52,6 +56,7 @@ bool GuiText::CleanUp() {
 	bool ret = true;
 	App->tex->UnLoad(texture);
 	texture = nullptr;
+	parent = nullptr;
 	return ret;
 }
 
@@ -86,16 +91,19 @@ bool GuiText::Draw() {
 
 void GuiText::UpdateText() {
 
-	if (font == DEFAULT_FONT)
+	if (text.Length() > 0)
 	{
-		App->tex->UnLoad(texture);
-		texture = nullptr;
-		texture = App->font->Print(text.GetString());
-	}
-	else
-	{
-		App->tex->UnLoad(texture);
-		texture = nullptr;
-		texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+		if (font == DEFAULT_FONT)
+		{
+			App->tex->UnLoad(texture);
+			texture = nullptr;
+			texture = App->font->Print(text.GetString());
+		}
+		else
+		{
+			App->tex->UnLoad(texture);
+			texture = nullptr;
+			texture = App->font->Print(text.GetString(), { (255),(255),(255),(255) }, App->font->console_font);
+		}
 	}
 }
