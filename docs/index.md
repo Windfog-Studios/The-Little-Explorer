@@ -12,6 +12,8 @@ In this platformer game you will guide the Little explorer Tilo through two diff
 
 ## Team 
 
+![](https://github.com/Windfog-Studios/The-Little-Explorer/blob/master/docs/silvinomedina.jpg?raw=true)
+
 [Silvino Medina](https://github.com/silvino00)
 - Level Design
 - Audio
