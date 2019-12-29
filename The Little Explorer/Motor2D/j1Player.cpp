@@ -41,6 +41,7 @@ j1Player::j1Player():j1Entity (EntityType::PLAYER) {
 	can_go_right = true;
 	lives = 3;
 	score = 0;
+	last_checkpoint = nullptr;
 
 	if (App->entities->reference_player != nullptr)
 	{
@@ -128,6 +129,8 @@ bool j1Player::CleanUp() {
 		raycast->to_delete = true;
 		raycast = nullptr;
 	}
+	lives = 0;
+	score = 0;
 	return true;
 }
 

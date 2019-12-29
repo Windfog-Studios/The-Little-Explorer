@@ -62,7 +62,7 @@ public:
 	bool controls_blocked;
 	bool isVisible;
 
-	Collider* last_checkpoint = nullptr;
+	Collider* last_checkpoint;
 };
 
 #endif // !_j1PLAYER_H_

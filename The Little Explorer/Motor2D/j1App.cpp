@@ -32,6 +32,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	frames = 0;
 	want_to_save = want_to_load = false;
 	quit = false;
+	pause = false;
+	vsync = false;
+	cap_enabled = true;
+	framerate_cap = 30;
 
 	input = new j1Input();
 	win = new j1Window();

@@ -102,9 +102,9 @@ public:
 
 	mutable p2SString	checkpoint_save;
 
-	bool pause = false;
-	bool vsync = false;
-	bool cap_enabled = true;
+	bool pause;
+	bool vsync;
+	bool cap_enabled;
 	bool quit;
 	double	framerate_cap;
 

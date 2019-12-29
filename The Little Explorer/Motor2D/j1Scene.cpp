@@ -453,18 +453,25 @@ void j1Scene::OnCommand(p2SString command) {
 }
 
 void j1Scene::GameOver() {
+
 	App->gui->DestroyAllGui();
+
+	lives.clear();
+	stars.clear();
 	on_screen_ui.clear();
 	settings_screen.clear();
 	pause_menu.clear();
+
 	App->map->CleanUp();
 	App->entities->DestroyAllEntities();
+
 	on_screen_lives = 0;
 	on_screen_score = 0;
 	App->entities->player_pointer->score = 0;
 	relative_max_time = max_time;
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
+
 	score = nullptr;
 	time_text = nullptr;
 	time_count = nullptr;
