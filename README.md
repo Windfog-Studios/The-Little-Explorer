@@ -14,6 +14,9 @@ Role:
 - Camera Implementation
 - Particle Implementation 
 - Entities artificial intelligence and pathfinding
+- GUI Basics 
+- Main Menu
+- Console
 
 ### Silvino Medina Cardona
 https://github.com/silvino00
@@ -24,6 +27,7 @@ Roles:
 - Spritesheet design 
 - Animation
 - Secondary entities
+- InGame GUI impplementation
 
 We are both students of video game development in the CITM in Terrassa and this is our development project for the first semester of the second year of the degree.  
 
