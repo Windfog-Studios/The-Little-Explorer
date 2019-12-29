@@ -64154,8 +64154,6 @@
  </layer>
  <objectgroup name="Entities">
   <object id="288" name="Player" type="Player" x="128" y="768" width="32" height="32"/>
-  <object id="262" name="Knight" type="Knight" x="1312" y="160" width="32" height="32"/>
-  <object id="267" name="Knight" type="Knight" x="704" y="320" width="32" height="32"/>
   <object id="269" name="Bat" type="Bat" x="896" y="384" width="32" height="32"/>
   <object id="270" name="Bat" type="Bat" x="1504" y="192" width="32" height="32"/>
   <object id="272" name="Bat" type="Bat" x="2496" y="352" width="32" height="32"/>

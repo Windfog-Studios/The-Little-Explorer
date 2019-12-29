@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
 <Checkpoint>
 	<render>
-		<camera x="-664" y="-1" />
+		<camera x="-4107" y="-508" />
 	</render>
 	<entities>
-		<player position_x="1118" position_y="256" score="0" />
-		<walking_enemy position_x="1312" position_y="41184" />
-		<walking_enemy position_x="937" position_y="535" />
-		<flying_enemy position_x="1504" position_y="192" />
+		<player position_x="4573" position_y="928" score="140" />
+		<flying_enemy position_x="700" position_y="498" />
 		<flying_enemy position_x="2496" position_y="352" />
 		<flying_enemy position_x="3709" position_y="544" />
 		<flying_enemy position_x="3457" position_y="129" />
@@ -15,25 +13,21 @@
 		<flying_enemy position_x="5373" position_y="352" />
 		<flying_enemy position_x="5856" position_y="672" />
 		<flying_enemy position_x="1536" position_y="896" />
-		<walking_enemy position_x="1865" position_y="7895" />
-		<walking_enemy position_x="2601" position_y="1083" />
-		<walking_enemy position_x="2125" position_y="192" />
-		<walking_enemy position_x="1914" position_y="192" />
-		<walking_enemy position_x="4453" position_y="960" />
-		<walking_enemy position_x="4649" position_y="7575" />
-		<walking_enemy position_x="4931" position_y="160" />
-		<walking_enemy position_x="5400" position_y="6146" />
-		<walking_enemy position_x="6441" position_y="7703" />
-		<walking_enemy position_x="2254" position_y="416" />
+		<walking_enemy position_x="1866" position_y="3727" />
+		<walking_enemy position_x="2602" position_y="1086" />
+		<walking_enemy position_x="2155" position_y="192" />
+		<walking_enemy position_x="4455" position_y="960" />
+		<walking_enemy position_x="4650" position_y="3407" />
+		<walking_enemy position_x="4863" position_y="160" />
+		<walking_enemy position_x="5399" position_y="2009" />
+		<walking_enemy position_x="6442" position_y="3535" />
 		<flying_enemy position_x="4256" position_y="224" />
+		<collectible position_x="832" position_y="576" />
 		<collectible position_x="2158" position_y="415" />
 		<collectible position_x="2385" position_y="177" />
 		<collectible position_x="3232" position_y="32" />
-		<collectible position_x="3104" position_y="768" />
-		<collectible position_x="2464" position_y="992" />
-		<collectible position_x="2176" position_y="1120" />
+		<collectible position_x="1408" position_y="1184" />
 		<collectible position_x="1280" position_y="960" />
-		<collectible position_x="1517" position_y="289" />
 		<collectible position_x="3552" position_y="832" />
 		<collectible position_x="3584" position_y="416" />
 		<collectible position_x="3840" position_y="160" />
