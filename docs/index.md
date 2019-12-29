@@ -29,6 +29,8 @@ Check our [repository](https://github.com/Windfog-Studios/The-Little-Explorer) t
 
 ## Video
 
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=l1QD2Q4vmXU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Controls
 
 - A: Go left

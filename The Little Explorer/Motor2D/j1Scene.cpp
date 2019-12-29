@@ -378,6 +378,8 @@ void j1Scene::UpdateScreenUI() {
 		App->gui->DestroyUIElement(lives.end->data);
 		lives.del(lives.end);
 		on_screen_lives--;
+		relative_max_time = max_time;
+		timer.Start();
 	}
 
 	if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
