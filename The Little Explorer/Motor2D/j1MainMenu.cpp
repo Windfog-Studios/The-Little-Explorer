@@ -77,6 +77,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 			if (App->console->isVisible) 
 				App->console->DestroyInterface();
+
 			App->scene->CreateScreenUI();
 			App->entities->player_pointer->lives = 3;
 			App->scene->relative_max_time = App->scene->max_time;
@@ -87,8 +88,8 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 		case ButtonAction::CONTINUE:
 			App->gui->DestroyAllGui();
 			if (App->console->isVisible) App->console->DestroyInterface();
-			App->LoadGame();
 			App->scene->LevelChange(Map::NO_MAP, Map::LEVEL_1);
+			App->LoadGame();
 			App->scene->CreateScreenUI();
 			App->entities->blocked_movement = false;
 			App->scene->visible_menu = Menu::SCREEN_UI;

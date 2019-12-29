@@ -378,52 +378,54 @@ void j1Scene::OnEvent(j1UI_Element* element, FocusEvent event) {
 
 void j1Scene::UpdateScreenUI() {
 
-	if ((lives.start != nullptr) && (on_screen_lives > App->entities->player_pointer->lives))
-	{
-		App->gui->DestroyUIElement(lives.end->data);
-		lives.del(lives.end);
-		on_screen_lives--;
-		relative_max_time = max_time;
-		timer.Start();
-	}
-
-	if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
-
-		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.end);
-	}
-
-	if ((stars.start != nullptr) && (timer.Read() > time_star2 * 1000)) {
-
-		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.end);
-	}
-
-	if ((stars.start != nullptr) && (timer.Read() > time_star3 * 1000)) {
-
-		App->gui->DestroyUIElement(stars.end->data);
-		stars.del(stars.end);
-	}
-
-	if (time_text != nullptr)
-	{
-		if (performance_timer.Read() > 1000)
+	if (App->entities->player_pointer != nullptr) {
+		if ((lives.start != nullptr) && (on_screen_lives > App->entities->player_pointer->lives))
 		{
-			time_left = relative_max_time - timer.ReadSec();
-			p2SString temp("%i", time_left);
-			time_count->text.Clear();
-			if (temp.Length() > 0) time_count->text = temp;
-			time_count->UpdateText();
-			performance_timer.Start();
+			App->gui->DestroyUIElement(lives.end->data);
+			lives.del(lives.end);
+			on_screen_lives--;
+			relative_max_time = max_time;
+			timer.Start();
 		}
 
+		if ((stars.start != nullptr) && (timer.Read() > time_star1 * 1000)) {
 
-		if (on_screen_score != App->entities->player_pointer->score) {
-			p2SString coin("     %i points", App->entities->player_pointer->score);
-			score->text.Clear();
-			score->text = coin;
-			score->UpdateText();
-			on_screen_score = App->entities->player_pointer->score;
+			App->gui->DestroyUIElement(stars.end->data);
+			stars.del(stars.end);
+		}
+
+		if ((stars.start != nullptr) && (timer.Read() > time_star2 * 1000)) {
+
+			App->gui->DestroyUIElement(stars.end->data);
+			stars.del(stars.end);
+		}
+
+		if ((stars.start != nullptr) && (timer.Read() > time_star3 * 1000)) {
+
+			App->gui->DestroyUIElement(stars.end->data);
+			stars.del(stars.end);
+		}
+
+		if (time_text != nullptr)
+		{
+			if (performance_timer.Read() > 1000)
+			{
+				time_left = relative_max_time - timer.ReadSec();
+				p2SString temp("%i", time_left);
+				time_count->text.Clear();
+				if (temp.Length() > 0) time_count->text = temp;
+				time_count->UpdateText();
+				performance_timer.Start();
+			}
+
+
+			if (on_screen_score != App->entities->player_pointer->score) {
+				p2SString coin("     %i points", App->entities->player_pointer->score);
+				score->text.Clear();
+				score->text = coin;
+				score->UpdateText();
+				on_screen_score = App->entities->player_pointer->score;
+			}
 		}
 	}
 }
