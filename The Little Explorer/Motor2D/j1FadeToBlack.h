@@ -4,7 +4,7 @@
 #include "j1Module.h"
 #include "SDL\include\SDL_rect.h"
 
-enum Map;
+enum class Map;
 
 class j1FadeToBlack : public j1Module
 {

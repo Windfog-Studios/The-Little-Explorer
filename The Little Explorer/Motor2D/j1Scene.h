@@ -23,7 +23,7 @@ enum class Menu {
 	NO_MENU
 };
 
-enum Map
+enum class Map
 {
 	NO_MAP,
 	LEVEL_1,

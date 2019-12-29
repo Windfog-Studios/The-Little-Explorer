@@ -85,6 +85,7 @@ void j1EntityManager::DestroyAllEntities() {
 		DestroyEntity(item->data);
 	}
 	DestroyEntity(player_pointer);
+	player_pointer = nullptr;
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config){

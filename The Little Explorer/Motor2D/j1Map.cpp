@@ -198,12 +198,12 @@ bool j1Map::Load(const char* file_name)
 	// Level data ---------------------
 
 	if (file_name == "Level1.tmx") {
-		App->scene->current_level = LEVEL_1;
+		App->scene->current_level = Map::LEVEL_1;
 		App->audio->PlayMusic(level_1_music.GetString());
 		App->scene->initial_camera_position = level_1_initial_camera_position;
 	}
 	if (file_name == "Level2.tmx") {
-		App->scene->current_level = LEVEL_2; 
+		App->scene->current_level = Map::LEVEL_2;
 		App->audio->PlayMusic(level_2_music.GetString());
 		App->scene->initial_camera_position = level_2_initial_camera_position;
 	}

@@ -145,11 +145,11 @@ bool j1Scene::Update(float dt)
 	if (visible_menu == Menu::SCREEN_UI)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-			App->fade_to_black->FadeToBlack(current_level, LEVEL_1);
+			App->fade_to_black->FadeToBlack(current_level, Map::LEVEL_1);
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-			App->fade_to_black->FadeToBlack(current_level, LEVEL_2);
+			App->fade_to_black->FadeToBlack(current_level, Map::LEVEL_2);
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
@@ -181,7 +181,7 @@ bool j1Scene::Update(float dt)
 	}
 
 	//camera window ------------------
-	if (!blocked_camera) {
+	if ((!blocked_camera)&&(App->entities->player_pointer != nullptr)) {
 		if (!camera_manual_control)
 		{
 			if (((player_position->x < camera_frame_x_center)) && (-camera->x > camera_margin)) {
@@ -286,8 +286,8 @@ bool j1Scene::Save(pugi::xml_node& data) const {
 	//cam_frame.append_attribute("x") = camera_frame.x;
 	//cam_frame.append_attribute("y") = camera_frame.y;
 
-	if (current_level == LEVEL_1) level.append_attribute("number") = 1;
-	if (current_level == LEVEL_2) level.append_attribute("number") = 2;
+	if (current_level == Map::LEVEL_1) level.append_attribute("number") = 1;
+	if (current_level == Map::LEVEL_2) level.append_attribute("number") = 2;
 
 	time.append_attribute("value") = time_left;
 
@@ -299,17 +299,17 @@ bool j1Scene::Load(pugi::xml_node& data)
 	//camera_frame.x = data.child("position").attribute("x").as_int();
 	//camera_frame.y = data.child("position").attribute("y").as_int();
 
-	if ((current_level == LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) 
-		LevelChange(LEVEL_2, LEVEL_1);
-	if ((current_level == LEVEL_2) && (data.child("level").attribute("number").as_int() == 1)) 
-		LevelChange(LEVEL_1, LEVEL_2);
+	if ((current_level == Map::LEVEL_1) && (data.child("level").attribute("number").as_int() == 2)) 
+		LevelChange(Map::LEVEL_2, Map::LEVEL_1);
+	if ((current_level == Map::LEVEL_2) && (data.child("level").attribute("number").as_int() == 1))
+		LevelChange(Map::LEVEL_1, Map::LEVEL_2);
 
-	if (current_level == NO_MAP) {
+	if (current_level == Map::NO_MAP) {
 		if (data.child("level").attribute("number").as_int() == 1)
-			LevelChange(NO_MAP, LEVEL_1);
+			LevelChange(Map::NO_MAP, Map::LEVEL_1);
 
 		if (data.child("level").attribute("number").as_int() == 2)
-			LevelChange(NO_MAP, LEVEL_2);
+			LevelChange(Map::NO_MAP, Map::LEVEL_2);
 	}
 
 	relative_max_time = data.child("time_left").attribute("value").as_int();
@@ -438,7 +438,7 @@ void j1Scene::OnCommand(p2SString command) {
 		App->gui->DestroyAllGui();
 		App->console->DestroyInterface();
 		LOG("Loading level 1");
-		LevelChange(current_level, LEVEL_1);
+		LevelChange(current_level, Map::LEVEL_1);
 		CreateScreenUI();
 	}
 	if (strcmp(given_command, map2) == 0)
@@ -446,7 +446,7 @@ void j1Scene::OnCommand(p2SString command) {
 		App->gui->DestroyAllGui();
 		App->console->DestroyInterface();
 		LOG("Loading level 2");
-		LevelChange(current_level, LEVEL_2);
+		LevelChange(current_level, Map::LEVEL_2);
 		CreateScreenUI();
 	}
 
@@ -467,7 +467,6 @@ void j1Scene::GameOver() {
 
 	on_screen_lives = 0;
 	on_screen_score = 0;
-	App->entities->player_pointer->score = 0;
 	relative_max_time = max_time;
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -631,7 +630,7 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 		if(unloading_map != Map::NO_MAP)
 			App->map->CleanUp();
 
-		if (loading_map == LEVEL_1) {
+		if (loading_map == Map::LEVEL_1) {
 			if (App->map->Load("Level1.tmx") == true)
 			{
 				int w, h;
@@ -641,10 +640,10 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 				RELEASE_ARRAY(data);
 			}
 
-			current_level = LEVEL_1;
+			current_level = Map::LEVEL_1;
 		}
 
-		if (loading_map == LEVEL_2) {
+		if (loading_map == Map::LEVEL_2) {
 			if (App->map->Load("Level2.tmx") == true)
 			{
 				int w, h;
@@ -654,7 +653,7 @@ void j1Scene::LevelChange(Map unloading_map, Map loading_map) {
 				RELEASE_ARRAY(data);
 			}
 
-			current_level = LEVEL_2;
+			current_level = Map::LEVEL_2;
 		}
 	}
 	else

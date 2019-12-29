@@ -88,7 +88,7 @@ void j1MainMenu::OnEvent(j1UI_Element* element, FocusEvent event) {
 			App->gui->DestroyAllGui();
 			if (App->console->isVisible) App->console->DestroyInterface();
 			App->LoadGame();
-			App->scene->LevelChange(NO_MAP, LEVEL_1);
+			App->scene->LevelChange(Map::NO_MAP, Map::LEVEL_1);
 			App->scene->CreateScreenUI();
 			App->entities->blocked_movement = false;
 			App->scene->visible_menu = Menu::SCREEN_UI;

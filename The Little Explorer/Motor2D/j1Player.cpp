@@ -554,8 +554,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			break;
 		case TRIGGER:
 			if (c2->level_change) {
-				if (App->scene->current_level == LEVEL_1) App->fade_to_black->FadeToBlack(LEVEL_1, LEVEL_2);
-				if (App->scene->current_level == LEVEL_2) App->fade_to_black->FadeToBlack(LEVEL_2, LEVEL_1);
+				if (App->scene->current_level == Map::LEVEL_1) App->fade_to_black->FadeToBlack(Map::LEVEL_1, Map::LEVEL_2);
+				if (App->scene->current_level == Map::LEVEL_2) App->fade_to_black->FadeToBlack(Map::LEVEL_2, Map::LEVEL_1);
 				App->entities->blocked_movement = true;
 			}
 
